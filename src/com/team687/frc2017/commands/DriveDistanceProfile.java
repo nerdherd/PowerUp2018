@@ -1,7 +1,7 @@
 package com.team687.frc2017.commands;
 
-import com.team687.frc2017.Constants;
 import com.team687.frc2017.Robot;
+import com.team687.frc2017.constants.DriveConstants;
 import com.team687.frc2017.utilities.MotionProfile;
 import com.team687.frc2017.utilities.NerdyMath;
 import com.team687.frc2017.utilities.PGains;
@@ -50,20 +50,20 @@ public class DriveDistanceProfile extends Command {
 	m_leftError = 0;
 	m_rightError = 0;
 
-	m_motionProfile = new MotionProfile(Constants.kMaxVelocity, Constants.kMaxAcceleration,
-		-Constants.kMaxAcceleration);
+	m_motionProfile = new MotionProfile(DriveConstants.kMaxVelocity, DriveConstants.kMaxAcceleration,
+		-DriveConstants.kMaxAcceleration);
 	m_motionProfile.generateProfile(m_distance);
 
 	if (m_isHighGear) {
 	    Robot.drive.shiftUp();
-	    m_rightPGains = Constants.kDistHighGearRightPGains;
-	    m_leftPGains = Constants.kDistHighGearLeftPGains;
-	    m_rotPGains = Constants.kRotHighGearPGains;
+	    m_rightPGains = DriveConstants.kDistHighGearRightPGains;
+	    m_leftPGains = DriveConstants.kDistHighGearLeftPGains;
+	    m_rotPGains = DriveConstants.kRotHighGearPGains;
 	} else if (!m_isHighGear) {
 	    Robot.drive.shiftDown();
-	    m_rightPGains = Constants.kDistLowGearRightPGains;
-	    m_leftPGains = Constants.kDistLowGearLeftPGains;
-	    m_rotPGains = Constants.kRotLowGearPGains;
+	    m_rightPGains = DriveConstants.kDistLowGearRightPGains;
+	    m_leftPGains = DriveConstants.kDistLowGearLeftPGains;
+	    m_rotPGains = DriveConstants.kRotLowGearPGains;
 	}
 
 	Robot.drive.resetEncoders();
@@ -80,7 +80,7 @@ public class DriveDistanceProfile extends Command {
 	m_lastLeftError = m_leftError;
 	m_lastRightError = m_rightError;
 	m_timestamp = Timer.getFPGATimestamp() - m_startTime;
-	int index = (int) (m_timestamp / Constants.kDt);
+	int index = (int) (m_timestamp / DriveConstants.kDt);
 	if (m_timestamp > m_motionProfile.getAccelTime() * 60) {
 	    index += 1;
 	} else if (m_timestamp >= ((m_motionProfile.getAccelTime() + m_motionProfile.getCruiseTime()) * 60)) {
@@ -90,7 +90,7 @@ public class DriveDistanceProfile extends Command {
 	double goalVelocity = m_motionProfile.readVelocity(index);
 	double goalAccel = m_motionProfile.readAcceleration(index);
 
-	double feedforward = (Constants.kV * goalVelocity) + (Constants.kA * goalAccel);
+	double feedforward = (DriveConstants.kV * goalVelocity) + (DriveConstants.kA * goalAccel);
 
 	m_leftError = setpoint - Robot.drive.getLeftPosition();
 	m_rightError = setpoint - Robot.drive.getRightPosition();
@@ -98,9 +98,11 @@ public class DriveDistanceProfile extends Command {
 	SmartDashboard.putNumber("Right error from setpoint", m_rightError);
 
 	double leftPow = (m_leftPGains.getP() * m_leftError)
-		+ (Constants.kDistD * ((m_leftError - m_lastLeftError) / Constants.kDt - goalVelocity)) + feedforward;
+		+ (DriveConstants.kDistD * ((m_leftError - m_lastLeftError) / DriveConstants.kDt - goalVelocity))
+		+ feedforward;
 	double rightPow = (m_rightPGains.getP() * m_rightError)
-		+ (Constants.kDistD * ((m_rightError - m_lastRightError) / Constants.kDt - goalVelocity)) + feedforward;
+		+ (DriveConstants.kDistD * ((m_rightError - m_lastRightError) / DriveConstants.kDt - goalVelocity))
+		+ feedforward;
 
 	double rotPow = 0;
 	if (m_isStraight) {

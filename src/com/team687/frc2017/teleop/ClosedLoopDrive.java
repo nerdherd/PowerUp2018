@@ -1,16 +1,13 @@
 package com.team687.frc2017.teleop;
 
-import com.team687.frc2017.Constants;
 import com.team687.frc2017.Robot;
+import com.team687.frc2017.constants.DriveConstants;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Simple split joystick arcade
- * 
- * @author tedlin
- *
  */
 
 public class ClosedLoopDrive extends Command {
@@ -44,7 +41,7 @@ public class ClosedLoopDrive extends Command {
 	error = (error > 180) ? error - 360 : error;
 	error = (error < -180) ? error + 360 : error;
 
-	double wheel = Constants.kRotHighGearPGains.getP();
+	double wheel = DriveConstants.kRotHighGearPGains.getP();
 
 	// wheel = Math.pow(wheel, 2) * sign; // sensitivity
 	double throttle = Robot.oi.getDriveJoyLeftY();

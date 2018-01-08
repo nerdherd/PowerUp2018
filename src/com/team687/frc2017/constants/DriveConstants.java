@@ -1,4 +1,4 @@
-package com.team687.frc2017;
+package com.team687.frc2017.constants;
 
 import com.team687.frc2017.utilities.PGains;
 
@@ -6,7 +6,7 @@ import com.team687.frc2017.utilities.PGains;
  * Important constants
  */
 
-public class Constants {
+public class DriveConstants {
 
     // Conversions
     public final static double kDriveFeetToEncoderUnitsRight = 0;

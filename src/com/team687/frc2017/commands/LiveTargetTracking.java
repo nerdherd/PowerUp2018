@@ -1,8 +1,8 @@
 package com.team687.frc2017.commands;
 
-import com.team687.frc2017.Constants;
 import com.team687.frc2017.Robot;
 import com.team687.frc2017.VisionAdapter;
+import com.team687.frc2017.constants.DriveConstants;
 import com.team687.frc2017.utilities.NerdyMath;
 import com.team687.frc2017.utilities.PGains;
 
@@ -33,10 +33,10 @@ public class LiveTargetTracking extends Command {
 
 	if (m_isHighGear) {
 	    Robot.drive.shiftUp();
-	    m_rotPGains = Constants.kRotHighGearPGains;
+	    m_rotPGains = DriveConstants.kRotHighGearPGains;
 	} else if (!m_isHighGear) {
 	    Robot.drive.shiftDown();
-	    m_rotPGains = Constants.kRotLowGearPGains;
+	    m_rotPGains = DriveConstants.kRotLowGearPGains;
 	}
     }
 
@@ -52,7 +52,7 @@ public class LiveTargetTracking extends Command {
 
 	double power = m_rotPGains.getP() * error;
 	power = NerdyMath.threshold(power, m_rotPGains.getMinPower(), m_rotPGains.getMaxPower());
-	if (Math.abs(error) <= Constants.kDriveRotationDeadband) {
+	if (Math.abs(error) <= DriveConstants.kDriveRotationDeadband) {
 	    power = 0;
 	}
 

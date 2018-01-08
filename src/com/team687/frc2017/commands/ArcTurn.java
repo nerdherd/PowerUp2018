@@ -1,7 +1,7 @@
 package com.team687.frc2017.commands;
 
-import com.team687.frc2017.Constants;
 import com.team687.frc2017.Robot;
+import com.team687.frc2017.constants.DriveConstants;
 import com.team687.frc2017.utilities.NerdyMath;
 import com.team687.frc2017.utilities.PGains;
 
@@ -53,10 +53,10 @@ public class ArcTurn extends Command {
 	m_startTime = Timer.getFPGATimestamp();
 	if (m_isHighGear) {
 	    Robot.drive.shiftUp();
-	    m_rotPGains = Constants.kRotHighGearPGains;
+	    m_rotPGains = DriveConstants.kRotHighGearPGains;
 	} else if (!m_isHighGear) {
 	    Robot.drive.shiftDown();
-	    m_rotPGains = Constants.kRotLowGearPGains;
+	    m_rotPGains = DriveConstants.kRotLowGearPGains;
 	}
     }
 
@@ -83,7 +83,7 @@ public class ArcTurn extends Command {
 
     @Override
     protected boolean isFinished() {
-	return Math.abs(m_error) < Constants.kDriveRotationTolerance
+	return Math.abs(m_error) < DriveConstants.kDriveRotationTolerance
 		|| Timer.getFPGATimestamp() - m_startTime > m_timeout;
     }
 

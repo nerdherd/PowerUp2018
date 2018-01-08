@@ -1,7 +1,7 @@
 package com.team687.frc2017.commands;
 
-import com.team687.frc2017.Constants;
 import com.team687.frc2017.Robot;
+import com.team687.frc2017.constants.DriveConstants;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -77,7 +77,8 @@ public class DriveUntilCollision extends Command {
 
     @Override
     protected boolean isFinished() {
-	return Math.abs(m_jerkX) > Constants.kCollisionThreshold || Math.abs(m_jerkY) > Constants.kCollisionThreshold
+	return Math.abs(m_jerkX) > DriveConstants.kCollisionThreshold
+		|| Math.abs(m_jerkY) > DriveConstants.kCollisionThreshold
 		|| Timer.getFPGATimestamp() - m_startTime > m_timeout;
     }
 

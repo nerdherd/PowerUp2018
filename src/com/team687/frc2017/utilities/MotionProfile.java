@@ -2,7 +2,7 @@ package com.team687.frc2017.utilities;
 
 import java.util.ArrayList;
 
-import com.team687.frc2017.Constants;
+import com.team687.frc2017.constants.DriveConstants;
 
 /**
  * Trapezoidal motion profile generator
@@ -14,7 +14,7 @@ public class MotionProfile {
     private double m_accel;
     private double m_decel;
 
-    private double m_clkInMinutes = Constants.kDtInMinutes;
+    private double m_clkInMinutes = DriveConstants.kDtInMinutes;
 
     private ArrayList<Double> m_timeProfile = new ArrayList<Double>();
     private ArrayList<Double> m_velocityProfile = new ArrayList<Double>();

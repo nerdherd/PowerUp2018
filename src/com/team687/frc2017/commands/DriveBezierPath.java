@@ -2,8 +2,8 @@ package com.team687.frc2017.commands;
 
 import java.util.ArrayList;
 
-import com.team687.frc2017.Constants;
 import com.team687.frc2017.Robot;
+import com.team687.frc2017.constants.DriveConstants;
 import com.team687.frc2017.utilities.BezierCurve;
 import com.team687.frc2017.utilities.PGains;
 
@@ -76,12 +76,12 @@ public class DriveBezierPath extends Command {
 
 	if (m_isHighGear) {
 	    Robot.drive.shiftUp();
-	    m_straightPGains = Constants.kBezierDistHighGearPGains;
-	    m_rotPGains = Constants.kRotHighGearPGains;
+	    m_straightPGains = DriveConstants.kBezierDistHighGearPGains;
+	    m_rotPGains = DriveConstants.kRotHighGearPGains;
 	} else if (!m_isHighGear) {
 	    Robot.drive.shiftDown();
-	    m_straightPGains = Constants.kBezierDistLowGearPGains;
-	    m_rotPGains = Constants.kRotLowGearPGains;
+	    m_straightPGains = DriveConstants.kBezierDistLowGearPGains;
+	    m_rotPGains = DriveConstants.kRotLowGearPGains;
 	}
 
 	m_path.calculateBezier();
@@ -121,7 +121,7 @@ public class DriveBezierPath extends Command {
 		double deltaSegmentLength = m_arcLengthList.get(m_counter) - Robot.drive.getDrivetrainPosition();
 		double curvature = Math.abs(rotError / deltaSegmentLength);
 		if (m_straightPowerIsDynamic) {
-		    straightPower = (m_straightPower - (Constants.kCurvatureFunction * curvature)) * m_direction;
+		    straightPower = (m_straightPower - (DriveConstants.kCurvatureFunction * curvature)) * m_direction;
 		}
 
 		double maxStraightPower = Math.abs(m_straightPower);

@@ -1,8 +1,8 @@
 package com.team687.frc2017.commands;
 
-import com.team687.frc2017.Constants;
 import com.team687.frc2017.Robot;
 import com.team687.frc2017.VisionAdapter;
+import com.team687.frc2017.constants.DriveConstants;
 import com.team687.frc2017.utilities.NerdyMath;
 import com.team687.frc2017.utilities.PGains;
 
@@ -50,10 +50,10 @@ public class SnapToTarget extends Command {
 
 	if (m_isHighGear) {
 	    Robot.drive.shiftUp();
-	    m_rotPGains = Constants.kRotHighGearPGains;
+	    m_rotPGains = DriveConstants.kRotHighGearPGains;
 	} else if (!m_isHighGear) {
 	    Robot.drive.shiftDown();
-	    m_rotPGains = Constants.kRotLowGearPGains;
+	    m_rotPGains = DriveConstants.kRotLowGearPGains;
 	}
 
 	m_startTime = Timer.getFPGATimestamp();
@@ -71,7 +71,7 @@ public class SnapToTarget extends Command {
 
 	double rotPower = m_rotPGains.getP() * error;
 	rotPower = NerdyMath.threshold(rotPower, m_rotPGains.getMinPower(), m_rotPGains.getMaxPower());
-	if (Math.abs(error) <= Constants.kDriveRotationDeadband) {
+	if (Math.abs(error) <= DriveConstants.kDriveRotationDeadband) {
 	    rotPower = 0;
 	    m_counter++;
 	} else {
@@ -83,7 +83,7 @@ public class SnapToTarget extends Command {
 
     @Override
     protected boolean isFinished() {
-	return Timer.getFPGATimestamp() - m_startTime > m_timeout || m_counter > Constants.kDriveRotationCounter;
+	return Timer.getFPGATimestamp() - m_startTime > m_timeout || m_counter > DriveConstants.kDriveRotationCounter;
     }
 
     @Override

@@ -1,8 +1,8 @@
 package com.team687.frc2017.commands;
 
-import com.team687.frc2017.Constants;
 import com.team687.frc2017.Robot;
 import com.team687.frc2017.VisionAdapter;
+import com.team687.frc2017.constants.DriveConstants;
 import com.team687.frc2017.utilities.NerdyMath;
 import com.team687.frc2017.utilities.PGains;
 
@@ -60,14 +60,14 @@ public class ApproachTarget extends Command {
 
 	if (m_isHighGear) {
 	    Robot.drive.shiftUp();
-	    m_rightPGains = Constants.kDistHighGearRightPGains;
-	    m_leftPGains = Constants.kDistHighGearLeftPGains;
-	    m_rotPGains = Constants.kRotHighGearPGains;
+	    m_rightPGains = DriveConstants.kDistHighGearRightPGains;
+	    m_leftPGains = DriveConstants.kDistHighGearLeftPGains;
+	    m_rotPGains = DriveConstants.kRotHighGearPGains;
 	} else if (!m_isHighGear) {
 	    Robot.drive.shiftDown();
-	    m_rightPGains = Constants.kDistLowGearRightPGains;
-	    m_leftPGains = Constants.kDistLowGearLeftPGains;
-	    m_rotPGains = Constants.kRotLowGearPGains;
+	    m_rightPGains = DriveConstants.kDistLowGearRightPGains;
+	    m_leftPGains = DriveConstants.kDistLowGearLeftPGains;
+	    m_rotPGains = DriveConstants.kRotLowGearPGains;
 	}
 
 	m_startTime = Timer.getFPGATimestamp();
@@ -83,7 +83,7 @@ public class ApproachTarget extends Command {
 	rotError = (rotError > 180) ? rotError - 360 : rotError;
 	rotError = (rotError < -180) ? rotError + 360 : rotError;
 	double rotPower = m_rotPGains.getP() * rotError;
-	if (Math.abs(rotError) <= Constants.kDriveRotationDeadband) {
+	if (Math.abs(rotError) <= DriveConstants.kDriveRotationDeadband) {
 	    rotPower = 0;
 	}
 

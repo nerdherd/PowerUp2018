@@ -1,6 +1,6 @@
 package com.team687.frc2017.utilities;
 
-import com.team687.frc2017.Constants;
+import com.team687.frc2017.constants.DriveConstants;
 
 /**
  * Useful math functions
@@ -17,7 +17,7 @@ public class NerdyMath {
     }
 
     public static double inchesToRotations(double inches) {
-	return (int) (inches / (Math.PI * Constants.kWheelDiameter));
+	return (int) (inches / (Math.PI * DriveConstants.kWheelDiameter));
     }
 
     public static int rotationsToTicks(double rotations) {
@@ -88,7 +88,7 @@ public class NerdyMath {
      * @param throttle
      */
     public static double addSensitivity(double input, double throttle) {
-	double b = Constants.kJoystickDeadband;
+	double b = DriveConstants.kJoystickDeadband;
 	double a = throttle;
 	double output = 0;
 	if (input >= 0) {

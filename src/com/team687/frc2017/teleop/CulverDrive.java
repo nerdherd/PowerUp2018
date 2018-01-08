@@ -8,9 +8,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * 33's Culver drive (Halo drive but with θ of joystick * radius as wheel
  * component). Uses gamepad.
- * 
- * @author tedlin
- *
  */
 
 public class CulverDrive extends Command {

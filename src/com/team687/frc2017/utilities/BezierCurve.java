@@ -2,7 +2,7 @@ package com.team687.frc2017.utilities;
 
 import java.util.ArrayList;
 
-import com.team687.frc2017.Constants;
+import com.team687.frc2017.constants.DriveConstants;
 
 /**
  * Bezier curve generation inspired by 1241
@@ -69,7 +69,7 @@ public class BezierCurve {
     public void calculatePoints() {
 	m_xPoints.clear();
 	m_yPoints.clear();
-	for (double i = 0; i <= 1; i += (1 / Constants.kBezierStep)) {
+	for (double i = 0; i <= 1; i += (1 / DriveConstants.kBezierStep)) {
 	    m_xPoints.add(calculateX(i));
 	    m_yPoints.add(calculateY(i));
 	}

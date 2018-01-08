@@ -7,9 +7,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Tank drive with sensitivity adjustments
- * 
- * @author tedlin
- * 
  */
 
 public class TankDrive extends Command {

@@ -1,7 +1,7 @@
 package com.team687.frc2017.utilities;
 
-import com.team687.frc2017.Constants;
 import com.team687.frc2017.Robot;
+import com.team687.frc2017.constants.DriveConstants;
 
 /**
  * Skid steer drive kinematic calculations
@@ -84,7 +84,7 @@ public class Kinematics {
      */
     public static double getAngularVelocity(double rightVelocity, double leftVelocity) {
 	double diffVelocity = rightVelocity - leftVelocity;
-	return diffVelocity / Constants.kDrivetrainWidth;
+	return diffVelocity / DriveConstants.kDrivetrainWidth;
     }
 
     /**
@@ -97,7 +97,7 @@ public class Kinematics {
 	if (diffVelocity == 0) {
 	    return Double.POSITIVE_INFINITY;
 	} else {
-	    return (Constants.kDrivetrainWidth * sigmaVelocity) / (2 * diffVelocity);
+	    return (DriveConstants.kDrivetrainWidth * sigmaVelocity) / (2 * diffVelocity);
 	}
     }
 
@@ -108,7 +108,7 @@ public class Kinematics {
      */
     public static double getDerivedDeltaYaw(double rightVelocity, double leftVelocity, double deltaTime) {
 	double diffVelocity = rightVelocity - leftVelocity;
-	return diffVelocity * deltaTime / Constants.kDrivetrainWidth;
+	return diffVelocity * deltaTime / DriveConstants.kDrivetrainWidth;
     }
 
 }

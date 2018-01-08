@@ -1,7 +1,7 @@
 package com.team687.frc2017.commands;
 
-import com.team687.frc2017.Constants;
 import com.team687.frc2017.Robot;
+import com.team687.frc2017.constants.DriveConstants;
 import com.team687.frc2017.utilities.NerdyMath;
 import com.team687.frc2017.utilities.PGains;
 
@@ -46,12 +46,12 @@ public class DriveDistancePID extends Command {
 
 	if (m_isHighGear) {
 	    Robot.drive.shiftUp();
-	    m_rightPGains = Constants.kDistHighGearRightPGains;
-	    m_leftPGains = Constants.kDistHighGearLeftPGains;
+	    m_rightPGains = DriveConstants.kDistHighGearRightPGains;
+	    m_leftPGains = DriveConstants.kDistHighGearLeftPGains;
 	} else if (!m_isHighGear) {
 	    Robot.drive.shiftDown();
-	    m_rightPGains = Constants.kDistLowGearRightPGains;
-	    m_leftPGains = Constants.kDistLowGearLeftPGains;
+	    m_rightPGains = DriveConstants.kDistLowGearRightPGains;
+	    m_leftPGains = DriveConstants.kDistLowGearLeftPGains;
 	}
 
 	m_startTime = Timer.getFPGATimestamp();
@@ -75,8 +75,8 @@ public class DriveDistancePID extends Command {
 
     @Override
     protected boolean isFinished() {
-	boolean reachedGoal = Math.abs(m_leftError) < Constants.kDriveDistanceTolerance
-		&& Math.abs(m_rightError) < Constants.kDriveDistanceTolerance;
+	boolean reachedGoal = Math.abs(m_leftError) < DriveConstants.kDriveDistanceTolerance
+		&& Math.abs(m_rightError) < DriveConstants.kDriveDistanceTolerance;
 	return reachedGoal || Timer.getFPGATimestamp() - m_startTime > m_timeout;
     }
 

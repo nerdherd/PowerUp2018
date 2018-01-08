@@ -7,9 +7,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Simple split joystick arcade
- * 
- * @author tedlin
- *
  */
 
 public class HaloDrive extends Command {
