@@ -12,7 +12,10 @@ public class Robot extends TimedRobot {
     public static Drive drive;
     public static PowerDistributionPanel pdp;
     public static Compressor compressor;
-    public static OI m_oi;
+    public static OI oi;
+
+    public static VisionAdapter visionAdapter;
+    public static Odometry odometry;
 
     @Override
     public void robotInit() {
@@ -25,48 +28,65 @@ public class Robot extends TimedRobot {
 	drive.resetEncoders();
 	drive.resetGyro();
 
-	m_oi = new OI();
+	oi = new OI();
+
+	visionAdapter = VisionAdapter.getInstance();
+	odometry = Odometry.getInstance();
     }
 
     @Override
     public void disabledInit() {
 	Scheduler.getInstance().removeAll();
 	drive.reportToSmartDashboard();
+	visionAdapter.reportToSmartDashboard();
+	odometry.update();
     }
 
     @Override
     public void disabledPeriodic() {
 	Scheduler.getInstance().run();
 	drive.reportToSmartDashboard();
+	visionAdapter.reportToSmartDashboard();
+	odometry.update();
     }
 
     @Override
     public void autonomousInit() {
 	Scheduler.getInstance().removeAll();
 	drive.reportToSmartDashboard();
+	visionAdapter.reportToSmartDashboard();
+	odometry.update();
     }
 
     @Override
     public void autonomousPeriodic() {
 	Scheduler.getInstance().run();
 	drive.reportToSmartDashboard();
+	visionAdapter.reportToSmartDashboard();
+	odometry.update();
     }
 
     @Override
     public void teleopInit() {
 	Scheduler.getInstance().run();
 	drive.reportToSmartDashboard();
+	visionAdapter.reportToSmartDashboard();
+	odometry.update();
     }
 
     @Override
     public void teleopPeriodic() {
 	Scheduler.getInstance().removeAll();
 	drive.reportToSmartDashboard();
+	visionAdapter.reportToSmartDashboard();
+	odometry.update();
     }
 
     @Override
     public void testPeriodic() {
 	Scheduler.getInstance().run();
 	drive.reportToSmartDashboard();
+	visionAdapter.reportToSmartDashboard();
+	odometry.update();
     }
 }
