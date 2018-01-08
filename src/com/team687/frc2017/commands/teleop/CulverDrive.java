@@ -1,4 +1,4 @@
-package com.team687.frc2017.teleop;
+package com.team687.frc2017.commands.teleop;
 
 import com.team687.frc2017.Robot;
 
