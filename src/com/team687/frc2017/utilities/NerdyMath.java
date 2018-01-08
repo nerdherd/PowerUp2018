@@ -4,10 +4,6 @@ import com.team687.frc2017.Constants;
 
 /**
  * Useful math functions
- *
- * @author Wesley
- * @author tedlin
- *
  */
 
 public class NerdyMath {

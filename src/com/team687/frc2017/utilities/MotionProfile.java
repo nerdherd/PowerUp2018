@@ -6,9 +6,6 @@ import com.team687.frc2017.Constants;
 
 /**
  * Trapezoidal motion profile generator
- * 
- * @author tedlin
- *
  */
 
 public class MotionProfile {

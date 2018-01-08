@@ -2,9 +2,6 @@ package com.team687.frc2017.utilities;
 
 /**
  * PID Controller
- * 
- * @author Wesley
- *
  */
 
 public class NerdyPID {

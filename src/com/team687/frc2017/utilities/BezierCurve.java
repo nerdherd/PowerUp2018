@@ -6,9 +6,6 @@ import com.team687.frc2017.Constants;
 
 /**
  * Bezier curve generation inspired by 1241
- *
- * @author tedlin
- *
  */
 
 public class BezierCurve {

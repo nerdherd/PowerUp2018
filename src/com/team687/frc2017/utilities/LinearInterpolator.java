@@ -7,9 +7,6 @@ import java.util.Arrays;
  * determining distance from the area of contour(s) from vision.
  * 
  * Negative numbers not supported.
- * 
- * @author tedlin
- *
  */
 
 public class LinearInterpolator {

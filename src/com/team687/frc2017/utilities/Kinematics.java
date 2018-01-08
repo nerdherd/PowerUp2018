@@ -5,9 +5,6 @@ import com.team687.frc2017.Robot;
 
 /**
  * Skid steer drive kinematic calculations
- * 
- * @author tedlin
- *
  */
 
 public class Kinematics {

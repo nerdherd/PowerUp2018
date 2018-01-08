@@ -3,9 +3,6 @@ package com.team687.frc2017.utilities;
 /**
  * A set of values needed to complete create a simple but robust proportional
  * control loop.
- * 
- * @author tedlin
- *
  */
 
 public class PGains {
