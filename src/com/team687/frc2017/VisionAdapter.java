@@ -1,6 +1,6 @@
 package com.team687.frc2017;
 
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -21,27 +21,27 @@ public class VisionAdapter {
     private NetworkTable m_visionTable;
 
     protected VisionAdapter() {
-	m_visionTable = NetworkTable.getTable("NerdyVision");
+	m_visionTable = Robot.networkTable.getTable("NerdyVision");
     }
 
     public boolean isAligned() {
-	return m_visionTable.getBoolean("IS_ALIGNED", true);
+	return m_visionTable.getEntry("IS_ALIGNED").getBoolean(false);
     }
 
     public double getAngleToTurn() {
-	return m_visionTable.getNumber("ANGLE_TO_TURN", 0);
+	return m_visionTable.getEntry("ANGLE_TO_TURN").getDouble(0);
     }
 
     public double getTargetArea() {
-	return m_visionTable.getNumber("TARGET_AREA", 0);
+	return m_visionTable.getEntry("TARGET_AREA").getDouble(0);
     }
 
     public double getDistanceFromTarget() {
-	return m_visionTable.getNumber("DISTANCE_FROM_TARGET", 0);
+	return m_visionTable.getEntry("DISTANCE_FROM_TARGET").getDouble(0);
     }
 
     public double getProcessedTime() {
-	return m_visionTable.getNumber("PROCESSED_TIME", 0);
+	return m_visionTable.getEntry("PROCESSED_TIME").getDouble(0);
     }
 
     public void reportToSmartDashboard() {
