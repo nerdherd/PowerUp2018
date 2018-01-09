@@ -22,5 +22,7 @@ public class RobotMap {
     public static final int kLeftSlaveTalon2ID = 3;
 
     public static final Port navID = Port.kMXP;
+    
+    public static final int kArticID = 0;
 
 }

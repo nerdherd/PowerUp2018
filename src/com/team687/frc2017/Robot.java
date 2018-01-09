@@ -1,5 +1,6 @@
 package com.team687.frc2017;
 
+import com.team687.frc2017.subsystems.Arm;
 import com.team687.frc2017.subsystems.Drive;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -11,6 +12,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 public class Robot extends TimedRobot {
 
     public static Drive drive;
+    public static Arm arm;
     public static PowerDistributionPanel pdp;
     public static Compressor compressor;
     public static OI oi;
@@ -24,7 +26,11 @@ public class Robot extends TimedRobot {
 	pdp = new PowerDistributionPanel();
 	compressor = new Compressor();
 	compressor.start();
-
+	
+	arm = new Arm();
+	arm.setZeroVoltage();
+	arm.resetEncoders();
+	
 	drive = new Drive();
 	drive.stopDrive();
 	drive.resetEncoders();
