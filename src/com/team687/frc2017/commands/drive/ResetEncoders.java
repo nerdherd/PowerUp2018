@@ -1,4 +1,4 @@
-package com.team687.frc2017.commands;
+package com.team687.frc2017.commands.drive;
 
 import com.team687.frc2017.Robot;
 
@@ -6,28 +6,29 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Reset gyro with a command so we do not have to enable/disable every time
+ * Reset encoders
  */
 
-public class ResetGyro extends Command {
+public class ResetEncoders extends Command {
 
-    public ResetGyro() {
+    public ResetEncoders() {
 	requires(Robot.drive);
     }
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "ResetGyro");
-	Robot.drive.resetGyro();
+	SmartDashboard.putString("Current Command", "Reset Encoders");
+	Robot.drive.resetEncoders();
     }
 
     @Override
     protected void execute() {
+	Robot.drive.resetEncoders();
     }
 
     @Override
     protected boolean isFinished() {
-	return true;
+	return Robot.drive.getRightPosition() == 0 && Robot.drive.getLeftPosition() == 0;
     }
 
     @Override

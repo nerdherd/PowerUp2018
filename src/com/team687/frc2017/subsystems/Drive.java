@@ -5,7 +5,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.team687.frc2017.RobotMap;
-import com.team687.frc2017.commands.teleop.TankDrive;
+import com.team687.frc2017.commands.drive.teleop.TankDrive;
 import com.team687.frc2017.constants.DriveConstants;
 import com.team687.frc2017.utilities.NerdyMath;
 import com.team687.lib.kauailabs.navx.frc.AHRS;

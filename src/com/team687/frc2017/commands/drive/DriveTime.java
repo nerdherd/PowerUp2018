@@ -1,4 +1,4 @@
-package com.team687.frc2017.commands;
+package com.team687.frc2017.commands.drive;
 
 import com.team687.frc2017.Robot;
 
@@ -7,12 +7,12 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Turn in place for a specified time
+ * Drive for a specified time
  */
 
-public class TurnTime extends Command {
+public class DriveTime extends Command {
 
-    private double m_rotPower;
+    private double m_straightPower;
     private double m_timeout;
     private boolean m_isHighGear;
     private double m_startTime;
@@ -22,8 +22,8 @@ public class TurnTime extends Command {
      * @param timeout
      * @param isHighGear
      */
-    public TurnTime(double rotPower, double timeout, boolean isHighGear) {
-	m_rotPower = rotPower;
+    public DriveTime(double straightPower, double timeout, boolean isHighGear) {
+	m_straightPower = straightPower;
 	m_timeout = timeout;
 	m_isHighGear = isHighGear;
 
@@ -44,7 +44,7 @@ public class TurnTime extends Command {
 
     @Override
     protected void execute() {
-	Robot.drive.setPower(m_rotPower, m_rotPower);
+	Robot.drive.setPower(m_straightPower, -m_straightPower);
     }
 
     @Override
@@ -61,4 +61,5 @@ public class TurnTime extends Command {
     protected void interrupted() {
 	end();
     }
+
 }

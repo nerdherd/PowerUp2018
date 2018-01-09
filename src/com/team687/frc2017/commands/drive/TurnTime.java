@@ -1,29 +1,30 @@
-package com.team687.frc2017.commands;
+package com.team687.frc2017.commands.drive;
 
 import com.team687.frc2017.Robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Drive straight without setting power to 0 when it reaches goal. No heading
- * adjustment, all open loop.
+ * Turn in place for a specified time
  */
 
-public class DriveStraightContinuous extends Command {
+public class TurnTime extends Command {
 
-    private double m_distance;
-    private double m_straightPower;
+    private double m_rotPower;
+    private double m_timeout;
     private boolean m_isHighGear;
+    private double m_startTime;
 
     /**
-     * @param distance
      * @param straightPower
+     * @param timeout
      * @param isHighGear
      */
-    public DriveStraightContinuous(double distance, double straightPower, boolean isHighGear) {
-	m_distance = distance;
-	m_straightPower = straightPower;
+    public TurnTime(double rotPower, double timeout, boolean isHighGear) {
+	m_rotPower = rotPower;
+	m_timeout = timeout;
 	m_isHighGear = isHighGear;
 
 	requires(Robot.drive);
@@ -31,7 +32,8 @@ public class DriveStraightContinuous extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "DriveStraightContinuous");
+	SmartDashboard.putString("Current Command", "DriveTime");
+	m_startTime = Timer.getFPGATimestamp();
 
 	if (m_isHighGear) {
 	    Robot.drive.shiftUp();
@@ -42,21 +44,21 @@ public class DriveStraightContinuous extends Command {
 
     @Override
     protected void execute() {
-	Robot.drive.setPower(m_straightPower, -m_straightPower);
+	Robot.drive.setPower(m_rotPower, m_rotPower);
     }
 
     @Override
     protected boolean isFinished() {
-	return Robot.drive.getDrivetrainPosition() > m_distance;
+	return Timer.getFPGATimestamp() - m_startTime > m_timeout;
     }
 
     @Override
     protected void end() {
+	Robot.drive.stopDrive();
     }
 
     @Override
     protected void interrupted() {
 	end();
     }
-
 }

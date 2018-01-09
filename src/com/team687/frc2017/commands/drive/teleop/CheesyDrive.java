@@ -1,4 +1,4 @@
-package com.team687.frc2017.commands.teleop;
+package com.team687.frc2017.commands.drive.teleop;
 
 import com.team687.frc2017.Robot;
 import com.team687.frc2017.constants.DriveConstants;

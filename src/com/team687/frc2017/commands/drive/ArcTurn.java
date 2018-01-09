@@ -1,4 +1,4 @@
-package com.team687.frc2017.commands;
+package com.team687.frc2017.commands.drive;
 
 import com.team687.frc2017.Robot;
 import com.team687.frc2017.constants.DriveConstants;
@@ -10,46 +10,47 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Turn to a specified angle (no vision, absolute)
+ * Arc turning
  */
 
-public class TurnToAngle extends Command {
+public class ArcTurn extends Command {
 
     private double m_desiredAngle;
-    private double m_startTime, m_timeout;
-    private double m_error;
-
+    private boolean m_isRightPowered;
     private boolean m_isHighGear;
 
     private PGains m_rotPGains;
 
-    public TurnToAngle(double angle, boolean isHighGear) {
-	m_desiredAngle = angle;
-	m_timeout = 10; // default timeout is 10 seconds
-	m_isHighGear = isHighGear;
+    private double m_startTime, m_timeout;
+    private double m_error;
 
-	requires(Robot.drive);
-    }
+    private double m_sign;
 
     /**
-     * @param angle
+     * Arc Turn
+     * 
+     * @param desiredAngle
+     * @param isRightPowered
      * @param isHighGear
      * @param timeout
+     * @param sign
+     *            (+1.0 or -1.0)
      */
-    public TurnToAngle(double angle, boolean isHighGear, double timeout) {
-	m_desiredAngle = angle;
+    public ArcTurn(double desiredAngle, boolean isRightPowered, boolean isHighGear, double timeout, double sign) {
+	m_desiredAngle = desiredAngle;
+	m_isRightPowered = isRightPowered;
 	m_timeout = timeout;
 	m_isHighGear = isHighGear;
+	m_sign = Math.signum(sign);
 
-	// subsystem dependencies
 	requires(Robot.drive);
     }
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "TurnToAngle");
-	m_startTime = Timer.getFPGATimestamp();
+	SmartDashboard.putString("Current Command", "ArcTurn");
 
+	m_startTime = Timer.getFPGATimestamp();
 	if (m_isHighGear) {
 	    Robot.drive.shiftUp();
 	    m_rotPGains = DriveConstants.kRotHighGearPGains;
@@ -65,18 +66,24 @@ public class TurnToAngle extends Command {
 	m_error = -m_desiredAngle - robotAngle;
 	m_error = (m_error > 180) ? m_error - 360 : m_error;
 	m_error = (m_error < -180) ? m_error + 360 : m_error;
+	double rotPower = m_rotPGains.getP() * m_error * 1.95; // multiplied by 2 because the rotational component is
+							       // only added to one side of the drivetrain
 
-	double power = m_rotPGains.getP() * m_error;
-	double rawSign = Math.signum(power);
-	power = NerdyMath.threshold(Math.abs(power), m_rotPGains.getMinPower(), m_rotPGains.getMaxPower());
-	power = Math.abs(power) * rawSign;
+	double rawSign = Math.signum(rotPower);
+	rotPower = NerdyMath.threshold(Math.abs(rotPower), m_rotPGains.getMinPower(), m_rotPGains.getMaxPower())
+		* rawSign;
+	rotPower = Math.abs(rotPower) * m_sign;
 
-	Robot.drive.setPower(power, power);
+	if (m_isRightPowered) {
+	    Robot.drive.setPower(0, rotPower);
+	} else if (!m_isRightPowered) {
+	    Robot.drive.setPower(rotPower, 0);
+	}
     }
 
     @Override
     protected boolean isFinished() {
-	return Math.abs(m_error) <= DriveConstants.kDriveRotationTolerance
+	return Math.abs(m_error) < DriveConstants.kDriveRotationTolerance
 		|| Timer.getFPGATimestamp() - m_startTime > m_timeout;
     }
 

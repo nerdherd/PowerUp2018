@@ -1,4 +1,4 @@
-package com.team687.frc2017.commands;
+package com.team687.frc2017.commands.drive;
 
 import com.team687.frc2017.Robot;
 import com.team687.frc2017.utilities.PGains;
@@ -7,32 +7,30 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * An arc turn that drift turns to an angle near the end of a specified
- * distance. Similar to the logic behind 973's hopper auto controller. Loop is
- * closed on heading but not on straight power.
+ * Drive at a specified heading (turns to an angle near the beginning of a
+ * specified distance). Loop is closed on heading but not on straight power.
  */
 
-public class DriftTurnToAngle extends Command {
+public class DriveAtHeading extends Command {
 
     private double m_straightPower;
-    private double m_desiredAngle;
-    private double m_distance;
+    private double m_heading, m_distance;
     private boolean m_isHighGear;
     private PGains m_rotPGains;
 
     /**
      * @param straightPower
-     * @param angle
+     *            (determines direction and magnitude)
+     * @param heading
      * @param distance
      *            (absolute value)
      * @param isHighGear
      * @param kRotP
      */
-    public DriftTurnToAngle(double straightPower, double angle, double distance, boolean isHighGear, double kRotP) {
+    public DriveAtHeading(double straightPower, double heading, double distance, boolean isHighGear, double kRotP) {
 	m_straightPower = straightPower;
-	m_desiredAngle = angle;
+	m_heading = heading;
 	m_distance = distance;
-	m_isHighGear = isHighGear;
 	m_rotPGains.setP(kRotP);
 
 	requires(Robot.drive);
@@ -40,7 +38,7 @@ public class DriftTurnToAngle extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "DriftTurnToAngle");
+	SmartDashboard.putString("Current Command", "DriveAtHeading");
 
 	if (m_isHighGear) {
 	    Robot.drive.shiftUp();
@@ -51,14 +49,11 @@ public class DriftTurnToAngle extends Command {
 
     @Override
     protected void execute() {
-	double doneness = Math.abs(Robot.drive.getDrivetrainPosition() / m_distance);
-	// doneness = Math.sqrt(doneness); // this makes the arc turn more gradual
-
 	double robotAngle = (360 - Robot.drive.getCurrentYaw()) % 360;
-	double rotError = -m_desiredAngle - robotAngle;
+	double rotError = -m_heading - robotAngle;
 	rotError = (rotError > 180) ? rotError - 360 : rotError;
 	rotError = (rotError < -180) ? rotError + 360 : rotError;
-	double rotPower = m_rotPGains.getP() * rotError * doneness;
+	double rotPower = m_rotPGains.getP() * rotError;
 
 	Robot.drive.setPower(rotPower + m_straightPower, rotPower - m_straightPower);
     }

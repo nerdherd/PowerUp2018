@@ -1,4 +1,4 @@
-package com.team687.frc2017.commands;
+package com.team687.frc2017.commands.drive;
 
 import com.team687.frc2017.Robot;
 import com.team687.frc2017.VisionAdapter;
@@ -6,22 +6,36 @@ import com.team687.frc2017.constants.DriveConstants;
 import com.team687.frc2017.utilities.NerdyMath;
 import com.team687.frc2017.utilities.PGains;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Live vision tracking (follows vision target around, no end)
+ * Alignment based on vision and gyro. Ends when the shoot button is released
  */
 
-public class LiveTargetTracking extends Command {
+public class SnapToTarget extends Command {
 
+    private double m_startTime, m_timeout;
+    private int m_counter;
     private boolean m_isHighGear;
+
     private PGains m_rotPGains;
 
+    public SnapToTarget(boolean isHighGear) {
+	m_timeout = 3.3;
+	m_isHighGear = isHighGear;
+
+	requires(Robot.drive);
+    }
+
     /**
+     * @param isAuto
      * @param isHighGear
+     * @param timeout
      */
-    public LiveTargetTracking(boolean isHighGear) {
+    public SnapToTarget(boolean isHighGear, double timeout) {
+	m_timeout = timeout;
 	m_isHighGear = isHighGear;
 
 	requires(Robot.drive);
@@ -29,7 +43,10 @@ public class LiveTargetTracking extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "LiveTargetTracking");
+	SmartDashboard.putString("Current Command", "SnapToTarget");
+
+	Robot.drive.stopDrive();
+	m_counter = 0;
 
 	if (m_isHighGear) {
 	    Robot.drive.shiftUp();
@@ -38,6 +55,8 @@ public class LiveTargetTracking extends Command {
 	    Robot.drive.shiftDown();
 	    m_rotPGains = DriveConstants.kRotLowGearPGains;
 	}
+
+	m_startTime = Timer.getFPGATimestamp();
     }
 
     @Override
@@ -46,22 +65,25 @@ public class LiveTargetTracking extends Command {
 	double relativeAngleError = VisionAdapter.getInstance().getAngleToTurn();
 	double processingTime = VisionAdapter.getInstance().getProcessedTime();
 	double absoluteDesiredAngle = relativeAngleError + Robot.drive.timeMachineYaw(processingTime);
-	double error = absoluteDesiredAngle - robotAngle;
+	double error = -absoluteDesiredAngle - robotAngle;
 	error = (error > 180) ? error - 360 : error;
 	error = (error < -180) ? error + 360 : error;
 
-	double power = m_rotPGains.getP() * error;
-	power = NerdyMath.threshold(power, m_rotPGains.getMinPower(), m_rotPGains.getMaxPower());
+	double rotPower = m_rotPGains.getP() * error;
+	rotPower = NerdyMath.threshold(rotPower, m_rotPGains.getMinPower(), m_rotPGains.getMaxPower());
 	if (Math.abs(error) <= DriveConstants.kDriveRotationDeadband) {
-	    power = 0;
+	    rotPower = 0;
+	    m_counter++;
+	} else {
+	    m_counter = 0;
 	}
 
-	Robot.drive.setPower(power, power);
+	Robot.drive.setPower(rotPower, rotPower);
     }
 
     @Override
     protected boolean isFinished() {
-	return false;
+	return Timer.getFPGATimestamp() - m_startTime > m_timeout || m_counter > DriveConstants.kDriveRotationCounter;
     }
 
     @Override
