@@ -7,6 +7,7 @@ import com.team687.frc2018.RobotMap;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Intake subsystem
@@ -19,7 +20,7 @@ public class Intake extends Subsystem {
 
     public Intake() {
 	m_rollers = new TalonSRX(RobotMap.kIntakeRollersID);
-	m_rollers.setNeutralMode(NeutralMode.Brake);
+	m_rollers.setNeutralMode(NeutralMode.Coast);
 
 	m_claw = new DoubleSolenoid(RobotMap.kClawID1, RobotMap.kClawID2);
     }
@@ -54,6 +55,12 @@ public class Intake extends Subsystem {
 
     public double getRollerCurrent() {
 	return m_rollers.getOutputCurrent();
+    }
+
+    public void reportToSmartDashboard() {
+	SmartDashboard.putBoolean("Claw Closed", isClawClosed());
+	SmartDashboard.putNumber("Roller Voltage", getRollerVoltage());
+	SmartDashboard.putNumber("Roller Current", getRollerCurrent());
     }
 
 }

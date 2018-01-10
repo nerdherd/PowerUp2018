@@ -267,12 +267,12 @@ public class Drive extends Subsystem {
 
 	SmartDashboard.putBoolean("Brake Mode On", m_brakeModeOn);
 
-	SmartDashboard.putNumber("Left Master PercentVbus", m_leftMaster.getMotorOutputVoltage());
-	SmartDashboard.putNumber("Left Slave 1 PercentVbus", m_leftSlave1.getMotorOutputVoltage());
-	SmartDashboard.putNumber("Left Slave 2 PercentVbus", m_leftSlave2.getMotorOutputVoltage());
-	SmartDashboard.putNumber("Right Master PercentVbus", m_rightMaster.getMotorOutputVoltage());
-	SmartDashboard.putNumber("Right Slave 1 PercentVbus", m_rightSlave1.getMotorOutputVoltage());
-	SmartDashboard.putNumber("Right Slave 2 PercentVbus", m_rightSlave2.getMotorOutputVoltage());
+	SmartDashboard.putNumber("Left Master Voltage", m_leftMaster.getMotorOutputVoltage());
+	SmartDashboard.putNumber("Left Slave 1 Voltage", m_leftSlave1.getMotorOutputVoltage());
+	SmartDashboard.putNumber("Left Slave 2 Voltage", m_leftSlave2.getMotorOutputVoltage());
+	SmartDashboard.putNumber("Right Master Voltage", m_rightMaster.getMotorOutputVoltage());
+	SmartDashboard.putNumber("Right Slave 1 Voltage", m_rightSlave1.getMotorOutputVoltage());
+	SmartDashboard.putNumber("Right Slave 2 Voltage", m_rightSlave2.getMotorOutputVoltage());
 
 	SmartDashboard.putNumber("Left Master Current", m_leftMaster.getOutputCurrent());
 	SmartDashboard.putNumber("Left Slave 1 Current", m_leftSlave1.getOutputCurrent());

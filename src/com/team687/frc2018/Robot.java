@@ -2,6 +2,8 @@ package com.team687.frc2018;
 
 import com.team687.frc2018.subsystems.Arm;
 import com.team687.frc2018.subsystems.Drive;
+import com.team687.frc2018.subsystems.Intake;
+import com.team687.frc2018.subsystems.Wrist;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Compressor;
@@ -13,6 +15,9 @@ public class Robot extends TimedRobot {
 
     public static Drive drive;
     public static Arm arm;
+    public static Wrist wrist;
+    public static Intake intake;
+
     public static PowerDistributionPanel pdp;
     public static Compressor compressor;
     public static OI oi;
@@ -31,6 +36,13 @@ public class Robot extends TimedRobot {
 	arm.setZeroVoltage();
 	arm.resetEncoder();
 
+	wrist = new Wrist();
+	wrist.setZeroVoltage();
+	wrist.resetEncoder();
+
+	intake = new Intake();
+	intake.setRollerPower(0);
+
 	drive = new Drive();
 	drive.stopDrive();
 	drive.resetEncoders();
@@ -45,7 +57,12 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledInit() {
 	Scheduler.getInstance().removeAll();
+
 	drive.reportToSmartDashboard();
+	arm.reportToSmartDashboard();
+	wrist.reportToSmartDashboard();
+	intake.reportToSmartDashboard();
+
 	visionAdapter.reportToSmartDashboard();
 	odometry.update();
     }
@@ -53,7 +70,12 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledPeriodic() {
 	Scheduler.getInstance().run();
+
 	drive.reportToSmartDashboard();
+	arm.reportToSmartDashboard();
+	wrist.reportToSmartDashboard();
+	intake.reportToSmartDashboard();
+
 	visionAdapter.reportToSmartDashboard();
 	odometry.update();
     }
@@ -61,7 +83,12 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
 	Scheduler.getInstance().removeAll();
+
 	drive.reportToSmartDashboard();
+	arm.reportToSmartDashboard();
+	wrist.reportToSmartDashboard();
+	intake.reportToSmartDashboard();
+
 	visionAdapter.reportToSmartDashboard();
 	odometry.update();
     }
@@ -69,7 +96,12 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
 	Scheduler.getInstance().run();
+
 	drive.reportToSmartDashboard();
+	arm.reportToSmartDashboard();
+	wrist.reportToSmartDashboard();
+	intake.reportToSmartDashboard();
+
 	visionAdapter.reportToSmartDashboard();
 	odometry.update();
     }
@@ -77,7 +109,12 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
 	Scheduler.getInstance().run();
+
 	drive.reportToSmartDashboard();
+	arm.reportToSmartDashboard();
+	wrist.reportToSmartDashboard();
+	intake.reportToSmartDashboard();
+
 	visionAdapter.reportToSmartDashboard();
 	odometry.update();
     }
@@ -85,7 +122,12 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
 	Scheduler.getInstance().removeAll();
+
 	drive.reportToSmartDashboard();
+	arm.reportToSmartDashboard();
+	wrist.reportToSmartDashboard();
+	intake.reportToSmartDashboard();
+
 	visionAdapter.reportToSmartDashboard();
 	odometry.update();
     }
@@ -93,7 +135,12 @@ public class Robot extends TimedRobot {
     @Override
     public void testPeriodic() {
 	Scheduler.getInstance().run();
+
 	drive.reportToSmartDashboard();
+	arm.reportToSmartDashboard();
+	wrist.reportToSmartDashboard();
+	intake.reportToSmartDashboard();
+
 	visionAdapter.reportToSmartDashboard();
 	odometry.update();
     }

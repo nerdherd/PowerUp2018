@@ -8,6 +8,7 @@ import com.team687.frc2018.RobotMap;
 import com.team687.frc2018.constants.SuperstructureConstants;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Wrist subsystem
@@ -42,19 +43,20 @@ public class Wrist extends Subsystem {
 	m_wrist.set(ControlMode.PercentOutput, 0);
     }
 
+    // // real world units
+    // public double getPosition() {
+    // return m_wrist.getSelectedSensorPosition(0) / 4096;
+    // }
+    //
+    // public double getSpeed() {
+    // return m_wrist.getSelectedSensorVelocity(0) * (600 / 4096);
+    // }
+
     public double getPosition() {
-	return m_wrist.getSelectedSensorPosition(0) / 4096;
-    }
-
-    public double getSpeed() {
-	return m_wrist.getSelectedSensorVelocity(0) * (600 / 4096);
-    }
-
-    public double getPositionTicks() {
 	return m_wrist.getSelectedSensorPosition(0);
     }
 
-    public double getSpeedTicks() {
+    public double getSpeed() {
 	return m_wrist.getSelectedSensorVelocity(0);
     }
 
@@ -69,6 +71,13 @@ public class Wrist extends Subsystem {
 
     public double getCurrent() {
 	return m_wrist.getOutputCurrent();
+    }
+
+    public void reportToSmartDashboard() {
+	SmartDashboard.putNumber("Wrist Position", getPosition());
+	SmartDashboard.putNumber("Wrist Velocity", getSpeed());
+	SmartDashboard.putNumber("Wrist Voltage", getVoltage());
+	SmartDashboard.putNumber("Wrist Current", getCurrent());
     }
 
 }

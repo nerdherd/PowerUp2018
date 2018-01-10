@@ -8,6 +8,7 @@ import com.team687.frc2018.RobotMap;
 import com.team687.frc2018.constants.SuperstructureConstants;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Arm subsystem
@@ -42,19 +43,20 @@ public class Arm extends Subsystem {
 	m_arm.set(ControlMode.PercentOutput, 0);
     }
 
+    // // real world units
+    // public double getPosition() {
+    // return m_arm.getSelectedSensorPosition(0) / 4096;
+    // }
+    //
+    // public double getSpeed() {
+    // return m_arm.getSelectedSensorVelocity(0) * (600 / 4096);
+    // }
+
     public double getPosition() {
-	return m_arm.getSelectedSensorPosition(0) / 4096;
-    }
-
-    public double getSpeed() {
-	return m_arm.getSelectedSensorVelocity(0) * (600 / 4096);
-    }
-
-    public double getPositionTicks() {
 	return m_arm.getSelectedSensorPosition(0);
     }
 
-    public double getSpeedTicks() {
+    public double getSpeed() {
 	return m_arm.getSelectedSensorVelocity(0);
     }
 
@@ -68,6 +70,13 @@ public class Arm extends Subsystem {
 
     public double getCurrent() {
 	return m_arm.getOutputCurrent();
+    }
+
+    public void reportToSmartDashboard() {
+	SmartDashboard.putNumber("Arm Position", getPosition());
+	SmartDashboard.putNumber("Arm Speed", getSpeed());
+	SmartDashboard.putNumber("Arm Voltage", getVoltage());
+	SmartDashboard.putNumber("Arm Current", getCurrent());
     }
 
 }
