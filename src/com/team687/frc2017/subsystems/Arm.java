@@ -2,26 +2,29 @@ package com.team687.frc2017.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.team687.frc2017.RobotMap;
-import com.team687.frc2017.constants.ArmConstants;
+import com.team687.frc2017.constants.SuperstructureConstants;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- *
+ * Arm subsystem
  */
+
 public class Arm extends Subsystem {
 
-    private final TalonSRX m_artic;
+    private final TalonSRX m_arm;
 
     public Arm() {
-	m_artic = new TalonSRX(RobotMap.kArticID);
+	m_arm = new TalonSRX(RobotMap.kArmID);
 
-	m_artic.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
-	m_artic.config_kP(0, ArmConstants.kArmP, 0);
-	m_artic.config_kI(0, ArmConstants.kArmI, 0);
-	m_artic.config_kD(0, ArmConstants.kArmD, 0);
+	m_arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
+	m_arm.config_kP(0, SuperstructureConstants.kArmP, 0);
+	m_arm.config_kI(0, SuperstructureConstants.kArmI, 0);
+	m_arm.config_kD(0, SuperstructureConstants.kArmD, 0);
+	m_arm.setNeutralMode(NeutralMode.Brake);
     }
 
     @Override
@@ -29,32 +32,42 @@ public class Arm extends Subsystem {
 	// setDefaultCommand(new MySpecialCommand());
     }
 
-    public void setPos(double pos) {
-	double position = Math.min(ArmConstants.kArmScaleTopPos, Math.max(pos, ArmConstants.kArmDownPos));
-	m_artic.set(ControlMode.Position, position);
-    }
-
-    public void resetEncoder() {
-	m_artic.setSelectedSensorPosition(0, 0, 0);
+    public void setPosition(double position) {
+	position = Math.min(SuperstructureConstants.kArmScaleTopPos,
+		Math.max(position, SuperstructureConstants.kArmIntakePos));
+	m_arm.set(ControlMode.Position, position);
     }
 
     public void setZeroVoltage() {
-	m_artic.set(ControlMode.PercentOutput, 0);
+	m_arm.set(ControlMode.PercentOutput, 0);
     }
 
     public double getPosition() {
-	return m_artic.getSelectedSensorPosition(0) / 4096;
+	return m_arm.getSelectedSensorPosition(0) / 4096;
     }
 
     public double getSpeed() {
-	return m_artic.getSelectedSensorVelocity(0) * (600 / 4096);
+	return m_arm.getSelectedSensorVelocity(0) * (600 / 4096);
     }
 
     public double getPositionTicks() {
-	return m_artic.getSelectedSensorPosition(0);
+	return m_arm.getSelectedSensorPosition(0);
     }
 
-    public double getASpeedTicks() {
-	return m_artic.getSelectedSensorVelocity(0);
+    public double getSpeedTicks() {
+	return m_arm.getSelectedSensorVelocity(0);
     }
+
+    public void resetEncoder() {
+	m_arm.setSelectedSensorPosition(0, 0, 0);
+    }
+
+    public double getVoltage() {
+	return m_arm.getMotorOutputVoltage();
+    }
+
+    public double getCurrent() {
+	return m_arm.getOutputCurrent();
+    }
+
 }

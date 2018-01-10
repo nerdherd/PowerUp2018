@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 
-public class SetArticPos extends Command {
+public class SetArmPosition extends Command {
 
     private double m_position;
 
-    public SetArticPos(double pos) {
+    public SetArmPosition(double pos) {
 	requires(Robot.arm);
 	m_position = pos;
     }
@@ -22,7 +22,7 @@ public class SetArticPos extends Command {
     }
 
     protected void execute() {
-	Robot.arm.setPos(m_position);
+	Robot.arm.setPosition(m_position);
     }
 
     protected boolean isFinished() {
