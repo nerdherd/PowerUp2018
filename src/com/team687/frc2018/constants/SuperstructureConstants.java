@@ -15,6 +15,7 @@ public class SuperstructureConstants {
     public static final double kArmScaleTopPos = 1.678;
     public static final double kArmScaleMidPos = 0.971;
     public static final double kArmScaleBottomPos = 0.254;
+    public static final double kArmWristSafePos = 0.33; // if the arm is lower than this, limit wrist movement
 
     public static final double kWristP = 0;
     public static final double kWristI = 0;
