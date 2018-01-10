@@ -19,13 +19,18 @@ public class Arm extends Subsystem {
 	m_artic = new TalonSRX(RobotMap.kArticID);
 
 	m_artic.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
-	m_artic.config_kP(0, ArmConstants.kArticP, 0);
-	m_artic.config_kI(0, ArmConstants.kArticI, 0);
-	m_artic.config_kD(0, ArmConstants.kArticD, 0);
+	m_artic.config_kP(0, ArmConstants.kArmP, 0);
+	m_artic.config_kI(0, ArmConstants.kArmI, 0);
+	m_artic.config_kD(0, ArmConstants.kArmD, 0);
+    }
+
+    @Override
+    protected void initDefaultCommand() {
+	// setDefaultCommand(new MySpecialCommand());
     }
 
     public void setPos(double pos) {
-	double position = Math.min(ArmConstants.kArmMax, Math.max(pos, ArmConstants.kArmMin));
+	double position = Math.min(ArmConstants.kArmScaleTopPos, Math.max(pos, ArmConstants.kArmDownPos));
 	m_artic.set(ControlMode.Position, position);
     }
 
@@ -37,23 +42,19 @@ public class Arm extends Subsystem {
 	m_artic.set(ControlMode.PercentOutput, 0);
     }
 
-    public double getArticPosition() {
+    public double getPosition() {
 	return m_artic.getSelectedSensorPosition(0) / 4096;
     }
 
-    public double getArticSpeed() {
+    public double getSpeed() {
 	return m_artic.getSelectedSensorVelocity(0) * (600 / 4096);
     }
 
-    public double getArticPositionTicks() {
+    public double getPositionTicks() {
 	return m_artic.getSelectedSensorPosition(0);
     }
 
-    public double getArticSpeedTicks() {
+    public double getASpeedTicks() {
 	return m_artic.getSelectedSensorVelocity(0);
-    }
-
-    public void initDefaultCommand() {
-	// setDefaultCommand(new MySpecialCommand());
     }
 }

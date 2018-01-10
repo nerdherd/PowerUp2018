@@ -3,7 +3,7 @@ package com.team687.frc2017.constants;
 import com.team687.frc2017.utilities.PGains;
 
 /**
- * Important constants
+ * Drive constants
  */
 
 public class DriveConstants {
