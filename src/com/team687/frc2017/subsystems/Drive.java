@@ -3,7 +3,7 @@ package com.team687.frc2017.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.team687.frc2017.RobotMap;
 import com.team687.frc2017.commands.drive.teleop.TankDrive;
 import com.team687.frc2017.constants.DriveConstants;
@@ -24,11 +24,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drive extends Subsystem {
 
-    private final WPI_TalonSRX m_leftMaster, m_leftSlave1, m_leftSlave2;
-    private final WPI_TalonSRX m_rightMaster, m_rightSlave1, m_rightSlave2;
-
-    private final int m_leftSensorIndex = 1;
-    private final int m_rightSensorIndex = 2;
+    private final TalonSRX m_leftMaster, m_leftSlave1, m_leftSlave2;
+    private final TalonSRX m_rightMaster, m_rightSlave1, m_rightSlave2;
 
     private final DoubleSolenoid m_shifter;
 
@@ -41,18 +38,15 @@ public class Drive extends Subsystem {
 
     private boolean m_brakeModeOn;
 
-    private double m_rightSensorOffset, m_leftSensorOffset;
-    private double m_rightSensorCumulativeOffset, m_leftSensorCumulativeOffset;
-
     public Drive() {
-	m_leftMaster = new WPI_TalonSRX(RobotMap.kLeftMasterTalonID);
-	m_leftSlave1 = new WPI_TalonSRX(RobotMap.kLeftSlaveTalon1ID);
-	m_leftSlave2 = new WPI_TalonSRX(RobotMap.kLeftSlaveTalon2ID);
-	m_rightMaster = new WPI_TalonSRX(RobotMap.kRightMasterTalonID);
-	m_rightSlave1 = new WPI_TalonSRX(RobotMap.kRightSlaveTalon1ID);
-	m_rightSlave2 = new WPI_TalonSRX(RobotMap.kRightSlaveTalon2ID);
+	m_leftMaster = new TalonSRX(RobotMap.kLeftMasterTalonID);
+	m_leftSlave1 = new TalonSRX(RobotMap.kLeftSlaveTalon1ID);
+	m_leftSlave2 = new TalonSRX(RobotMap.kLeftSlaveTalon2ID);
+	m_rightMaster = new TalonSRX(RobotMap.kRightMasterTalonID);
+	m_rightSlave1 = new TalonSRX(RobotMap.kRightSlaveTalon1ID);
+	m_rightSlave2 = new TalonSRX(RobotMap.kRightSlaveTalon2ID);
 
-	m_leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, m_leftSensorIndex, 0);
+	m_leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
 	m_leftMaster.setInverted(false);
 	m_leftSlave1.setInverted(false);
 	m_leftSlave2.setInverted(false);
@@ -61,7 +55,7 @@ public class Drive extends Subsystem {
 	m_leftSlave1.setNeutralMode(NeutralMode.Brake);
 	m_leftSlave2.setNeutralMode(NeutralMode.Brake);
 
-	m_rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, m_rightSensorIndex, 0);
+	m_rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
 	m_rightMaster.setInverted(true);
 	m_rightSlave1.setInverted(true);
 	m_rightSlave2.setInverted(true);
@@ -71,10 +65,6 @@ public class Drive extends Subsystem {
 	m_rightSlave2.setNeutralMode(NeutralMode.Brake);
 
 	m_brakeModeOn = true;
-	m_rightSensorOffset = 0;
-	m_leftSensorOffset = 0;
-	m_rightSensorCumulativeOffset = 0;
-	m_leftSensorCumulativeOffset = 0;
 
 	m_shifter = new DoubleSolenoid(RobotMap.kShifterID1, RobotMap.kShifterID2);
 
@@ -95,20 +85,13 @@ public class Drive extends Subsystem {
      * @param rightPower
      */
     public void setPower(double leftPower, double rightPower) {
-	m_leftMaster.set(ControlMode.PercentOutput, RobotMap.kLeftMasterTalonID);
-	m_leftSlave1.set(ControlMode.PercentOutput, RobotMap.kLeftSlaveTalon1ID);
-	m_leftSlave2.set(ControlMode.PercentOutput, RobotMap.kLeftSlaveTalon2ID);
-	m_rightMaster.set(ControlMode.PercentOutput, RobotMap.kRightMasterTalonID);
-	m_rightSlave1.set(ControlMode.PercentOutput, RobotMap.kRightSlaveTalon1ID);
-	m_rightSlave2.set(ControlMode.PercentOutput, RobotMap.kRightSlaveTalon2ID);
+	m_leftMaster.set(ControlMode.PercentOutput, leftPower);
+	m_leftSlave1.set(ControlMode.PercentOutput, leftPower);
+	m_leftSlave2.set(ControlMode.PercentOutput, leftPower);
 
-	m_leftMaster.set(leftPower);
-	m_leftSlave1.set(leftPower);
-	m_leftSlave2.set(leftPower);
-
-	m_rightMaster.set(rightPower);
-	m_rightSlave1.set(rightPower);
-	m_rightSlave2.set(rightPower);
+	m_rightMaster.set(ControlMode.PercentOutput, rightPower);
+	m_rightSlave1.set(ControlMode.PercentOutput, rightPower);
+	m_rightSlave2.set(ControlMode.PercentOutput, rightPower);
     }
 
     public void setBrakeMode(boolean enabled) {
@@ -140,14 +123,6 @@ public class Drive extends Subsystem {
     public double squareInput(double input) {
 	return Math.pow(input, 2) * (input / Math.abs(input));
     }
-
-    // public double addLeftSensitivity(double input) {
-    // return NerdyMath.addSensitivity(input, Robot.oi.getThrottleL());
-    // }
-    //
-    // public double addRightSensitivity(double input) {
-    // return NerdyMath.addSensitivity(input, Robot.oi.getThrottleR());
-    // }
 
     /**
      * Handles when the joystick moves slightly when you actually don't want it to
@@ -236,11 +211,11 @@ public class Drive extends Subsystem {
     }
 
     public double getLeftPosition() {
-	return m_leftMaster.getSelectedSensorPosition(m_leftSensorIndex) + m_leftSensorCumulativeOffset;
+	return m_leftMaster.getSelectedSensorPosition(0);
     }
 
     public double getRightPosition() {
-	return m_rightMaster.getSelectedSensorPosition(m_rightSensorIndex) + m_rightSensorCumulativeOffset;
+	return m_rightMaster.getSelectedSensorPosition(0);
     }
 
     public double getDrivetrainPosition() {
@@ -256,21 +231,18 @@ public class Drive extends Subsystem {
     }
 
     public void resetEncoders() {
-	// m_leftMaster.reset();
-	// m_rightMaster.reset();
+	// m_leftSensorOffset = getLeftPosition();
+	// m_rightSensorOffset = getRightPosition();
+	//
+	// m_leftSensorCumulativeOffset += m_leftSensorOffset;
+	// m_rightSensorOffset += m_rightSensorOffset;
 
-	m_leftSensorOffset = getLeftPosition();
-	m_rightSensorOffset = getRightPosition();
-
-	m_leftSensorCumulativeOffset += m_leftSensorOffset;
-	m_rightSensorOffset += m_rightSensorOffset;
-
-	// m_leftMaster.setEncPosition(0);
-	// m_rightMaster.setEncPosition(0);
+	m_leftMaster.setSelectedSensorPosition(0, 0, 0);
+	m_rightMaster.setSelectedSensorPosition(0, 0, 0);
     }
 
     public void stopDrive() {
-	setPower(0.0, 0.0);
+	setPower(0, 0);
     }
 
     public boolean testDriveSubsystem() {

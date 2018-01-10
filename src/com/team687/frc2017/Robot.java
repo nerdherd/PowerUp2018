@@ -26,11 +26,11 @@ public class Robot extends TimedRobot {
 	pdp = new PowerDistributionPanel();
 	compressor = new Compressor();
 	compressor.start();
-	
+
 	arm = new Arm();
 	arm.setZeroVoltage();
-	arm.resetEncoders();
-	
+	arm.resetEncoder();
+
 	drive = new Drive();
 	drive.stopDrive();
 	drive.resetEncoders();

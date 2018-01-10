@@ -18,7 +18,7 @@ public class SetArticPos extends Command {
     }
 
     protected void initialize() {
-	Robot.arm.resetEncoders();
+	Robot.arm.resetEncoder();
     }
 
     protected void execute() {
