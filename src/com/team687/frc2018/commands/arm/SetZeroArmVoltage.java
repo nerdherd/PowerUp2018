@@ -4,24 +4,17 @@ import com.team687.frc2018.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- * Set arm position
- */
+public class SetZeroArmVoltage extends Command {
 
-public class SetArmPosition extends Command {
-
-    private double m_position;
-
-    public SetArmPosition(double pos) {
+    public SetZeroArmVoltage() {
 	requires(Robot.arm);
-	m_position = pos;
     }
 
     protected void initialize() {
     }
 
     protected void execute() {
-	Robot.arm.setPosition(m_position);
+	Robot.arm.setZeroVoltage();
     }
 
     protected boolean isFinished() {
