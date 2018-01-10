@@ -27,4 +27,6 @@ public class SuperstructureConstants {
     public static final double kWristScaleMidPos = 2.056;
     public static final double kWristScaleBottomPos = 2.122;
 
+    public static final double kRollerPower = 0.469;
+
 }
