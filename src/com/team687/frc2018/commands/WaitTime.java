@@ -26,7 +26,7 @@ public class WaitTime extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "WaitTime");
+	SmartDashboard.putString("Current Drive Command", "WaitTime");
 	Robot.drive.stopDrive();
 
 	m_startTime = Timer.getFPGATimestamp();
