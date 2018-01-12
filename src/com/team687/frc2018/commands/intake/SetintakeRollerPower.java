@@ -4,11 +4,11 @@ import com.team687.frc2018.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class SetintakeRollerPower extends Command {
+public class SetIntakeRollerPower extends Command {
 
     private double m_power;
 
-    public SetintakeRollerPower(double power) {
+    public SetIntakeRollerPower(double power) {
 	requires(Robot.intake);
     }
 

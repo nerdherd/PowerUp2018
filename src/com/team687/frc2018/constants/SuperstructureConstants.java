@@ -10,12 +10,14 @@ public class SuperstructureConstants {
     public static final double kArmI = 0;
     public static final double kArmD = 0;
 
-    public static final double kArmIntakePos = 0;
+    public static final double kArmDownPos = 0;
     public static final double kArmSwitchPos = 0.118;
     public static final double kArmScaleTopPos = 1.678;
     public static final double kArmScaleMidPos = 0.971;
     public static final double kArmScaleBottomPos = 0.254;
     public static final double kArmWristSafePos = 0.33; // if the arm is lower than this, limit wrist movement
+
+    public static final double kArmTolerance = 0.0687;
 
     public static final double kWristP = 0;
     public static final double kWristI = 0;
@@ -27,6 +29,8 @@ public class SuperstructureConstants {
     public static final double kWristScaleTopPos = 2.052;
     public static final double kWristScaleMidPos = 2.056;
     public static final double kWristScaleBottomPos = 2.122;
+
+    public static double kWristTolerance = 0.0687;
 
     public static final double kRollerPower = 0.469;
 

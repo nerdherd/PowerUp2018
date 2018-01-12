@@ -1,6 +1,7 @@
 package com.team687.frc2018.commands.wrist;
 
 import com.team687.frc2018.Robot;
+import com.team687.frc2018.constants.SuperstructureConstants;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -8,9 +9,9 @@ public class SetWristPosition extends Command {
 
     private double m_position;
 
-    public SetWristPosition(double pos) {
+    public SetWristPosition(double position) {
 	requires(Robot.wrist);
-	m_position = pos;
+	m_position = position;
     }
 
     protected void initialize() {
@@ -21,7 +22,7 @@ public class SetWristPosition extends Command {
     }
 
     protected boolean isFinished() {
-	return false;
+	return Math.abs(Robot.wrist.getPosition() - m_position) < SuperstructureConstants.kWristTolerance;
     }
 
     protected void end() {

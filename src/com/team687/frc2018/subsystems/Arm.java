@@ -35,7 +35,7 @@ public class Arm extends Subsystem {
 
     public void setPosition(double position) {
 	position = Math.min(SuperstructureConstants.kArmScaleTopPos,
-		Math.max(position, SuperstructureConstants.kArmIntakePos));
+		Math.max(position, SuperstructureConstants.kArmDownPos));
 	m_arm.set(ControlMode.Position, position);
     }
 

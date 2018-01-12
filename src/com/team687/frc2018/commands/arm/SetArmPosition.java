@@ -1,6 +1,7 @@
 package com.team687.frc2018.commands.arm;
 
 import com.team687.frc2018.Robot;
+import com.team687.frc2018.constants.SuperstructureConstants;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -12,9 +13,9 @@ public class SetArmPosition extends Command {
 
     private double m_position;
 
-    public SetArmPosition(double pos) {
+    public SetArmPosition(double position) {
 	requires(Robot.arm);
-	m_position = pos;
+	m_position = position;
     }
 
     protected void initialize() {
@@ -25,7 +26,7 @@ public class SetArmPosition extends Command {
     }
 
     protected boolean isFinished() {
-	return false;
+	return Math.abs(Robot.arm.getPosition() - m_position) < SuperstructureConstants.kArmTolerance;
     }
 
     protected void end() {
