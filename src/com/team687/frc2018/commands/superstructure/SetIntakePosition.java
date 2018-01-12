@@ -8,9 +8,9 @@ import com.team687.frc2018.constants.SuperstructureConstants;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class SetIntakePositionSuperstructure extends CommandGroup {
+public class SetIntakePosition extends CommandGroup {
 
-    public SetIntakePositionSuperstructure() {
+    public SetIntakePosition() {
 	addSequential(new SetArmPosition(SuperstructureConstants.kArmDownPos));
 	addSequential(new SetWristPosition(SuperstructureConstants.kWristIntakePos));
 	addSequential(new OpenClaw());
