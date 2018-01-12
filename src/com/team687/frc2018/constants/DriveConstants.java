@@ -11,8 +11,8 @@ public class DriveConstants {
     // Conversions
     public final static double kDriveFeetToEncoderUnitsRight = 0;
     public final static double kDriveFeetToEncoderUnitsLeft = 0;
-    public final static double kWheelDiameter = 0; // in inches
-    public final static double kDrivetrainWidth = 0; // in inches
+    public final static double kWheelDiameter = 2.54; // in inches
+    public final static double kDrivetrainWidth = 25.4; // in inches
 
     // Distance PID
     public final static PGains kDistLowGearRightPGains = new PGains(0, 0, 1.0);
