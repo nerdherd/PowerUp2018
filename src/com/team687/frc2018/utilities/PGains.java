@@ -1,8 +1,8 @@
 package com.team687.frc2018.utilities;
 
 /**
- * A set of values needed to complete create a simple but robust proportional
- * control loop.
+ * A set of values needed to create a simple but robust proportional control
+ * loop.
  */
 
 public class PGains {

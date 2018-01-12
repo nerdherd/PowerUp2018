@@ -6,12 +6,11 @@ import com.team687.frc2018.constants.SuperstructureConstants;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class SetSwitchPosition extends CommandGroup {
+public class AdjustScalePositionTop extends CommandGroup {
 
-    public SetSwitchPosition() {
-	addSequential(new StowSuperstructure());
-	addSequential(new SetArmPosition(SuperstructureConstants.kArmDownPos));
-	addSequential(new SetWristPosition(SuperstructureConstants.kWristSwitchPos));
+    public AdjustScalePositionTop() {
+	addSequential(new SetWristPosition(SuperstructureConstants.kWristScaleTopPos));
+	addSequential(new SetArmPosition(SuperstructureConstants.kArmScaleTopPos));
     }
 
 }

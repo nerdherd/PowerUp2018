@@ -76,11 +76,20 @@ public class Wrist extends Subsystem {
 	return m_wrist.getOutputCurrent();
     }
 
+    /**
+     * @return if arm can safely move down without crushing wrist
+     */
+    public boolean isWristSafe() {
+	return getPosition() <= SuperstructureConstants.kWristStowPos
+		&& getPosition() >= SuperstructureConstants.kWristIntakePos;
+    }
+
     public void reportToSmartDashboard() {
 	SmartDashboard.putNumber("Wrist Position", getPosition());
 	SmartDashboard.putNumber("Wrist Velocity", getSpeed());
 	SmartDashboard.putNumber("Wrist Voltage", getVoltage());
 	SmartDashboard.putNumber("Wrist Current", getCurrent());
+	SmartDashboard.putBoolean("Wrist Safe", isWristSafe());
     }
 
 }

@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.team687.frc2018.Robot;
 import com.team687.frc2018.RobotMap;
 import com.team687.frc2018.constants.SuperstructureConstants;
 
@@ -36,6 +37,9 @@ public class Arm extends Subsystem {
     public void setPosition(double position) {
 	position = Math.min(SuperstructureConstants.kArmScaleTopPos,
 		Math.max(position, SuperstructureConstants.kArmDownPos));
+	if (!Robot.wrist.isWristSafe()) {
+	    position = Math.min(position, SuperstructureConstants.kArmWristSafePos);
+	}
 	m_arm.set(ControlMode.Position, position);
     }
 
