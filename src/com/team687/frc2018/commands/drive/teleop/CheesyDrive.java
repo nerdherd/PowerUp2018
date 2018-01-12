@@ -22,7 +22,7 @@ public class CheesyDrive extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "CheesyDrive");
+	SmartDashboard.putString("Current Drive Command", "CheesyDrive");
 	Robot.drive.stopDrive();
     }
 

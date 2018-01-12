@@ -17,7 +17,7 @@ public class ShiftUp extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "ShiftUp");
+	SmartDashboard.putString("Current Drive Command", "ShiftUp");
 	Robot.drive.shiftUp();
     }
 

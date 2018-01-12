@@ -47,7 +47,7 @@ public class TurnToAngle extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "TurnToAngle");
+	SmartDashboard.putString("Current Drive Command", "TurnToAngle");
 	m_startTime = Timer.getFPGATimestamp();
 
 	if (m_isHighGear) {

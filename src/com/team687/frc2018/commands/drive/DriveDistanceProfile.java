@@ -46,7 +46,7 @@ public class DriveDistanceProfile extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "DriveDistanceProfile");
+	SmartDashboard.putString("Current Drive Command", "DriveDistanceProfile");
 	m_leftError = 0;
 	m_rightError = 0;
 

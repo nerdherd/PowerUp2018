@@ -17,7 +17,7 @@ public class ShiftDown extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "ShiftDown");
+	SmartDashboard.putString("Current Drive Command", "ShiftDown");
 	Robot.drive.shiftDown();
     }
 

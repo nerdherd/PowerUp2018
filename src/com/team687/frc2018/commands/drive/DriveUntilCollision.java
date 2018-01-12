@@ -46,7 +46,7 @@ public class DriveUntilCollision extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "DriveUntilCollision");
+	SmartDashboard.putString("Current Drive Command", "DriveUntilCollision");
 	Robot.drive.stopDrive();
 
 	m_lastAccelX = 0;

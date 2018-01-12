@@ -54,7 +54,7 @@ public class ApproachTarget extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "ApproachTarget");
+	SmartDashboard.putString("Current Drive Command", "ApproachTarget");
 
 	Robot.drive.stopDrive();
 

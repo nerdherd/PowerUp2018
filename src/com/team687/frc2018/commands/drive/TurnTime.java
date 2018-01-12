@@ -32,7 +32,7 @@ public class TurnTime extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "DriveTime");
+	SmartDashboard.putString("Current Drive Command", "DriveTime");
 	m_startTime = Timer.getFPGATimestamp();
 
 	if (m_isHighGear) {

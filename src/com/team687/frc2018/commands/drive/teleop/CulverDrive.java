@@ -19,7 +19,7 @@ public class CulverDrive extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "CulverDrive");
+	SmartDashboard.putString("Current Drive Command", "CulverDrive");
 	Robot.drive.stopDrive();
     }
 

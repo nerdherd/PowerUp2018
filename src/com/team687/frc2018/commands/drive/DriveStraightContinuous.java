@@ -31,7 +31,7 @@ public class DriveStraightContinuous extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "DriveStraightContinuous");
+	SmartDashboard.putString("Current Drive Command", "DriveStraightContinuous");
 
 	if (m_isHighGear) {
 	    Robot.drive.shiftUp();

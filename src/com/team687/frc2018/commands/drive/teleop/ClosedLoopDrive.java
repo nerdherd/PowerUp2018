@@ -19,7 +19,7 @@ public class ClosedLoopDrive extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "ClosedLoopDrive");
+	SmartDashboard.putString("Current Drive Command", "ClosedLoopDrive");
 	Robot.drive.stopDrive();
     }
 

@@ -40,7 +40,7 @@ public class DriftTurnToAngle extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "DriftTurnToAngle");
+	SmartDashboard.putString("Current Drive Command", "DriftTurnToAngle");
 
 	if (m_isHighGear) {
 	    Robot.drive.shiftUp();

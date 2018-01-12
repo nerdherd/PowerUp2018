@@ -18,7 +18,7 @@ public class TestDriveSubsystem extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "TestDriveSubsystem");
+	SmartDashboard.putString("Current Drive Command", "TestDriveSubsystem");
 	Robot.drive.stopDrive();
     }
 

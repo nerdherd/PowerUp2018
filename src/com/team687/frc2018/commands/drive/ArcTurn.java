@@ -48,7 +48,7 @@ public class ArcTurn extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "ArcTurn");
+	SmartDashboard.putString("Current Drive Command", "ArcTurn");
 
 	m_startTime = Timer.getFPGATimestamp();
 	if (m_isHighGear) {

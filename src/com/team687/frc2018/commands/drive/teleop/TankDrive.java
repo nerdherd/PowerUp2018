@@ -18,7 +18,7 @@ public class TankDrive extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "TankDrive");
+	SmartDashboard.putString("Current Drive Command", "TankDrive");
 	Robot.drive.stopDrive();
     }
 

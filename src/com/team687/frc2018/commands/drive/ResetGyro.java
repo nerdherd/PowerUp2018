@@ -17,7 +17,7 @@ public class ResetGyro extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "ResetGyro");
+	SmartDashboard.putString("Current Drive Command", "ResetGyro");
 	Robot.drive.resetGyro();
     }
 

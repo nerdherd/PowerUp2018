@@ -38,7 +38,7 @@ public class DriveAtHeading extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "DriveAtHeading");
+	SmartDashboard.putString("Current Drive Command", "DriveAtHeading");
 
 	if (m_isHighGear) {
 	    Robot.drive.shiftUp();

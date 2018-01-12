@@ -17,7 +17,7 @@ public class ResetEncoders extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "Reset Encoders");
+	SmartDashboard.putString("Current Drive Command", "Reset Encoders");
 	Robot.drive.resetEncoders();
     }
 

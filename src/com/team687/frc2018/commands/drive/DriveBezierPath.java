@@ -70,7 +70,7 @@ public class DriveBezierPath extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "DriveBezierPath");
+	SmartDashboard.putString("Current Drive Command", "DriveBezierPath");
 	Robot.drive.stopDrive();
 	Robot.drive.resetEncoders();
 

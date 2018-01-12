@@ -43,7 +43,7 @@ public class SnapToTarget extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "SnapToTarget");
+	SmartDashboard.putString("Current Drive Command", "SnapToTarget");
 
 	Robot.drive.stopDrive();
 	m_counter = 0;

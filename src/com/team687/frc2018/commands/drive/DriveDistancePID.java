@@ -40,7 +40,7 @@ public class DriveDistancePID extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "DriveDistancePID");
+	SmartDashboard.putString("Current Drive Command", "DriveDistancePID");
 	Robot.drive.stopDrive();
 	Robot.drive.resetEncoders();
 

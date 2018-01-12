@@ -46,7 +46,7 @@ public class AlignDistanceToTarget extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "AlignDistanceToTarget");
+	SmartDashboard.putString("Current Drive Command", "AlignDistanceToTarget");
 	Robot.drive.stopDrive();
 
 	if (m_isHighGear) {

@@ -18,7 +18,7 @@ public class HaloDrive extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "HaloDrive");
+	SmartDashboard.putString("Current Drive Command", "HaloDrive");
 	Robot.drive.stopDrive();
     }
 

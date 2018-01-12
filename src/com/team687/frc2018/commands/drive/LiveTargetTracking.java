@@ -29,7 +29,7 @@ public class LiveTargetTracking extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "LiveTargetTracking");
+	SmartDashboard.putString("Current Drive Command", "LiveTargetTracking");
 
 	if (m_isHighGear) {
 	    Robot.drive.shiftUp();
