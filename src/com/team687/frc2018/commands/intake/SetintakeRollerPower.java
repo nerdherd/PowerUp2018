@@ -14,21 +14,26 @@ public class SetIntakeRollerPower extends Command {
 	requires(Robot.intake);
     }
 
+    @Override
     protected void initialize() {
 	SmartDashboard.putString("Current Intake Command", "SetIntakeRollerPower: " + m_power);
     }
 
+    @Override
     protected void execute() {
 	Robot.intake.setRollerPower(m_power);
     }
 
+    @Override
     protected boolean isFinished() {
 	return false;
     }
 
+    @Override
     protected void end() {
     }
 
+    @Override
     protected void interrupted() {
     }
 }

@@ -19,21 +19,26 @@ public class SetArmPosition extends Command {
 	m_position = position;
     }
 
+    @Override
     protected void initialize() {
 	SmartDashboard.putString("Current Arm Command", "SetArmPosition: " + m_position);
     }
 
+    @Override
     protected void execute() {
 	Robot.arm.setPosition(m_position);
     }
 
+    @Override
     protected boolean isFinished() {
 	return Math.abs(Robot.arm.getPosition() - m_position) < SuperstructureConstants.kArmTolerance;
     }
 
+    @Override
     protected void end() {
     }
 
+    @Override
     protected void interrupted() {
     }
 }

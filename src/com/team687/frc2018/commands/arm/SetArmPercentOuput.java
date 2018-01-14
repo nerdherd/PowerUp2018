@@ -13,21 +13,26 @@ public class SetArmPercentOuput extends Command {
 	requires(Robot.arm);
     }
 
+    @Override
     protected void initialize() {
 	SmartDashboard.putString("Current Arm Command", "SetArmPercentOutput");
     }
 
+    @Override
     protected void execute() {
 	Robot.arm.setPercentOutput(m_power);
     }
 
+    @Override
     protected boolean isFinished() {
 	return false;
     }
 
+    @Override
     protected void end() {
     }
 
+    @Override
     protected void interrupted() {
     }
 }
