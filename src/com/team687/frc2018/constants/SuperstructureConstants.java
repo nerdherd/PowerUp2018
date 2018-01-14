@@ -9,6 +9,9 @@ public class SuperstructureConstants {
     public static final double kArmP = 0;
     public static final double kArmI = 0;
     public static final double kArmD = 0;
+    public static final double kArmMaxVoltageForward = 2;
+    public static final double kArmMaxVoltageReverse = -2;
+    public static final double kArmMaxCurrent = 40;
 
     public static final double kArmDownPos = 0;
     public static final double kArmSwitchPos = 0.118;
@@ -22,6 +25,9 @@ public class SuperstructureConstants {
     public static final double kWristP = 0;
     public static final double kWristI = 0;
     public static final double kWristD = 0;
+    public static final double kWristMaxVoltageForward = 6;
+    public static final double kWristMaxVoltageReverse = -4;
+    public static final double kWristMaxCurrent = 40;
 
     public static final double kWristIntakePos = 0;
     public static final double kWristStowPos = 0.330;
@@ -32,6 +38,6 @@ public class SuperstructureConstants {
 
     public static double kWristTolerance = 0.0687;
 
-    public static final double kRollerPower = 0.469;
+    public static final double kRollerPower = 0.2;
 
 }

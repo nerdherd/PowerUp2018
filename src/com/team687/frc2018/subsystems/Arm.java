@@ -26,6 +26,8 @@ public class Arm extends Subsystem {
 	m_arm.config_kP(0, SuperstructureConstants.kArmP, 0);
 	m_arm.config_kI(0, SuperstructureConstants.kArmI, 0);
 	m_arm.config_kD(0, SuperstructureConstants.kArmD, 0);
+	m_arm.configPeakOutputForward(SuperstructureConstants.kArmMaxVoltageForward / 12, 0);
+	m_arm.configPeakOutputReverse(SuperstructureConstants.kArmMaxVoltageReverse / 12, 0);
 	m_arm.setNeutralMode(NeutralMode.Brake);
     }
 
@@ -43,8 +45,8 @@ public class Arm extends Subsystem {
 	m_arm.set(ControlMode.Position, position);
     }
 
-    public void setZeroVoltage() {
-	m_arm.set(ControlMode.PercentOutput, 0);
+    public void setPercentOutput(double power) {
+	m_arm.set(ControlMode.PercentOutput, power);
     }
 
     // // real world units

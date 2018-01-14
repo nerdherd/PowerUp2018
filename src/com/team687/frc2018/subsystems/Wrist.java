@@ -26,6 +26,8 @@ public class Wrist extends Subsystem {
 	m_wrist.config_kP(0, SuperstructureConstants.kWristP, 0);
 	m_wrist.config_kI(0, SuperstructureConstants.kWristI, 0);
 	m_wrist.config_kD(0, SuperstructureConstants.kWristD, 0);
+	m_wrist.configPeakOutputForward(SuperstructureConstants.kWristMaxVoltageForward / 12, 0);
+	m_wrist.configPeakOutputReverse(SuperstructureConstants.kWristMaxVoltageReverse / 12, 0);
 	m_wrist.setNeutralMode(NeutralMode.Brake);
     }
 
@@ -42,8 +44,8 @@ public class Wrist extends Subsystem {
 	m_wrist.set(ControlMode.Position, position);
     }
 
-    public void setZeroVoltage() {
-	m_wrist.set(ControlMode.PercentOutput, 0);
+    public void setPercentOutput(double power) {
+	m_wrist.set(ControlMode.PercentOutput, power);
     }
 
     // // real world units
