@@ -60,8 +60,8 @@ public class CheesyDrive extends Command {
 	    }
 	}
 
-	leftPower = angularPow + leftPower;
-	rightPower = angularPow - rightPower;
+	leftPower = leftPower + angularPow;
+	rightPower = rightPower - angularPow;
 
 	double[] pow = { leftPower, rightPower };
 	pow = NerdyMath.normalize(pow, false);

@@ -101,7 +101,7 @@ public class ApproachTarget extends Command {
 	straightLeftPower = NerdyMath.threshold(straightLeftPower, m_leftPGains.getMinPower(),
 		m_rightPGains.getMaxPower());
 
-	Robot.drive.setPower(rotPower + straightLeftPower, rotPower - straightRightPower);
+	Robot.drive.setPower(straightLeftPower + rotPower, straightRightPower - rotPower);
     }
 
     @Override

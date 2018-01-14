@@ -143,8 +143,8 @@ public class DriveBezierPath extends Command {
 		    straightPower = m_straightPGains.getMinPower() * m_direction;
 		}
 
-		double leftPow = rotPower + straightPower;
-		double rightPow = rotPower - straightPower;
+		double leftPow = straightPower + rotPower;
+		double rightPow = straightPower - rotPower;
 		Robot.drive.setPower(leftPow, rightPow);
 	    } else {
 		m_counter++;

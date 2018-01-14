@@ -30,7 +30,7 @@ public class TankDrive extends Command {
 
 	double leftPow = Robot.oi.getDriveJoyLeftY();
 	double rightPow = Robot.oi.getDriveJoyRightY();
-	Robot.drive.setPower(leftPow, -rightPow);
+	Robot.drive.setPower(leftPow, rightPow);
     }
 
     @Override

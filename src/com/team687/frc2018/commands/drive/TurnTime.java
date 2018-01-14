@@ -44,7 +44,7 @@ public class TurnTime extends Command {
 
     @Override
     protected void execute() {
-	Robot.drive.setPower(m_rotPower, m_rotPower);
+	Robot.drive.setPower(m_rotPower, -m_rotPower);
     }
 
     @Override
