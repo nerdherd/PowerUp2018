@@ -30,4 +30,6 @@ public class RobotMap {
     public static final int kClawID1 = 2;
     public static final int kClawID2 = 3;
 
+    public static final int kLimitSwitchID = 9;
+
 }
