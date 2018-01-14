@@ -23,7 +23,7 @@ public class SetIntakeRollerPower extends Command {
     }
 
     protected boolean isFinished() {
-	return Robot.intake.getRollerVoltage() / 12 == m_power;
+	return false;
     }
 
     protected void end() {

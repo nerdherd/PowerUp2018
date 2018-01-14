@@ -1,7 +1,10 @@
 package com.team687.frc2018;
 
+import com.team687.frc2018.commands.intake.SetIntakeRollerPower;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -19,6 +22,9 @@ public class OI {
 
     public OI() {
 	quickTurn_1 = new JoystickButton(driveJoyRight, 1);
+
+	SmartDashboard.putData("Set Intake Rollers On", new SetIntakeRollerPower(0.2));
+	SmartDashboard.putData("Set Intake Rollers Reverse", new SetIntakeRollerPower(-0.2));
     }
 
     /**

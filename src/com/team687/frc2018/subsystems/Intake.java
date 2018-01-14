@@ -5,7 +5,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.team687.frc2018.RobotMap;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -16,37 +16,29 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Intake extends Subsystem {
 
     private final TalonSRX m_rollers;
-    private final DoubleSolenoid m_claw;
+    private final DigitalInput m_switch;
 
     public Intake() {
 	m_rollers = new TalonSRX(RobotMap.kIntakeRollersID);
 	m_rollers.setNeutralMode(NeutralMode.Coast);
 
-	m_claw = new DoubleSolenoid(RobotMap.kClawID1, RobotMap.kClawID2);
+	m_switch = new DigitalInput(RobotMap.kLimitSwitchID);
     }
 
     @Override
     protected void initDefaultCommand() {
     }
 
+    public boolean hasCube() {
+	return !m_switch.get();
+    }
+
     public void setRollerPower(double power) {
-	m_rollers.set(ControlMode.PercentOutput, power);
-    }
-
-    public void closeClaw(boolean clawClose) {
-	if (clawClose) {
-	    m_claw.set(DoubleSolenoid.Value.kForward);
+	if (!hasCube()) {
+	    m_rollers.set(ControlMode.PercentOutput, power);
 	} else {
-	    m_claw.set(DoubleSolenoid.Value.kReverse);
+	    m_rollers.set(ControlMode.PercentOutput, 0);
 	}
-    }
-
-    public boolean isClawClosed() {
-	boolean clawClosed = false;
-	if (m_claw.get() == DoubleSolenoid.Value.kForward) {
-	    clawClosed = true;
-	}
-	return clawClosed;
     }
 
     public double getRollerVoltage() {
@@ -58,7 +50,6 @@ public class Intake extends Subsystem {
     }
 
     public void reportToSmartDashboard() {
-	SmartDashboard.putBoolean("Claw Closed", isClawClosed());
 	SmartDashboard.putNumber("Roller Voltage", getRollerVoltage());
 	SmartDashboard.putNumber("Roller Current", getRollerCurrent());
     }
