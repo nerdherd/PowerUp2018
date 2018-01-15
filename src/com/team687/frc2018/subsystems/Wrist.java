@@ -26,9 +26,14 @@ public class Wrist extends Subsystem {
 	m_wrist.config_kP(0, SuperstructureConstants.kWristP, 0);
 	m_wrist.config_kI(0, SuperstructureConstants.kWristI, 0);
 	m_wrist.config_kD(0, SuperstructureConstants.kWristD, 0);
+	m_wrist.setNeutralMode(NeutralMode.Brake);
+
 	m_wrist.configPeakOutputForward(SuperstructureConstants.kWristMaxVoltageForward / 12, 0);
 	m_wrist.configPeakOutputReverse(SuperstructureConstants.kWristMaxVoltageReverse / 12, 0);
-	m_wrist.setNeutralMode(NeutralMode.Brake);
+	m_wrist.configForwardSoftLimitThreshold(SuperstructureConstants.kWristForwardSoftLimit, 0);
+	m_wrist.configReverseSoftLimitThreshold(SuperstructureConstants.kWristReverseSoftLimit, 0);
+	m_wrist.configForwardSoftLimitEnable(true, 0);
+	m_wrist.configReverseSoftLimitEnable(true, 0);
     }
 
     @Override
@@ -38,8 +43,7 @@ public class Wrist extends Subsystem {
 
     public void setPosition(double position) {
 	if (Robot.arm.getPosition() < SuperstructureConstants.kArmWristSafePos) {
-	    position = Math.min(SuperstructureConstants.kWristStowPos,
-		    Math.max(position, SuperstructureConstants.kWristIntakePos));
+	    position = Math.max(position, SuperstructureConstants.kWristIntakePos);
 	}
 	m_wrist.set(ControlMode.Position, position);
     }

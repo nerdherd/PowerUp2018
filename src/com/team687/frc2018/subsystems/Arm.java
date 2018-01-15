@@ -26,9 +26,14 @@ public class Arm extends Subsystem {
 	m_arm.config_kP(0, SuperstructureConstants.kArmP, 0);
 	m_arm.config_kI(0, SuperstructureConstants.kArmI, 0);
 	m_arm.config_kD(0, SuperstructureConstants.kArmD, 0);
+	m_arm.setNeutralMode(NeutralMode.Brake);
+
 	m_arm.configPeakOutputForward(SuperstructureConstants.kArmMaxVoltageForward / 12, 0);
 	m_arm.configPeakOutputReverse(SuperstructureConstants.kArmMaxVoltageReverse / 12, 0);
-	m_arm.setNeutralMode(NeutralMode.Brake);
+	m_arm.configForwardSoftLimitThreshold(SuperstructureConstants.kArmForwardSoftLimit, 0);
+	m_arm.configReverseSoftLimitThreshold(SuperstructureConstants.kArmReverseSoftLimit, 0);
+	m_arm.configForwardSoftLimitEnable(true, 0);
+	m_arm.configReverseSoftLimitEnable(true, 0);
     }
 
     @Override
@@ -37,8 +42,6 @@ public class Arm extends Subsystem {
     }
 
     public void setPosition(double position) {
-	position = Math.min(SuperstructureConstants.kArmScaleTopPos,
-		Math.max(position, SuperstructureConstants.kArmDownPos));
 	if (!Robot.wrist.isWristSafe()) {
 	    position = Math.min(position, SuperstructureConstants.kArmWristSafePos);
 	}
