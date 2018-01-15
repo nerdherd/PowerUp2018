@@ -12,9 +12,14 @@ public class WristSimulation {
     }
 
     public void setPosition(double position) {
+	if (position > SuperstructureConstants.kWristForwardSoftLimit) {
+	    position = SuperstructureConstants.kWristForwardSoftLimit;
+	}
+	if (position < SuperstructureConstants.kWristReverseSoftLimit) {
+	    position = SuperstructureConstants.kWristReverseSoftLimit;
+	}
 	if (SuperstructureTest.m_armSimulation.getPosition() < SuperstructureConstants.kArmWristSafePos) {
-	    position = Math.min(SuperstructureConstants.kWristStowPos,
-		    Math.max(position, SuperstructureConstants.kWristIntakePos));
+	    position = Math.max(position, SuperstructureConstants.kWristIntakePos);
 	}
 	m_position = position;
     }

@@ -28,8 +28,8 @@ public class SuperstructureConstants {
     public static final double kWristP = 0;
     public static final double kWristI = 0;
     public static final double kWristD = 0;
-    public static final double kWristMaxVoltageForward = 6;
-    public static final double kWristMaxVoltageReverse = -4;
+    public static final double kWristMaxVoltageForward = 2;
+    public static final double kWristMaxVoltageReverse = -2;
     public static final double kWristMaxCurrent = 40;
 
     public static final int kWristIntakePos = 0;
