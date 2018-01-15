@@ -12,10 +12,14 @@ public class ArmSimulation {
     }
 
     public void setPosition(double position) {
-	position = Math.min(SuperstructureConstants.kArmScaleTopPos,
-		Math.max(position, SuperstructureConstants.kArmDownPos));
+	if (position > SuperstructureConstants.kArmForwardSoftLimit) {
+	    position = SuperstructureConstants.kArmForwardSoftLimit;
+	}
+	if (position < SuperstructureConstants.kArmReverseSoftLimit) {
+	    position = SuperstructureConstants.kArmReverseSoftLimit;
+	}
 	if (!SuperstructureTest.m_wristSimulation.isWristSafe()) {
-	    position = Math.min(position, SuperstructureConstants.kArmWristSafePos);
+	    position = Math.max(position, SuperstructureConstants.kArmWristSafePos);
 	}
 	m_position = position;
     }

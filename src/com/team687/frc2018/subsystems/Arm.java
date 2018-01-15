@@ -43,7 +43,7 @@ public class Arm extends Subsystem {
 
     public void setPosition(double position) {
 	if (!Robot.wrist.isWristSafe()) {
-	    position = Math.min(position, SuperstructureConstants.kArmWristSafePos);
+	    position = Math.max(position, SuperstructureConstants.kArmWristSafePos);
 	}
 	m_arm.set(ControlMode.Position, position);
     }
