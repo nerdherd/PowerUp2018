@@ -17,7 +17,10 @@ public class SuperstructureTest {
     public void setSwitchPosition() {
     }
 
-    public void setScalePosition() {
+    public void setScalePositionForward() {
+    }
+
+    public void setScalePositionBackward() {
     }
 
     public void adjustScalePositionBottom() {
