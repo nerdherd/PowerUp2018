@@ -6,9 +6,9 @@ import com.team687.frc2018.constants.SuperstructureConstants;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class SetScalePosition extends CommandGroup {
+public class SetScalePositionForward extends CommandGroup {
 
-    public SetScalePosition() {
+    public SetScalePositionForward() {
 	addSequential(new StowSuperstructure());
 	addSequential(new SetArmPosition(SuperstructureConstants.kArmScaleMidPos));
 	addSequential(new SetWristPosition(SuperstructureConstants.kWristScaleMidPos));
