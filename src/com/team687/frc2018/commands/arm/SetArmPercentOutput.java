@@ -5,11 +5,11 @@ import com.team687.frc2018.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class SetArmPercentOuput extends Command {
+public class SetArmPercentOutput extends Command {
 
     private double m_power;
 
-    public SetArmPercentOuput(double power) {
+    public SetArmPercentOutput(double power) {
 	requires(Robot.arm);
     }
 

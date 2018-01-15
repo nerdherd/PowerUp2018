@@ -34,7 +34,7 @@ public class Intake extends Subsystem {
     }
 
     public void setRollerPower(double power) {
-	if (!hasCube()) {
+	if (!hasCube() || power <= 0) {
 	    m_rollers.set(ControlMode.PercentOutput, power);
 	} else {
 	    m_rollers.set(ControlMode.PercentOutput, 0);
@@ -52,6 +52,7 @@ public class Intake extends Subsystem {
     public void reportToSmartDashboard() {
 	SmartDashboard.putNumber("Roller Voltage", getRollerVoltage());
 	SmartDashboard.putNumber("Roller Current", getRollerCurrent());
+	SmartDashboard.putBoolean("Has Cube", hasCube());
     }
 
 }
