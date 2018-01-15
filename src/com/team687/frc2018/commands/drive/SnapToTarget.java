@@ -78,7 +78,7 @@ public class SnapToTarget extends Command {
 	    m_counter = 0;
 	}
 
-	Robot.drive.setPower(rotPower, rotPower);
+	Robot.drive.setPower(rotPower, -rotPower);
     }
 
     @Override

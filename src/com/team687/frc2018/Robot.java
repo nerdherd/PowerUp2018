@@ -33,11 +33,11 @@ public class Robot extends TimedRobot {
 	compressor.start();
 
 	arm = new Arm();
-	arm.setZeroVoltage();
+	arm.setPercentOutput(0);
 	arm.resetEncoder();
 
 	wrist = new Wrist();
-	wrist.setZeroVoltage();
+	wrist.setPercentOutput(0);
 	wrist.resetEncoder();
 
 	intake = new Intake();

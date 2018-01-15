@@ -56,7 +56,7 @@ public class LiveTargetTracking extends Command {
 	    power = 0;
 	}
 
-	Robot.drive.setPower(power, power);
+	Robot.drive.setPower(power, -power);
     }
 
     @Override

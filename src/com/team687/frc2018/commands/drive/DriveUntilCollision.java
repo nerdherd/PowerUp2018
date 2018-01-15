@@ -69,7 +69,7 @@ public class DriveUntilCollision extends Command {
 	m_jerkX = currentAccelX - m_lastAccelX;
 	m_jerkY = currentAccelY - m_lastAccelY;
 
-	Robot.drive.setPower(m_straightPower, -m_straightPower);
+	Robot.drive.setPower(m_straightPower, m_straightPower);
 
 	m_lastAccelX = currentAccelX;
 	m_lastAccelY = currentAccelY;

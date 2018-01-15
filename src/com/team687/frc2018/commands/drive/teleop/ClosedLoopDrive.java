@@ -49,8 +49,8 @@ public class ClosedLoopDrive extends Command {
 	SmartDashboard.putNumber("Closed Loop Wheel", wheel);
 	SmartDashboard.putNumber("Closed Loop Throttle", throttle);
 
-	double leftPower = wheel + throttle;
-	double rightPower = wheel - throttle;
+	double leftPower = throttle + wheel;
+	double rightPower = throttle - wheel;
 
 	SmartDashboard.putNumber("Left power", leftPower);
 	SmartDashboard.putNumber("Right power", rightPower);

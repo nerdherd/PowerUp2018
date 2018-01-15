@@ -55,7 +55,7 @@ public class DriveAtHeading extends Command {
 	rotError = (rotError < -180) ? rotError + 360 : rotError;
 	double rotPower = m_rotPGains.getP() * rotError;
 
-	Robot.drive.setPower(rotPower + m_straightPower, rotPower - m_straightPower);
+	Robot.drive.setPower(m_straightPower + rotPower, m_straightPower - rotPower);
     }
 
     @Override

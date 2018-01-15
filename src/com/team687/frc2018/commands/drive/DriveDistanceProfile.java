@@ -116,7 +116,7 @@ public class DriveDistanceProfile extends Command {
 	    rightPow -= rotPow;
 	}
 
-	double[] pow = { rotPow + leftPow, rotPow - rightPow };
+	double[] pow = { leftPow, rightPow };
 	NerdyMath.normalize(pow, false);
 
 	Robot.drive.setPower(pow[0], -pow[1]);

@@ -70,7 +70,7 @@ public class DriveDistancePID extends Command {
 	straightLeftPower = NerdyMath.threshold(straightLeftPower, m_leftPGains.getMinPower(),
 		m_leftPGains.getMaxPower());
 
-	Robot.drive.setPower(straightLeftPower, -straightRightPower);
+	Robot.drive.setPower(straightLeftPower, straightRightPower);
     }
 
     @Override

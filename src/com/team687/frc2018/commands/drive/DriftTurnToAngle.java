@@ -60,7 +60,7 @@ public class DriftTurnToAngle extends Command {
 	rotError = (rotError < -180) ? rotError + 360 : rotError;
 	double rotPower = m_rotPGains.getP() * rotError * doneness;
 
-	Robot.drive.setPower(rotPower + m_straightPower, rotPower - m_straightPower);
+	Robot.drive.setPower(m_straightPower + rotPower, m_straightPower - rotPower);
     }
 
     @Override

@@ -1,31 +1,40 @@
-package com.team687.frc2018.commands.arm;
+package com.team687.frc2018.commands.wrist;
 
 import com.team687.frc2018.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class SetZeroArmVoltage extends Command {
+public class SetWristPercentOutput extends Command {
 
-    public SetZeroArmVoltage() {
+    private double m_power;
+
+    public SetWristPercentOutput(double power) {
+	m_power = power;
+
 	requires(Robot.arm);
     }
 
+    @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Arm Command", "SetZeroArmVoltage");
+	SmartDashboard.putString("Current Wrist Command", "SetWristPercentOutput");
     }
 
+    @Override
     protected void execute() {
-	Robot.arm.setZeroVoltage();
+	Robot.wrist.setPercentOutput(m_power);
     }
 
+    @Override
     protected boolean isFinished() {
 	return false;
     }
 
+    @Override
     protected void end() {
     }
 
+    @Override
     protected void interrupted() {
     }
 }

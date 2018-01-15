@@ -44,7 +44,7 @@ public class DriveTime extends Command {
 
     @Override
     protected void execute() {
-	Robot.drive.setPower(m_straightPower, -m_straightPower);
+	Robot.drive.setPower(m_straightPower, m_straightPower);
     }
 
     @Override

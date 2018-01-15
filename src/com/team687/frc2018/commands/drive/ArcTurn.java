@@ -75,7 +75,7 @@ public class ArcTurn extends Command {
 	rotPower = Math.abs(rotPower) * m_sign;
 
 	if (m_isRightPowered) {
-	    Robot.drive.setPower(0, rotPower);
+	    Robot.drive.setPower(0, -rotPower);
 	} else if (!m_isRightPowered) {
 	    Robot.drive.setPower(rotPower, 0);
 	}

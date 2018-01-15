@@ -15,21 +15,26 @@ public class SetWristPosition extends Command {
 	m_position = position;
     }
 
+    @Override
     protected void initialize() {
 	SmartDashboard.putString("Current Wrist Command", "SetWristPosition: " + m_position);
     }
 
+    @Override
     protected void execute() {
 	Robot.wrist.setPosition(m_position);
     }
 
+    @Override
     protected boolean isFinished() {
 	return Math.abs(Robot.wrist.getPosition() - m_position) < SuperstructureConstants.kWristTolerance;
     }
 
+    @Override
     protected void end() {
     }
 
+    @Override
     protected void interrupted() {
     }
 }
