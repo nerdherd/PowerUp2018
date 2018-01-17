@@ -5,7 +5,6 @@ import com.team687.frc2018.subsystems.Drive;
 import com.team687.frc2018.subsystems.Intake;
 import com.team687.frc2018.subsystems.Wrist;
 
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -21,7 +20,6 @@ public class Robot extends TimedRobot {
     public static PowerDistributionPanel pdp;
     public static Compressor compressor;
     public static OI oi;
-    public static NetworkTableInstance networkTable;
 
     public static VisionAdapter visionAdapter;
     public static Odometry odometry;
