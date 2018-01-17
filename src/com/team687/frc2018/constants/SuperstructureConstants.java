@@ -11,6 +11,7 @@ public class SuperstructureConstants {
     public static final double kArmD = 0;
     public static final double kArmMaxVoltageForward = 1;
     public static final double kArmMaxVoltageReverse = -1;
+    public static final double kArmRampRate = 1;
     public static final double kArmMaxCurrent = 40;
 
     public static final int kArmDownPos = 0;
@@ -30,6 +31,7 @@ public class SuperstructureConstants {
     public static final double kWristD = 0;
     public static final double kWristMaxVoltageForward = 1;
     public static final double kWristMaxVoltageReverse = -1;
+    public static final double kWristRampRate = 1;
     public static final double kWristMaxCurrent = 40;
 
     public static final int kWristIntakePos = 0;

@@ -19,7 +19,6 @@ public class TurnTime extends Command {
     /**
      * @param straightPower
      * @param timeout
-     * @param isHighGear
      */
     public TurnTime(double rotPower, double timeout) {
 	m_rotPower = rotPower;

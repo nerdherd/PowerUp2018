@@ -18,7 +18,6 @@ public class DriveStraightContinuous extends Command {
     /**
      * @param distance
      * @param straightPower
-     * @param isHighGear
      */
     public DriveStraightContinuous(double distance, double straightPower) {
 	m_distance = distance;

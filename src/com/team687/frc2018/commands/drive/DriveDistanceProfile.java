@@ -32,7 +32,6 @@ public class DriveDistanceProfile extends Command {
 
     /**
      * @param distance
-     * @param isHighGear
      * @param isStraight
      */
     public DriveDistanceProfile(double distance, boolean isStraight) {

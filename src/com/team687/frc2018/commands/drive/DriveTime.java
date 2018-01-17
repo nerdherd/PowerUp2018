@@ -19,7 +19,6 @@ public class DriveTime extends Command {
     /**
      * @param straightPower
      * @param timeout
-     * @param isHighGear
      */
     public DriveTime(double straightPower, double timeout) {
 	m_straightPower = straightPower;
