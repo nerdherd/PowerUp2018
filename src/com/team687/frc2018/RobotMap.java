@@ -11,9 +11,6 @@ import edu.wpi.first.wpilibj.I2C.Port;
 
 public class RobotMap {
 
-    public static final int kShifterID1 = 0;
-    public static final int kShifterID2 = 1;
-
     public static final int kRightSlaveTalon1ID = 0;
     public static final int kLeftSlaveTalon1ID = 1;
     public static final int kLeftMasterTalonID = 2;

@@ -12,7 +12,6 @@ import com.team687.lib.kauailabs.navx.frc.AHRS;
 import com.team687.lib.kauailabs.sf2.frc.navXSensor;
 import com.team687.lib.kauailabs.sf2.orientation.OrientationHistory;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -26,8 +25,6 @@ public class Drive extends Subsystem {
 
     private final TalonSRX m_leftMaster, m_leftSlave1;
     private final TalonSRX m_rightMaster, m_rightSlave1;
-
-    private final DoubleSolenoid m_shifter;
 
     private final AHRS m_nav;
     private final navXSensor m_navxsensor;
@@ -59,8 +56,6 @@ public class Drive extends Subsystem {
 	m_rightSlave1.setNeutralMode(NeutralMode.Brake);
 
 	m_brakeModeOn = true;
-
-	m_shifter = new DoubleSolenoid(RobotMap.kShifterID1, RobotMap.kShifterID2);
 
 	m_nav = new AHRS(SerialPort.Port.kMXP);
 	m_navxsensor = new navXSensor(m_nav, "Drivetrain Orientation");
@@ -120,18 +115,6 @@ public class Drive extends Subsystem {
      */
     public double handleDeadband(double val, double deadband) {
 	return (Math.abs(val) > Math.abs(deadband)) ? val : 0.0;
-    }
-
-    public void shiftUp() {
-	m_shifter.set(DoubleSolenoid.Value.kForward);
-    }
-
-    public void shiftDown() {
-	m_shifter.set(DoubleSolenoid.Value.kReverse);
-    }
-
-    public boolean isHighGear() {
-	return m_shifter.get() == DoubleSolenoid.Value.kForward;
     }
 
     public double getCurrentYaw() {
@@ -245,12 +228,6 @@ public class Drive extends Subsystem {
     }
 
     public void reportToSmartDashboard() {
-	if (isHighGear()) {
-	    SmartDashboard.putString("Gear Shift", "High");
-	} else if (!isHighGear()) {
-	    SmartDashboard.putString("Gear Shift", "Low");
-	}
-
 	SmartDashboard.putBoolean("Brake Mode On", m_brakeModeOn);
 
 	SmartDashboard.putNumber("Left Master Voltage", m_leftMaster.getMotorOutputVoltage());

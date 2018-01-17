@@ -36,12 +36,7 @@ public class CheesyDrive extends Command {
 
 	rightPower = leftPower = throttle;
 
-	double sensitivity;
-	if (Robot.drive.isHighGear()) {
-	    sensitivity = DriveConstants.kSensitivityHigh;
-	} else {
-	    sensitivity = DriveConstants.kSensitivityLow;
-	}
+	double sensitivity = DriveConstants.kSensitivity;
 
 	double angularPow;
 	if (isQuickTurn) {

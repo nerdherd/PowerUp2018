@@ -41,7 +41,7 @@ public class ClosedLoopDrive extends Command {
 	error = (error > 180) ? error - 360 : error;
 	error = (error < -180) ? error + 360 : error;
 
-	double wheel = DriveConstants.kRotHighGearPGains.getP();
+	double wheel = DriveConstants.kRotPGains.getP();
 
 	// wheel = Math.pow(wheel, 2) * sign; // sensitivity
 	double throttle = Robot.oi.getDriveJoyLeftY();
