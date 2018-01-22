@@ -26,7 +26,7 @@ public class SetIntakeRollerPower extends Command {
 
     @Override
     protected boolean isFinished() {
-	return false;
+	return m_power >= 0 && Robot.intake.hasCube();
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.team687.frc2018.RobotMap;
+import com.team687.frc2018.constants.SuperstructureConstants;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -33,26 +34,27 @@ public class Intake extends Subsystem {
 	return !m_switch.get();
     }
 
-    public void setRollerPower(double power) {
-	if (!hasCube() || power <= 0) {
-	    m_rollers.set(ControlMode.PercentOutput, power);
-	} else {
-	    m_rollers.set(ControlMode.PercentOutput, 0);
-	}
+    public boolean isMaxCurrent() {
+	return getCurrent() > SuperstructureConstants.kRollerMaxCurrent;
     }
 
-    public double getRollerVoltage() {
+    public void setRollerPower(double power) {
+	m_rollers.set(ControlMode.PercentOutput, power);
+    }
+
+    public double getVoltage() {
 	return m_rollers.getMotorOutputVoltage();
     }
 
-    public double getRollerCurrent() {
+    public double getCurrent() {
 	return m_rollers.getOutputCurrent();
     }
 
     public void reportToSmartDashboard() {
-	SmartDashboard.putNumber("Roller Voltage", getRollerVoltage());
-	SmartDashboard.putNumber("Roller Current", getRollerCurrent());
+	SmartDashboard.putNumber("Roller Voltage", getVoltage());
+	SmartDashboard.putNumber("Roller Current", getCurrent());
 	SmartDashboard.putBoolean("Has Cube", hasCube());
+	SmartDashboard.putBoolean("Reached Max Current", isMaxCurrent());
     }
 
 }
