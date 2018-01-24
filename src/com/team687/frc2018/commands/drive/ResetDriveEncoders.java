@@ -9,15 +9,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * Reset encoders
  */
 
-public class ResetEncoders extends Command {
+public class ResetDriveEncoders extends Command {
 
-    public ResetEncoders() {
+    public ResetDriveEncoders() {
 	requires(Robot.drive);
     }
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Drive Command", "Reset Encoders");
+	SmartDashboard.putString("Current Drive Command", "ResetDriveEncoders");
 	Robot.drive.resetEncoders();
     }
 

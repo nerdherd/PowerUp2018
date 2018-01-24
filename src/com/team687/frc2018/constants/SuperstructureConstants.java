@@ -9,8 +9,8 @@ public class SuperstructureConstants {
     public static final double kArmP = 0;
     public static final double kArmI = 0;
     public static final double kArmD = 0;
-    public static final double kArmMaxVoltageForward = 1;
-    public static final double kArmMaxVoltageReverse = -1;
+    public static final double kArmMaxVoltageForward = 9;
+    public static final double kArmMaxVoltageReverse = -5;
     public static final double kArmRampRate = 1;
     public static final int kArmMaxCurrent = 40;
 

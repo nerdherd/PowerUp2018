@@ -5,29 +5,26 @@ import com.team687.frc2018.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class SetWristPercentOutput extends Command {
+public class ResetWristEncoder extends Command {
 
-    private double m_power;
-
-    public SetWristPercentOutput(double power) {
-	m_power = power;
-
+    public ResetWristEncoder() {
 	requires(Robot.wrist);
     }
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Wrist Command", "SetWristPercentOutput");
+	SmartDashboard.putString("Current Wrist Command", "ResetArmEncoders");
+	Robot.wrist.resetEncoder();
     }
 
     @Override
     protected void execute() {
-	Robot.wrist.setPercentOutput(m_power);
+	Robot.wrist.resetEncoder();
     }
 
     @Override
     protected boolean isFinished() {
-	return false;
+	return Robot.wrist.getPosition() == 0;
     }
 
     @Override
@@ -37,4 +34,5 @@ public class SetWristPercentOutput extends Command {
     @Override
     protected void interrupted() {
     }
+
 }
