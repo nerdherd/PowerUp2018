@@ -32,6 +32,10 @@ public class Arm extends Subsystem {
 	m_arm.configPeakOutputReverse(SuperstructureConstants.kArmMaxVoltageReverse / 12, 0);
 	m_arm.configClosedloopRamp(SuperstructureConstants.kArmRampRate, 0);
 
+	m_arm.configPeakCurrentLimit(SuperstructureConstants.kArmPeakCurrent, 0);
+	m_arm.configContinuousCurrentLimit(SuperstructureConstants.kArmContinuousCurrent, 0);
+	m_arm.enableCurrentLimit(true);
+
 	m_arm.configForwardSoftLimitThreshold(SuperstructureConstants.kArmForwardSoftLimit, 0);
 	m_arm.configReverseSoftLimitThreshold(SuperstructureConstants.kArmReverseSoftLimit, 0);
 	m_arm.configForwardSoftLimitEnable(true, 0);

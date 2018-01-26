@@ -12,7 +12,8 @@ public class SuperstructureConstants {
     public static final double kArmMaxVoltageForward = 9;
     public static final double kArmMaxVoltageReverse = -5;
     public static final double kArmRampRate = 1;
-    public static final int kArmMaxCurrent = 40;
+    public static final int kArmPeakCurrent = 40;
+    public static final int kArmContinuousCurrent = 40;
 
     public static final int kArmDownPos = 0;
     public static final int kArmSwitchPos = 118;
@@ -22,7 +23,7 @@ public class SuperstructureConstants {
     public static final int kArmScaleBackwardPos = 1114;
     public static final int kArmWristSafePos = 254; // arm position where wrist can still safely point down
 
-    public static final int kArmTolerance = 687;
+    public static final int kArmTolerance = 67;
     public static final int kArmForwardSoftLimit = kArmScaleBackwardPos;
     public static final int kArmReverseSoftLimit = kArmDownPos;
 
@@ -32,7 +33,8 @@ public class SuperstructureConstants {
     public static final double kWristMaxVoltageForward = 1;
     public static final double kWristMaxVoltageReverse = -1;
     public static final double kWristRampRate = 1;
-    public static final int kWristMaxCurrent = 40;
+    public static final int kWristPeakCurrent = 40;
+    public static final int kWristContinuousCurrent = 40;
 
     public static final int kWristIntakePos = 0;
     public static final int kWristStowPos = 330;
@@ -42,7 +44,7 @@ public class SuperstructureConstants {
     public static final int kWristScaleBottomPos = -2052;
     public static final int kWristScaleBackwardPos = 125;
 
-    public static final int kWristTolerance = 687;
+    public static final int kWristTolerance = 67;
     public static final int kWristForwardSoftLimit = kWristStowPos;
     public static final int kWristReverseSoftLimit = kWristScaleTopPos;
 
