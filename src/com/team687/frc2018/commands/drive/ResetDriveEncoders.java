@@ -6,28 +6,29 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Shift to low gear
+ * Reset encoders
  */
 
-public class ShiftDown extends Command {
+public class ResetDriveEncoders extends Command {
 
-    public ShiftDown() {
+    public ResetDriveEncoders() {
 	requires(Robot.drive);
     }
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Drive Command", "ShiftDown");
-	Robot.drive.shiftDown();
+	SmartDashboard.putString("Current Drive Command", "ResetDriveEncoders");
+	Robot.drive.resetEncoders();
     }
 
     @Override
     protected void execute() {
+	Robot.drive.resetEncoders();
     }
 
     @Override
     protected boolean isFinished() {
-	return true;
+	return Robot.drive.getRightPosition() == 0 && Robot.drive.getLeftPosition() == 0;
     }
 
     @Override

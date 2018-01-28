@@ -20,7 +20,6 @@ public class DriveBezierPath extends Command {
     private double m_straightPower;
     private boolean m_straightPowerIsDynamic;
     private boolean m_softStop;
-    private boolean m_isHighGear;
 
     private PGains m_straightPGains;
     private PGains m_rotPGains;
@@ -33,12 +32,11 @@ public class DriveBezierPath extends Command {
     private double m_direction;
 
     public DriveBezierPath(double x0, double y0, double x1, double y1, double x2, double y2, double x3, double y3,
-	    double straightPower, boolean straightPowerIsDynamic, boolean softStop, boolean isHighGear) {
+	    double straightPower, boolean straightPowerIsDynamic, boolean softStop) {
 	m_path = new BezierCurve(x0, y0, x1, y1, x2, y2, x3, y3);
 	m_straightPower = straightPower;
 	m_straightPowerIsDynamic = straightPowerIsDynamic;
 	m_softStop = softStop;
-	m_isHighGear = isHighGear;
 
 	requires(Robot.drive);
     }
@@ -54,16 +52,13 @@ public class DriveBezierPath extends Command {
      *            (true for paths with sharp turns)
      * @param softStop
      *            (if you want to slow down near end)
-     * @param isHighGear
      * 
      */
-    public DriveBezierPath(double[] path, double straightPower, boolean straightPowerIsDynamic, boolean softStop,
-	    boolean isHighGear) {
+    public DriveBezierPath(double[] path, double straightPower, boolean straightPowerIsDynamic, boolean softStop) {
 	m_path = new BezierCurve(path[0], path[1], path[2], path[3], path[4], path[5], path[6], path[7]);
 	m_straightPower = straightPower;
 	m_straightPowerIsDynamic = straightPowerIsDynamic;
 	m_softStop = softStop;
-	m_isHighGear = isHighGear;
 
 	requires(Robot.drive);
     }
@@ -74,15 +69,8 @@ public class DriveBezierPath extends Command {
 	Robot.drive.stopDrive();
 	Robot.drive.resetEncoders();
 
-	if (m_isHighGear) {
-	    Robot.drive.shiftUp();
-	    m_straightPGains = DriveConstants.kBezierDistHighGearPGains;
-	    m_rotPGains = DriveConstants.kRotHighGearPGains;
-	} else if (!m_isHighGear) {
-	    Robot.drive.shiftDown();
-	    m_straightPGains = DriveConstants.kBezierDistLowGearPGains;
-	    m_rotPGains = DriveConstants.kRotLowGearPGains;
-	}
+	m_straightPGains = DriveConstants.kBezierDistPGains;
+	m_rotPGains = DriveConstants.kRotPGains;
 
 	m_path.calculateBezier();
 	m_headingList = m_path.getHeadingList();

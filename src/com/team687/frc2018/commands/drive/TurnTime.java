@@ -14,18 +14,15 @@ public class TurnTime extends Command {
 
     private double m_rotPower;
     private double m_timeout;
-    private boolean m_isHighGear;
     private double m_startTime;
 
     /**
      * @param straightPower
      * @param timeout
-     * @param isHighGear
      */
-    public TurnTime(double rotPower, double timeout, boolean isHighGear) {
+    public TurnTime(double rotPower, double timeout) {
 	m_rotPower = rotPower;
 	m_timeout = timeout;
-	m_isHighGear = isHighGear;
 
 	requires(Robot.drive);
     }
@@ -34,12 +31,6 @@ public class TurnTime extends Command {
     protected void initialize() {
 	SmartDashboard.putString("Current Drive Command", "DriveTime");
 	m_startTime = Timer.getFPGATimestamp();
-
-	if (m_isHighGear) {
-	    Robot.drive.shiftUp();
-	} else if (!m_isHighGear) {
-	    Robot.drive.shiftDown();
-	}
     }
 
     @Override

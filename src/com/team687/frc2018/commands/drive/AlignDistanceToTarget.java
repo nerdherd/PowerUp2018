@@ -17,7 +17,6 @@ public class AlignDistanceToTarget extends Command {
 
     private double m_distanceFromTargetInFeet;
     private double m_error;
-    private boolean m_isHighGear;
 
     private PGains m_rightPGains, m_leftPGains;
 
@@ -25,7 +24,6 @@ public class AlignDistanceToTarget extends Command {
 
     public AlignDistanceToTarget(double distanceFromTargetInFeet) {
 	m_distanceFromTargetInFeet = distanceFromTargetInFeet;
-	m_isHighGear = false;
 	m_timeout = 6.87;
 
 	requires(Robot.drive);
@@ -33,12 +31,10 @@ public class AlignDistanceToTarget extends Command {
 
     /**
      * @param distanceFromTargetInFeet
-     * @param isHighGear
      * @param timeout
      */
-    public AlignDistanceToTarget(double distanceFromTargetInFeet, boolean isHighGear, double timeout) {
+    public AlignDistanceToTarget(double distanceFromTargetInFeet, double timeout) {
 	m_distanceFromTargetInFeet = distanceFromTargetInFeet;
-	m_isHighGear = isHighGear;
 	m_timeout = timeout;
 
 	requires(Robot.drive);
@@ -49,15 +45,8 @@ public class AlignDistanceToTarget extends Command {
 	SmartDashboard.putString("Current Drive Command", "AlignDistanceToTarget");
 	Robot.drive.stopDrive();
 
-	if (m_isHighGear) {
-	    Robot.drive.shiftUp();
-	    m_rightPGains = DriveConstants.kDistHighGearRightPGains;
-	    m_leftPGains = DriveConstants.kDistHighGearLeftPGains;
-	} else if (!m_isHighGear) {
-	    Robot.drive.shiftDown();
-	    m_rightPGains = DriveConstants.kDistLowGearRightPGains;
-	    m_leftPGains = DriveConstants.kDistLowGearLeftPGains;
-	}
+	m_rightPGains = DriveConstants.kDistRightPGains;
+	m_leftPGains = DriveConstants.kDistLeftPGains;
 
 	m_startTime = Timer.getFPGATimestamp();
     }

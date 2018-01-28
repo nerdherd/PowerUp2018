@@ -12,6 +12,7 @@ public class SetIntakePosition extends CommandGroup {
 	addSequential(new StowSuperstructure());
 	addSequential(new SetWristPosition(SuperstructureConstants.kWristIntakePos));
 	addSequential(new SetIntakeRollerPower(SuperstructureConstants.kRollerPower));
+	addSequential(new SetWristPosition(SuperstructureConstants.kWristStowPos));
     }
 
 }

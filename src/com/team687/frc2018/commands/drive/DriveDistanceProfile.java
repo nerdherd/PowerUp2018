@@ -19,7 +19,6 @@ public class DriveDistanceProfile extends Command {
 
     private double m_distance;
     private boolean m_isStraight;
-    private boolean m_isHighGear;
     private double m_heading;
     private MotionProfile m_motionProfile;
 
@@ -33,12 +32,10 @@ public class DriveDistanceProfile extends Command {
 
     /**
      * @param distance
-     * @param isHighGear
      * @param isStraight
      */
-    public DriveDistanceProfile(double distance, boolean isHighGear, boolean isStraight) {
+    public DriveDistanceProfile(double distance, boolean isStraight) {
 	m_distance = distance;
-	m_isHighGear = isHighGear;
 	m_isStraight = isStraight;
 
 	requires(Robot.drive);
@@ -54,20 +51,11 @@ public class DriveDistanceProfile extends Command {
 		-DriveConstants.kMaxAcceleration);
 	m_motionProfile.generateProfile(m_distance);
 
-	if (m_isHighGear) {
-	    Robot.drive.shiftUp();
-	    m_rightPGains = DriveConstants.kDistHighGearRightPGains;
-	    m_leftPGains = DriveConstants.kDistHighGearLeftPGains;
-	    m_rotPGains = DriveConstants.kRotHighGearPGains;
-	} else if (!m_isHighGear) {
-	    Robot.drive.shiftDown();
-	    m_rightPGains = DriveConstants.kDistLowGearRightPGains;
-	    m_leftPGains = DriveConstants.kDistLowGearLeftPGains;
-	    m_rotPGains = DriveConstants.kRotLowGearPGains;
-	}
+	m_rightPGains = DriveConstants.kDistRightPGains;
+	m_leftPGains = DriveConstants.kDistLeftPGains;
+	m_rotPGains = DriveConstants.kRotPGains;
 
 	Robot.drive.resetEncoders();
-	Robot.drive.shiftDown();
 
 	m_heading = Robot.drive.getCurrentYaw();
 

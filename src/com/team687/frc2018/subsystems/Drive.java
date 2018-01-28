@@ -12,7 +12,6 @@ import com.team687.lib.kauailabs.navx.frc.AHRS;
 import com.team687.lib.kauailabs.sf2.frc.navXSensor;
 import com.team687.lib.kauailabs.sf2.orientation.OrientationHistory;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -24,10 +23,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drive extends Subsystem {
 
-    private final TalonSRX m_leftMaster, m_leftSlave1, m_leftSlave2;
-    private final TalonSRX m_rightMaster, m_rightSlave1, m_rightSlave2;
-
-    private final DoubleSolenoid m_shifter;
+    private final TalonSRX m_leftMaster, m_leftSlave1;
+    private final TalonSRX m_rightMaster, m_rightSlave1;
 
     private final AHRS m_nav;
     private final navXSensor m_navxsensor;
@@ -41,32 +38,24 @@ public class Drive extends Subsystem {
     public Drive() {
 	m_leftMaster = new TalonSRX(RobotMap.kLeftMasterTalonID);
 	m_leftSlave1 = new TalonSRX(RobotMap.kLeftSlaveTalon1ID);
-	m_leftSlave2 = new TalonSRX(RobotMap.kLeftSlaveTalon2ID);
 	m_rightMaster = new TalonSRX(RobotMap.kRightMasterTalonID);
 	m_rightSlave1 = new TalonSRX(RobotMap.kRightSlaveTalon1ID);
-	m_rightSlave2 = new TalonSRX(RobotMap.kRightSlaveTalon2ID);
 
 	m_leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
 	m_leftMaster.setInverted(false);
 	m_leftSlave1.setInverted(false);
-	m_leftSlave2.setInverted(false);
 	m_leftMaster.setSensorPhase(true); // check this on actual robot
 	m_leftMaster.setNeutralMode(NeutralMode.Brake);
 	m_leftSlave1.setNeutralMode(NeutralMode.Brake);
-	m_leftSlave2.setNeutralMode(NeutralMode.Brake);
 
 	m_rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
 	m_rightMaster.setInverted(true);
 	m_rightSlave1.setInverted(true);
-	m_rightSlave2.setInverted(true);
 	m_rightMaster.setSensorPhase(true); // check this on actual robot
 	m_rightMaster.setNeutralMode(NeutralMode.Brake);
 	m_rightSlave1.setNeutralMode(NeutralMode.Brake);
-	m_rightSlave2.setNeutralMode(NeutralMode.Brake);
 
 	m_brakeModeOn = true;
-
-	m_shifter = new DoubleSolenoid(RobotMap.kShifterID1, RobotMap.kShifterID2);
 
 	m_nav = new AHRS(SerialPort.Port.kMXP);
 	m_navxsensor = new navXSensor(m_nav, "Drivetrain Orientation");
@@ -87,30 +76,22 @@ public class Drive extends Subsystem {
     public void setPower(double leftPower, double rightPower) {
 	m_leftMaster.set(ControlMode.PercentOutput, leftPower);
 	m_leftSlave1.set(ControlMode.PercentOutput, leftPower);
-	m_leftSlave2.set(ControlMode.PercentOutput, leftPower);
 
 	m_rightMaster.set(ControlMode.PercentOutput, rightPower);
 	m_rightSlave1.set(ControlMode.PercentOutput, rightPower);
-	m_rightSlave2.set(ControlMode.PercentOutput, rightPower);
     }
 
     public void setBrakeMode(boolean enabled) {
 	if (enabled) {
 	    m_leftMaster.setNeutralMode(NeutralMode.Brake);
 	    m_leftSlave1.setNeutralMode(NeutralMode.Brake);
-	    m_leftSlave2.setNeutralMode(NeutralMode.Brake);
-
 	    m_rightMaster.setNeutralMode(NeutralMode.Brake);
 	    m_rightSlave1.setNeutralMode(NeutralMode.Brake);
-	    m_rightSlave2.setNeutralMode(NeutralMode.Brake);
 	} else {
 	    m_leftMaster.setNeutralMode(NeutralMode.Coast);
 	    m_leftSlave1.setNeutralMode(NeutralMode.Coast);
-	    m_leftSlave2.setNeutralMode(NeutralMode.Coast);
-
 	    m_rightMaster.setNeutralMode(NeutralMode.Coast);
 	    m_rightSlave1.setNeutralMode(NeutralMode.Coast);
-	    m_rightSlave2.setNeutralMode(NeutralMode.Coast);
 	}
 
 	m_brakeModeOn = enabled;
@@ -134,18 +115,6 @@ public class Drive extends Subsystem {
      */
     public double handleDeadband(double val, double deadband) {
 	return (Math.abs(val) > Math.abs(deadband)) ? val : 0.0;
-    }
-
-    public void shiftUp() {
-	m_shifter.set(DoubleSolenoid.Value.kForward);
-    }
-
-    public void shiftDown() {
-	m_shifter.set(DoubleSolenoid.Value.kReverse);
-    }
-
-    public boolean isHighGear() {
-	return m_shifter.get() == DoubleSolenoid.Value.kForward;
     }
 
     public double getCurrentYaw() {
@@ -259,27 +228,17 @@ public class Drive extends Subsystem {
     }
 
     public void reportToSmartDashboard() {
-	if (isHighGear()) {
-	    SmartDashboard.putString("Gear Shift", "High");
-	} else if (!isHighGear()) {
-	    SmartDashboard.putString("Gear Shift", "Low");
-	}
-
 	SmartDashboard.putBoolean("Brake Mode On", m_brakeModeOn);
 
 	SmartDashboard.putNumber("Left Master Voltage", m_leftMaster.getMotorOutputVoltage());
 	SmartDashboard.putNumber("Left Slave 1 Voltage", m_leftSlave1.getMotorOutputVoltage());
-	SmartDashboard.putNumber("Left Slave 2 Voltage", m_leftSlave2.getMotorOutputVoltage());
 	SmartDashboard.putNumber("Right Master Voltage", m_rightMaster.getMotorOutputVoltage());
 	SmartDashboard.putNumber("Right Slave 1 Voltage", m_rightSlave1.getMotorOutputVoltage());
-	SmartDashboard.putNumber("Right Slave 2 Voltage", m_rightSlave2.getMotorOutputVoltage());
 
 	SmartDashboard.putNumber("Left Master Current", m_leftMaster.getOutputCurrent());
 	SmartDashboard.putNumber("Left Slave 1 Current", m_leftSlave1.getOutputCurrent());
-	SmartDashboard.putNumber("Left Slave 2 Current", m_leftSlave2.getOutputCurrent());
 	SmartDashboard.putNumber("Right Master Current", m_rightMaster.getOutputCurrent());
 	SmartDashboard.putNumber("Right Slave 1 Current", m_rightSlave1.getOutputCurrent());
-	SmartDashboard.putNumber("Right Slave 2 Current", m_rightSlave2.getOutputCurrent());
     }
 
 }

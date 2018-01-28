@@ -1,7 +1,6 @@
 package com.team687.frc2018.commands.drive;
 
 import com.team687.frc2018.Robot;
-import com.team687.frc2018.utilities.PGains;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,8 +14,7 @@ public class DriveAtHeading extends Command {
 
     private double m_straightPower;
     private double m_heading, m_distance;
-    private boolean m_isHighGear;
-    private PGains m_rotPGains;
+    private double m_kRotP;
 
     /**
      * @param straightPower
@@ -24,14 +22,13 @@ public class DriveAtHeading extends Command {
      * @param heading
      * @param distance
      *            (absolute value)
-     * @param isHighGear
      * @param kRotP
      */
-    public DriveAtHeading(double straightPower, double heading, double distance, boolean isHighGear, double kRotP) {
+    public DriveAtHeading(double straightPower, double heading, double distance, double kRotP) {
 	m_straightPower = straightPower;
 	m_heading = heading;
 	m_distance = distance;
-	m_rotPGains.setP(kRotP);
+	m_kRotP = kRotP;
 
 	requires(Robot.drive);
     }
@@ -39,12 +36,6 @@ public class DriveAtHeading extends Command {
     @Override
     protected void initialize() {
 	SmartDashboard.putString("Current Drive Command", "DriveAtHeading");
-
-	if (m_isHighGear) {
-	    Robot.drive.shiftUp();
-	} else if (!m_isHighGear) {
-	    Robot.drive.shiftDown();
-	}
     }
 
     @Override
@@ -53,7 +44,7 @@ public class DriveAtHeading extends Command {
 	double rotError = -m_heading - robotAngle;
 	rotError = (rotError > 180) ? rotError - 360 : rotError;
 	rotError = (rotError < -180) ? rotError + 360 : rotError;
-	double rotPower = m_rotPGains.getP() * rotError;
+	double rotPower = m_kRotP * rotError;
 
 	Robot.drive.setPower(m_straightPower + rotPower, m_straightPower - rotPower);
     }

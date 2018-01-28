@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveUntilCollision extends Command {
 
     private double m_straightPower;
-    private boolean m_isHighGear;
     private double m_timeout;
     private double m_startTime;
 
@@ -23,9 +22,8 @@ public class DriveUntilCollision extends Command {
     private double m_jerkX;
     private double m_jerkY;
 
-    public DriveUntilCollision(double straightPower, boolean isHighGear) {
+    public DriveUntilCollision(double straightPower) {
 	m_straightPower = straightPower;
-	m_isHighGear = isHighGear;
 	m_timeout = 3.3;
 
 	requires(Robot.drive);
@@ -33,12 +31,10 @@ public class DriveUntilCollision extends Command {
 
     /**
      * @param straightPower
-     * @param isHighGear
      * @param timeout
      */
-    public DriveUntilCollision(double straightPower, boolean isHighGear, double timeout) {
+    public DriveUntilCollision(double straightPower, double timeout) {
 	m_straightPower = straightPower;
-	m_isHighGear = isHighGear;
 	m_timeout = timeout;
 
 	requires(Robot.drive);
@@ -51,12 +47,6 @@ public class DriveUntilCollision extends Command {
 
 	m_lastAccelX = 0;
 	m_lastAccelY = 0;
-
-	if (m_isHighGear) {
-	    Robot.drive.shiftUp();
-	} else if (!m_isHighGear) {
-	    Robot.drive.shiftDown();
-	}
 
 	m_startTime = Timer.getFPGATimestamp();
     }
