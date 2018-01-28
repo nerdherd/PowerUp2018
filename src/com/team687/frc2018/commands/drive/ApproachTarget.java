@@ -20,17 +20,15 @@ public class ApproachTarget extends Command {
     private double m_straightPower;
     private double m_startTime, m_timeout;
     private boolean m_softStop;
-    private boolean m_isHighGear;
 
     private PGains m_leftPGains, m_rightPGains;
     private PGains m_rotPGains;
 
-    public ApproachTarget(double distance, double straightPower, boolean softStop, boolean isHighGear) {
+    public ApproachTarget(double distance, double straightPower, boolean softStop) {
 	m_distance = distance;
 	m_straightPower = straightPower;
 	m_timeout = 6.87;
 	m_softStop = softStop;
-	m_isHighGear = isHighGear;
 
 	requires(Robot.drive);
     }
@@ -39,15 +37,13 @@ public class ApproachTarget extends Command {
      * @param distance
      * @param straightPower
      * @param softStop
-     * @param isHighGear
      * @param timeout
      */
-    public ApproachTarget(double distance, double straightPower, boolean softStop, boolean isHighGear, double timeout) {
+    public ApproachTarget(double distance, double straightPower, boolean softStop, double timeout) {
 	m_distance = distance;
 	m_straightPower = straightPower;
 	m_timeout = timeout;
 	m_softStop = softStop;
-	m_isHighGear = isHighGear;
 
 	requires(Robot.drive);
     }
@@ -58,17 +54,9 @@ public class ApproachTarget extends Command {
 
 	Robot.drive.stopDrive();
 
-	if (m_isHighGear) {
-	    Robot.drive.shiftUp();
-	    m_rightPGains = DriveConstants.kDistHighGearRightPGains;
-	    m_leftPGains = DriveConstants.kDistHighGearLeftPGains;
-	    m_rotPGains = DriveConstants.kRotHighGearPGains;
-	} else if (!m_isHighGear) {
-	    Robot.drive.shiftDown();
-	    m_rightPGains = DriveConstants.kDistLowGearRightPGains;
-	    m_leftPGains = DriveConstants.kDistLowGearLeftPGains;
-	    m_rotPGains = DriveConstants.kRotLowGearPGains;
-	}
+	m_rightPGains = DriveConstants.kDistRightPGains;
+	m_leftPGains = DriveConstants.kDistLeftPGains;
+	m_rotPGains = DriveConstants.kRotPGains;
 
 	m_startTime = Timer.getFPGATimestamp();
     }

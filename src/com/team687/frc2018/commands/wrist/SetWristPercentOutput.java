@@ -12,7 +12,7 @@ public class SetWristPercentOutput extends Command {
     public SetWristPercentOutput(double power) {
 	m_power = power;
 
-	requires(Robot.arm);
+	requires(Robot.wrist);
     }
 
     @Override

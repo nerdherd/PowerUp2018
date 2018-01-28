@@ -1,33 +1,31 @@
-package com.team687.frc2018.commands.drive;
+package com.team687.frc2018.commands.arm;
 
 import com.team687.frc2018.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- * Shift to high gear
- */
+public class SetArmPercentOutput extends Command {
 
-public class ShiftUp extends Command {
+    private double m_power;
 
-    public ShiftUp() {
-	requires(Robot.drive);
+    public SetArmPercentOutput(double power) {
+	requires(Robot.arm);
     }
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Drive Command", "ShiftUp");
-	Robot.drive.shiftUp();
+	SmartDashboard.putString("Current Arm Command", "SetArmPercentOutput");
     }
 
     @Override
     protected void execute() {
+	Robot.arm.setPercentOutput(m_power);
     }
 
     @Override
     protected boolean isFinished() {
-	return true;
+	return false;
     }
 
     @Override
@@ -37,5 +35,4 @@ public class ShiftUp extends Command {
     @Override
     protected void interrupted() {
     }
-
 }

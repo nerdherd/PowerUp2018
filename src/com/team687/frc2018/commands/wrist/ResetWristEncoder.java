@@ -1,34 +1,30 @@
-package com.team687.frc2018.commands.drive;
+package com.team687.frc2018.commands.wrist;
 
 import com.team687.frc2018.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- * Reset encoders
- */
+public class ResetWristEncoder extends Command {
 
-public class ResetEncoders extends Command {
-
-    public ResetEncoders() {
-	requires(Robot.drive);
+    public ResetWristEncoder() {
+	requires(Robot.wrist);
     }
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Drive Command", "Reset Encoders");
-	Robot.drive.resetEncoders();
+	SmartDashboard.putString("Current Wrist Command", "ResetArmEncoders");
+	Robot.wrist.resetEncoder();
     }
 
     @Override
     protected void execute() {
-	Robot.drive.resetEncoders();
+	Robot.wrist.resetEncoder();
     }
 
     @Override
     protected boolean isFinished() {
-	return Robot.drive.getRightPosition() == 0 && Robot.drive.getLeftPosition() == 0;
+	return Robot.wrist.getPosition() == 0;
     }
 
     @Override

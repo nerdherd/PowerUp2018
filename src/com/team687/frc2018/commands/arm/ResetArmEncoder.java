@@ -1,32 +1,30 @@
-package com.team687.frc2018.commands.intake;
+package com.team687.frc2018.commands.arm;
 
 import com.team687.frc2018.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class SetIntakeRollerPower extends Command {
+public class ResetArmEncoder extends Command {
 
-    private double m_power;
-
-    public SetIntakeRollerPower(double power) {
-	m_power = power;
-	requires(Robot.intake);
+    public ResetArmEncoder() {
+	requires(Robot.arm);
     }
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Intake Command", "SetIntakeRollerPower: " + m_power);
+	SmartDashboard.putString("Current Arm Command", "ResetArmEncoders");
+	Robot.arm.resetEncoder();
     }
 
     @Override
     protected void execute() {
-	Robot.intake.setRollerPower(m_power);
+	Robot.arm.resetEncoder();
     }
 
     @Override
     protected boolean isFinished() {
-	return false;
+	return Robot.arm.getPosition() == 0;
     }
 
     @Override
@@ -36,4 +34,5 @@ public class SetIntakeRollerPower extends Command {
     @Override
     protected void interrupted() {
     }
+
 }

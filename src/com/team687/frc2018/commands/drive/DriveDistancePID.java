@@ -17,7 +17,6 @@ public class DriveDistancePID extends Command {
 
     private double m_rightDistance, m_leftDistance;
     private double m_rightError, m_leftError;
-    private boolean m_isHighGear;
 
     private PGains m_rightPGains, m_leftPGains;
 
@@ -27,13 +26,11 @@ public class DriveDistancePID extends Command {
      * @param rightDistance
      * @param leftDistance
      * @param timeout
-     * @param isHighGear
      */
-    public DriveDistancePID(double rightDistance, double leftDistance, boolean isHighGear, double timeout) {
+    public DriveDistancePID(double rightDistance, double leftDistance, double timeout) {
 	m_timeout = timeout;
 	m_rightDistance = rightDistance;
 	m_leftDistance = leftDistance;
-	m_isHighGear = isHighGear;
 
 	requires(Robot.drive);
     }
@@ -44,15 +41,8 @@ public class DriveDistancePID extends Command {
 	Robot.drive.stopDrive();
 	Robot.drive.resetEncoders();
 
-	if (m_isHighGear) {
-	    Robot.drive.shiftUp();
-	    m_rightPGains = DriveConstants.kDistHighGearRightPGains;
-	    m_leftPGains = DriveConstants.kDistHighGearLeftPGains;
-	} else if (!m_isHighGear) {
-	    Robot.drive.shiftDown();
-	    m_rightPGains = DriveConstants.kDistLowGearRightPGains;
-	    m_leftPGains = DriveConstants.kDistLowGearLeftPGains;
-	}
+	m_rightPGains = DriveConstants.kDistRightPGains;
+	m_leftPGains = DriveConstants.kDistLeftPGains;
 
 	m_startTime = Timer.getFPGATimestamp();
     }

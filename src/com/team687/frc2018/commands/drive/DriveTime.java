@@ -14,18 +14,15 @@ public class DriveTime extends Command {
 
     private double m_straightPower;
     private double m_timeout;
-    private boolean m_isHighGear;
     private double m_startTime;
 
     /**
      * @param straightPower
      * @param timeout
-     * @param isHighGear
      */
-    public DriveTime(double straightPower, double timeout, boolean isHighGear) {
+    public DriveTime(double straightPower, double timeout) {
 	m_straightPower = straightPower;
 	m_timeout = timeout;
-	m_isHighGear = isHighGear;
 
 	requires(Robot.drive);
     }
@@ -34,12 +31,6 @@ public class DriveTime extends Command {
     protected void initialize() {
 	SmartDashboard.putString("Current Drive Command", "DriveTime");
 	m_startTime = Timer.getFPGATimestamp();
-
-	if (m_isHighGear) {
-	    Robot.drive.shiftUp();
-	} else if (!m_isHighGear) {
-	    Robot.drive.shiftDown();
-	}
     }
 
     @Override

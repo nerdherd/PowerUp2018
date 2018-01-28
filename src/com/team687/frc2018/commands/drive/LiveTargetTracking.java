@@ -15,29 +15,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class LiveTargetTracking extends Command {
 
-    private boolean m_isHighGear;
     private PGains m_rotPGains;
 
-    /**
-     * @param isHighGear
-     */
-    public LiveTargetTracking(boolean isHighGear) {
-	m_isHighGear = isHighGear;
-
+    public LiveTargetTracking() {
 	requires(Robot.drive);
     }
 
     @Override
     protected void initialize() {
 	SmartDashboard.putString("Current Drive Command", "LiveTargetTracking");
-
-	if (m_isHighGear) {
-	    Robot.drive.shiftUp();
-	    m_rotPGains = DriveConstants.kRotHighGearPGains;
-	} else if (!m_isHighGear) {
-	    Robot.drive.shiftDown();
-	    m_rotPGains = DriveConstants.kRotLowGearPGains;
-	}
+	m_rotPGains = DriveConstants.kRotPGains;
     }
 
     @Override

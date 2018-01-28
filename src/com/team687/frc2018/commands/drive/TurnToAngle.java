@@ -19,27 +19,22 @@ public class TurnToAngle extends Command {
     private double m_startTime, m_timeout;
     private double m_error;
 
-    private boolean m_isHighGear;
-
     private PGains m_rotPGains;
 
-    public TurnToAngle(double angle, boolean isHighGear) {
+    public TurnToAngle(double angle) {
 	m_desiredAngle = angle;
 	m_timeout = 10; // default timeout is 10 seconds
-	m_isHighGear = isHighGear;
 
 	requires(Robot.drive);
     }
 
     /**
      * @param angle
-     * @param isHighGear
      * @param timeout
      */
-    public TurnToAngle(double angle, boolean isHighGear, double timeout) {
+    public TurnToAngle(double angle, double timeout) {
 	m_desiredAngle = angle;
 	m_timeout = timeout;
-	m_isHighGear = isHighGear;
 
 	// subsystem dependencies
 	requires(Robot.drive);
@@ -49,14 +44,7 @@ public class TurnToAngle extends Command {
     protected void initialize() {
 	SmartDashboard.putString("Current Drive Command", "TurnToAngle");
 	m_startTime = Timer.getFPGATimestamp();
-
-	if (m_isHighGear) {
-	    Robot.drive.shiftUp();
-	    m_rotPGains = DriveConstants.kRotHighGearPGains;
-	} else if (!m_isHighGear) {
-	    Robot.drive.shiftDown();
-	    m_rotPGains = DriveConstants.kRotLowGearPGains;
-	}
+	m_rotPGains = DriveConstants.kRotPGains;
     }
 
     @Override

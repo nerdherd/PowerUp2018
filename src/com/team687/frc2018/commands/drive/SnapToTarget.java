@@ -18,25 +18,20 @@ public class SnapToTarget extends Command {
 
     private double m_startTime, m_timeout;
     private int m_counter;
-    private boolean m_isHighGear;
 
     private PGains m_rotPGains;
 
-    public SnapToTarget(boolean isHighGear) {
+    public SnapToTarget() {
 	m_timeout = 3.3;
-	m_isHighGear = isHighGear;
 
 	requires(Robot.drive);
     }
 
     /**
-     * @param isAuto
-     * @param isHighGear
      * @param timeout
      */
-    public SnapToTarget(boolean isHighGear, double timeout) {
+    public SnapToTarget(double timeout) {
 	m_timeout = timeout;
-	m_isHighGear = isHighGear;
 
 	requires(Robot.drive);
     }
@@ -47,14 +42,7 @@ public class SnapToTarget extends Command {
 
 	Robot.drive.stopDrive();
 	m_counter = 0;
-
-	if (m_isHighGear) {
-	    Robot.drive.shiftUp();
-	    m_rotPGains = DriveConstants.kRotHighGearPGains;
-	} else if (!m_isHighGear) {
-	    Robot.drive.shiftDown();
-	    m_rotPGains = DriveConstants.kRotLowGearPGains;
-	}
+	m_rotPGains = DriveConstants.kRotPGains;
 
 	m_startTime = Timer.getFPGATimestamp();
     }
