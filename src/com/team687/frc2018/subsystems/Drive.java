@@ -3,6 +3,7 @@ package com.team687.frc2018.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.team687.frc2018.RobotMap;
 import com.team687.frc2018.commands.drive.teleop.TankDrive;
@@ -42,6 +43,7 @@ public class Drive extends Subsystem {
 	m_rightSlave1 = new TalonSRX(RobotMap.kRightSlaveTalon1ID);
 
 	m_leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
+	m_leftMaster.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, 0);
 	m_leftMaster.setInverted(false);
 	m_leftSlave1.setInverted(false);
 	m_leftMaster.setSensorPhase(true); // check this on actual robot
@@ -49,6 +51,7 @@ public class Drive extends Subsystem {
 	m_leftSlave1.setNeutralMode(NeutralMode.Brake);
 
 	m_rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
+	m_rightMaster.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, 0);
 	m_rightMaster.setInverted(true);
 	m_rightSlave1.setInverted(true);
 	m_rightMaster.setSensorPhase(true); // check this on actual robot

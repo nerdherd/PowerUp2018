@@ -3,6 +3,7 @@ package com.team687.frc2018.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.team687.frc2018.Robot;
 import com.team687.frc2018.RobotMap;
@@ -40,6 +41,9 @@ public class Arm extends Subsystem {
 	m_arm.configReverseSoftLimitThreshold(SuperstructureConstants.kArmReverseSoftLimit, 0);
 	m_arm.configForwardSoftLimitEnable(true, 0);
 	m_arm.configReverseSoftLimitEnable(true, 0);
+
+	m_arm.setStatusFramePeriod(StatusFrame.Status_1_General, 10, 0);
+	m_arm.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 20, 0);
     }
 
     @Override

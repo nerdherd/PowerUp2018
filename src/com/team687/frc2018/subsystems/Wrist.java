@@ -3,6 +3,7 @@ package com.team687.frc2018.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.team687.frc2018.Robot;
 import com.team687.frc2018.RobotMap;
@@ -40,6 +41,9 @@ public class Wrist extends Subsystem {
 	m_wrist.configReverseSoftLimitThreshold(SuperstructureConstants.kWristReverseSoftLimit, 0);
 	m_wrist.configForwardSoftLimitEnable(true, 0);
 	m_wrist.configReverseSoftLimitEnable(true, 0);
+
+	m_wrist.setStatusFramePeriod(StatusFrame.Status_1_General, 10, 0);
+	m_wrist.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 20, 0);
     }
 
     @Override
