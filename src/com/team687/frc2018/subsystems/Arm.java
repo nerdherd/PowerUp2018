@@ -5,8 +5,10 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.team687.frc2018.Robot;
 import com.team687.frc2018.RobotMap;
 import com.team687.frc2018.constants.SuperstructureConstants;
+import com.team687.frc2018.utilities.CSVDatum;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -97,6 +99,30 @@ public class Arm extends Subsystem {
 	SmartDashboard.putNumber("Arm Voltage", getVoltage());
 	SmartDashboard.putNumber("Arm Current", getCurrent());
 	SmartDashboard.putNumber("Arm Desired Position", m_desiredPos);
+    }
+
+    private CSVDatum m_positionData, m_armDesiredPosData, m_velocityData, m_voltageData, m_currentData;
+
+    public void addLoggedData() {
+	m_positionData = new CSVDatum("arm_position");
+	m_armDesiredPosData = new CSVDatum("arm_desiredPos");
+	m_velocityData = new CSVDatum("arm_velocity");
+	m_voltageData = new CSVDatum("arm_voltage");
+	m_currentData = new CSVDatum("arm_current");
+
+	Robot.logger.addCSVDatum(m_positionData);
+	Robot.logger.addCSVDatum(m_armDesiredPosData);
+	Robot.logger.addCSVDatum(m_velocityData);
+	Robot.logger.addCSVDatum(m_voltageData);
+	Robot.logger.addCSVDatum(m_currentData);
+    }
+
+    public void updateLog() {
+	m_positionData.updateValue(getPosition());
+	m_armDesiredPosData.updateValue(m_desiredPos);
+	m_velocityData.updateValue(getVelocity());
+	m_voltageData.updateValue(getVoltage());
+	m_currentData.updateValue(getCurrent());
     }
 
 }
