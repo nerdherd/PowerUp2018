@@ -5,7 +5,6 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.team687.frc2018.Robot;
 import com.team687.frc2018.RobotMap;
 import com.team687.frc2018.constants.SuperstructureConstants;
 
@@ -52,9 +51,6 @@ public class Wrist extends Subsystem {
     }
 
     public void setPosition(double position) {
-	if (Robot.arm.getPosition() < SuperstructureConstants.kArmWristSafePos) {
-	    position = Math.max(position, SuperstructureConstants.kWristIntakePos);
-	}
 	m_wrist.set(ControlMode.Position, position);
     }
 

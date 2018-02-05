@@ -1,15 +1,7 @@
 package com.team687.frc2018;
 
-import com.team687.frc2018.commands.arm.SetArmPercentOutput;
-import com.team687.frc2018.commands.arm.SetArmPosition;
-import com.team687.frc2018.commands.intake.SetIntakeRollerPower;
-import com.team687.frc2018.commands.wrist.SetWristPercentOutput;
-import com.team687.frc2018.commands.wrist.SetWristPosition;
-import com.team687.frc2018.constants.SuperstructureConstants;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -27,28 +19,6 @@ public class OI {
 
     public OI() {
 	quickTurn_1 = new JoystickButton(driveJoyRight, 1);
-
-	SmartDashboard.putData("Set Intake Rollers On", new SetIntakeRollerPower(SuperstructureConstants.kRollerPower));
-	SmartDashboard.putData("Set Intake Rollers Reverse",
-		new SetIntakeRollerPower(-SuperstructureConstants.kRollerPower));
-
-	SmartDashboard.putData("Set Wrist Positive Voltage Test",
-		new SetWristPercentOutput(SuperstructureConstants.kWristMaxVoltageForward / 12));
-	SmartDashboard.putData("Set Wrist Negative Voltage Test",
-		new SetWristPercentOutput(SuperstructureConstants.kWristMaxVoltageReverse / 12));
-
-	SmartDashboard.putData("Set Arm Positive Voltage Test",
-		new SetArmPercentOutput(SuperstructureConstants.kArmMaxVoltageForward / 12));
-	SmartDashboard.putData("Set Arm Negative Voltage Test",
-		new SetArmPercentOutput(SuperstructureConstants.kArmMaxVoltageReverse / 12));
-
-	SmartDashboard.putData("Set Wrist Position Intake",
-		new SetWristPosition(SuperstructureConstants.kWristIntakePos));
-	SmartDashboard.putData("Set Wrist Position Stow", new SetWristPosition(SuperstructureConstants.kWristStowPos));
-
-	SmartDashboard.putData("Set Arm Position Down", new SetArmPosition(SuperstructureConstants.kArmDownPos));
-	SmartDashboard.putData("Set Arm Position Scale Forward",
-		new SetArmPosition(SuperstructureConstants.kArmScaleMidPos));
     }
 
     /**
