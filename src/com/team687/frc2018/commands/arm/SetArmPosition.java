@@ -3,6 +3,7 @@ package com.team687.frc2018.commands.arm;
 import com.team687.frc2018.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Set arm position
@@ -20,6 +21,8 @@ public class SetArmPosition extends Command {
 
     @Override
     protected void initialize() {
+	SmartDashboard.putString("Current Arm Command", "SetArmVoltgae");
+
 	Robot.arm.setPosition(m_position);
     }
 

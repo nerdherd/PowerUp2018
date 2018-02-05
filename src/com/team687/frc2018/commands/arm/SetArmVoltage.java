@@ -18,6 +18,8 @@ public class SetArmVoltage extends Command {
     @Override
     protected void initialize() {
 	SmartDashboard.putString("Current Arm Command", "SetArmVoltgae");
+
+	Robot.arm.setVoltage(m_voltage);
     }
 
     @Override

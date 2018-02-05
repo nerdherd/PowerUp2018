@@ -24,6 +24,14 @@ public class SuperstructureConstants {
     public static final int kArmHorizontalPos = 7173;
     public static final int kArmVerticalPos = 20057;
 
+    // simulation purposes
+    public static final int kArmSwitchPos = 118;
+    public static final int kArmScaleBottomPos = 687;
+    public static final int kArmScaleMidPos = 971;
+    public static final int kArmScaleTopPos = 987;
+    public static final int kArmScaleBackwardPos = 1114;
+    public static final int kArmWristSafePos = 254; // arm position where wrist can still safely point down
+
     public static final int kArmTolerance = 67;
     public static final int kArmForwardSoftLimit = kArmVerticalPos;
     public static final int kArmReverseSoftLimit = kArmDownPos;
