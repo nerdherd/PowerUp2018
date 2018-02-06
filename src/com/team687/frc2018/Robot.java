@@ -72,7 +72,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
-	Scheduler.getInstance().run();
+	Scheduler.getInstance().removeAll();
 
 	drive.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
@@ -85,7 +85,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-	Scheduler.getInstance().removeAll();
+	// Scheduler.getInstance().removeAll();
 
 	drive.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
@@ -111,7 +111,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-	Scheduler.getInstance().run();
+	// Scheduler.getInstance().removeAll();
 
 	drive.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
@@ -127,7 +127,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
-	Scheduler.getInstance().removeAll();
+	Scheduler.getInstance().run();
 
 	drive.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
