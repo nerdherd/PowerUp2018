@@ -58,6 +58,9 @@ public class DriveConstants {
     public final static double kCurvatureFunction = 85;
 
     // subsystem testing
-    public final static double rpmEpsilon = 254;
+    public final static double kVelocityEpsilon = 254;
+
+    public final static double kCurrentEpsilon = 10;
+    public final static double kVoltageEpsilon = 2;
 
 }

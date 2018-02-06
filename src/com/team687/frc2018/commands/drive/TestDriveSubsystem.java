@@ -24,7 +24,7 @@ public class TestDriveSubsystem extends Command {
 
     @Override
     protected void execute() {
-	double power = Robot.oi.getDriveJoyLeftY();
+	double power = 1;
 	Robot.drive.setPower(power, power);
 
 	boolean failed = Robot.drive.testDriveSubsystem();

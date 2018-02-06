@@ -202,6 +202,22 @@ public class Drive extends Subsystem {
 	return m_rightMaster.getSelectedSensorVelocity(2);
     }
 
+    public double getRightCurrent() {
+	return m_rightMaster.getOutputCurrent();
+    }
+
+    public double getLeftCurrent() {
+	return m_leftMaster.getOutputCurrent();
+    }
+
+    public double getRightVoltage() {
+	return m_rightMaster.getMotorOutputVoltage();
+    }
+
+    public double getLeftVoltage() {
+	return m_leftMaster.getMotorOutputVoltage();
+    }
+
     public void resetEncoders() {
 	// m_leftSensorOffset = getLeftPosition();
 	// m_rightSensorOffset = getRightPosition();
@@ -221,10 +237,26 @@ public class Drive extends Subsystem {
 	boolean failed = false;
 
 	double expectedSpeed = getRightSpeed();
-	if (Math.abs(getLeftSpeed() - expectedSpeed) > DriveConstants.rpmEpsilon) {
+	if (Math.abs(getLeftSpeed() - expectedSpeed) > DriveConstants.kVelocityEpsilon) {
 	    failed = true;
 	    DriverStation.reportError("Left Master Speed != Right Master Speed (Drive subsystem test)", false);
 	    System.out.println("Left Master Speed != Right Master Speed (Drive subsystem test)");
+	}
+
+	double expectedCurrent = getRightCurrent();
+	if (Math.abs(getLeftCurrent() - expectedCurrent) > DriveConstants.kCurrentEpsilon || getRightCurrent() == 0
+		|| getLeftCurrent() == 0) {
+	    failed = true;
+	    DriverStation.reportError("Check Drive Current (Drive subsystem test)", false);
+	    System.out.println("Check Drive Current (Drive subsystem test)");
+	}
+
+	double expectedVoltage = getRightVoltage();
+	if (Math.abs(getLeftVoltage() - expectedVoltage) > DriveConstants.kVoltageEpsilon || getRightVoltage() == 0
+		|| getLeftVoltage() == 0) {
+	    failed = true;
+	    DriverStation.reportError("Check Drive Voltage (Drive subsystem test)", false);
+	    System.out.println("Check Drive Voltage (Drive subsystem test)");
 	}
 
 	return failed;
