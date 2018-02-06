@@ -33,8 +33,8 @@ public class SuperstructureConstants {
     public static final int kArmWristSafePos = 254; // arm position where wrist can still safely point down
 
     public static final int kArmTolerance = 67;
-    public static final int kArmForwardSoftLimit = kArmVerticalPos;
-    public static final int kArmReverseSoftLimit = kArmDownPos;
+    public static final int kArmForwardSoftLimit = kArmVerticalPos + 409;
+    public static final int kArmReverseSoftLimit = kArmDownPos - 409;
 
     public static final double kWristP = 0;
     public static final double kWristI = 0;

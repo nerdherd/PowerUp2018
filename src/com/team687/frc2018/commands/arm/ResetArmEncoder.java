@@ -3,6 +3,7 @@ package com.team687.frc2018.commands.arm;
 import com.team687.frc2018.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ResetArmEncoder extends Command {
 
@@ -12,6 +13,8 @@ public class ResetArmEncoder extends Command {
 
     @Override
     protected void initialize() {
+	SmartDashboard.putString("Current Arm Command", "ResetArmEncoder");
+
 	Robot.arm.resetEncoder();
     }
 

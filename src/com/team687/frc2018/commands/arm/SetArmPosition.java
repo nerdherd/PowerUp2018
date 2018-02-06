@@ -21,7 +21,7 @@ public class SetArmPosition extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Arm Command", "SetArmVoltgae");
+	SmartDashboard.putString("Current Arm Command", "SetArmPosition");
 
 	Robot.arm.setPosition(m_position);
     }
