@@ -1,7 +1,6 @@
 package com.team687.frc2018.commands.arm;
 
 import com.team687.frc2018.Robot;
-import com.team687.frc2018.constants.SuperstructureConstants;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,13 +14,16 @@ public class SetArmPosition extends Command {
     private double m_position;
 
     public SetArmPosition(double position) {
-	requires(Robot.arm);
 	m_position = position;
+
+	requires(Robot.arm);
     }
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Arm Command", "SetArmPosition: " + m_position);
+	SmartDashboard.putString("Current Arm Command", "SetArmPosition");
+
+	Robot.arm.setPosition(m_position);
     }
 
     @Override
@@ -31,14 +33,16 @@ public class SetArmPosition extends Command {
 
     @Override
     protected boolean isFinished() {
-	return Math.abs(Robot.arm.getPosition() - m_position) < SuperstructureConstants.kArmTolerance;
+	return false;
     }
 
     @Override
     protected void end() {
+	Robot.arm.setVoltage(0);
     }
 
     @Override
     protected void interrupted() {
+	end();
     }
 }

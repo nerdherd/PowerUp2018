@@ -4,6 +4,7 @@ import com.team687.frc2018.subsystems.Arm;
 import com.team687.frc2018.subsystems.Drive;
 import com.team687.frc2018.subsystems.Intake;
 import com.team687.frc2018.subsystems.Wrist;
+import com.team687.frc2018.utilities.CSVLogger;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -24,6 +25,8 @@ public class Robot extends TimedRobot {
     public static VisionAdapter visionAdapter;
     public static Odometry odometry;
 
+    public static CSVLogger logger;
+
     @Override
     public void robotInit() {
 	pdp = new PowerDistributionPanel();
@@ -31,7 +34,7 @@ public class Robot extends TimedRobot {
 	compressor.start();
 
 	arm = new Arm();
-	arm.setPercentOutput(0);
+	arm.setVoltage(0);
 	arm.resetEncoder();
 
 	wrist = new Wrist();
@@ -50,6 +53,7 @@ public class Robot extends TimedRobot {
 
 	visionAdapter = VisionAdapter.getInstance();
 	odometry = Odometry.getInstance();
+	logger = CSVLogger.getInstance();
     }
 
     @Override
@@ -63,6 +67,7 @@ public class Robot extends TimedRobot {
 
 	visionAdapter.reportToSmartDashboard();
 	odometry.update();
+	logger.stopLog();
     }
 
     @Override
@@ -115,6 +120,9 @@ public class Robot extends TimedRobot {
 
 	visionAdapter.reportToSmartDashboard();
 	odometry.update();
+
+	arm.addLoggedData();
+	logger.startLog();
     }
 
     @Override
@@ -128,6 +136,9 @@ public class Robot extends TimedRobot {
 
 	visionAdapter.reportToSmartDashboard();
 	odometry.update();
+
+	arm.updateLog();
+	logger.logToCSV();
     }
 
     @Override

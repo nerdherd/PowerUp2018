@@ -5,22 +5,26 @@ import com.team687.frc2018.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class SetArmPercentOutput extends Command {
+public class SetArmVoltage extends Command {
 
-    private double m_power;
+    private double m_voltage;
 
-    public SetArmPercentOutput(double power) {
+    public SetArmVoltage(double voltage) {
+	m_voltage = voltage;
+
 	requires(Robot.arm);
     }
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Arm Command", "SetArmPercentOutput");
+	SmartDashboard.putString("Current Arm Command", "SetArmVoltgae");
+
+	Robot.arm.setVoltage(m_voltage);
     }
 
     @Override
     protected void execute() {
-	Robot.arm.setPercentOutput(m_power);
+	Robot.arm.setVoltage(m_voltage);
     }
 
     @Override
@@ -30,9 +34,11 @@ public class SetArmPercentOutput extends Command {
 
     @Override
     protected void end() {
+	Robot.arm.setVoltage(0);
     }
 
     @Override
     protected void interrupted() {
+	end();
     }
 }

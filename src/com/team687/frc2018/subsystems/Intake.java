@@ -2,6 +2,7 @@ package com.team687.frc2018.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.team687.frc2018.RobotMap;
 import com.team687.frc2018.constants.SuperstructureConstants;
@@ -22,6 +23,7 @@ public class Intake extends Subsystem {
     public Intake() {
 	m_rollers = new TalonSRX(RobotMap.kIntakeRollersID);
 	m_rollers.setNeutralMode(NeutralMode.Coast);
+	m_rollers.setStatusFramePeriod(StatusFrame.Status_1_General, 15, 0);
 
 	m_switch = new DigitalInput(RobotMap.kLimitSwitchID);
     }
