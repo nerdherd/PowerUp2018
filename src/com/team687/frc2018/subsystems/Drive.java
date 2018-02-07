@@ -99,8 +99,10 @@ public class Drive extends Subsystem {
      *            (from -12V to +12V)
      */
     public void setVoltage(double leftVoltage, double rightVoltage) {
-	m_leftMaster.set(ControlMode.PercentOutput, leftVoltage / m_leftMaster.getBusVoltage());
-	m_rightMaster.set(ControlMode.PercentOutput, rightVoltage / m_rightMaster.getBusVoltage());
+	double leftBusVoltage = m_leftMaster.getBusVoltage();
+	double rightBusVoltage = m_rightMaster.getBusVoltage();
+	m_leftMaster.set(ControlMode.PercentOutput, leftVoltage / leftBusVoltage);
+	m_rightMaster.set(ControlMode.PercentOutput, rightVoltage / rightBusVoltage);
     }
 
     /**
