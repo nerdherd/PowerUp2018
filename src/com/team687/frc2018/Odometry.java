@@ -55,11 +55,11 @@ public class Odometry {
 	m_gyroYawDegrees = Robot.drive.getCurrentYaw();
 	m_gyroYawRadians = Robot.drive.getCurrentYawRadians();
 
-	SmartDashboard.putNumber("Left Position Ticks", m_leftDistance);
-	SmartDashboard.putNumber("Right Position Ticks", m_rightDistance);
-	SmartDashboard.putNumber("Drivetrain Position Ticks", Robot.drive.getDrivetrainPosition());
-	SmartDashboard.putNumber("Left Speed Ticks", m_leftVelocity);
-	SmartDashboard.putNumber("Right Speed Ticks", m_rightVelocity);
+	SmartDashboard.putNumber("Drive Left Position", m_leftDistance);
+	SmartDashboard.putNumber("Drive Right Position", m_rightDistance);
+	SmartDashboard.putNumber("Drive Average Position", Robot.drive.getDrivetrainPosition());
+	SmartDashboard.putNumber("Drive Left Velocity", m_leftVelocity);
+	SmartDashboard.putNumber("Drive Right Velocity", m_rightVelocity);
 
 	SmartDashboard.putNumber("Yaw (degrees)", m_gyroYawDegrees);
 	SmartDashboard.putNumber("Yaw (radians)", m_gyroYawRadians);

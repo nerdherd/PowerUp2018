@@ -147,22 +147,6 @@ public class Drive extends Subsystem {
 	return m_brakeModeOn;
     }
 
-    public double squareInput(double input) {
-	return Math.pow(input, 2) * (input / Math.abs(input));
-    }
-
-    /**
-     * Handles when the joystick moves slightly when you actually don't want it to
-     * move at all
-     * 
-     * @param value
-     * @param deadband
-     * @return value or 0 if within deadband
-     */
-    public double handleDeadband(double val, double deadband) {
-	return (Math.abs(val) > Math.abs(deadband)) ? val : 0.0;
-    }
-
     public double getCurrentYaw() {
 	return m_nav.getYaw();
     }
@@ -348,6 +332,10 @@ public class Drive extends Subsystem {
 	SmartDashboard.putNumber("Right Position", getRightPosition());
 	SmartDashboard.putNumber("Left Velocity", getLeftVelocity());
 	SmartDashboard.putNumber("Right Velocity", getRightVelocity());
+
+	SmartDashboard.putNumber("Yaw", getCurrentYaw());
+	SmartDashboard.putNumber("Pitch", getCurrentPitch());
+	SmartDashboard.putNumber("Roll", getCurrentRoll());
     }
 
 }

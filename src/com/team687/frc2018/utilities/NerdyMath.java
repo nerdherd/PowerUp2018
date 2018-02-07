@@ -82,7 +82,8 @@ public class NerdyMath {
 
     /**
      * Add joystick sensitivity (Ether method) If throttle is 0, joystick output is
-     * linear If throttle is 1, joystick output is cubic You can adjust in between
+     * linear. If throttle is 1, joystick output is cubic. You can adjust in
+     * between.
      * 
      * @param input
      * @param throttle
@@ -97,6 +98,28 @@ public class NerdyMath {
 	    output = -b + (1 - b) * (a * Math.pow(input, 3) + (1 - a) * input);
 	}
 	return output;
+    }
+
+    /**
+     * Square input for sensitivity adjustment
+     * 
+     * @param input
+     * @return scaled output
+     */
+    public static double squareInput(double input) {
+	return Math.pow(input, 2) * (input / Math.abs(input));
+    }
+
+    /**
+     * Handles when the joystick moves slightly when you actually don't want it to
+     * move at all
+     * 
+     * @param value
+     * @param deadband
+     * @return value or 0 if within deadband
+     */
+    public static double handleDeadband(double val, double deadband) {
+	return (Math.abs(val) > Math.abs(deadband)) ? val : 0.0;
     }
 
     /**
