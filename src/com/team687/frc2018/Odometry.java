@@ -50,8 +50,8 @@ public class Odometry {
     public void update() {
 	m_leftDistance = Robot.drive.getLeftPosition();
 	m_rightDistance = Robot.drive.getRightPosition();
-	m_leftVelocity = Robot.drive.getLeftSpeed();
-	m_rightVelocity = Robot.drive.getRightSpeed();
+	m_leftVelocity = Robot.drive.getLeftVelocity();
+	m_rightVelocity = Robot.drive.getRightVelocity();
 	m_gyroYawDegrees = Robot.drive.getCurrentYaw();
 	m_gyroYawRadians = Robot.drive.getCurrentYawRadians();
 

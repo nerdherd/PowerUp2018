@@ -42,22 +42,33 @@ public class Drive extends Subsystem {
 	m_rightMaster = new TalonSRX(RobotMap.kRightMasterTalonID);
 	m_rightSlave1 = new TalonSRX(RobotMap.kRightSlaveTalon1ID);
 
+	m_leftSlave1.follow(m_leftMaster);
+	m_rightSlave1.follow(m_rightMaster);
+
 	m_leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
 	m_leftMaster.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, 0);
 	m_leftMaster.setInverted(false);
 	m_leftSlave1.setInverted(false);
-	m_leftMaster.setSensorPhase(true); // check this on actual robot
-	m_leftMaster.setNeutralMode(NeutralMode.Brake);
-	m_leftSlave1.setNeutralMode(NeutralMode.Brake);
+	m_leftMaster.setSensorPhase(true);
+	m_leftMaster.config_kF(0, DriveConstants.kLeftVelocityF, 0);
+	m_leftMaster.config_kP(0, DriveConstants.kLeftVelocityP, 0);
+	m_leftMaster.config_kI(0, DriveConstants.kLeftVelocityI, 0);
+	m_leftMaster.config_kD(0, DriveConstants.kLeftVelocityD, 0);
 
 	m_rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
 	m_rightMaster.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, 0);
 	m_rightMaster.setInverted(true);
 	m_rightSlave1.setInverted(true);
-	m_rightMaster.setSensorPhase(true); // check this on actual robot
+	m_rightMaster.setSensorPhase(true);
+	m_rightMaster.config_kF(0, DriveConstants.kRightVelocityF, 0);
+	m_rightMaster.config_kP(0, DriveConstants.kRightVelocityP, 0);
+	m_rightMaster.config_kI(0, DriveConstants.kRightVelocityI, 0);
+	m_rightMaster.config_kD(0, DriveConstants.kRightVelocityD, 0);
+
+	m_leftMaster.setNeutralMode(NeutralMode.Brake);
+	m_leftSlave1.setNeutralMode(NeutralMode.Brake);
 	m_rightMaster.setNeutralMode(NeutralMode.Brake);
 	m_rightSlave1.setNeutralMode(NeutralMode.Brake);
-
 	m_brakeModeOn = true;
 
 	m_nav = new AHRS(SerialPort.Port.kMXP);
@@ -71,17 +82,47 @@ public class Drive extends Subsystem {
     }
 
     /**
-     * Set drivetrain motor power to value between -1.0 and +1.0
-     * 
-     * @param leftPower
-     * @param rightPower
+     * @param leftPercentOutput
+     *            (from -1.0 to +1.0)
+     * @param rightPercentOutput
+     *            (from -1.0 to +1.0)
      */
-    public void setPower(double leftPower, double rightPower) {
-	m_leftMaster.set(ControlMode.PercentOutput, leftPower);
-	m_leftSlave1.set(ControlMode.PercentOutput, leftPower);
+    public void setPower(double leftPercentOutput, double rightPercentOutput) {
+	m_leftMaster.set(ControlMode.PercentOutput, leftPercentOutput);
+	m_rightMaster.set(ControlMode.PercentOutput, rightPercentOutput);
+    }
 
-	m_rightMaster.set(ControlMode.PercentOutput, rightPower);
-	m_rightSlave1.set(ControlMode.PercentOutput, rightPower);
+    /**
+     * @param leftVoltage
+     *            (from -12V to +12V)
+     * @param rightVoltage
+     *            (from -12V to +12V)
+     */
+    public void setVoltage(double leftVoltage, double rightVoltage) {
+	m_leftMaster.set(ControlMode.PercentOutput, leftVoltage / m_leftMaster.getBusVoltage());
+	m_rightMaster.set(ControlMode.PercentOutput, rightVoltage / m_rightMaster.getBusVoltage());
+    }
+
+    /**
+     * @param leftVelocity
+     *            (ticks / 100ms)
+     * @param rightVelocity
+     *            (ticks / 100ms)
+     */
+    public void setVelocity(double leftVelocity, double rightVelocity) {
+	m_leftMaster.set(ControlMode.Velocity, leftVelocity);
+	m_rightMaster.set(ControlMode.Velocity, rightVelocity);
+    }
+
+    /**
+     * @param leftPercentVelocity
+     *            (from -1.0 to +1.0)
+     * @param rightPercentVelocity
+     *            (from -1.0 to +1.0)
+     */
+    public void setPercentVelocity(double leftPercentVelocity, double rightPercentVelocity) {
+	m_leftMaster.set(ControlMode.Velocity, leftPercentVelocity * DriveConstants.kMaxVelocity);
+	m_rightMaster.set(ControlMode.Velocity, rightPercentVelocity * DriveConstants.kMaxVelocity);
     }
 
     public void setBrakeMode(boolean enabled) {
@@ -194,37 +235,47 @@ public class Drive extends Subsystem {
 	return (getLeftPosition() + getRightPosition() / 2);
     }
 
-    public double getLeftSpeed() {
+    public double getLeftVelocity() {
 	return m_leftMaster.getSelectedSensorVelocity(1);
     }
 
-    public double getRightSpeed() {
+    public double getRightVelocity() {
 	return m_rightMaster.getSelectedSensorVelocity(2);
     }
 
-    public double getRightCurrent() {
+    public double getRightMasterCurrent() {
 	return m_rightMaster.getOutputCurrent();
     }
 
-    public double getLeftCurrent() {
+    public double getLeftMasterCurrent() {
 	return m_leftMaster.getOutputCurrent();
     }
 
-    public double getRightVoltage() {
+    public double getRightSlaveCurrent() {
+	return m_rightSlave1.getOutputCurrent();
+    }
+
+    public double getLeftSlaveCurrent() {
+	return m_leftSlave1.getOutputCurrent();
+    }
+
+    public double getRightMasterVoltage() {
 	return m_rightMaster.getMotorOutputVoltage();
     }
 
-    public double getLeftVoltage() {
+    public double getLeftMasterVoltage() {
 	return m_leftMaster.getMotorOutputVoltage();
     }
 
-    public void resetEncoders() {
-	// m_leftSensorOffset = getLeftPosition();
-	// m_rightSensorOffset = getRightPosition();
-	//
-	// m_leftSensorCumulativeOffset += m_leftSensorOffset;
-	// m_rightSensorOffset += m_rightSensorOffset;
+    public double getRightSlaveVoltage() {
+	return m_rightSlave1.getMotorOutputVoltage();
+    }
 
+    public double getLeftSlaveVoltage() {
+	return m_leftSlave1.getMotorOutputVoltage();
+    }
+
+    public void resetEncoders() {
 	m_leftMaster.setSelectedSensorPosition(0, 0, 0);
 	m_rightMaster.setSelectedSensorPosition(0, 0, 0);
     }
@@ -236,27 +287,43 @@ public class Drive extends Subsystem {
     public boolean testDriveSubsystem() {
 	boolean failed = false;
 
-	double expectedSpeed = getRightSpeed();
-	if (Math.abs(getLeftSpeed() - expectedSpeed) > DriveConstants.kVelocityEpsilon) {
+	double expectedSpeed = getRightVelocity();
+	if (Math.abs(getLeftVelocity() - expectedSpeed) > DriveConstants.kVelocityEpsilon) {
 	    failed = true;
-	    DriverStation.reportError("Left Master Speed != Right Master Speed (Drive subsystem test)", false);
-	    System.out.println("Left Master Speed != Right Master Speed (Drive subsystem test)");
+	    DriverStation.reportError("Drive Velocities Unequal (Drive subsystem test)", false);
+	    System.out.println("Drive Velocities Unequal (Drive subsystem test)");
 	}
 
-	double expectedCurrent = getRightCurrent();
-	if (Math.abs(getLeftCurrent() - expectedCurrent) > DriveConstants.kCurrentEpsilon || getRightCurrent() == 0
-		|| getLeftCurrent() == 0) {
+	double expectedCurrent = getRightMasterCurrent();
+	if (Math.abs(getLeftMasterCurrent() - expectedCurrent) > DriveConstants.kCurrentEpsilon
+		|| Math.abs(getRightSlaveCurrent() - expectedCurrent) > DriveConstants.kCurrentEpsilon
+		|| Math.abs(getLeftSlaveCurrent() - expectedCurrent) > DriveConstants.kCurrentEpsilon) {
 	    failed = true;
-	    DriverStation.reportError("Check Drive Current (Drive subsystem test)", false);
-	    System.out.println("Check Drive Current (Drive subsystem test)");
+	    DriverStation.reportError("Drive Currents Unequal (Drive subsystem test)", false);
+	    System.out.println("Drive Currents Unequal (Drive subsystem test)");
 	}
 
-	double expectedVoltage = getRightVoltage();
-	if (Math.abs(getLeftVoltage() - expectedVoltage) > DriveConstants.kVoltageEpsilon || getRightVoltage() == 0
-		|| getLeftVoltage() == 0) {
+	double expectedVoltage = getRightMasterVoltage();
+	if (Math.abs(getLeftMasterVoltage() - expectedVoltage) > DriveConstants.kVoltageEpsilon
+		|| Math.abs(getRightSlaveVoltage() - expectedVoltage) > DriveConstants.kVoltageEpsilon
+		|| Math.abs(getLeftSlaveVoltage() - expectedVoltage) > DriveConstants.kVoltageEpsilon) {
 	    failed = true;
-	    DriverStation.reportError("Check Drive Voltage (Drive subsystem test)", false);
-	    System.out.println("Check Drive Voltage (Drive subsystem test)");
+	    DriverStation.reportError("Drive Voltages Unequal (Drive subsystem test)", false);
+	    System.out.println("Drive Voltages Unequal (Drive subsystem test)");
+	}
+
+	if (getLeftMasterCurrent() == 0 || getRightMasterCurrent() == 0 || getLeftSlaveCurrent() == 0
+		|| getRightMasterCurrent() == 0) {
+	    failed = true;
+	    DriverStation.reportError("Drive Current at 0 (Drive subsystem test)", false);
+	    System.out.println("Drive Current at 0 (Drive subsystem test)");
+	}
+
+	if (getLeftMasterVoltage() == 0 || getRightMasterVoltage() == 0 || getLeftSlaveVoltage() == 0
+		|| getRightMasterVoltage() == 0) {
+	    failed = true;
+	    DriverStation.reportError("Drive Voltage at 0 (Drive subsystem test)", false);
+	    System.out.println("Drive Voltage at 0 (Drive subsystem test)");
 	}
 
 	return failed;
@@ -265,15 +332,20 @@ public class Drive extends Subsystem {
     public void reportToSmartDashboard() {
 	SmartDashboard.putBoolean("Brake Mode On", m_brakeModeOn);
 
-	SmartDashboard.putNumber("Left Master Voltage", m_leftMaster.getMotorOutputVoltage());
-	SmartDashboard.putNumber("Left Slave 1 Voltage", m_leftSlave1.getMotorOutputVoltage());
-	SmartDashboard.putNumber("Right Master Voltage", m_rightMaster.getMotorOutputVoltage());
-	SmartDashboard.putNumber("Right Slave 1 Voltage", m_rightSlave1.getMotorOutputVoltage());
+	SmartDashboard.putNumber("Left Master Voltage", getLeftMasterVoltage());
+	SmartDashboard.putNumber("Left Slave 1 Voltage", getLeftSlaveVoltage());
+	SmartDashboard.putNumber("Right Master Voltage", getRightMasterVoltage());
+	SmartDashboard.putNumber("Right Slave 1 Voltage", getRightSlaveVoltage());
 
-	SmartDashboard.putNumber("Left Master Current", m_leftMaster.getOutputCurrent());
-	SmartDashboard.putNumber("Left Slave 1 Current", m_leftSlave1.getOutputCurrent());
-	SmartDashboard.putNumber("Right Master Current", m_rightMaster.getOutputCurrent());
-	SmartDashboard.putNumber("Right Slave 1 Current", m_rightSlave1.getOutputCurrent());
+	SmartDashboard.putNumber("Left Master Current", getLeftMasterCurrent());
+	SmartDashboard.putNumber("Left Slave 1 Current", getLeftSlaveCurrent());
+	SmartDashboard.putNumber("Right Master Current", getRightMasterCurrent());
+	SmartDashboard.putNumber("Right Slave 1 Current", getRightSlaveCurrent());
+
+	SmartDashboard.putNumber("Left Position", getLeftPosition());
+	SmartDashboard.putNumber("Right Position", getRightPosition());
+	SmartDashboard.putNumber("Left Velocity", getLeftVelocity());
+	SmartDashboard.putNumber("Right Velocity", getRightVelocity());
     }
 
 }
