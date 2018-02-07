@@ -5,9 +5,11 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.team687.frc2018.Robot;
 import com.team687.frc2018.RobotMap;
 import com.team687.frc2018.commands.drive.teleop.TankDrive;
 import com.team687.frc2018.constants.DriveConstants;
+import com.team687.frc2018.utilities.CSVDatum;
 import com.team687.frc2018.utilities.NerdyMath;
 import com.team687.lib.kauailabs.navx.frc.AHRS;
 import com.team687.lib.kauailabs.sf2.frc.navXSensor;
@@ -327,15 +329,43 @@ public class Drive extends Subsystem {
 	SmartDashboard.putNumber("Left Slave 1 Current", getLeftSlaveCurrent());
 	SmartDashboard.putNumber("Right Master Current", getRightMasterCurrent());
 	SmartDashboard.putNumber("Right Slave 1 Current", getRightSlaveCurrent());
+    }
 
-	SmartDashboard.putNumber("Left Position", getLeftPosition());
-	SmartDashboard.putNumber("Right Position", getRightPosition());
-	SmartDashboard.putNumber("Left Velocity", getLeftVelocity());
-	SmartDashboard.putNumber("Right Velocity", getRightVelocity());
+    private CSVDatum m_leftMasterVoltage, m_leftSlaveVoltage, m_rightMasterVoltage, m_rightSlaveVoltage;
+    private CSVDatum m_leftMasterCurrent, m_leftSlaveCurrent, m_rightMasterCurrent, m_rightSlaveCurrent;
 
-	SmartDashboard.putNumber("Yaw", getCurrentYaw());
-	SmartDashboard.putNumber("Pitch", getCurrentPitch());
-	SmartDashboard.putNumber("Roll", getCurrentRoll());
+    public void addLoggedData() {
+	m_leftMasterVoltage = new CSVDatum("drive_leftMasterVoltage");
+	m_leftSlaveVoltage = new CSVDatum("drive_leftSlaveVoltage");
+	m_rightMasterVoltage = new CSVDatum("drive_rightMasterVoltage");
+	m_rightSlaveVoltage = new CSVDatum("drive_rightSlaveVoltage");
+
+	m_leftMasterCurrent = new CSVDatum("drive_leftMasterCurrent");
+	m_leftSlaveCurrent = new CSVDatum("drive_leftSlaveCurrent");
+	m_rightMasterCurrent = new CSVDatum("drive_rightMasterCurrent");
+	m_rightSlaveCurrent = new CSVDatum("drive_rightSlaveCurrent");
+
+	Robot.logger.addCSVDatum(m_leftMasterVoltage);
+	Robot.logger.addCSVDatum(m_leftSlaveVoltage);
+	Robot.logger.addCSVDatum(m_rightMasterVoltage);
+	Robot.logger.addCSVDatum(m_rightSlaveVoltage);
+
+	Robot.logger.addCSVDatum(m_leftMasterCurrent);
+	Robot.logger.addCSVDatum(m_leftSlaveCurrent);
+	Robot.logger.addCSVDatum(m_rightMasterCurrent);
+	Robot.logger.addCSVDatum(m_rightSlaveCurrent);
+    }
+
+    public void updateLog() {
+	m_leftMasterVoltage.updateValue(getLeftMasterVoltage());
+	m_leftSlaveVoltage.updateValue(getLeftSlaveVoltage());
+	m_rightMasterVoltage.updateValue(getRightMasterVoltage());
+	m_rightSlaveVoltage.updateValue(getRightSlaveVoltage());
+
+	m_leftMasterCurrent.updateValue(getLeftMasterCurrent());
+	m_leftSlaveCurrent.updateValue(getLeftSlaveCurrent());
+	m_rightMasterCurrent.updateValue(getRightMasterCurrent());
+	m_rightSlaveCurrent.updateValue(getRightSlaveCurrent());
     }
 
 }

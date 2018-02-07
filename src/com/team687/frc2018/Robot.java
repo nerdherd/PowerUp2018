@@ -29,6 +29,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
+	logger = CSVLogger.getInstance();
+
 	pdp = new PowerDistributionPanel();
 	compressor = new Compressor();
 	compressor.start();
@@ -53,7 +55,6 @@ public class Robot extends TimedRobot {
 
 	visionAdapter = VisionAdapter.getInstance();
 	odometry = Odometry.getInstance();
-	logger = CSVLogger.getInstance();
     }
 
     @Override
@@ -121,7 +122,8 @@ public class Robot extends TimedRobot {
 	visionAdapter.reportToSmartDashboard();
 	odometry.update();
 
-	arm.addLoggedData();
+	drive.addLoggedData();
+	// arm.addLoggedData();
 	logger.startLog();
     }
 
@@ -137,6 +139,7 @@ public class Robot extends TimedRobot {
 	visionAdapter.reportToSmartDashboard();
 	odometry.update();
 
+	drive.addLoggedData();
 	arm.updateLog();
 	logger.logToCSV();
     }
