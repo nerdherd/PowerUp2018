@@ -68,6 +68,7 @@ public class Robot extends TimedRobot {
 
 	visionAdapter.reportToSmartDashboard();
 	odometry.update();
+	odometry.reportToSmartDashboard();
 	logger.stopLog();
     }
 
@@ -82,6 +83,7 @@ public class Robot extends TimedRobot {
 
 	visionAdapter.reportToSmartDashboard();
 	odometry.update();
+	odometry.reportToSmartDashboard();
     }
 
     @Override
@@ -95,6 +97,7 @@ public class Robot extends TimedRobot {
 
 	visionAdapter.reportToSmartDashboard();
 	odometry.update();
+	odometry.reportToSmartDashboard();
     }
 
     @Override
@@ -108,6 +111,7 @@ public class Robot extends TimedRobot {
 
 	visionAdapter.reportToSmartDashboard();
 	odometry.update();
+	odometry.reportToSmartDashboard();
     }
 
     @Override
@@ -121,8 +125,10 @@ public class Robot extends TimedRobot {
 
 	visionAdapter.reportToSmartDashboard();
 	odometry.update();
+	odometry.reportToSmartDashboard();
 
 	drive.addLoggedData();
+	odometry.addLoggedData();
 	// arm.addLoggedData();
 	logger.startLog();
     }
@@ -138,9 +144,11 @@ public class Robot extends TimedRobot {
 
 	visionAdapter.reportToSmartDashboard();
 	odometry.update();
+	odometry.reportToSmartDashboard();
 
-	drive.addLoggedData();
-	arm.updateLog();
+	drive.updateLog();
+	odometry.updateLog();
+	// arm.updateLog();
 	logger.logToCSV();
     }
 
@@ -155,5 +163,6 @@ public class Robot extends TimedRobot {
 
 	visionAdapter.reportToSmartDashboard();
 	odometry.update();
+	odometry.reportToSmartDashboard();
     }
 }
