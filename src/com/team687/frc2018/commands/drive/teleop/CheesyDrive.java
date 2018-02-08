@@ -31,8 +31,8 @@ public class CheesyDrive extends Command {
 	double rightPower, leftPower;
 	boolean isQuickTurn = Robot.oi.getQuickTurn();
 
-	double wheel = Robot.drive.handleDeadband(Robot.oi.getDriveJoyRightX(), DriveConstants.kJoystickDeadband);
-	double throttle = -Robot.drive.handleDeadband(Robot.oi.getDriveJoyLeftY(), DriveConstants.kJoystickDeadband);
+	double wheel = NerdyMath.handleDeadband(Robot.oi.getDriveJoyRightX(), DriveConstants.kJoystickDeadband);
+	double throttle = -NerdyMath.handleDeadband(Robot.oi.getDriveJoyLeftY(), DriveConstants.kJoystickDeadband);
 
 	rightPower = leftPower = throttle;
 

@@ -14,6 +14,19 @@ public class DriveConstants {
     public final static double kWheelDiameter = 2.54; // in inches
     public final static double kDrivetrainWidth = 25.4; // in inches
 
+    // Velocity PIDF
+    public final static double kRightVelocityF = 0;
+    public final static double kRightVelocityP = 0;
+    public final static double kRightVelocityI = 0;
+    public final static double kRightVelocityD = 0;
+
+    public final static double kLeftVelocityF = 0;
+    public final static double kLeftVelocityP = 0;
+    public final static double kLeftVelocityI = 0;
+    public final static double kLeftVelocityD = 0;
+
+    public final static double kMaxVelocity = 0; // max velocity on ground
+
     // Distance PID
     public final static PGains kDistRightPGains = new PGains(0, 0, 1.0);
     public final static PGains kDistLeftPGains = new PGains(0, 0, 1.0);
@@ -28,14 +41,13 @@ public class DriveConstants {
     public final static int kDriveRotationCounter = 3;
 
     // Motion Profiling
-    public final static double kMaxVelocity = 0;
+    public final static double kCruiseVelocity = 0;
     public final static double kMaxAcceleration = 0;
     public final static double kMaxJerk = 0;
     public final static double kV = 0;
     public final static double kA = 0;
     public final static double kDt = 0.01;
     public final static double kDtInMinutes = kDt / 60;
-    public final static double kCruiseVelocity = 0;
 
     // Collision Detection
     public final static double kCollisionThreshold = 100000;
@@ -58,6 +70,8 @@ public class DriveConstants {
     public final static double kCurvatureFunction = 85;
 
     // subsystem testing
-    public final static double rpmEpsilon = 254;
+    public final static double kVelocityEpsilon = 254;
+    public final static double kCurrentEpsilon = 10;
+    public final static double kVoltageEpsilon = 2;
 
 }
