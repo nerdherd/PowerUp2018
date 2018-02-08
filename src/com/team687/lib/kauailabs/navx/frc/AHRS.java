@@ -21,9 +21,9 @@ import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SensorBase;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
 import edu.wpi.first.wpilibj.tables.ITable;
-import edu.wpi.first.wpilibj.Timer;
 
 /**
  * The AHRS class provides an interface to AHRS capabilities of the KauaiLabs
@@ -44,6 +44,7 @@ import edu.wpi.first.wpilibj.Timer;
  * @author Scott
  */
 
+@SuppressWarnings("deprecation")
 public class AHRS extends SensorBase implements PIDSource, LiveWindowSendable {
 
     /**

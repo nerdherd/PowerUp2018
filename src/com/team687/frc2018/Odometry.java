@@ -19,9 +19,9 @@ public class Odometry {
     private double m_yawDegrees, m_pitchDegrees, m_rollDegrees;
     private double m_yawRadians;
     private double m_accelX, m_accelY, m_accelZ;
-    private double m_derivedYaw;
-    private double m_angularVelocity;
-    private double m_arcRadius;
+
+    @SuppressWarnings("unused")
+    private double m_derivedYaw, m_angularVelocity, m_arcRadius;
 
     private double m_leftPosition, m_rightPosition;
     private double m_lastLeftPosition, m_lastRightPosition;

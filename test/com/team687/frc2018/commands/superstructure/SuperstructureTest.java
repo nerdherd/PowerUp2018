@@ -13,8 +13,6 @@ public class SuperstructureTest {
     public static ArmSimulation m_armSimulation = new ArmSimulation();
     public static WristSimulation m_wristSimulation = new WristSimulation();
 
-    private double kEpsilon = 0.0001;
-
     public void stowSuperstructure() {
 	System.out.println("StowSuperstructure");
 	m_wristSimulation.setPosition(SuperstructureConstants.kWristStowPos);

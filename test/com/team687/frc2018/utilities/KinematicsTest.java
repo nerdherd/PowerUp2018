@@ -36,7 +36,6 @@ public class KinematicsTest {
     private double m_angularVelocity;
     private double m_radius;
     private double m_dt; // in seconds
-    private double m_time;
 
     public KinematicsTest(double[] rawVal) {
 	m_x = rawVal[0];
