@@ -77,7 +77,7 @@ public class Drive extends Subsystem {
 	m_leftMaster.configContinuousCurrentLimit(DriveConstants.kContinuousCurrentLimit, 0);
 	m_leftMaster.enableCurrentLimit(true);
 	m_leftMaster.configOpenloopRamp(DriveConstants.kVoltageRampRate, 0);
-	m_leftMaster.configClosedloopRamp(DriveConstants.kVoltageEpsilon, 0);
+	m_leftMaster.configClosedloopRamp(DriveConstants.kVoltageRampRate, 0);
 
 	m_rightMaster.configPeakCurrentLimit(DriveConstants.kPeakCurrentLimit, 0);
 	m_rightMaster.configContinuousCurrentLimit(DriveConstants.kContinuousCurrentLimit, 0);
@@ -345,6 +345,7 @@ public class Drive extends Subsystem {
 
     private CSVDatum m_leftMasterVoltage, m_leftSlaveVoltage, m_rightMasterVoltage, m_rightSlaveVoltage;
     private CSVDatum m_leftMasterCurrent, m_leftSlaveCurrent, m_rightMasterCurrent, m_rightSlaveCurrent;
+    private CSVDatum m_busVoltage;
 
     public void addLoggedData() {
 	m_leftMasterVoltage = new CSVDatum("drive_leftMasterVoltage");
@@ -357,6 +358,8 @@ public class Drive extends Subsystem {
 	m_rightMasterCurrent = new CSVDatum("drive_rightMasterCurrent");
 	m_rightSlaveCurrent = new CSVDatum("drive_rightSlaveCurrent");
 
+	m_busVoltage = new CSVDatum("busVoltage");
+
 	Robot.logger.addCSVDatum(m_leftMasterVoltage);
 	Robot.logger.addCSVDatum(m_leftSlaveVoltage);
 	Robot.logger.addCSVDatum(m_rightMasterVoltage);
@@ -366,6 +369,8 @@ public class Drive extends Subsystem {
 	Robot.logger.addCSVDatum(m_leftSlaveCurrent);
 	Robot.logger.addCSVDatum(m_rightMasterCurrent);
 	Robot.logger.addCSVDatum(m_rightSlaveCurrent);
+
+	Robot.logger.addCSVDatum(m_busVoltage);
     }
 
     public void updateLog() {
@@ -378,6 +383,8 @@ public class Drive extends Subsystem {
 	m_leftSlaveCurrent.updateValue(getLeftSlaveCurrent());
 	m_rightMasterCurrent.updateValue(getRightMasterCurrent());
 	m_rightSlaveCurrent.updateValue(getRightSlaveCurrent());
+
+	m_busVoltage.updateValue(Robot.pdp.getVoltage());
     }
 
 }
