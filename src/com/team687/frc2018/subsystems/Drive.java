@@ -73,6 +73,18 @@ public class Drive extends Subsystem {
 	m_rightSlave1.setNeutralMode(NeutralMode.Brake);
 	m_brakeModeOn = true;
 
+	m_leftMaster.configPeakCurrentLimit(DriveConstants.kPeakCurrentLimit, 0);
+	m_leftMaster.configContinuousCurrentLimit(DriveConstants.kContinuousCurrentLimit, 0);
+	m_leftMaster.enableCurrentLimit(true);
+	m_leftMaster.configOpenloopRamp(DriveConstants.kVoltageRampRate, 0);
+	m_leftMaster.configClosedloopRamp(DriveConstants.kVoltageEpsilon, 0);
+
+	m_rightMaster.configPeakCurrentLimit(DriveConstants.kPeakCurrentLimit, 0);
+	m_rightMaster.configContinuousCurrentLimit(DriveConstants.kContinuousCurrentLimit, 0);
+	m_rightMaster.enableCurrentLimit(true);
+	m_rightMaster.configOpenloopRamp(DriveConstants.kVoltageRampRate, 0);
+	m_rightMaster.configClosedloopRamp(DriveConstants.kVoltageRampRate, 0);
+
 	m_nav = new AHRS(SerialPort.Port.kMXP);
 	m_navxsensor = new navXSensor(m_nav, "Drivetrain Orientation");
 	m_orientationHistory = new OrientationHistory(m_navxsensor, m_nav.getRequestedUpdateRate() * 10);

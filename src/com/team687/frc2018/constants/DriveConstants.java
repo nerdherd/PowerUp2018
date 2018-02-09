@@ -14,6 +14,11 @@ public class DriveConstants {
     public final static double kWheelDiameter = 2.54; // in inches
     public final static double kDrivetrainWidth = 25.4; // in inches
 
+    // Safety
+    public final static int kPeakCurrentLimit = 60;
+    public final static int kContinuousCurrentLimit = 50;
+    public final static double kVoltageRampRate = 0.05; // seconds
+
     // Velocity PIDF
     public final static double kRightVelocityF = 0;
     public final static double kRightVelocityP = 0;
