@@ -3,12 +3,15 @@ package com.team687.frc2018.commands.superstructure;
 import com.team687.frc2018.Robot;
 import com.team687.frc2018.constants.SuperstructureConstants;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class StowToScale extends Command {
+public class ForwardsScaleToStow extends Command {
 
-    public StowToScale() {
+    private double m_startTime;
+
+    public ForwardsScaleToStow() {
 	requires(Robot.arm);
 	requires(Robot.wrist);
 	requires(Robot.intake);
@@ -16,17 +19,18 @@ public class StowToScale extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "ScaleScorePosition");
+	SmartDashboard.putString("Current Command", "ForwardsScaleToStow");
+
+	m_startTime = Timer.getFPGATimestamp();
     }
 
     @Override
     protected void execute() {
-	Robot.intake.setRollerPower(-0.3); // hold cube in place as we go up
-	Robot.arm.setPosition(SuperstructureConstants.kArmAutoScaleScorePos);
-	if (Robot.arm.getPosition() > SuperstructureConstants.kArmWristSafePos) {
-	    Robot.wrist.setPosition(SuperstructureConstants.kWristScoreScalePos);
-	} else {
-	    Robot.wrist.setPosition(SuperstructureConstants.kWristStowOffsetPos);
+	Robot.intake.setRollerPower(0);
+	Robot.wrist.setPosition(SuperstructureConstants.kWristStowArmOffsetPos);
+	// give the wrist a head start
+	if (Timer.getFPGATimestamp() - m_startTime > 0.5) {
+	    Robot.arm.setPosition(SuperstructureConstants.kArmOffsetPos);
 	}
     }
 
