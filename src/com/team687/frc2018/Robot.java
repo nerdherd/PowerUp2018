@@ -6,7 +6,6 @@ import com.team687.frc2018.subsystems.Intake;
 import com.team687.frc2018.subsystems.Wrist;
 import com.team687.frc2018.utilities.CSVLogger;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -19,7 +18,6 @@ public class Robot extends TimedRobot {
     public static Intake intake;
 
     public static PowerDistributionPanel pdp;
-    public static Compressor compressor;
     public static OI oi;
 
     public static VisionAdapter visionAdapter;
@@ -32,8 +30,6 @@ public class Robot extends TimedRobot {
 	logger = CSVLogger.getInstance();
 
 	pdp = new PowerDistributionPanel();
-	compressor = new Compressor();
-	compressor.start();
 
 	arm = new Arm();
 	arm.setVoltage(0);

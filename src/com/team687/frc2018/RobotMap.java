@@ -11,16 +11,16 @@ import edu.wpi.first.wpilibj.I2C.Port;
 
 public class RobotMap {
 
-    public static final int kRightSlaveTalon1ID = 0;
-    public static final int kLeftSlaveTalon1ID = 1;
-    public static final int kLeftMasterTalonID = 2;
-    public static final int kRightMasterTalonID = 3;
+    public static final int kRightMasterTalonID = 15;
+    public static final int kRightSlaveTalon1ID = 14;
+    public static final int kLeftMasterTalonID = 12;
+    public static final int kLeftSlaveTalon1ID = 13;
 
     public static final Port navID = Port.kMXP;
 
-    public static final int kArmID = 12;
-    public static final int kWristID = 13;
-    public static final int kIntakeRollersID = 14;
+    public static final int kArmID = 3;
+    public static final int kWristID = 2;
+    public static final int kIntakeRollersID = 1;
 
     public static final int kLimitSwitchID = 9;
 

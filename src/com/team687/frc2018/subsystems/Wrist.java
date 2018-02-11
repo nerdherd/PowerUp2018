@@ -26,20 +26,23 @@ public class Wrist extends Subsystem {
 	m_wrist.config_kP(0, SuperstructureConstants.kWristP, 0);
 	m_wrist.config_kI(0, SuperstructureConstants.kWristI, 0);
 	m_wrist.config_kD(0, SuperstructureConstants.kWristD, 0);
-	m_wrist.setNeutralMode(NeutralMode.Brake);
+	m_wrist.setNeutralMode(NeutralMode.Coast);
 
 	m_wrist.configPeakOutputForward(SuperstructureConstants.kWristMaxVoltageForward / 12, 0);
 	m_wrist.configPeakOutputReverse(SuperstructureConstants.kWristMaxVoltageReverse / 12, 0);
 	m_wrist.configClosedloopRamp(SuperstructureConstants.kWristRampRate, 0);
 
-	m_wrist.configPeakCurrentLimit(SuperstructureConstants.kWristPeakCurrent, 0);
+	m_wrist.configPeakCurrentLimit(0, 0);
 	m_wrist.configContinuousCurrentLimit(SuperstructureConstants.kWristContinuousCurrent, 0);
 	m_wrist.enableCurrentLimit(true);
 
 	m_wrist.configForwardSoftLimitThreshold(SuperstructureConstants.kWristForwardSoftLimit, 0);
 	m_wrist.configReverseSoftLimitThreshold(SuperstructureConstants.kWristReverseSoftLimit, 0);
-	m_wrist.configForwardSoftLimitEnable(true, 0);
-	m_wrist.configReverseSoftLimitEnable(true, 0);
+	m_wrist.configForwardSoftLimitEnable(false, 0);
+	m_wrist.configReverseSoftLimitEnable(false, 0);
+
+	m_wrist.setInverted(true);
+	m_wrist.setSensorPhase(true);
 
 	m_wrist.setStatusFramePeriod(StatusFrame.Status_1_General, 10, 0);
 	m_wrist.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 20, 0);

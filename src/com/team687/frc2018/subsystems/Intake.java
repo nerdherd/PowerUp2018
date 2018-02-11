@@ -23,7 +23,11 @@ public class Intake extends Subsystem {
     public Intake() {
 	m_rollers = new TalonSRX(RobotMap.kIntakeRollersID);
 	m_rollers.setNeutralMode(NeutralMode.Coast);
-	m_rollers.setStatusFramePeriod(StatusFrame.Status_1_General, 15, 0);
+	m_rollers.setStatusFramePeriod(StatusFrame.Status_1_General, 20, 0);
+
+	m_rollers.configPeakOutputForward(1, 0);
+	m_rollers.configPeakOutputReverse(-1, 0);
+	m_rollers.enableCurrentLimit(false);
 
 	m_switch = new DigitalInput(RobotMap.kLimitSwitchID);
     }
