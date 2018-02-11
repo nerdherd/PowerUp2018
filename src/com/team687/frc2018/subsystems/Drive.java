@@ -7,7 +7,7 @@ import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.team687.frc2018.Robot;
 import com.team687.frc2018.RobotMap;
-import com.team687.frc2018.commands.drive.teleop.TankDrive;
+import com.team687.frc2018.commands.drive.teleop.ArcadeDrive;
 import com.team687.frc2018.constants.DriveConstants;
 import com.team687.frc2018.utilities.CSVDatum;
 import com.team687.frc2018.utilities.NerdyMath;
@@ -48,20 +48,28 @@ public class Drive extends Subsystem {
 	m_rightSlave1.follow(m_rightMaster);
 
 	m_leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
-	m_leftMaster.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, 0);
+	m_leftMaster.setStatusFramePeriod(StatusFrame.Status_1_General, 20, 0);
+	m_leftMaster.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 20, 0);
 	m_leftMaster.setInverted(false);
 	m_leftSlave1.setInverted(false);
 	m_leftMaster.setSensorPhase(true);
+	m_leftMaster.configForwardSoftLimitEnable(false, 0);
+	m_leftMaster.configReverseSoftLimitEnable(false, 0);
+
 	m_leftMaster.config_kF(0, DriveConstants.kLeftVelocityF, 0);
 	m_leftMaster.config_kP(0, DriveConstants.kLeftVelocityP, 0);
 	m_leftMaster.config_kI(0, DriveConstants.kLeftVelocityI, 0);
 	m_leftMaster.config_kD(0, DriveConstants.kLeftVelocityD, 0);
 
 	m_rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
-	m_rightMaster.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, 0);
+	m_leftMaster.setStatusFramePeriod(StatusFrame.Status_1_General, 20, 0);
+	m_rightMaster.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 20, 0);
 	m_rightMaster.setInverted(true);
 	m_rightSlave1.setInverted(true);
 	m_rightMaster.setSensorPhase(true);
+	m_rightMaster.configForwardSoftLimitEnable(false, 0);
+	m_rightMaster.configReverseSoftLimitEnable(false, 0);
+
 	m_rightMaster.config_kF(0, DriveConstants.kRightVelocityF, 0);
 	m_rightMaster.config_kP(0, DriveConstants.kRightVelocityP, 0);
 	m_rightMaster.config_kI(0, DriveConstants.kRightVelocityI, 0);
@@ -73,6 +81,22 @@ public class Drive extends Subsystem {
 	m_rightSlave1.setNeutralMode(NeutralMode.Brake);
 	m_brakeModeOn = true;
 
+	m_leftMaster.configPeakCurrentLimit(0, 0);
+	m_leftMaster.configPeakCurrentDuration(0, 0);
+	m_leftMaster.configContinuousCurrentLimit(DriveConstants.kContinuousCurrentLimit, 0);
+	m_leftMaster.enableCurrentLimit(true);
+	m_leftSlave1.enableCurrentLimit(false);
+	m_leftMaster.configOpenloopRamp(DriveConstants.kVoltageRampRate, 0);
+	m_leftMaster.configClosedloopRamp(DriveConstants.kVoltageRampRate, 0);
+
+	m_rightMaster.configPeakCurrentLimit(0, 0);
+	m_rightMaster.configPeakCurrentDuration(0, 0);
+	m_rightMaster.configContinuousCurrentLimit(DriveConstants.kContinuousCurrentLimit, 0);
+	m_rightMaster.enableCurrentLimit(true);
+	m_rightSlave1.enableCurrentLimit(false);
+	m_rightMaster.configOpenloopRamp(DriveConstants.kVoltageRampRate, 0);
+	m_rightMaster.configClosedloopRamp(DriveConstants.kVoltageRampRate, 0);
+
 	m_nav = new AHRS(SerialPort.Port.kMXP);
 	m_navxsensor = new navXSensor(m_nav, "Drivetrain Orientation");
 	m_orientationHistory = new OrientationHistory(m_navxsensor, m_nav.getRequestedUpdateRate() * 10);
@@ -80,7 +104,7 @@ public class Drive extends Subsystem {
 
     @Override
     protected void initDefaultCommand() {
-	setDefaultCommand(new TankDrive());
+	setDefaultCommand(new ArcadeDrive());
     }
 
     /**
@@ -333,6 +357,7 @@ public class Drive extends Subsystem {
 
     private CSVDatum m_leftMasterVoltage, m_leftSlaveVoltage, m_rightMasterVoltage, m_rightSlaveVoltage;
     private CSVDatum m_leftMasterCurrent, m_leftSlaveCurrent, m_rightMasterCurrent, m_rightSlaveCurrent;
+    private CSVDatum m_busVoltage;
 
     public void addLoggedData() {
 	m_leftMasterVoltage = new CSVDatum("drive_leftMasterVoltage");
@@ -345,6 +370,8 @@ public class Drive extends Subsystem {
 	m_rightMasterCurrent = new CSVDatum("drive_rightMasterCurrent");
 	m_rightSlaveCurrent = new CSVDatum("drive_rightSlaveCurrent");
 
+	m_busVoltage = new CSVDatum("busVoltage");
+
 	Robot.logger.addCSVDatum(m_leftMasterVoltage);
 	Robot.logger.addCSVDatum(m_leftSlaveVoltage);
 	Robot.logger.addCSVDatum(m_rightMasterVoltage);
@@ -354,6 +381,8 @@ public class Drive extends Subsystem {
 	Robot.logger.addCSVDatum(m_leftSlaveCurrent);
 	Robot.logger.addCSVDatum(m_rightMasterCurrent);
 	Robot.logger.addCSVDatum(m_rightSlaveCurrent);
+
+	Robot.logger.addCSVDatum(m_busVoltage);
     }
 
     public void updateLog() {
@@ -366,6 +395,8 @@ public class Drive extends Subsystem {
 	m_leftSlaveCurrent.updateValue(getLeftSlaveCurrent());
 	m_rightMasterCurrent.updateValue(getRightMasterCurrent());
 	m_rightSlaveCurrent.updateValue(getRightSlaveCurrent());
+
+	m_busVoltage.updateValue(Robot.pdp.getVoltage());
     }
 
 }

@@ -111,6 +111,16 @@ public class NerdyMath {
     }
 
     /**
+     * Cube input for sensitivity adjustment
+     * 
+     * @param input
+     * @return scaled output
+     */
+    public static double cubeInput(double input) {
+	return Math.pow(input, 3);
+    }
+
+    /**
      * Handles when the joystick moves slightly when you actually don't want it to
      * move at all
      * 

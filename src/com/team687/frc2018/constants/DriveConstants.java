@@ -14,18 +14,24 @@ public class DriveConstants {
     public final static double kWheelDiameter = 2.54; // in inches
     public final static double kDrivetrainWidth = 25.4; // in inches
 
+    // Safety
+    public final static int kPeakCurrentLimit = 0;
+    public final static int kContinuousCurrentLimit = 40;
+    public final static double kVoltageRampRate = 0.5; // seconds
+    public final static int kDistanceToAccelerate = 67000;
+
     // Velocity PIDF
-    public final static double kRightVelocityF = 0;
+    public final static double kRightVelocityF = 0.271352785;
     public final static double kRightVelocityP = 0;
     public final static double kRightVelocityI = 0;
     public final static double kRightVelocityD = 0;
 
-    public final static double kLeftVelocityF = 0;
+    public final static double kLeftVelocityF = 0.276411781;
     public final static double kLeftVelocityP = 0;
     public final static double kLeftVelocityI = 0;
     public final static double kLeftVelocityD = 0;
 
-    public final static double kMaxVelocity = 0; // max velocity on ground
+    public final static double kMaxVelocity = 3492; // max velocity on ground
 
     // Distance PID
     public final static PGains kDistRightPGains = new PGains(0, 0, 1.0);

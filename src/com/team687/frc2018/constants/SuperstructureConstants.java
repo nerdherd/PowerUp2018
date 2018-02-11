@@ -19,10 +19,11 @@ public class SuperstructureConstants {
     public static final int kArmPeakCurrent = 60;
     public static final int kArmContinuousCurrent = 60;
 
+    // confirmed
     public static final int kArmDownPos = 0;
     public static final int kArmOffsetPos = 682;
-    public static final int kArmHorizontalPos = 7173;
-    public static final int kArmVerticalPos = 20057;
+    public static final int kArmHorizontalPos = 7000;
+    public static final int kArmVerticalPos = 18550;
 
     // simulation purposes
     public static final int kArmSwitchPos = 118;
@@ -36,17 +37,20 @@ public class SuperstructureConstants {
     public static final int kArmForwardSoftLimit = kArmVerticalPos + 409;
     public static final int kArmReverseSoftLimit = kArmDownPos - 409;
 
-    public static final double kWristP = 0;
+    public static final double kWristP = 0.2046;
     public static final double kWristI = 0;
     public static final double kWristD = 0;
-    public static final double kWristMaxVoltageForward = 1;
-    public static final double kWristMaxVoltageReverse = -1;
+    public static final double kWristMaxVoltageForward = 4;
+    public static final double kWristMaxVoltageReverse = -4;
     public static final double kWristRampRate = 1;
-    public static final int kWristPeakCurrent = 40;
+    public static final int kWristPeakCurrent = 0;
     public static final int kWristContinuousCurrent = 40;
 
-    public static final int kWristIntakePos = 0;
-    public static final int kWristStowPos = 330;
+    // confirmed
+    public static final int kWristIntakePos = -2700;
+    public static final int kWristStowPos = 0;
+    public static final int kWristStowOffsetPos = -262;
+
     public static final int kWristSwitchPos = 148;
     public static final int kWristScaleTopPos = -2122;
     public static final int kWristScaleMidPos = -2056;
@@ -57,8 +61,8 @@ public class SuperstructureConstants {
     public static final int kWristForwardSoftLimit = kWristStowPos;
     public static final int kWristReverseSoftLimit = kWristScaleTopPos;
 
-    public static final double kRollerPower = 0.5;
-    public static final int kRollerMaxCurrent = 20;
+    public static final double kRollerPower = 1;
+    public static final int kRollerMaxCurrent = 40;
     public static final double kRollerOuttakeTime = 3.3;
 
 }

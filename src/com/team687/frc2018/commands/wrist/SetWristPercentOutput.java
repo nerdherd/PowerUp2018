@@ -32,9 +32,11 @@ public class SetWristPercentOutput extends Command {
 
     @Override
     protected void end() {
+	Robot.wrist.setPercentOutput(0);
     }
 
     @Override
     protected void interrupted() {
+	end();
     }
 }

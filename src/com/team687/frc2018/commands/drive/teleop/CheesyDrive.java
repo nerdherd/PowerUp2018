@@ -29,7 +29,8 @@ public class CheesyDrive extends Command {
     @Override
     protected void execute() {
 	double rightPower, leftPower;
-	boolean isQuickTurn = Robot.oi.getQuickTurn();
+	// boolean isQuickTurn = Robot.oi.getQuickTurn();
+	boolean isQuickTurn = false;
 
 	double wheel = NerdyMath.handleDeadband(Robot.oi.getDriveJoyRightX(), DriveConstants.kJoystickDeadband);
 	double throttle = -NerdyMath.handleDeadband(Robot.oi.getDriveJoyLeftY(), DriveConstants.kJoystickDeadband);
