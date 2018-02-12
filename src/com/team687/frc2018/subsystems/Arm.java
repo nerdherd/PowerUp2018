@@ -81,6 +81,18 @@ public class Arm extends Subsystem {
 	return m_arm.getSelectedSensorVelocity(0);
     }
 
+    public double ticksToDegrees(double ticks) {
+	return (ticks / 4096) * (360 / 12) - 52;
+    }
+
+    public double degreesToTicks(double degrees) {
+	return (degrees + 52) * 12 / 360 * 4096;
+    }
+
+    public double getAbsoluteAngle() {
+	return ticksToDegrees(getPosition());
+    }
+
     public void resetEncoder() {
 	m_arm.setSelectedSensorPosition(0, 0, 0);
     }

@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.team687.frc2018.Robot;
 import com.team687.frc2018.RobotMap;
 import com.team687.frc2018.constants.SuperstructureConstants;
 
@@ -72,6 +73,23 @@ public class Wrist extends Subsystem {
 
     public double getPosition() {
 	return m_wrist.getSelectedSensorPosition(0);
+    }
+
+    public double ticksToDegrees(double ticks) {
+	return ticks / 4096 * 360 / 2.5;
+    }
+
+    public double degreesToTicks(double degrees) {
+	return degrees / 360 * 4096 * 2.5;
+    }
+
+    public double getAngleRelative() {
+	return ticksToDegrees(getPosition() + 650) + 52; // 650 is the offset that accounts for our zeroing because we
+							 // don't zero our encoder at exactly 0 degrees)
+    }
+
+    public double getAngleAbsolute() {
+	return getAngleRelative() + Robot.arm.getAbsoluteAngle();
     }
 
     public double getSpeed() {
