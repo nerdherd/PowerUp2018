@@ -107,6 +107,7 @@ public class Arm extends Subsystem {
 
     public void reportToSmartDashboard() {
 	SmartDashboard.putNumber("Arm Position", getPosition());
+	SmartDashboard.putNumber("Arm Angle", getAbsoluteAngle());
 	SmartDashboard.putNumber("Arm Velocity", getVelocity());
 	SmartDashboard.putNumber("Arm Voltage", getVoltage());
 	SmartDashboard.putNumber("Arm Current", getCurrent());

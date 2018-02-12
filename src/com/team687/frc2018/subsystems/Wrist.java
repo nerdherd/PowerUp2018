@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.team687.frc2018.Robot;
 import com.team687.frc2018.RobotMap;
 import com.team687.frc2018.constants.SuperstructureConstants;
+import com.team687.frc2018.utilities.NerdyMath;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -51,7 +52,6 @@ public class Wrist extends Subsystem {
 
     @Override
     protected void initDefaultCommand() {
-	// setDefaultCommand(new MySpecialCommand());
     }
 
     public void setPosition(double position) {
@@ -62,14 +62,9 @@ public class Wrist extends Subsystem {
 	m_wrist.set(ControlMode.PercentOutput, power);
     }
 
-    // // real world units
-    // public double getPosition() {
-    // return m_wrist.getSelectedSensorPosition(0) / 4096;
-    // }
-    //
-    // public double getSpeed() {
-    // return m_wrist.getSelectedSensorVelocity(0) * (600 / 4096);
-    // }
+    public void setVoltage(double voltage) {
+	m_wrist.set(ControlMode.PercentOutput, voltage / m_wrist.getBusVoltage());
+    }
 
     public double getPosition() {
 	return m_wrist.getSelectedSensorPosition(0);
@@ -90,6 +85,36 @@ public class Wrist extends Subsystem {
 
     public double getAngleAbsolute() {
 	return getAngleRelative() + Robot.arm.getAbsoluteAngle();
+    }
+
+    public double angleAbsoluteToRelative(double angleAbsolute) {
+	return angleAbsolute - Robot.arm.getAbsoluteAngle();
+    }
+
+    public double angleRelativeToTicks(double angleRelative) {
+	return degreesToTicks(angleRelative - 52) - 650;
+    }
+
+    public double angleAbsoluteToTicks(double angle) {
+	return angleRelativeToTicks(angleAbsoluteToRelative(angle));
+    }
+
+    public void setAngleAbsolute(double angle) {
+	setPosition(angleAbsoluteToTicks(angle));
+    }
+
+    public double getDesiredAbsoluteAngle() {
+	if (Robot.arm.getAbsoluteAngle() <= 0) {
+	    return 90;
+	} else if (Robot.arm.getAbsoluteAngle() <= 40) {
+	    return NerdyMath.radiansToDegrees(
+		    Math.acos(41 * (1 - Math.cos(NerdyMath.degreesToRadians(Robot.arm.getAbsoluteAngle()))) / 12));
+	} else if (Robot.arm.getAbsoluteAngle() <= 50) {
+	    return Robot.arm.getAbsoluteAngle();
+	} else {
+	    return NerdyMath.radiansToDegrees(
+		    Math.asin(41 * (1 - Math.sin(NerdyMath.degreesToRadians(Robot.arm.getAbsoluteAngle()))) / 12));
+	}
     }
 
     public double getSpeed() {

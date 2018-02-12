@@ -19,43 +19,49 @@ public class SuperstructureConstants {
     public static final int kArmPeakCurrent = 60;
     public static final int kArmContinuousCurrent = 60;
 
-    // confirmed
     public static final int kArmDownPos = 0;
     public static final int kArmOffsetPos = 682;
     public static final int kArmHorizontalPos = 7000;
     public static final int kArmVerticalPos = 18550;
 
-    // todo
-    public static final int kArmAutoScaleScorePos = 14000;
-    public static final int kArmWristSafePos = 10000; // arm position where wrist can start extending (scale
-						      // scoring)
+    public static final int kArmAutoScaleScorePos = 18025; // scoring backwards
+    public static final int kArmWristSafePos = 10000; // arm position where wrist can start extending (scale scoring)
 
     public static final int kArmTolerance = 67;
     public static final int kArmForwardSoftLimit = kArmVerticalPos + 409;
     public static final int kArmReverseSoftLimit = kArmDownPos - 409;
 
-    public static final double kWristP = 0.2046;
+    // independent wrist movement
+    // public static final double kWristP = 0.2046;
+    // public static final double kWristI = 0;
+    // public static final double kWristD = 0;
+    // public static final double kWristMaxVoltageForward = 4;
+    // public static final double kWristMaxVoltageReverse = -4;
+
+    // wrist synced with arm
+    public static final double kWristP = 6.7;
     public static final double kWristI = 0;
     public static final double kWristD = 0;
-    public static final double kWristMaxVoltageForward = 4;
-    public static final double kWristMaxVoltageReverse = -4;
-    public static final double kWristRampRate = 1;
+    public static final double kWristMaxVoltageForward = 12;
+    public static final double kWristMaxVoltageReverse = -12;
+
+    public static final double kWristRampRate = 0;
     public static final int kWristPeakCurrent = 0;
     public static final int kWristContinuousCurrent = 40;
 
-    // confirmed
-    public static final int kWristIntakePos = -2700;
+    public static final int kWristIntakePos = -2500;
     public static final int kWristStowPos = 0;
     public static final int kWristStowArmOffsetPos = -262;
-
-    // todo
-    public static final int kWristStowArmHorizontalPos = -500;
-    public static final int kWristScoreBackwardsScalePos = -2056;
-    public static final int kWristScoreForwardsScalePos = 971;
+    public static final int kWristScoreForwardsScalePos = -6300;
+    public static final int kWristStowArmHorizontalPos = -2000;
+    public static final int kWristScoreBackwardsScalePos = -3000;
 
     public static final int kWristTolerance = 67;
     public static final int kWristForwardSoftLimit = 0;
     public static final int kWristReverseSoftLimit = 0;
+
+    public static final int kWristTestingForwardSoftLimit = -1678;
+    public static final int kWristTestingReverseSoftLimit = -7150;
 
     public static final double kRollerPower = 1;
     public static final int kRollerMaxCurrent = 40;

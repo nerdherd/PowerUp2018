@@ -27,13 +27,7 @@ public class StowToForwardsScale extends Command {
     protected void execute() {
 	Robot.intake.setRollerPower(-0.3); // hold cube in place as we go up
 	Robot.arm.setPosition(SuperstructureConstants.kArmVerticalPos);
-	if (Robot.arm.getPosition() > SuperstructureConstants.kArmWristSafePos) {
-	    Robot.wrist.setPosition(SuperstructureConstants.kWristScoreForwardsScalePos);
-	} else if (Timer.getFPGATimestamp() - m_startTime > 0.5) {
-	    Robot.wrist.setPosition(SuperstructureConstants.kWristStowArmHorizontalPos);
-	} else {
-	    Robot.wrist.setPosition(SuperstructureConstants.kWristStowArmOffsetPos);
-	}
+	Robot.wrist.setAngleAbsolute(Robot.wrist.getDesiredAbsoluteAngle());
     }
 
     @Override
