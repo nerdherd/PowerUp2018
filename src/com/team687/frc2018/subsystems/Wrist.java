@@ -79,8 +79,10 @@ public class Wrist extends Subsystem {
     }
 
     public double getAngleRelative() {
-	return ticksToDegrees(getPosition() + 650) + 52; // 650 is the offset that accounts for our zeroing because we
-							 // don't zero our encoder at exactly 0 degrees)
+	// 650 is the offset that accounts for our zeroing because we don't zero our
+	// encoder at exactly 0 degrees)
+	// 2560 converts our 0 angle to the positive x-axis
+	return ticksToDegrees(getPosition() + 650 + 2560) + 52;
     }
 
     public double getAngleAbsolute() {
@@ -92,7 +94,7 @@ public class Wrist extends Subsystem {
     }
 
     public double angleRelativeToTicks(double angleRelative) {
-	return degreesToTicks(angleRelative - 52) - 650;
+	return degreesToTicks(angleRelative - 52) - 650 - 2560;
     }
 
     public double angleAbsoluteToTicks(double angle) {
@@ -144,6 +146,8 @@ public class Wrist extends Subsystem {
 
     public void reportToSmartDashboard() {
 	SmartDashboard.putNumber("Wrist Position", getPosition());
+	SmartDashboard.putNumber("Wrist Desired Absolute Angle", getDesiredAbsoluteAngle());
+	SmartDashboard.putNumber("Wrist Absolute Angle", getAngleAbsolute());
 	SmartDashboard.putNumber("Wrist Velocity", getSpeed());
 	SmartDashboard.putNumber("Wrist Voltage", getVoltage());
 	SmartDashboard.putNumber("Wrist Current", getCurrent());
