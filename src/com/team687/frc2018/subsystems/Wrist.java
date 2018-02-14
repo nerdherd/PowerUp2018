@@ -21,18 +21,31 @@ public class Wrist extends Subsystem {
 
     private final TalonSRX m_wrist;
 
+    private double m_desiredPos = 0;
+
     public Wrist() {
 	m_wrist = new TalonSRX(RobotMap.kWristID);
 
 	m_wrist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
+	m_wrist.setSensorPhase(true);
+	m_wrist.setInverted(true);
+	m_wrist.setNeutralMode(NeutralMode.Coast);
+
+	m_wrist.config_kF(0, SuperstructureConstants.kWristF, 0);
 	m_wrist.config_kP(0, SuperstructureConstants.kWristP, 0);
 	m_wrist.config_kI(0, SuperstructureConstants.kWristI, 0);
 	m_wrist.config_kD(0, SuperstructureConstants.kWristD, 0);
-	m_wrist.setNeutralMode(NeutralMode.Coast);
+
+	m_wrist.configMotionCruiseVelocity(SuperstructureConstants.kWristCruiseVelocity, 0);
+	m_wrist.configMotionAcceleration(SuperstructureConstants.kWristAcceleration, 0);
 
 	m_wrist.configPeakOutputForward(SuperstructureConstants.kWristMaxVoltageForward / 12, 0);
 	m_wrist.configPeakOutputReverse(SuperstructureConstants.kWristMaxVoltageReverse / 12, 0);
+	m_wrist.configNominalOutputForward(0, 0);
+	m_wrist.configNominalOutputReverse(0, 0);
 	m_wrist.configClosedloopRamp(SuperstructureConstants.kWristRampRate, 0);
+	m_wrist.configVoltageCompSaturation(12, 0);
+	m_wrist.enableVoltageCompensation(false);
 
 	m_wrist.configPeakCurrentLimit(0, 0);
 	m_wrist.configContinuousCurrentLimit(SuperstructureConstants.kWristContinuousCurrent, 0);
@@ -43,11 +56,9 @@ public class Wrist extends Subsystem {
 	m_wrist.configForwardSoftLimitEnable(false, 0);
 	m_wrist.configReverseSoftLimitEnable(false, 0);
 
-	m_wrist.setInverted(true);
-	m_wrist.setSensorPhase(true);
-
 	m_wrist.setStatusFramePeriod(StatusFrame.Status_1_General, 10, 0);
 	m_wrist.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 20, 0);
+	m_wrist.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 20, 0);
     }
 
     @Override
@@ -55,7 +66,8 @@ public class Wrist extends Subsystem {
     }
 
     public void setPosition(double position) {
-	m_wrist.set(ControlMode.Position, position);
+	m_desiredPos = position;
+	m_wrist.set(ControlMode.MotionMagic, position);
     }
 
     public void setPercentOutput(double power) {

@@ -16,7 +16,7 @@ public class SuperstructureConstants {
     public static final double kArmMaxVoltageForward = 12;
     public static final double kArmMaxVoltageReverse = -12;
     public static final double kArmRampRate = 0;
-    public static final int kArmPeakCurrent = 60;
+    public static final int kArmPeakCurrent = 0;
     public static final int kArmContinuousCurrent = 60;
 
     public static final int kArmDownPos = 0;
@@ -39,12 +39,15 @@ public class SuperstructureConstants {
     // public static final double kWristMaxVoltageReverse = -4;
 
     // wrist synced with arm
-    public static final double kWristP = 6.7;
+    public static final double kWristF = 0.68;
+    public static final double kWristP = 3.5;
     public static final double kWristI = 0;
     public static final double kWristD = 0;
+    public static final int kWristCruiseVelocity = 1200;
+    public static final int kWristAcceleration = 1200;
+
     public static final double kWristMaxVoltageForward = 12;
     public static final double kWristMaxVoltageReverse = -12;
-
     public static final double kWristRampRate = 0;
     public static final int kWristPeakCurrent = 0;
     public static final int kWristContinuousCurrent = 40;
