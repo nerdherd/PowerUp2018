@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.team687.frc2018.Robot;
 import com.team687.frc2018.RobotMap;
 import com.team687.frc2018.constants.SuperstructureConstants;
+import com.team687.frc2018.utilities.CSVDatum;
 import com.team687.frc2018.utilities.NerdyMath;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -98,11 +99,11 @@ public class Wrist extends Subsystem {
     }
 
     public double getAngleAbsolute() {
-	return getAngleRelative() + Robot.arm.getAbsoluteAngle();
+	return getAngleRelative() + Robot.arm.getAngleAbsolute();
     }
 
     public double angleAbsoluteToRelative(double angleAbsolute) {
-	return angleAbsolute - Robot.arm.getAbsoluteAngle();
+	return angleAbsolute - Robot.arm.getAngleAbsolute();
     }
 
     public double angleRelativeToTicks(double angleRelative) {
@@ -118,20 +119,20 @@ public class Wrist extends Subsystem {
     }
 
     public double getDesiredAbsoluteAngle() {
-	if (Robot.arm.getAbsoluteAngle() <= 0) {
+	if (Robot.arm.getAngleAbsolute() <= 0) {
 	    return 90;
-	} else if (Robot.arm.getAbsoluteAngle() <= 40) {
+	} else if (Robot.arm.getAngleAbsolute() <= 40) {
 	    return NerdyMath.radiansToDegrees(
-		    Math.acos(41 * (1 - Math.cos(NerdyMath.degreesToRadians(Robot.arm.getAbsoluteAngle()))) / 12));
-	} else if (Robot.arm.getAbsoluteAngle() <= 50) {
-	    return Robot.arm.getAbsoluteAngle();
+		    Math.acos(41 * (1 - Math.cos(NerdyMath.degreesToRadians(Robot.arm.getAngleAbsolute()))) / 12));
+	} else if (Robot.arm.getAngleAbsolute() <= 50) {
+	    return Robot.arm.getAngleAbsolute();
 	} else {
 	    return NerdyMath.radiansToDegrees(
-		    Math.asin(41 * (1 - Math.sin(NerdyMath.degreesToRadians(Robot.arm.getAbsoluteAngle()))) / 12));
+		    Math.asin(41 * (1 - Math.sin(NerdyMath.degreesToRadians(Robot.arm.getAngleAbsolute()))) / 12));
 	}
     }
 
-    public double getSpeed() {
+    public double getVelocity() {
 	return m_wrist.getSelectedSensorVelocity(0);
     }
 
@@ -160,10 +161,38 @@ public class Wrist extends Subsystem {
 	SmartDashboard.putNumber("Wrist Position", getPosition());
 	SmartDashboard.putNumber("Wrist Desired Absolute Angle", getDesiredAbsoluteAngle());
 	SmartDashboard.putNumber("Wrist Absolute Angle", getAngleAbsolute());
-	SmartDashboard.putNumber("Wrist Velocity", getSpeed());
+	SmartDashboard.putNumber("Wrist Velocity", getVelocity());
 	SmartDashboard.putNumber("Wrist Voltage", getVoltage());
 	SmartDashboard.putNumber("Wrist Current", getCurrent());
 	SmartDashboard.putBoolean("Wrist Safe", isWristSafe());
+    }
+
+    private CSVDatum m_wristPositionData, m_wristDesiredPosData, m_wristVelocityData, m_wristAngleData,
+	    m_wristVoltageData, m_wristCurrentData;
+
+    public void addLoggedData() {
+	m_wristPositionData = new CSVDatum("wrist_position");
+	m_wristDesiredPosData = new CSVDatum("wrist_desiredPos");
+	m_wristVelocityData = new CSVDatum("wrist_velocity");
+	m_wristAngleData = new CSVDatum("wrist_angle");
+	m_wristVoltageData = new CSVDatum("wrist_voltage");
+	m_wristCurrentData = new CSVDatum("wrist_current");
+
+	Robot.logger.addCSVDatum(m_wristPositionData);
+	Robot.logger.addCSVDatum(m_wristDesiredPosData);
+	Robot.logger.addCSVDatum(m_wristVelocityData);
+	Robot.logger.addCSVDatum(m_wristAngleData);
+	Robot.logger.addCSVDatum(m_wristVoltageData);
+	Robot.logger.addCSVDatum(m_wristCurrentData);
+    }
+
+    public void updateLog() {
+	m_wristPositionData.updateValue(getPosition());
+	m_wristDesiredPosData.updateValue(m_desiredPos);
+	m_wristVelocityData.updateValue(getVelocity());
+	m_wristAngleData.updateValue(getAngleAbsolute());
+	m_wristVoltageData.updateValue(getVoltage());
+	m_wristCurrentData.updateValue(getCurrent());
     }
 
 }
