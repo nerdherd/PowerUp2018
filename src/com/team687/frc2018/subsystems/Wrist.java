@@ -5,6 +5,8 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.sensors.PigeonIMU;
+import com.ctre.phoenix.sensors.PigeonIMU.CalibrationMode;
 import com.team687.frc2018.Robot;
 import com.team687.frc2018.RobotMap;
 import com.team687.frc2018.constants.SuperstructureConstants;
@@ -21,11 +23,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Wrist extends Subsystem {
 
     private final TalonSRX m_wrist;
-
     private double m_desiredPos = 0;
+
+    private final PigeonIMU m_pigeon;
+    private double[] m_ypr = new double[3];
+    private double m_resetOffset = 0;
 
     public Wrist() {
 	m_wrist = new TalonSRX(RobotMap.kWristID);
+
+	m_pigeon = new PigeonIMU(RobotMap.kWristPigeonID);
 
 	m_wrist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
 	m_wrist.setSensorPhase(true);
@@ -98,6 +105,9 @@ public class Wrist extends Subsystem {
 	return ticksToDegrees(getPosition() + 650 + 2560) + 52;
     }
 
+    /**
+     * @return calculated angle from encoders
+     */
     public double getAngleAbsolute() {
 	return getAngleRelative() + Robot.arm.getAngleAbsolute();
     }
@@ -118,6 +128,9 @@ public class Wrist extends Subsystem {
 	setPosition(angleAbsoluteToTicks(angle));
     }
 
+    /**
+     * @return desired angle when going to/from forwards scale scoring position
+     */
     public double getDesiredAbsoluteAngle() {
 	if (Robot.arm.getAngleAbsolute() <= 0) {
 	    return 90;
@@ -136,9 +149,24 @@ public class Wrist extends Subsystem {
 	return m_wrist.getSelectedSensorVelocity(0);
     }
 
-    // see if we can avoid using this for the wrist
     public void resetEncoder() {
 	m_wrist.setSelectedSensorPosition(0, 0, 0);
+    }
+
+    public void updateYawPitchRoll() {
+	m_pigeon.getYawPitchRoll(m_ypr);
+    }
+
+    public double getPigeonAngle() {
+	return ((360 - m_ypr[0]) % 360) - m_resetOffset + 113; // TODO: convert to correct frame
+    }
+
+    public void resetAngle() {
+	m_resetOffset += getPigeonAngle();
+    }
+
+    public void enterCalibrationMode() {
+	m_pigeon.enterCalibrationMode(CalibrationMode.Temperature, 0);
     }
 
     public double getVoltage() {
@@ -161,27 +189,29 @@ public class Wrist extends Subsystem {
 	SmartDashboard.putNumber("Wrist Position", getPosition());
 	SmartDashboard.putNumber("Wrist Desired Absolute Angle", getDesiredAbsoluteAngle());
 	SmartDashboard.putNumber("Wrist Absolute Angle", getAngleAbsolute());
+	SmartDashboard.putNumber("Wrist Pigeon Angle", getPigeonAngle());
 	SmartDashboard.putNumber("Wrist Velocity", getVelocity());
 	SmartDashboard.putNumber("Wrist Voltage", getVoltage());
 	SmartDashboard.putNumber("Wrist Current", getCurrent());
 	SmartDashboard.putBoolean("Wrist Safe", isWristSafe());
     }
 
-    private CSVDatum m_wristPositionData, m_wristDesiredPosData, m_wristVelocityData, m_wristAngleData,
-	    m_wristVoltageData, m_wristCurrentData;
+    private CSVDatum m_wristPositionData, m_wristDesiredPosData, m_wristVelocityData, m_wristEncoderAngleData,
+	    m_wristPigeonAngleData, m_wristVoltageData, m_wristCurrentData;
 
     public void addLoggedData() {
 	m_wristPositionData = new CSVDatum("wrist_position");
 	m_wristDesiredPosData = new CSVDatum("wrist_desiredPos");
 	m_wristVelocityData = new CSVDatum("wrist_velocity");
-	m_wristAngleData = new CSVDatum("wrist_angle");
+	m_wristEncoderAngleData = new CSVDatum("wrist_encoderAngle");
+	m_wristPigeonAngleData = new CSVDatum("wrist_pigeonAngle");
 	m_wristVoltageData = new CSVDatum("wrist_voltage");
 	m_wristCurrentData = new CSVDatum("wrist_current");
 
 	Robot.logger.addCSVDatum(m_wristPositionData);
 	Robot.logger.addCSVDatum(m_wristDesiredPosData);
 	Robot.logger.addCSVDatum(m_wristVelocityData);
-	Robot.logger.addCSVDatum(m_wristAngleData);
+	Robot.logger.addCSVDatum(m_wristEncoderAngleData);
 	Robot.logger.addCSVDatum(m_wristVoltageData);
 	Robot.logger.addCSVDatum(m_wristCurrentData);
     }
@@ -190,7 +220,8 @@ public class Wrist extends Subsystem {
 	m_wristPositionData.updateValue(getPosition());
 	m_wristDesiredPosData.updateValue(m_desiredPos);
 	m_wristVelocityData.updateValue(getVelocity());
-	m_wristAngleData.updateValue(getAngleAbsolute());
+	m_wristEncoderAngleData.updateValue(getAngleAbsolute());
+	m_wristPigeonAngleData.updateValue(getPigeonAngle());
 	m_wristVoltageData.updateValue(getVoltage());
 	m_wristCurrentData.updateValue(getCurrent());
     }

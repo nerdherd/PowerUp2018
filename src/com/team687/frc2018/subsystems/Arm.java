@@ -117,26 +117,20 @@ public class Arm extends Subsystem {
 	m_armPigeon.getYawPitchRoll(m_armYpr);
     }
 
-    /**
-     * @return tower angle from pigeon
-     */
-    public double getTowerAngle() {
-	return ((360 - m_towerYpr[0]) % 360) - m_towerResetOffset + 90; // convert to correct frame
+    public double getTowerPigeonAngle() {
+	return ((360 - m_towerYpr[0]) % 360) - m_towerResetOffset + 90; // converted to correct frame
     }
 
     public void resetTowerAngle() {
-	m_towerResetOffset += getTowerAngle();
+	m_towerResetOffset += getTowerPigeonAngle();
     }
 
-    /**
-     * @return arm angle from pigeon
-     */
-    public double getArmAngle() {
-	return ((360 - m_armYpr[0]) % 360) - m_armResetOffset - 52; // convert to correct frame
+    public double getArmPigeonAngle() {
+	return ((360 - m_armYpr[0]) % 360) - m_armResetOffset - 52; // TODO: convert to correct frame
     }
 
     public void resetArmAngle() {
-	m_armResetOffset += getArmAngle();
+	m_armResetOffset += getArmPigeonAngle();
     }
 
     public void enterCalibrationMode() {
@@ -155,8 +149,8 @@ public class Arm extends Subsystem {
     public void reportToSmartDashboard() {
 	SmartDashboard.putNumber("Arm Position", getPosition());
 	SmartDashboard.putNumber("Arm Angle from Encoder", getAngleAbsolute());
-	SmartDashboard.putNumber("Arm Angle from Pigeon", getArmAngle());
-	SmartDashboard.putNumber("Tower Angle from Pigeon", getTowerAngle());
+	SmartDashboard.putNumber("Arm Angle from Pigeon", getArmPigeonAngle());
+	SmartDashboard.putNumber("Tower Angle from Pigeon", getTowerPigeonAngle());
 	SmartDashboard.putNumber("Arm Velocity", getVelocity());
 	SmartDashboard.putNumber("Arm Voltage", getVoltage());
 	SmartDashboard.putNumber("Arm Current", getCurrent());
@@ -191,8 +185,8 @@ public class Arm extends Subsystem {
 	m_armDesiredPosData.updateValue(m_desiredPos);
 	m_armVelocityData.updateValue(getVelocity());
 	m_armEncoderAngleData.updateValue(getAngleAbsolute());
-	m_armPigeonAngle.updateValue(getArmAngle());
-	m_towerPigeonAngle.updateValue(getTowerAngle());
+	m_armPigeonAngle.updateValue(getArmPigeonAngle());
+	m_towerPigeonAngle.updateValue(getTowerPigeonAngle());
 	m_armVoltageData.updateValue(getVoltage());
 	m_armCurrentData.updateValue(getCurrent());
     }
