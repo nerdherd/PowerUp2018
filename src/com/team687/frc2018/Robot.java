@@ -126,6 +126,7 @@ public class Robot extends TimedRobot {
 	drive.addLoggedData();
 	odometry.addLoggedData();
 	// arm.addLoggedData();
+	wrist.addLoggedData();
 	logger.startLog();
     }
 
@@ -145,6 +146,7 @@ public class Robot extends TimedRobot {
 	drive.updateLog();
 	odometry.updateLog();
 	// arm.updateLog();
+	wrist.updateLog();
 	logger.logToCSV();
     }
 

@@ -28,6 +28,7 @@ public class Arm extends Subsystem {
 
 	m_arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
 	m_arm.setSensorPhase(true);
+	m_arm.setInverted(false);
 	m_arm.setNeutralMode(NeutralMode.Coast);
 
 	m_arm.config_kF(0, SuperstructureConstants.kArmF, 0);
@@ -81,6 +82,18 @@ public class Arm extends Subsystem {
 	return m_arm.getSelectedSensorVelocity(0);
     }
 
+    public double ticksToDegrees(double ticks) {
+	return (ticks / 4096) * (360 / 12) - 52;
+    }
+
+    public double degreesToTicks(double degrees) {
+	return (degrees + 52) * 12 / 360 * 4096;
+    }
+
+    public double getAngleAbsolute() {
+	return ticksToDegrees(getPosition());
+    }
+
     public void resetEncoder() {
 	m_arm.setSelectedSensorPosition(0, 0, 0);
     }
@@ -95,34 +108,39 @@ public class Arm extends Subsystem {
 
     public void reportToSmartDashboard() {
 	SmartDashboard.putNumber("Arm Position", getPosition());
+	SmartDashboard.putNumber("Arm Angle", getAngleAbsolute());
 	SmartDashboard.putNumber("Arm Velocity", getVelocity());
 	SmartDashboard.putNumber("Arm Voltage", getVoltage());
 	SmartDashboard.putNumber("Arm Current", getCurrent());
 	SmartDashboard.putNumber("Arm Desired Position", m_desiredPos);
     }
 
-    private CSVDatum m_positionData, m_armDesiredPosData, m_velocityData, m_voltageData, m_currentData;
+    private CSVDatum m_armPositionData, m_armDesiredPosData, m_armVelocityData, m_armAngleData, m_armVoltageData,
+	    m_armCurrentData;
 
     public void addLoggedData() {
-	m_positionData = new CSVDatum("arm_position");
+	m_armPositionData = new CSVDatum("arm_position");
 	m_armDesiredPosData = new CSVDatum("arm_desiredPos");
-	m_velocityData = new CSVDatum("arm_velocity");
-	m_voltageData = new CSVDatum("arm_voltage");
-	m_currentData = new CSVDatum("arm_current");
+	m_armVelocityData = new CSVDatum("arm_velocity");
+	m_armAngleData = new CSVDatum("arm_angle");
+	m_armVoltageData = new CSVDatum("arm_voltage");
+	m_armCurrentData = new CSVDatum("arm_current");
 
-	Robot.logger.addCSVDatum(m_positionData);
+	Robot.logger.addCSVDatum(m_armPositionData);
 	Robot.logger.addCSVDatum(m_armDesiredPosData);
-	Robot.logger.addCSVDatum(m_velocityData);
-	Robot.logger.addCSVDatum(m_voltageData);
-	Robot.logger.addCSVDatum(m_currentData);
+	Robot.logger.addCSVDatum(m_armVelocityData);
+	Robot.logger.addCSVDatum(m_armAngleData);
+	Robot.logger.addCSVDatum(m_armVoltageData);
+	Robot.logger.addCSVDatum(m_armCurrentData);
     }
 
     public void updateLog() {
-	m_positionData.updateValue(getPosition());
+	m_armPositionData.updateValue(getPosition());
 	m_armDesiredPosData.updateValue(m_desiredPos);
-	m_velocityData.updateValue(getVelocity());
-	m_voltageData.updateValue(getVoltage());
-	m_currentData.updateValue(getCurrent());
+	m_armVelocityData.updateValue(getVelocity());
+	m_armAngleData.updateValue(getAngleAbsolute());
+	m_armVoltageData.updateValue(getVoltage());
+	m_armCurrentData.updateValue(getCurrent());
     }
 
 }

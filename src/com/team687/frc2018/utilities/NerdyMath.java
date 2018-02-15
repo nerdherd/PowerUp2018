@@ -8,12 +8,12 @@ import com.team687.frc2018.constants.DriveConstants;
 
 public class NerdyMath {
 
-    public static double radiansToDegrees(double deg) {
-	return deg * 360 / (2 * Math.PI);
+    public static double radiansToDegrees(double rads) {
+	return rads * 360 / (2 * Math.PI);
     }
 
-    public static double degreesToRadians(double rads) {
-	return rads * (2 * Math.PI) / 360;
+    public static double degreesToRadians(double deg) {
+	return deg * (2 * Math.PI) / 360;
     }
 
     public static double inchesToRotations(double inches) {

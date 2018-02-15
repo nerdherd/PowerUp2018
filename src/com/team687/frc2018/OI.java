@@ -57,7 +57,7 @@ public class OI {
 	armVertical_7.whenPressed(new SetArmPosition(SuperstructureConstants.kArmVerticalPos));
 
 	wristStow_10 = new JoystickButton(driveJoyArtic, 10);
-	wristStow_10.whenPressed(new SetWristPosition(SuperstructureConstants.kWristStowOffsetPos));
+	wristStow_10.whenPressed(new SetWristPosition(SuperstructureConstants.kWristStowArmOffsetPos));
 	wristIntake_12 = new JoystickButton(driveJoyArtic, 12);
 	wristIntake_12.whenPressed(new SetWristPosition(SuperstructureConstants.kWristIntakePos));
 
@@ -68,13 +68,11 @@ public class OI {
 	SmartDashboard.putData("Arm Voltage 0", new SetArmVoltage(0));
 	SmartDashboard.putData("Arm Reset Encoder", new ResetArmEncoder());
 
-	SmartDashboard.putData("Wrist Reset Encoders", new ResetWristEncoder());
-	SmartDashboard.putData("Wrist 0 Percent Output", new SetWristPercentOutput(0));
-	SmartDashboard.putData("Wrist 0.3 Percent Output", new SetWristPercentOutput(0.3));
-	SmartDashboard.putData("Wrist -0.3 Percent Output", new SetWristPercentOutput(-0.3));
+	SmartDashboard.putData("Wrist Reset Encoder", new ResetWristEncoder());
+	SmartDashboard.putData("Wrist Voltage 0", new SetWristPercentOutput(0));
 	SmartDashboard.putData("Wrist Position Intake", new SetWristPosition(SuperstructureConstants.kWristIntakePos));
 	SmartDashboard.putData("Wrist Position Offset Stow",
-		new SetWristPosition(SuperstructureConstants.kWristStowOffsetPos));
+		new SetWristPosition(SuperstructureConstants.kWristStowArmOffsetPos));
 	SmartDashboard.putData("Wrist Position Stow", new SetWristPosition(SuperstructureConstants.kWristStowPos));
 
 	SmartDashboard.putData("Set Intake Power 1", new SetIntakeRollerPower(1));

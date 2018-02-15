@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.team687.frc2018.constants.SuperstructureConstants;
+import com.team687.frc2018.constants.SuperstructureSimConstants;
 import com.team687.frc2018.subsystems.ArmSimulation;
 import com.team687.frc2018.subsystems.WristSimulation;
 
@@ -41,8 +42,8 @@ public class SuperstructureTest {
     public void setScalePositionForward() {
 	System.out.println("SetScalePositionForward");
 	stowSuperstructure();
-	m_armSimulation.setPosition(SuperstructureConstants.kArmScaleMidPos);
-	m_wristSimulation.setPosition(SuperstructureConstants.kWristScaleMidPos);
+	m_armSimulation.setPosition(SuperstructureSimConstants.kArmScaleMidPos);
+	m_wristSimulation.setPosition(SuperstructureSimConstants.kWristScaleMidPos);
 	if (m_armSimulation.getPosition() < SuperstructureConstants.kArmWristSafePos) {
 	    assertTrue(m_wristSimulation.isWristSafe());
 	}
@@ -55,8 +56,8 @@ public class SuperstructureTest {
     public void setScalePositionBackward() {
 	System.out.println("SetScalePositionBackward");
 	stowSuperstructure();
-	m_armSimulation.setPosition(SuperstructureConstants.kArmScaleBackwardPos);
-	m_wristSimulation.setPosition(SuperstructureConstants.kWristScaleBackwardPos);
+	m_armSimulation.setPosition(SuperstructureSimConstants.kArmScaleBackwardPos);
+	m_wristSimulation.setPosition(SuperstructureSimConstants.kWristScaleBackwardPos);
 	if (m_armSimulation.getPosition() < SuperstructureConstants.kArmWristSafePos) {
 	    assertTrue(m_wristSimulation.isWristSafe());
 	}
