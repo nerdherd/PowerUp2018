@@ -198,7 +198,6 @@ public class Wrist extends Subsystem {
 	SmartDashboard.putNumber("Wrist Velocity", getVelocity());
 	SmartDashboard.putNumber("Wrist Voltage", getVoltage());
 	SmartDashboard.putNumber("Wrist Current", getCurrent());
-	SmartDashboard.putBoolean("Wrist Safe", isWristSafe());
     }
 
     private CSVDatum m_wristPositionData, m_wristDesiredPosData, m_wristVelocityData, m_wristEncoderAngleData,

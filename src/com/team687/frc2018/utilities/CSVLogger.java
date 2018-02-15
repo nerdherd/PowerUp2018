@@ -97,6 +97,7 @@ public class CSVLogger {
 	    e.printStackTrace();
 	    m_writeException = true;
 	}
+	loggedData.clear();
     }
 
     public void logToCSV() {
