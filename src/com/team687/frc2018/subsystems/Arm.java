@@ -25,7 +25,6 @@ public class Arm extends Subsystem {
     private double m_desiredPos = 0;
 
     private final PigeonIMU m_towerPigeon, m_armPigeon;
-
     private double[] m_towerYpr = new double[3];
     private double m_towerResetOffset = 0;
     private double[] m_armYpr = new double[3];
@@ -78,7 +77,7 @@ public class Arm extends Subsystem {
 
     public void setPosition(double position) {
 	m_desiredPos = position;
-	m_arm.set(ControlMode.MotionMagic, position);
+	m_arm.set(ControlMode.MotionMagic, m_desiredPos);
     }
 
     public void setVoltage(double voltage) {

@@ -1,10 +1,12 @@
 package com.team687.frc2018;
 
 import com.team687.frc2018.commands.arm.ResetArmEncoder;
+import com.team687.frc2018.commands.arm.ResetArmTowerPigeons;
 import com.team687.frc2018.commands.arm.SetArmPosition;
 import com.team687.frc2018.commands.arm.SetArmVoltage;
 import com.team687.frc2018.commands.intake.SetIntakeRollerPower;
 import com.team687.frc2018.commands.wrist.ResetWristEncoder;
+import com.team687.frc2018.commands.wrist.ResetWristPigeon;
 import com.team687.frc2018.commands.wrist.SetWristPercentOutput;
 import com.team687.frc2018.commands.wrist.SetWristPosition;
 import com.team687.frc2018.constants.SuperstructureConstants;
@@ -61,13 +63,15 @@ public class OI {
 	wristIntake_12 = new JoystickButton(driveJoyArtic, 12);
 	wristIntake_12.whenPressed(new SetWristPosition(SuperstructureConstants.kWristIntakePos));
 
+	SmartDashboard.putData("Arm Tower Reset Pigeons", new ResetArmTowerPigeons());
+	SmartDashboard.putData("Arm Reset Encoder", new ResetArmEncoder());
+	SmartDashboard.putData("Arm Voltage 0", new SetArmVoltage(0));
 	SmartDashboard.putData("Arm Position Vertical", new SetArmPosition(SuperstructureConstants.kArmVerticalPos));
 	SmartDashboard.putData("Arm Position Horizontal",
 		new SetArmPosition(SuperstructureConstants.kArmHorizontalPos));
 	SmartDashboard.putData("Arm Position Offset", new SetArmPosition(SuperstructureConstants.kArmOffsetPos));
-	SmartDashboard.putData("Arm Voltage 0", new SetArmVoltage(0));
-	SmartDashboard.putData("Arm Reset Encoder", new ResetArmEncoder());
 
+	SmartDashboard.putData("Wrist Reset Pigeon", new ResetWristPigeon());
 	SmartDashboard.putData("Wrist Reset Encoder", new ResetWristEncoder());
 	SmartDashboard.putData("Wrist Voltage 0", new SetWristPercentOutput(0));
 	SmartDashboard.putData("Wrist Position Intake", new SetWristPosition(SuperstructureConstants.kWristIntakePos));

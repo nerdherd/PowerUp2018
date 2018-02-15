@@ -75,7 +75,7 @@ public class Wrist extends Subsystem {
 
     public void setPosition(double position) {
 	m_desiredPos = position;
-	m_wrist.set(ControlMode.MotionMagic, position);
+	m_wrist.set(ControlMode.MotionMagic, m_desiredPos);
     }
 
     public void setPercentOutput(double power) {
