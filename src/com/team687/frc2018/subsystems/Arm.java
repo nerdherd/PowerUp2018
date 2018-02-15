@@ -5,6 +5,8 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.sensors.PigeonIMU;
+import com.ctre.phoenix.sensors.PigeonIMU.CalibrationMode;
 import com.team687.frc2018.Robot;
 import com.team687.frc2018.RobotMap;
 import com.team687.frc2018.constants.SuperstructureConstants;
@@ -20,11 +22,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Arm extends Subsystem {
 
     private final TalonSRX m_arm;
-
     private double m_desiredPos = 0;
+
+    private final PigeonIMU m_towerPigeon, m_armPigeon;
+
+    private double[] m_towerYpr = new double[3];
+    private double m_towerResetOffset = 0;
+    private double[] m_armYpr = new double[3];
+    private double m_armResetOffset = 0;
 
     public Arm() {
 	m_arm = new TalonSRX(RobotMap.kArmID);
+
+	m_towerPigeon = new PigeonIMU(RobotMap.kTowerPigeonID);
+	m_armPigeon = new PigeonIMU(RobotMap.kArmPigeonID);
 
 	m_arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
 	m_arm.setSensorPhase(true);
@@ -90,12 +101,47 @@ public class Arm extends Subsystem {
 	return (degrees + 52) * 12 / 360 * 4096;
     }
 
+    /**
+     * @return calculated angle from encoders
+     */
     public double getAngleAbsolute() {
 	return ticksToDegrees(getPosition());
     }
 
     public void resetEncoder() {
 	m_arm.setSelectedSensorPosition(0, 0, 0);
+    }
+
+    public void updateYawPitchRoll() {
+	m_towerPigeon.getYawPitchRoll(m_towerYpr);
+	m_armPigeon.getYawPitchRoll(m_armYpr);
+    }
+
+    /**
+     * @return tower angle from pigeon
+     */
+    public double getTowerAngle() {
+	return ((360 - m_towerYpr[0]) % 360) - m_towerResetOffset + 90; // convert to correct frame
+    }
+
+    public void resetTowerAngle() {
+	m_towerResetOffset += getTowerAngle();
+    }
+
+    /**
+     * @return arm angle from pigeon
+     */
+    public double getArmAngle() {
+	return ((360 - m_armYpr[0]) % 360) - m_armResetOffset - 52; // convert to correct frame
+    }
+
+    public void resetArmAngle() {
+	m_armResetOffset += getArmAngle();
+    }
+
+    public void enterCalibrationMode() {
+	m_towerPigeon.enterCalibrationMode(CalibrationMode.Temperature, 0);
+	m_armPigeon.enterCalibrationMode(CalibrationMode.Temperature, 0);
     }
 
     public double getVoltage() {
@@ -108,28 +154,34 @@ public class Arm extends Subsystem {
 
     public void reportToSmartDashboard() {
 	SmartDashboard.putNumber("Arm Position", getPosition());
-	SmartDashboard.putNumber("Arm Angle", getAngleAbsolute());
+	SmartDashboard.putNumber("Arm Angle from Encoder", getAngleAbsolute());
+	SmartDashboard.putNumber("Arm Angle from Pigeon", getArmAngle());
+	SmartDashboard.putNumber("Tower Angle from Pigeon", getTowerAngle());
 	SmartDashboard.putNumber("Arm Velocity", getVelocity());
 	SmartDashboard.putNumber("Arm Voltage", getVoltage());
 	SmartDashboard.putNumber("Arm Current", getCurrent());
 	SmartDashboard.putNumber("Arm Desired Position", m_desiredPos);
     }
 
-    private CSVDatum m_armPositionData, m_armDesiredPosData, m_armVelocityData, m_armAngleData, m_armVoltageData,
-	    m_armCurrentData;
+    private CSVDatum m_armPositionData, m_armDesiredPosData, m_armVelocityData, m_armEncoderAngleData, m_armPigeonAngle,
+	    m_towerPigeonAngle, m_armVoltageData, m_armCurrentData;
 
     public void addLoggedData() {
 	m_armPositionData = new CSVDatum("arm_position");
 	m_armDesiredPosData = new CSVDatum("arm_desiredPos");
 	m_armVelocityData = new CSVDatum("arm_velocity");
-	m_armAngleData = new CSVDatum("arm_angle");
+	m_armEncoderAngleData = new CSVDatum("arm_encoderAngle");
+	m_armPigeonAngle = new CSVDatum("arm_pigeonAngle");
+	m_towerPigeonAngle = new CSVDatum("tower_pigeonAngle");
 	m_armVoltageData = new CSVDatum("arm_voltage");
 	m_armCurrentData = new CSVDatum("arm_current");
 
 	Robot.logger.addCSVDatum(m_armPositionData);
 	Robot.logger.addCSVDatum(m_armDesiredPosData);
 	Robot.logger.addCSVDatum(m_armVelocityData);
-	Robot.logger.addCSVDatum(m_armAngleData);
+	Robot.logger.addCSVDatum(m_armEncoderAngleData);
+	Robot.logger.addCSVDatum(m_armPigeonAngle);
+	Robot.logger.addCSVDatum(m_towerPigeonAngle);
 	Robot.logger.addCSVDatum(m_armVoltageData);
 	Robot.logger.addCSVDatum(m_armCurrentData);
     }
@@ -138,7 +190,9 @@ public class Arm extends Subsystem {
 	m_armPositionData.updateValue(getPosition());
 	m_armDesiredPosData.updateValue(m_desiredPos);
 	m_armVelocityData.updateValue(getVelocity());
-	m_armAngleData.updateValue(getAngleAbsolute());
+	m_armEncoderAngleData.updateValue(getAngleAbsolute());
+	m_armPigeonAngle.updateValue(getArmAngle());
+	m_towerPigeonAngle.updateValue(getTowerAngle());
 	m_armVoltageData.updateValue(getVoltage());
 	m_armCurrentData.updateValue(getCurrent());
     }
