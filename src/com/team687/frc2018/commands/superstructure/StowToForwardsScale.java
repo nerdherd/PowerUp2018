@@ -3,13 +3,10 @@ package com.team687.frc2018.commands.superstructure;
 import com.team687.frc2018.Robot;
 import com.team687.frc2018.constants.SuperstructureConstants;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class StowToForwardsScale extends Command {
-
-    private double m_startTime;
 
     public StowToForwardsScale() {
 	requires(Robot.arm);
@@ -20,7 +17,6 @@ public class StowToForwardsScale extends Command {
     @Override
     protected void initialize() {
 	SmartDashboard.putString("Current Command", "StowToForwardsScale");
-	m_startTime = Timer.getFPGATimestamp();
     }
 
     @Override
