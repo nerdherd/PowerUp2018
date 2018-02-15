@@ -74,7 +74,7 @@ public class Wrist extends Subsystem {
     }
 
     public void setPosition(double position) {
-	m_desiredPos = position;
+	m_desiredPos = position + getEncoderCorrection();
 	m_wrist.set(ControlMode.MotionMagic, m_desiredPos);
     }
 
@@ -167,6 +167,11 @@ public class Wrist extends Subsystem {
 
     public void enterCalibrationMode() {
 	m_pigeon.enterCalibrationMode(CalibrationMode.Temperature, 0);
+    }
+
+    public double getEncoderCorrection() {
+	double diff = getPigeonAngle() - getAngleAbsolute();
+	return degreesToTicks(diff);
     }
 
     public double getVoltage() {
