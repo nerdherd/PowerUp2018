@@ -138,13 +138,13 @@ public class Wrist extends Subsystem {
 	double y2 = Robot.arm.getY();
 	double _theta3_offset = -16;
 	if (theta2 <= -33) {
-	    return 74;
+	    return 90;
 	} else if (theta2 <= 43) {
-	    return NerdyMath.radiansToDegrees(Math.acos((45 - x2) / _r3)); // DEGREES(ACOS((45-[@x2])/_r3))-theta3_offset
+	    return NerdyMath.radiansToDegrees(Math.acos((45 - x2) / _r3)) - _theta3_offset; // DEGREES(ACOS((45-[@x2])/_r3))-theta3_offset
 	} else if (theta2 <= 46) {
-	    return -1.75 * theta2 + 135.3; // -1.75*[@theta2]+135.3-theta3_offset
+	    return -1.75 * theta2 + 135.3 - _theta3_offset; // -1.75*[@theta2]+135.3-theta3_offset
 	} else {
-	    return NerdyMath.radiansToDegrees(Math.asin((88 - y2) / _r3)); // DEGREES(ASIN((88-[@y2])/_r3))-theta3_offset
+	    return NerdyMath.radiansToDegrees(Math.asin((88 - y2) / _r3)) - _theta3_offset; // DEGREES(ASIN((88-[@y2])/_r3))-theta3_offset
 	}
     }
 

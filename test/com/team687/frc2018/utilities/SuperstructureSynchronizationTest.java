@@ -26,13 +26,13 @@ public class SuperstructureSynchronizationTest {
 
     @Test
     public void testDesiredWristAngles() {
-	assertEquals(getDesiredWristAngle(-52), 74.0, kEpsilon);
-	assertEquals(getDesiredWristAngle(-31), 75.9, kEpsilon);
-	assertEquals(getDesiredWristAngle(-11), 90.7, kEpsilon);
-	assertEquals(getDesiredWristAngle(10), 91.1, kEpsilon);
-	assertEquals(getDesiredWristAngle(44), 58.3, kEpsilon);
-	assertEquals(getDesiredWristAngle(62), 30.2, kEpsilon);
-	assertEquals(getDesiredWristAngle(87), 15.4, kEpsilon);
+	assertEquals(getDesiredWristAngle(-52), 90, kEpsilon);
+	assertEquals(getDesiredWristAngle(-31), 91.9, kEpsilon);
+	assertEquals(getDesiredWristAngle(-11), 106.7, kEpsilon);
+	assertEquals(getDesiredWristAngle(10), 107.1, kEpsilon);
+	assertEquals(getDesiredWristAngle(44), 74.3, kEpsilon);
+	assertEquals(getDesiredWristAngle(62), 46.2, kEpsilon);
+	assertEquals(getDesiredWristAngle(87), 31.4, kEpsilon);
     }
 
     public double getDesiredWristAngle(double armAngle) {
@@ -42,13 +42,13 @@ public class SuperstructureSynchronizationTest {
 	double y2 = getY(armAngle);
 	double _theta3_offset = -16;
 	if (theta2 <= -33) {
-	    return 74;
+	    return 90;
 	} else if (theta2 <= 43) {
-	    return NerdyMath.radiansToDegrees(Math.acos((45 - x2) / _r3)); // DEGREES(ACOS((45-[@x2])/_r3))-theta3_offset
+	    return NerdyMath.radiansToDegrees(Math.acos((45 - x2) / _r3)) - _theta3_offset; // DEGREES(ACOS((45-[@x2])/_r3))-theta3_offset
 	} else if (theta2 <= 46) {
-	    return -1.75 * theta2 + 135.3; // -1.75*[@theta2]+135.3-theta3_offset
+	    return -1.75 * theta2 + 135.3 - _theta3_offset; // -1.75*[@theta2]+135.3-theta3_offset
 	} else {
-	    return NerdyMath.radiansToDegrees(Math.asin((88 - y2) / _r3)); // DEGREES(ASIN((88-[@y2])/_r3))-theta3_offset
+	    return NerdyMath.radiansToDegrees(Math.asin((88 - y2) / _r3)) - _theta3_offset; // DEGREES(ASIN((88-[@y2])/_r3))-theta3_offset
 	}
     }
 
