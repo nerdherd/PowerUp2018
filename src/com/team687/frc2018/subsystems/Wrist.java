@@ -132,16 +132,19 @@ public class Wrist extends Subsystem {
      * @return desired angle when going to/from forwards scale scoring position
      */
     public double getDesiredAbsoluteAngle() {
-	if (Robot.arm.getAngleAbsolute() <= 0) {
+	double _r3 = SuperstructureConstants.kWristPivotToTip;
+	double theta2 = Robot.arm.getArmPigeonAngle();
+	double x2 = Robot.arm.getX();
+	double y2 = Robot.arm.getY();
+	double _theta3_offset = -16;
+	if (theta2 <= -33) {
 	    return 90;
-	} else if (Robot.arm.getAngleAbsolute() <= 40) {
-	    return NerdyMath.radiansToDegrees(
-		    Math.acos(41 * (1 - Math.cos(NerdyMath.degreesToRadians(Robot.arm.getAngleAbsolute()))) / 12));
-	} else if (Robot.arm.getAngleAbsolute() <= 50) {
-	    return Robot.arm.getAngleAbsolute();
+	} else if (theta2 <= 43) {
+	    return NerdyMath.radiansToDegrees(Math.acos((45 - x2) / _r3)); // DEGREES(ACOS((45-[@x2])/_r3))-theta3_offset
+	} else if (theta2 <= 46) {
+	    return -1.75 * theta2 + 135.3; // -1.75*[@theta2]+135.3-theta3_offset
 	} else {
-	    return NerdyMath.radiansToDegrees(
-		    Math.asin(41 * (1 - Math.sin(NerdyMath.degreesToRadians(Robot.arm.getAngleAbsolute()))) / 12));
+	    return NerdyMath.radiansToDegrees(Math.asin((88 - y2) / _r3)); // DEGREES(ASIN((88-[@y2])/_r3))-theta3_offset
 	}
     }
 

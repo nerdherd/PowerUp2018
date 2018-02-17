@@ -11,6 +11,7 @@ import com.team687.frc2018.Robot;
 import com.team687.frc2018.RobotMap;
 import com.team687.frc2018.constants.SuperstructureConstants;
 import com.team687.frc2018.utilities.CSVDatum;
+import com.team687.frc2018.utilities.NerdyMath;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -93,11 +94,11 @@ public class Arm extends Subsystem {
     }
 
     public double ticksToDegrees(double ticks) {
-	return (ticks / 4096) * (360 / 12) - 52;
+	return (ticks / 4096) * (360 / 12) - 55;
     }
 
     public double degreesToTicks(double degrees) {
-	return (degrees + 52) * 12 / 360 * 4096;
+	return (degrees + 55) * 12 / 360 * 4096;
     }
 
     /**
@@ -125,7 +126,7 @@ public class Arm extends Subsystem {
     }
 
     public double getArmPigeonAngle() {
-	return ((360 - m_armYpr[0]) % 360) - m_armResetOffset - 52; // TODO: convert to correct frame
+	return ((360 - m_armYpr[0]) % 360) - m_armResetOffset - 55; // TODO: convert to correct frame
     }
 
     public void resetArmAngle() {
@@ -135,6 +136,19 @@ public class Arm extends Subsystem {
     public void enterCalibrationMode() {
 	m_towerPigeon.enterCalibrationMode(CalibrationMode.Temperature, 0);
 	m_armPigeon.enterCalibrationMode(CalibrationMode.Temperature, 0);
+    }
+
+    // aliasing
+    public double _x1 = SuperstructureConstants.kShoulderPivotX;
+    public double _y1 = SuperstructureConstants.kShoulderPivotY;
+    public double _r2 = SuperstructureConstants.kShoulderToWristPivot;
+
+    public double getX() {
+	return _x1 + _r2 * Math.cos(NerdyMath.degreesToRadians(getArmPigeonAngle()));
+    }
+
+    public double getY() {
+	return _y1 + _r2 * Math.sin(NerdyMath.degreesToRadians(getArmPigeonAngle()));
     }
 
     public double getVoltage() {

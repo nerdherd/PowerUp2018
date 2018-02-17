@@ -31,6 +31,11 @@ public class SuperstructureConstants {
     public static final int kArmForwardSoftLimit = kArmVerticalPos + 409;
     public static final int kArmReverseSoftLimit = kArmDownPos - 409;
 
+    public static final double kShoulderPivotX = 5;
+    public static final double kShoulderPivotY = 41.75;
+    public static final double kShoulderToWristPivot = 41;
+    public static final double kWristPivotToTip = 20;
+
     // independent wrist movement
     // public static final double kWristP = 0.2046;
     // public static final double kWristI = 0;
