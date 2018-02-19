@@ -53,8 +53,7 @@ public class SuperstructureConstants {
 	// public static final double kWristMaxVoltageReverse = -4;
 
 	// wrist synced with arm
-	// public static final double kWristF = 0.68; disabled b/c is not working
-	public static final double kWristF = 0;
+	public static final double kWristF = 0.68; // disabled b/c is not working
 	// public static final double kWristP = 3.5;
 	public static final double kWristP = .3;
 	public static final double kWristI = 0;

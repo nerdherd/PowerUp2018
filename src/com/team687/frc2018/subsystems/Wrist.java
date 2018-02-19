@@ -54,8 +54,8 @@ public class Wrist extends Subsystem {
 		m_wrist.config_kI(0, SuperstructureConstants.kWristI, 0);
 		m_wrist.config_kD(0, SuperstructureConstants.kWristD, 0);
 
-		m_wrist.configMotionCruiseVelocity(SuperstructureConstants.kWristCruiseVelocity, 0);
 		m_wrist.configMotionAcceleration(SuperstructureConstants.kWristAcceleration, 0);
+		m_wrist.configMotionCruiseVelocity(SuperstructureConstants.kWristCruiseVelocity, 0);
 
 		m_wrist.configPeakOutputForward(SuperstructureConstants.kWristMaxVoltageForward / 12, 0);
 		m_wrist.configPeakOutputReverse(SuperstructureConstants.kWristMaxVoltageReverse / 12, 0);
@@ -65,16 +65,16 @@ public class Wrist extends Subsystem {
 		m_wrist.configVoltageCompSaturation(12, 0);
 		m_wrist.enableVoltageCompensation(false);
 
-		m_wrist.configPeakCurrentLimit(0, 0);
+		m_wrist.configPeakCurrentLimit(SuperstructureConstants.kWristPeakCurrent, 0);
 		m_wrist.configContinuousCurrentLimit(SuperstructureConstants.kWristContinuousCurrent, 0);
-		m_wrist.enableCurrentLimit(true);
+		m_wrist.enableCurrentLimit(false);
 
 		m_wrist.configForwardSoftLimitThreshold(SuperstructureConstants.kWristForwardSoftLimit, 0);
 		m_wrist.configReverseSoftLimitThreshold(SuperstructureConstants.kWristReverseSoftLimit, 0);
 		m_wrist.configForwardSoftLimitEnable(false, 0);
 		m_wrist.configReverseSoftLimitEnable(false, 0);
 
-		m_wrist.setStatusFramePeriod(StatusFrame.Status_1_General, 10, 0);
+		m_wrist.setStatusFramePeriod(StatusFrame.Status_1_General, 20, 0);
 		m_wrist.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 20, 0);
 		m_wrist.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 20, 0);
 	}
@@ -86,7 +86,7 @@ public class Wrist extends Subsystem {
 	public void setPosition(double position) {
 		m_desiredPos = position;
 		// m_wrist.set(ControlMode.MotionMagic, position);
-		m_wrist.set(ControlMode.Position, position);
+		m_wrist.set(ControlMode.MotionMagic, position);
 	}
 
 	public void setPercentOutput(double power) {
