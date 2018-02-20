@@ -20,7 +20,7 @@ public class Robot extends TimedRobot {
 	public static PowerDistributionPanel pdp;
 	public static OI oi;
 
-	public static VisionAdapter visionAdapter;
+	// public static VisionAdapter visionAdapter;
 	public static Odometry odometry;
 
 	public static CSVLogger logger;
@@ -49,7 +49,7 @@ public class Robot extends TimedRobot {
 
 		oi = new OI();
 
-		visionAdapter = VisionAdapter.getInstance();
+		// visionAdapter = VisionAdapter.getInstance();
 		odometry = Odometry.getInstance();
 	}
 
@@ -62,11 +62,12 @@ public class Robot extends TimedRobot {
 		wrist.reportToSmartDashboard();
 		intake.reportToSmartDashboard();
 
-		visionAdapter.reportToSmartDashboard();
+		// visionAdapter.reportToSmartDashboard();
 		odometry.update();
 		odometry.reportToSmartDashboard();
 		wrist.stopLog();
 		arm.stopLog();
+		intake.stopLog();
 	}
 
 	@Override
@@ -78,7 +79,7 @@ public class Robot extends TimedRobot {
 		wrist.reportToSmartDashboard();
 		intake.reportToSmartDashboard();
 
-		visionAdapter.reportToSmartDashboard();
+		// visionAdapter.reportToSmartDashboard();
 		odometry.update();
 		odometry.reportToSmartDashboard();
 	}
@@ -92,7 +93,7 @@ public class Robot extends TimedRobot {
 		wrist.reportToSmartDashboard();
 		intake.reportToSmartDashboard();
 
-		visionAdapter.reportToSmartDashboard();
+		// visionAdapter.reportToSmartDashboard();
 		odometry.update();
 		odometry.reportToSmartDashboard();
 	}
@@ -106,7 +107,7 @@ public class Robot extends TimedRobot {
 		wrist.reportToSmartDashboard();
 		intake.reportToSmartDashboard();
 
-		visionAdapter.reportToSmartDashboard();
+		// visionAdapter.reportToSmartDashboard();
 		odometry.update();
 		odometry.reportToSmartDashboard();
 	}
@@ -120,7 +121,7 @@ public class Robot extends TimedRobot {
 		wrist.reportToSmartDashboard();
 		intake.reportToSmartDashboard();
 
-		visionAdapter.reportToSmartDashboard();
+		// visionAdapter.reportToSmartDashboard();
 		odometry.update();
 		odometry.reportToSmartDashboard();
 
@@ -132,6 +133,7 @@ public class Robot extends TimedRobot {
 
 		wrist.startLog();
 		arm.startLog();
+		intake.startLog();
 
 	}
 
@@ -144,7 +146,7 @@ public class Robot extends TimedRobot {
 		wrist.reportToSmartDashboard();
 		intake.reportToSmartDashboard();
 
-		visionAdapter.reportToSmartDashboard();
+		// visionAdapter.reportToSmartDashboard();
 		odometry.update();
 		odometry.reportToSmartDashboard();
 
@@ -156,6 +158,7 @@ public class Robot extends TimedRobot {
 
 		wrist.logToCSV();
 		arm.logToCSV();
+		intake.logToCSV();
 
 	}
 
@@ -168,8 +171,8 @@ public class Robot extends TimedRobot {
 		wrist.reportToSmartDashboard();
 		intake.reportToSmartDashboard();
 
-		visionAdapter.reportToSmartDashboard();
-		odometry.update();
-		odometry.reportToSmartDashboard();
+		// visionAdapter.reportToSmartDashboard();
+		// odometry.update();
+		// odometry.reportToSmartDashboard();
 	}
 }

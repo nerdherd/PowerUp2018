@@ -13,6 +13,7 @@ import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.team687.frc2018.RobotMap;
 import com.team687.frc2018.constants.SuperstructureConstants;
+import com.team687.frc2018.utilities.NerdyMath;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -99,11 +100,11 @@ public class Arm extends Subsystem {
 	}
 
 	public double ticksToDegrees(double ticks) {
-		return (ticks / 4096) * (360 / 12) - 52;
+		return (ticks / 4096) * (360 / 8.18) - 54;
 	}
 
 	public double degreesToTicks(double degrees) {
-		return (degrees + 52) * 12 / 360 * 4096;
+		return (degrees + 54) * 8.18 / 360 * 4096;
 	}
 
 	public double getAngleAbsolute() {
@@ -120,6 +121,22 @@ public class Arm extends Subsystem {
 
 	public double getCurrent() {
 		return m_arm.getOutputCurrent();
+	}
+
+	public double getAbsoluteAngle() {
+		return ticksToDegrees(getPosition());
+	}
+
+	public double _x1 = SuperstructureConstants.kShoulderPivotX;
+	public double _y1 = SuperstructureConstants.kShoulderPivotY;
+	public double _r2 = SuperstructureConstants.kShoulderToWristPivot;
+
+	public double getX() {
+		return _x1 + _r2 * Math.cos(NerdyMath.degreesToRadians(getAbsoluteAngle()));
+	}
+
+	public double getY() {
+		return _y1 + _r2 * Math.sin(NerdyMath.degreesToRadians(getAbsoluteAngle()));
 	}
 
 	public void reportToSmartDashboard() {
@@ -187,7 +204,7 @@ public class Arm extends Subsystem {
 			}
 			try {
 				m_writer = new FileWriter(m_file);
-				m_writer.append("Time,Position,Velocity,Voltage,Current,DesiredPos\n");
+				m_writer.append("Time,Position,Velocity,Voltage,Current,DesiredPos,AbsAngle\n");
 				m_logStartTime = Timer.getFPGATimestamp();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -212,7 +229,8 @@ public class Arm extends Subsystem {
 				double timestamp = Timer.getFPGATimestamp() - m_logStartTime;
 				m_writer.append(String.valueOf(timestamp) + "," + String.valueOf(getPosition()) + ","
 						+ String.valueOf(getVelocity()) + "," + String.valueOf(getVoltage()) + ","
-						+ String.valueOf(getCurrent()) + "," + String.valueOf(m_desiredPos) + "\n");
+						+ String.valueOf(getCurrent()) + "," + String.valueOf(m_desiredPos) + ","
+						+ String.valueOf(getAngleAbsolute()) + "\n");
 				m_writer.flush();
 			} catch (IOException e) {
 				e.printStackTrace();

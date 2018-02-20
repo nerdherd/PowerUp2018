@@ -6,9 +6,9 @@ import com.team687.frc2018.constants.SuperstructureConstants;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class StowToForwardsScale extends Command {
+public class BackwardsScaleToStow extends Command {
 
-	public StowToForwardsScale() {
+	public BackwardsScaleToStow() {
 		requires(Robot.arm);
 		requires(Robot.wrist);
 		requires(Robot.intake);
@@ -16,14 +16,16 @@ public class StowToForwardsScale extends Command {
 
 	@Override
 	protected void initialize() {
-		SmartDashboard.putString("Current Command", "StowToForwardsScale");
+		SmartDashboard.putString("Current Command", "StowPosition");
 	}
 
 	@Override
 	protected void execute() {
-		Robot.intake.setRollerPower(0.15); // hold cube in place as we go up
-		Robot.arm.setPosition(SuperstructureConstants.kArmVerticalPos);
-		Robot.wrist.setAngleAbsolute(Robot.wrist.getDesiredAbsoluteAngleGoingUp());
+		Robot.intake.setRollerPower(0);
+		Robot.wrist.setPosition(SuperstructureConstants.kWristStowArmOffsetPos);
+		if (Robot.wrist.getPosition() < SuperstructureConstants.kWristStowArmOffsetPos + 200) {
+			Robot.arm.setPosition(SuperstructureConstants.kArmOffsetPos);
+		}
 	}
 
 	@Override

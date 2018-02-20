@@ -151,6 +151,23 @@ public class Wrist extends Subsystem {
 		}
 	}
 
+	public double getDesiredAbsoluteAngleGoingUp() {
+		double _r3 = SuperstructureConstants.kWristPivotToTip;
+		double theta2 = Robot.arm.getAbsoluteAngle();
+		double x2 = Robot.arm.getX();
+		double y2 = Robot.arm.getY();
+		double _theta3_offset = -16;
+		if (theta2 <= -33) {
+			return 90;
+		} else if (theta2 <= 43) {
+			return NerdyMath.radiansToDegrees(Math.acos((45 - x2) / _r3)) - _theta3_offset; // DEGREES(ACOS((45-[@x2])/_r3))-theta3_offset
+		} else if (theta2 <= 46) {
+			return -1.75 * theta2 + 135.3 - _theta3_offset; // -1.75*[@theta2]+135.3-theta3_offset
+		} else {
+			return NerdyMath.radiansToDegrees(Math.asin((88 - y2) / _r3)) - _theta3_offset; // DEGREES(ASIN((88-[@y2])/_r3))-theta3_offset
+		}
+	}
+
 	public double getVelocity() {
 		return m_wrist.getSelectedSensorVelocity(0);
 	}
@@ -179,6 +196,7 @@ public class Wrist extends Subsystem {
 	public void reportToSmartDashboard() {
 		SmartDashboard.putNumber("Wrist Position", getPosition());
 		SmartDashboard.putNumber("Wrist Desired Absolute Angle", getDesiredAbsoluteAngle());
+		SmartDashboard.putNumber("Wrist Desired Absolute Angle Going Up", getDesiredAbsoluteAngleGoingUp());
 		SmartDashboard.putNumber("Wrist Absolute Angle", getAngleAbsolute());
 		SmartDashboard.putNumber("Wrist Velocity", getVelocity());
 		SmartDashboard.putNumber("Wrist Voltage", getVoltage());
@@ -244,7 +262,7 @@ public class Wrist extends Subsystem {
 			}
 			try {
 				m_writer = new FileWriter(m_file);
-				m_writer.append("Time,Position,Velocity,Voltage,Current,TalonDesPos\n");
+				m_writer.append("Time,Position,Velocity,Voltage,Current,TalonDesPos,AbsoluteAngle,DesAbsAngleUp\n");
 				m_logStartTime = Timer.getFPGATimestamp();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -269,7 +287,9 @@ public class Wrist extends Subsystem {
 				double timestamp = Timer.getFPGATimestamp() - m_logStartTime;
 				m_writer.append(String.valueOf(timestamp) + "," + String.valueOf(getPosition()) + ","
 						+ String.valueOf(getVelocity()) + "," + String.valueOf(getVoltage()) + ","
-						+ String.valueOf(getCurrent()) + "," + String.valueOf(m_desiredPos) + "\n");
+						+ String.valueOf(getCurrent()) + "," + String.valueOf(m_desiredPos) + ","
+						+ String.valueOf(getAngleAbsolute()) + "," + String.valueOf(getDesiredAbsoluteAngleGoingUp())
+						+ "," + "\n");
 				m_writer.flush();
 			} catch (IOException e) {
 				e.printStackTrace();
