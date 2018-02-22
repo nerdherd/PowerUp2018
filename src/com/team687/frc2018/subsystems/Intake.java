@@ -37,7 +37,8 @@ public class Intake extends Subsystem {
     }
 
     public boolean hasCube() {
-	return !m_switch.get();
+	// return !m_switch.get();
+	return isMaxCurrent();
     }
 
     public boolean isMaxCurrent() {

@@ -23,9 +23,8 @@ public class SuperstructureConstants {
     public static final int kArmOffsetPos = 682;
     public static final int kArmHorizontalPos = 7000;
     public static final int kArmVerticalPos = 18550;
-
-    public static final int kArmAutoScaleScorePos = 18025; // scoring backwards
-    public static final int kArmWristSafePos = 10000; // arm position where wrist can start extending (scale scoring)
+    public static final int kArmAutoScaleScorePos = 15000; // scoring backwards
+    public static final int kArmWristSafePos = 12000; // arm position where wrist can start extending (scale scoring)
 
     public static final int kArmTolerance = 67;
     public static final int kArmForwardSoftLimit = kArmVerticalPos + 409;
@@ -72,7 +71,7 @@ public class SuperstructureConstants {
     public static final int kWristTestingReverseSoftLimit = -7150;
 
     public static final double kRollerPower = 1;
-    public static final int kRollerMaxCurrent = 40;
+    public static final int kRollerMaxCurrent = 12;
     public static final double kRollerOuttakeTime = 3.3;
 
 }
