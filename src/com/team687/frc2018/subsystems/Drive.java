@@ -16,7 +16,7 @@ import com.team687.lib.kauailabs.sf2.frc.navXSensor;
 import com.team687.lib.kauailabs.sf2.orientation.OrientationHistory;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -97,7 +97,7 @@ public class Drive extends Subsystem {
 	m_rightMaster.configOpenloopRamp(DriveConstants.kVoltageRampRate, 0);
 	m_rightMaster.configClosedloopRamp(DriveConstants.kVoltageRampRate, 0);
 
-	m_nav = new AHRS(SerialPort.Port.kMXP);
+	m_nav = new AHRS(SPI.Port.kMXP);
 	m_navxsensor = new navXSensor(m_nav, "Drivetrain Orientation");
 	m_orientationHistory = new OrientationHistory(m_navxsensor, m_nav.getRequestedUpdateRate() * 10);
     }
