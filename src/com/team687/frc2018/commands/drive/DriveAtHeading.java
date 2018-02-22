@@ -12,59 +12,56 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveAtHeading extends Command {
 
-	private double m_straightPower;
-	private double m_heading, m_distance;
-	private double m_kRotP;
+    private double m_straightPower;
+    private double m_heading, m_distance;
+    private double m_kRotP;
 
-	/**
-	 * @param straightPower
-	 *            (determines direction and magnitude)
-	 * @param heading
-	 * @param distance
-	 *            (absolute value)
-	 * @param kRotP
-	 */
-	public DriveAtHeading(double straightPower, double heading, double distance, double kRotP) {
-		m_straightPower = straightPower;
-		m_heading = heading;
-		m_distance = distance;
-		m_kRotP = kRotP;
+    /**
+     * @param straightPower
+     *            (determines direction and magnitude)
+     * @param heading
+     * @param distance
+     *            (absolute value)
+     * @param kRotP
+     */
+    public DriveAtHeading(double straightPower, double heading, double distance, double kRotP) {
+	m_straightPower = straightPower;
+	m_heading = heading;
+	m_distance = distance;
+	m_kRotP = kRotP;
 
-		requires(Robot.drive);
-	}
+	requires(Robot.drive);
+    }
 
-	@Override
-	protected void initialize() {
-		SmartDashboard.putString("Current Drive Command", "DriveAtHeading");
-	}
+    @Override
+    protected void initialize() {
+	SmartDashboard.putString("Current Drive Command", "DriveAtHeading");
+    }
 
-	@Override
-	protected void execute() {
-		double rawYaw = Robot.drive.getCurrentYaw();
-		double robotAngle = (360 - rawYaw) % 360;
-		double rotError = -m_heading - robotAngle;
-		rotError = (rotError > 180) ? rotError - 360 : rotError;
-		rotError = (rotError < -180) ? rotError + 360 : rotError;
-		double rotPower = m_kRotP * rotError;
-		SmartDashboard.putNumber("Rot Error", rotError);
-		SmartDashboard.putNumber("Rot Power", rotPower);
+    @Override
+    protected void execute() {
+	double robotAngle = (360 - Robot.drive.getCurrentYaw()) % 360;
+	double rotError = -m_heading - robotAngle;
+	rotError = (rotError > 180) ? rotError - 360 : rotError;
+	rotError = (rotError < -180) ? rotError + 360 : rotError;
+	double rotPower = m_kRotP * rotError;
 
-		Robot.drive.setPower(m_straightPower - rotPower, m_straightPower + rotPower);
-	}
+	Robot.drive.setPower(m_straightPower + rotPower, m_straightPower - rotPower);
+    }
 
-	@Override
-	protected boolean isFinished() {
-		return Math.abs(Robot.drive.getDrivetrainPosition()) >= m_distance;
-	}
+    @Override
+    protected boolean isFinished() {
+	return Math.abs(Robot.drive.getDrivetrainPosition()) >= m_distance;
+    }
 
-	@Override
-	protected void end() {
-		Robot.drive.stopDrive();
-	}
+    @Override
+    protected void end() {
+	Robot.drive.stopDrive();
+    }
 
-	@Override
-	protected void interrupted() {
-		end();
-	}
+    @Override
+    protected void interrupted() {
+	end();
+    }
 
 }

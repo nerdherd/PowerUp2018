@@ -12,42 +12,42 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TestDriveSubsystem extends Command {
 
-	public TestDriveSubsystem() {
-		requires(Robot.drive);
-	}
+    public TestDriveSubsystem() {
+	requires(Robot.drive);
+    }
 
-	@Override
-	protected void initialize() {
-		SmartDashboard.putString("Current Drive Command", "TestDriveSubsystem");
-		Robot.drive.stopDrive();
-	}
+    @Override
+    protected void initialize() {
+	SmartDashboard.putString("Current Drive Command", "TestDriveSubsystem");
+	Robot.drive.stopDrive();
+    }
 
-	@Override
-	protected void execute() {
-		double power = 0.3;
-		Robot.drive.setPower(power, power);
+    @Override
+    protected void execute() {
+	double power = 1;
+	Robot.drive.setPower(power, power);
 
-		// boolean failed = Robot.drive.testDriveSubsystem();
-		// if (failed) {
-		// SmartDashboard.putBoolean("DRIVE SUBSYSTEM HEALTHY", false);
-		// } else {
-		// SmartDashboard.putBoolean("DRIVE SUBSYSTEM HEALTHY", true);
-		// }
+	boolean failed = Robot.drive.testDriveSubsystem();
+	if (failed) {
+	    SmartDashboard.putBoolean("DRIVE SUBSYSTEM HEALTHY", false);
+	} else {
+	    SmartDashboard.putBoolean("DRIVE SUBSYSTEM HEALTHY", true);
 	}
+    }
 
-	@Override
-	protected boolean isFinished() {
-		return false;
-	}
+    @Override
+    protected boolean isFinished() {
+	return false;
+    }
 
-	@Override
-	protected void end() {
-		Robot.drive.stopDrive();
-	}
+    @Override
+    protected void end() {
+	Robot.drive.stopDrive();
+    }
 
-	@Override
-	protected void interrupted() {
-		end();
-	}
+    @Override
+    protected void interrupted() {
+	end();
+    }
 
 }

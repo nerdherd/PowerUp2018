@@ -11,46 +11,41 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TankDrive extends Command {
 
-	public TankDrive() {
-		// subsystem dependencies
-		requires(Robot.drive);
-	}
+    public TankDrive() {
+	// subsystem dependencies
+	requires(Robot.drive);
+    }
 
-	@Override
-	protected void initialize() {
-		SmartDashboard.putString("Current Drive Command", "TankDrive");
-		Robot.drive.stopDrive();
-	}
+    @Override
+    protected void initialize() {
+	SmartDashboard.putString("Current Drive Command", "TankDrive");
+	Robot.drive.stopDrive();
+    }
 
-	@Override
-	protected void execute() {
-		// double leftPow =
-		// Robot.drive.addLeftSensitivity(Robot.oi.getDriveJoyLeftY());
-		// double rightPow =
-		// Robot.drive.addRightSensitivity(Robot.oi.getDriveJoyRightY());
+    @Override
+    protected void execute() {
+	// double leftPow = Robot.drive.addLeftSensitivity(Robot.oi.getDriveJoyLeftY());
+	// double rightPow =
+	// Robot.drive.addRightSensitivity(Robot.oi.getDriveJoyRightY());
 
-		double leftPow = Robot.oi.getDriveJoyLeftY(); // Math.pow(Robot.oi.getDriveJoyLeftY(),
-														// 2) *
-														// Math.signum(Robot.oi.getDriveJoyLeftY());
-		double rightPow = Robot.oi.getDriveJoyRightY(); // Math.pow(Robot.oi.getDriveJoyRightY(),
-														// 2) *
-														// Math.signum(Robot.oi.getDriveJoyRightY());
-		Robot.drive.setPower(leftPow, rightPow);
-	}
+	double leftPow = Robot.oi.getDriveJoyLeftY();
+	double rightPow = Robot.oi.getDriveJoyRightY();
+	Robot.drive.setPower(leftPow, rightPow);
+    }
 
-	@Override
-	protected boolean isFinished() {
-		return false;
-	}
+    @Override
+    protected boolean isFinished() {
+	return false;
+    }
 
-	@Override
-	protected void end() {
-		Robot.drive.stopDrive();
-	}
+    @Override
+    protected void end() {
+	Robot.drive.stopDrive();
+    }
 
-	@Override
-	protected void interrupted() {
-		end();
-	}
+    @Override
+    protected void interrupted() {
+	end();
+    }
 
 }

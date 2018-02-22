@@ -36,19 +36,14 @@ public class SuperstructureConstants {
 	// // extending (scale
 	// // scoring)
 
-	public static final int kArmAutoScaleScorePos = 9719; // scoring backwards
-	public static final int kArmWristSafePos = 6500; // arm position where
+	public static final int kArmAutoScaleScorePos = -9900; // scoring backwards
+	public static final int kArmWristSafePos = 10000; // arm position where
 														// wrist can start
 														// extending (scale
 														// scoring)
 	public static final int kArmTolerance = 67;
 	public static final int kArmForwardSoftLimit = kArmVerticalPos + 409;
 	public static final int kArmReverseSoftLimit = kArmDownPos - 409;
-
-	public static final double kShoulderPivotX = 5;
-	public static final double kShoulderPivotY = 42;
-	public static final double kShoulderToWristPivot = 40;
-	public static final double kWristPivotToTip = 20;
 
 	// independent wrist movement
 	// public static final double kWristP = 0.2046;
@@ -59,15 +54,15 @@ public class SuperstructureConstants {
 
 	// wrist synced with arm
 	public static final double kWristF = 0.68; // disabled b/c is not working
-	public static final double kWristP = 3.5;
-	// public static final double kWristP = .3;
+	// public static final double kWristP = 3.5;
+	public static final double kWristP = .3;
 	public static final double kWristI = 0;
 	public static final double kWristD = 0;
-	public static final int kWristCruiseVelocity = 1200;
-	public static final int kWristAcceleration = 1200;
+	// public static final int kWristCruiseVelocity = 1128;
+	// public static final int kWristAcceleration = 1128;
 
-	// public static final int kWristCruiseVelocity = 500;
-	// public static final int kWristAcceleration = 500;
+	public static final int kWristCruiseVelocity = 500;
+	public static final int kWristAcceleration = 500;
 
 	public static final double kWristMaxVoltageForward = 12;
 	public static final double kWristMaxVoltageReverse = -12;
@@ -97,7 +92,7 @@ public class SuperstructureConstants {
 	public static final int kWristTestingReverseSoftLimit = -7150;
 
 	public static final double kRollerPower = 1;
-	public static final int kRollerMaxCurrent = 12;
+	public static final int kRollerMaxCurrent = 40;
 	public static final double kRollerOuttakeTime = 3.3;
 
 }

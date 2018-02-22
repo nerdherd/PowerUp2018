@@ -12,43 +12,41 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ArcadeDrive extends Command {
 
-	public ArcadeDrive() {
-		// subsystem dependencies
-		requires(Robot.drive);
-	}
+    public ArcadeDrive() {
+	// subsystem dependencies
+	requires(Robot.drive);
+    }
 
-	@Override
-	protected void initialize() {
-		SmartDashboard.putString("Current Drive Command", "ArcadeDrive");
-		Robot.drive.stopDrive();
-	}
+    @Override
+    protected void initialize() {
+	SmartDashboard.putString("Current Drive Command", "ArcadeDrive");
+	Robot.drive.stopDrive();
+    }
 
-	@Override
-	protected void execute() {
-		// double leftPow =
-		// Robot.drive.addLeftSensitivity(Robot.oi.getDriveJoyLeftY());
-		// double rightPow =
-		// Robot.drive.addRightSensitivity(Robot.oi.getDriveJoyRightY());
+    @Override
+    protected void execute() {
+	// double leftPow = Robot.drive.addLeftSensitivity(Robot.oi.getDriveJoyLeftY());
+	// double rightPow =
+	// Robot.drive.addRightSensitivity(Robot.oi.getDriveJoyRightY());
 
-		double straightPower = NerdyMath.handleDeadband(-Math.pow(Robot.oi.getDriveJoyLeftY(), 3), .05);
-		double rotPower = NerdyMath.handleDeadband(Math.pow(Robot.oi.getDriveJoyLeftX(), 3) * 0.5, .05);
-		Robot.drive.setPower(straightPower + rotPower, straightPower - rotPower);
-	}
+	double straightPower = NerdyMath.squareInput(Robot.oi.getDriveJoyLeftY());
+	double rotPower = NerdyMath.squareInput(Robot.oi.getDriveJoyRightX());
+	Robot.drive.setPower(straightPower + rotPower, straightPower - rotPower);
+    }
 
-	@Override
-	protected boolean isFinished() {
-		return false;
-	}
+    @Override
+    protected boolean isFinished() {
+	return false;
+    }
 
-	@Override
-	protected void end() {
-		Robot.drive.stopDrive();
-	}
+    @Override
+    protected void end() {
+	Robot.drive.stopDrive();
+    }
 
-	@Override
-	protected void interrupted() {
-		end();
-
-	}
+    @Override
+    protected void interrupted() {
+	end();
+    }
 
 }
