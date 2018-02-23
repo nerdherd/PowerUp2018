@@ -76,7 +76,7 @@ public class BezierCurveTest {
 	BezierCurve bezierCurve = new BezierCurve(m_path);
 	bezierCurve.calculateBezier();
 	ArrayList<Double> headingList = bezierCurve.getHeadingList();
-	ArrayList<Double> arcLengthList = bezierCurve.getArcLengthList();
+	// ArrayList<Double> arcLengthList = bezierCurve.getArcLengthList();
 
 	double m_straightPower = 0.7;
 	double direction = Math.signum(m_straightPower);

@@ -39,23 +39,27 @@ public class DriveBezierPath extends Command {
 	requires(Robot.drive);
     }
 
-    /**
-     * 
-     * @param path
-     *            (double[])
-     * @param straightPower
-     *            (postive if going forward (forward is side with climber), negative
-     *            if going backwards)
-     * @param softStop
-     *            (if you want to slow down near end)
-     * 
-     */
     public DriveBezierPath(double[] path, double straightPower, boolean softStop) {
 	m_path = new BezierCurve(path[0], path[1], path[2], path[3], path[4], path[5], path[6], path[7]);
 	m_straightPower = straightPower;
 	m_softStop = softStop;
 
 	requires(Robot.drive);
+    }
+
+    /**
+     * @param path
+     *            (BezierCurve)
+     * @param straightPower
+     *            (postive if going forward (forward is side with climber), negative
+     *            if going backwards)
+     * @param softStop
+     *            (if you want to slow down near end)
+     */
+    public DriveBezierPath(BezierCurve path, double straightPower, boolean softStop) {
+	m_path = path;
+	m_straightPower = straightPower;
+	m_softStop = softStop;
     }
 
     @Override

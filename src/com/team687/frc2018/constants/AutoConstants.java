@@ -1,5 +1,6 @@
 package com.team687.frc2018.constants;
 
+import com.team687.frc2018.utilities.BezierCurve;
 import com.team687.frc2018.utilities.NerdyMath;
 
 public class AutoConstants {
@@ -30,5 +31,24 @@ public class AutoConstants {
     public static final double kBlueSwitchToScale = NerdyMath.inchesToTicks(kBlueSwitchToScaleInches);
     public static final double kBlueSideWallToSwitch = NerdyMath.inchesToTicks(kBlueSideWallToSwitchInches);
     public static final double kBlueSideWallToScale = NerdyMath.inchesToTicks(kBlueSideWallToScaleInches);
+
+    // Bezier curve paths
+    public static BezierCurve kRedCenterToRightSwitchPath = new BezierCurve(0, 0, 0, 0, 0, 0, 0, 0);
+    public static BezierCurve kRedCenterToLeftSwitchPath = new BezierCurve(0, 0, 0, 0, 0, 0, 0, 0);
+    public static BezierCurve kRedCenterToRightScalePath = new BezierCurve(0, 0, 0, 0, 0, 0, 0, 0);
+    public static BezierCurve kRedCenterToLeftScalePath = new BezierCurve(0, 0, 0, 0, 0, 0, 0, 0);
+    public static BezierCurve kRedRightSideToRightScalePath = new BezierCurve(0, 0, 0, 0, 0, 0, 0, 0);
+    public static BezierCurve kRedRightSideToLeftScalePath = new BezierCurve(0, 0, 0, 0, 0, 0, 0, 0);
+    public static BezierCurve kRedLeftSideToRightScalePath = new BezierCurve(0, 0, 0, 0, 0, 0, 0, 0);
+    public static BezierCurve kRedLeftSideToLeftScalePath = new BezierCurve(0, 0, 0, 0, 0, 0, 0, 0);
+
+    public static BezierCurve kBlueCenterToRightSwitchPath = new BezierCurve(0, 0, 0, 0, 0, 0, 0, 0);
+    public static BezierCurve kBlueCenterToLeftSwitchPath = new BezierCurve(0, 0, 0, 0, 0, 0, 0, 0);
+    public static BezierCurve kBlueCenterToRightScalePath = new BezierCurve(0, 0, 0, 0, 0, 0, 0, 0);
+    public static BezierCurve kBlueCenterToLeftScalePath = new BezierCurve(0, 0, 0, 0, 0, 0, 0, 0);
+    public static BezierCurve kBlueRightSideToRightScalePath = new BezierCurve(0, 0, 0, 0, 0, 0, 0, 0);
+    public static BezierCurve kBlueRightSideToLeftScalePath = new BezierCurve(0, 0, 0, 0, 0, 0, 0, 0);
+    public static BezierCurve kBlueLeftSideToRightScalePath = new BezierCurve(0, 0, 0, 0, 0, 0, 0, 0);
+    public static BezierCurve kBlueLeftSideToLeftScalePath = new BezierCurve(0, 0, 0, 0, 0, 0, 0, 0);
 
 }
