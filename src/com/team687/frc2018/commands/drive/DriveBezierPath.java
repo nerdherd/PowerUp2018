@@ -83,7 +83,6 @@ public class DriveBezierPath extends Command {
 		double robotAngle = (360 - Robot.drive.getCurrentYaw()) % 360;
 		m_desiredHeading = m_headingList.get(m_counter);
 
-		// TODO: check this against the NerdyDrive code on Breakaway
 		// going reverse
 		if (m_direction > 0) {
 		    m_desiredHeading += 180;
