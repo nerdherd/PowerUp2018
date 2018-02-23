@@ -18,7 +18,6 @@ public class DriveBezierPath extends Command {
 
     private BezierCurve m_path;
     private double m_straightPower;
-    private boolean m_straightPowerIsDynamic;
     private boolean m_softStop;
 
     private PGains m_straightPGains;
@@ -32,10 +31,9 @@ public class DriveBezierPath extends Command {
     private double m_direction;
 
     public DriveBezierPath(double x0, double y0, double x1, double y1, double x2, double y2, double x3, double y3,
-	    double straightPower, boolean straightPowerIsDynamic, boolean softStop) {
+	    double straightPower, boolean softStop) {
 	m_path = new BezierCurve(x0, y0, x1, y1, x2, y2, x3, y3);
 	m_straightPower = straightPower;
-	m_straightPowerIsDynamic = straightPowerIsDynamic;
 	m_softStop = softStop;
 
 	requires(Robot.drive);
@@ -48,16 +46,13 @@ public class DriveBezierPath extends Command {
      * @param straightPower
      *            (postive if going forward (forward is side with climber), negative
      *            if going backwards)
-     * @param straightPowerIsDynamic
-     *            (true for paths with sharp turns)
      * @param softStop
      *            (if you want to slow down near end)
      * 
      */
-    public DriveBezierPath(double[] path, double straightPower, boolean straightPowerIsDynamic, boolean softStop) {
+    public DriveBezierPath(double[] path, double straightPower, boolean softStop) {
 	m_path = new BezierCurve(path[0], path[1], path[2], path[3], path[4], path[5], path[6], path[7]);
 	m_straightPower = straightPower;
-	m_straightPowerIsDynamic = straightPowerIsDynamic;
 	m_softStop = softStop;
 
 	requires(Robot.drive);
@@ -104,14 +99,6 @@ public class DriveBezierPath extends Command {
 
 		// default is specified straight power
 		double straightPower = m_straightPower;
-
-		// dynamic straight power
-		double deltaSegmentLength = m_arcLengthList.get(m_counter) - Robot.drive.getDrivetrainPosition();
-		double curvature = Math.abs(rotError / deltaSegmentLength);
-		if (m_straightPowerIsDynamic) {
-		    straightPower = (m_straightPower - (DriveConstants.kCurvatureFunction * curvature)) * m_direction;
-		}
-
 		double maxStraightPower = Math.abs(m_straightPower);
 		if (m_softStop) {
 		    double straightError = m_arcLengthList.get(m_arcLengthList.size() - 1)
