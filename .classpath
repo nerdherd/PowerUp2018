@@ -12,5 +12,6 @@
 	<classpathentry kind="var" path="USERLIBS_DIR/CTRE_Phoenix.jar"/>
 	<classpathentry kind="lib" path="/Users/tedlin/Documents/junit-4.12.jar"/>
 	<classpathentry kind="lib" path="/Users/tedlin/Documents/hamcrest-core-1.3.jar"/>
+	<classpathentry kind="lib" path="/Users/tedlin/wpilib/user/java/lib/Pathfinder-Java-1.8.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
