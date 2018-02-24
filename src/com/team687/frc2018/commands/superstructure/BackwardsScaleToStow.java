@@ -23,7 +23,7 @@ public class BackwardsScaleToStow extends Command {
     protected void execute() {
     	Robot.intake.setRollerPower(0);
     	Robot.wrist.setPosition(SuperstructureConstants.kWristStowArmOffsetPos);
-    	if (Robot.wrist.getPosition() > SuperstructureConstants.kWristStowArmOffsetPos - 200) {
+    	if (Robot.wrist.getPosition() < SuperstructureConstants.kWristStowArmOffsetPos + 200) {
     	    Robot.arm.setPosition(SuperstructureConstants.kArmOffsetPos);
     }
     }

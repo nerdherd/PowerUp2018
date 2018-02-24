@@ -11,31 +11,31 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ResetGyro extends Command {
 
-    public ResetGyro() {
-	requires(Robot.drive);
-    }
+	public ResetGyro() {
+		requires(Robot.drive);
+	}
 
-    @Override
-    protected void initialize() {
-	SmartDashboard.putString("Current Drive Command", "ResetGyro");
-	Robot.drive.resetGyro();
-    }
+	@Override
+	protected void initialize() {
+		SmartDashboard.putString("Current Drive Command", "ResetGyro");
+		Robot.drive.resetGyro();
+	}
 
-    @Override
-    protected void execute() {
-    }
+	@Override
+	protected void execute() {
+	}
 
-    @Override
-    protected boolean isFinished() {
-	return true;
-    }
+	@Override
+	protected boolean isFinished() {
+		return true;
+	}
 
-    @Override
-    protected void end() {
-    }
+	@Override
+	protected void end() {
+	}
 
-    @Override
-    protected void interrupted() {
-    }
+	@Override
+	protected void interrupted() {
+	}
 
 }

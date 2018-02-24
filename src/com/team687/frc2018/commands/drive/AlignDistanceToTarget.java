@@ -15,71 +15,71 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AlignDistanceToTarget extends Command {
 
-    private double m_distanceFromTargetInFeet;
-    private double m_error;
+	private double m_distanceFromTargetInFeet;
+	private double m_error;
 
-    private PGains m_rightPGains, m_leftPGains;
+	private PGains m_rightPGains, m_leftPGains;
 
-    private double m_startTime, m_timeout;
+	private double m_startTime, m_timeout;
 
-    public AlignDistanceToTarget(double distanceFromTargetInFeet) {
-	m_distanceFromTargetInFeet = distanceFromTargetInFeet;
-	m_timeout = 6.87;
+	public AlignDistanceToTarget(double distanceFromTargetInFeet) {
+		m_distanceFromTargetInFeet = distanceFromTargetInFeet;
+		m_timeout = 6.87;
 
-	requires(Robot.drive);
-    }
+		requires(Robot.drive);
+	}
 
-    /**
-     * @param distanceFromTargetInFeet
-     * @param timeout
-     */
-    public AlignDistanceToTarget(double distanceFromTargetInFeet, double timeout) {
-	m_distanceFromTargetInFeet = distanceFromTargetInFeet;
-	m_timeout = timeout;
+	/**
+	 * @param distanceFromTargetInFeet
+	 * @param timeout
+	 */
+	public AlignDistanceToTarget(double distanceFromTargetInFeet, double timeout) {
+		m_distanceFromTargetInFeet = distanceFromTargetInFeet;
+		m_timeout = timeout;
 
-	requires(Robot.drive);
-    }
+		requires(Robot.drive);
+	}
 
-    @Override
-    protected void initialize() {
-	SmartDashboard.putString("Current Drive Command", "AlignDistanceToTarget");
-	Robot.drive.stopDrive();
+	@Override
+	protected void initialize() {
+		SmartDashboard.putString("Current Drive Command", "AlignDistanceToTarget");
+		Robot.drive.stopDrive();
 
-	m_rightPGains = DriveConstants.kDistRightPGains;
-	m_leftPGains = DriveConstants.kDistLeftPGains;
+		m_rightPGains = DriveConstants.kDistRightPGains;
+		m_leftPGains = DriveConstants.kDistLeftPGains;
 
-	m_startTime = Timer.getFPGATimestamp();
-    }
+		m_startTime = Timer.getFPGATimestamp();
+	}
 
-    @Override
-    protected void execute() {
-	double robotInchesFromTarget = Robot.visionAdapter.getDistanceFromTarget();
-	m_error = NerdyMath.inchesToTicks(NerdyMath.feetToInches(m_distanceFromTargetInFeet) - robotInchesFromTarget);
+	@Override
+	protected void execute() {
+		double robotInchesFromTarget = Robot.visionAdapter.getDistanceFromTarget();
+		m_error = NerdyMath.inchesToTicks(NerdyMath.feetToInches(m_distanceFromTargetInFeet) - robotInchesFromTarget);
 
-	double straightRightPower = m_rightPGains.getP() * m_error;
-	straightRightPower = NerdyMath.threshold(straightRightPower, m_rightPGains.getMinPower(),
-		m_rightPGains.getMaxPower());
-	double straightLeftPower = m_leftPGains.getP() * m_error;
-	straightLeftPower = NerdyMath.threshold(straightLeftPower, m_leftPGains.getMinPower(),
-		m_leftPGains.getMaxPower());
+		double straightRightPower = m_rightPGains.getP() * m_error;
+		straightRightPower = NerdyMath.threshold(straightRightPower, m_rightPGains.getMinPower(),
+				m_rightPGains.getMaxPower());
+		double straightLeftPower = m_leftPGains.getP() * m_error;
+		straightLeftPower = NerdyMath.threshold(straightLeftPower, m_leftPGains.getMinPower(),
+				m_leftPGains.getMaxPower());
 
-	Robot.drive.setPower(straightLeftPower, straightRightPower);
-    }
+		Robot.drive.setPower(straightLeftPower, straightRightPower);
+	}
 
-    @Override
-    protected boolean isFinished() {
-	return Math.abs(m_error) < DriveConstants.kDriveDistanceTolerance
-		|| Timer.getFPGATimestamp() - m_startTime > m_timeout;
-    }
+	@Override
+	protected boolean isFinished() {
+		return Math.abs(m_error) < DriveConstants.kDriveDistanceTolerance
+				|| Timer.getFPGATimestamp() - m_startTime > m_timeout;
+	}
 
-    @Override
-    protected void end() {
-	Robot.drive.stopDrive();
-    }
+	@Override
+	protected void end() {
+		Robot.drive.stopDrive();
+	}
 
-    @Override
-    protected void interrupted() {
-	end();
-    }
+	@Override
+	protected void interrupted() {
+		end();
+	}
 
 }

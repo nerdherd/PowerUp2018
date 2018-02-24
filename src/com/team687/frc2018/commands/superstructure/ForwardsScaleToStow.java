@@ -36,7 +36,6 @@ public class ForwardsScaleToStow extends Command {
     		Robot.arm.setPosition(SuperstructureConstants.kArmVerticalPos);
     		Robot.wrist.setAngleAbsolute(47);
     	} else {
-    		m_isInitialActionFinished = true;
         	Robot.arm.setPosition(SuperstructureConstants.kArmOffsetPos);
         	double _r3 = SuperstructureConstants.kWristPivotToTip;
         	double theta2 = Robot.arm.getAbsoluteAngle();

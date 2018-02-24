@@ -30,143 +30,143 @@ import com.team687.lib.kauailabs.sf2.quantity.IQuantity;
 
 public class Timestamp implements IQuantity {
 
-    public enum TimestampResolution {
-	Second, Millisecond, Microsecond, Nanosecond
-    };
+	public enum TimestampResolution {
+		Second, Millisecond, Microsecond, Nanosecond
+	};
 
-    long timestamp;
-    TimestampResolution resolution;
+	long timestamp;
+	TimestampResolution resolution;
 
-    public Timestamp() {
-	this.timestamp = 0;
-	this.resolution = TimestampResolution.Millisecond;
-    }
-
-    public Timestamp(Timestamp ts_copy) {
-	this.timestamp = ts_copy.timestamp;
-	this.resolution = ts_copy.resolution;
-    }
-
-    public Timestamp(long timestamp, TimestampResolution resolution) {
-	this.timestamp = timestamp;
-	this.resolution = resolution;
-    }
-
-    public Timestamp(double seconds, TimestampResolution resolution) {
-	this.resolution = resolution;
-	this.fromSeconds(seconds);
-    }
-
-    public long getTimestamp() {
-	return this.timestamp;
-    }
-
-    public void setTimestamp(long new_timestamp) {
-	this.timestamp = new_timestamp;
-    }
-
-    public void setResolution(TimestampResolution r) {
-	this.resolution = r;
-    }
-
-    public TimestampResolution getResolution() {
-	return this.resolution;
-    }
-
-    public static final long MILLISECONDS_PER_SECOND = 1000;
-    public static final long MICROSECONDS_PER_SECOND = MILLISECONDS_PER_SECOND * 1000;
-    public static final long NANOSECONDS_PER_SECOND = MICROSECONDS_PER_SECOND * 1000;
-    public static final long NANOSECONDS_PER_MICROSECOND = 1000;
-    public static final long MICROSECONDS_PER_MILLISECOND = 1000;
-    public static final long NANOSECONDS_PER_MILLISECOND = NANOSECONDS_PER_MICROSECOND * 1000;
-
-    public long getNanoseconds() {
-	switch (resolution) {
-	case Second:
-	    return timestamp * NANOSECONDS_PER_SECOND;
-	case Millisecond:
-	    return timestamp * NANOSECONDS_PER_MILLISECOND;
-	case Microsecond:
-	    return timestamp * NANOSECONDS_PER_MICROSECOND;
-	case Nanosecond:
-	default:
-	    return timestamp;
+	public Timestamp() {
+		this.timestamp = 0;
+		this.resolution = TimestampResolution.Millisecond;
 	}
-    }
 
-    public long getMicroseconds() {
-	switch (resolution) {
-	case Second:
-	    return timestamp * MICROSECONDS_PER_SECOND;
-	case Millisecond:
-	    return timestamp * MICROSECONDS_PER_MILLISECOND;
-	case Microsecond:
-	default:
-	    return timestamp;
-	case Nanosecond:
-	    return timestamp / NANOSECONDS_PER_MICROSECOND;
+	public Timestamp(Timestamp ts_copy) {
+		this.timestamp = ts_copy.timestamp;
+		this.resolution = ts_copy.resolution;
 	}
-    }
 
-    public long getMilliseconds() {
-	switch (resolution) {
-	case Second:
-	    return timestamp * MILLISECONDS_PER_SECOND;
-	case Millisecond:
-	default:
-	    return timestamp;
-	case Microsecond:
-	    return timestamp / MICROSECONDS_PER_MILLISECOND;
-	case Nanosecond:
-	    return timestamp / NANOSECONDS_PER_MILLISECOND;
+	public Timestamp(long timestamp, TimestampResolution resolution) {
+		this.timestamp = timestamp;
+		this.resolution = resolution;
 	}
-    }
 
-    public double getSeconds() {
-	switch (resolution) {
-	case Second:
-	    return (double) timestamp;
-	case Millisecond:
-	default:
-	    return ((double) timestamp) / MILLISECONDS_PER_SECOND;
-	case Microsecond:
-	    return ((double) timestamp) / MICROSECONDS_PER_SECOND;
-	case Nanosecond:
-	    return ((double) timestamp) / NANOSECONDS_PER_SECOND;
+	public Timestamp(double seconds, TimestampResolution resolution) {
+		this.resolution = resolution;
+		this.fromSeconds(seconds);
 	}
-    }
 
-    public void fromSeconds(double seconds) {
-	switch (resolution) {
-	case Second:
-	    timestamp = (long) seconds;
-	    break;
-	case Millisecond:
-	default:
-	    timestamp = (long) (seconds * MILLISECONDS_PER_SECOND);
-	    break;
-	case Microsecond:
-	    timestamp = (long) (seconds * MICROSECONDS_PER_SECOND);
-	    break;
-	case Nanosecond:
-	    timestamp = (long) (seconds * NANOSECONDS_PER_SECOND);
-	    break;
+	public long getTimestamp() {
+		return this.timestamp;
 	}
-    }
 
-    @Override
-    public boolean getPrintableString(StringBuilder printable_string) {
-	printable_string.append(timestamp);
-	return true;
-    }
+	public void setTimestamp(long new_timestamp) {
+		this.timestamp = new_timestamp;
+	}
 
-    @Override
-    public boolean getContainedQuantities(ArrayList<IQuantity> quantities) {
-	return false;
-    }
+	public void setResolution(TimestampResolution r) {
+		this.resolution = r;
+	}
 
-    @Override
-    public boolean getContainedQuantityNames(ArrayList<String> quantity_names) {
-	return false;
-    }
+	public TimestampResolution getResolution() {
+		return this.resolution;
+	}
+
+	public static final long MILLISECONDS_PER_SECOND = 1000;
+	public static final long MICROSECONDS_PER_SECOND = MILLISECONDS_PER_SECOND * 1000;
+	public static final long NANOSECONDS_PER_SECOND = MICROSECONDS_PER_SECOND * 1000;
+	public static final long NANOSECONDS_PER_MICROSECOND = 1000;
+	public static final long MICROSECONDS_PER_MILLISECOND = 1000;
+	public static final long NANOSECONDS_PER_MILLISECOND = NANOSECONDS_PER_MICROSECOND * 1000;
+
+	public long getNanoseconds() {
+		switch (resolution) {
+		case Second:
+			return timestamp * NANOSECONDS_PER_SECOND;
+		case Millisecond:
+			return timestamp * NANOSECONDS_PER_MILLISECOND;
+		case Microsecond:
+			return timestamp * NANOSECONDS_PER_MICROSECOND;
+		case Nanosecond:
+		default:
+			return timestamp;
+		}
+	}
+
+	public long getMicroseconds() {
+		switch (resolution) {
+		case Second:
+			return timestamp * MICROSECONDS_PER_SECOND;
+		case Millisecond:
+			return timestamp * MICROSECONDS_PER_MILLISECOND;
+		case Microsecond:
+		default:
+			return timestamp;
+		case Nanosecond:
+			return timestamp / NANOSECONDS_PER_MICROSECOND;
+		}
+	}
+
+	public long getMilliseconds() {
+		switch (resolution) {
+		case Second:
+			return timestamp * MILLISECONDS_PER_SECOND;
+		case Millisecond:
+		default:
+			return timestamp;
+		case Microsecond:
+			return timestamp / MICROSECONDS_PER_MILLISECOND;
+		case Nanosecond:
+			return timestamp / NANOSECONDS_PER_MILLISECOND;
+		}
+	}
+
+	public double getSeconds() {
+		switch (resolution) {
+		case Second:
+			return (double) timestamp;
+		case Millisecond:
+		default:
+			return ((double) timestamp) / MILLISECONDS_PER_SECOND;
+		case Microsecond:
+			return ((double) timestamp) / MICROSECONDS_PER_SECOND;
+		case Nanosecond:
+			return ((double) timestamp) / NANOSECONDS_PER_SECOND;
+		}
+	}
+
+	public void fromSeconds(double seconds) {
+		switch (resolution) {
+		case Second:
+			timestamp = (long) seconds;
+			break;
+		case Millisecond:
+		default:
+			timestamp = (long) (seconds * MILLISECONDS_PER_SECOND);
+			break;
+		case Microsecond:
+			timestamp = (long) (seconds * MICROSECONDS_PER_SECOND);
+			break;
+		case Nanosecond:
+			timestamp = (long) (seconds * NANOSECONDS_PER_SECOND);
+			break;
+		}
+	}
+
+	@Override
+	public boolean getPrintableString(StringBuilder printable_string) {
+		printable_string.append(timestamp);
+		return true;
+	}
+
+	@Override
+	public boolean getContainedQuantities(ArrayList<IQuantity> quantities) {
+		return false;
+	}
+
+	@Override
+	public boolean getContainedQuantityNames(ArrayList<String> quantity_names) {
+		return false;
+	}
 }

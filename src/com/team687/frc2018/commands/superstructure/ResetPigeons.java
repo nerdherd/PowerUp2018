@@ -11,40 +11,40 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ResetPigeons extends Command {
 
-    public ResetPigeons() {
-	requires(Robot.wrist);
-	requires(Robot.arm);
-    }
+	public ResetPigeons() {
+		requires(Robot.wrist);
+		requires(Robot.arm);
+	}
 
-    @Override
-    protected void initialize() {
-	SmartDashboard.putString("Current Superstructure Command", "ResetPigeons");
-	Robot.wrist.resetYaw();
-	Robot.wrist.resetPitch();
-	Robot.wrist.resetRoll();
-	Robot.arm.resetArmYaw();
-	Robot.arm.resetArmPitch();
-	Robot.arm.resetArmRoll();
-	Robot.arm.resetTowerYaw();
-	Robot.arm.resetTowerPitch();
-	Robot.arm.resetTowerRoll();
-    }
+	@Override
+	protected void initialize() {
+		SmartDashboard.putString("Current Superstructure Command", "ResetPigeons");
+		Robot.wrist.resetYaw();
+		Robot.wrist.resetPitch();
+		Robot.wrist.resetRoll();
+		Robot.arm.resetArmYaw();
+		Robot.arm.resetArmPitch();
+		Robot.arm.resetArmRoll();
+		Robot.arm.resetTowerYaw();
+		Robot.arm.resetTowerPitch();
+		Robot.arm.resetTowerRoll();
+	}
 
-    @Override
-    protected void execute() {
-    }
+	@Override
+	protected void execute() {
+	}
 
-    @Override
-    protected boolean isFinished() {
-	return true;
-    }
+	@Override
+	protected boolean isFinished() {
+		return true;
+	}
 
-    @Override
-    protected void end() {
-    }
+	@Override
+	protected void end() {
+	}
 
-    @Override
-    protected void interrupted() {
-    }
+	@Override
+	protected void interrupted() {
+	}
 
 }

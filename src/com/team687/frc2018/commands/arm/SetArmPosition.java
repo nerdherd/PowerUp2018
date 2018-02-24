@@ -11,38 +11,38 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SetArmPosition extends Command {
 
-    private double m_position;
+	private double m_position;
 
-    public SetArmPosition(double position) {
-	m_position = position;
+	public SetArmPosition(double position) {
+		m_position = position;
 
-	requires(Robot.arm);
-    }
+		requires(Robot.arm);
+	}
 
-    @Override
-    protected void initialize() {
-	SmartDashboard.putString("Current Arm Command", "SetArmPosition");
+	@Override
+	protected void initialize() {
+		SmartDashboard.putString("Current Arm Command", "SetArmPosition");
 
-	Robot.arm.setPosition(m_position);
-    }
+		Robot.arm.setPosition(m_position);
+	}
 
-    @Override
-    protected void execute() {
-	Robot.arm.setPosition(m_position);
-    }
+	@Override
+	protected void execute() {
+		Robot.arm.setPosition(m_position);
+	}
 
-    @Override
-    protected boolean isFinished() {
-	return false;
-    }
+	@Override
+	protected boolean isFinished() {
+		return false;
+	}
 
-    @Override
-    protected void end() {
-	Robot.arm.setVoltage(0);
-    }
+	@Override
+	protected void end() {
+		Robot.arm.setVoltage(0);
+	}
 
-    @Override
-    protected void interrupted() {
-	end();
-    }
+	@Override
+	protected void interrupted() {
+		end();
+	}
 }

@@ -38,27 +38,27 @@ import com.team687.lib.kauailabs.sf2.quantity.IQuantity;
  */
 public interface ITimestampedValue {
 
-    /**
-     * Accessor for this object's sensor timestamp.
-     * 
-     * @return - sensor timestamp
-     */
-    public long getTimestamp();
+	/**
+	 * Accessor for this object's sensor timestamp.
+	 * 
+	 * @return - sensor timestamp
+	 */
+	public long getTimestamp();
 
-    /**
-     * Indicates whether this object currently represents a valid value/timestamp.
-     * 
-     * @return - true if this object is currently valid, false if not.
-     */
-    public boolean getValid();
+	/**
+	 * Indicates whether this object currently represents a valid value/timestamp.
+	 * 
+	 * @return - true if this object is currently valid, false if not.
+	 */
+	public boolean getValid();
 
-    /**
-     * Modifies whether this object currently represents a valid value/timestamp.
-     * 
-     * @param valid
-     *            - true if this object is currently valid, false if not.
-     */
-    public void setValid(boolean valid);
+	/**
+	 * Modifies whether this object currently represents a valid value/timestamp.
+	 * 
+	 * @param valid
+	 *            - true if this object is currently valid, false if not.
+	 */
+	public void setValid(boolean valid);
 
-    public IQuantity getQuantity();
+	public IQuantity getQuantity();
 }

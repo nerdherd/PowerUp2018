@@ -15,69 +15,69 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveDistancePID extends Command {
 
-    private double m_rightDistance, m_leftDistance;
-    private double m_rightError, m_leftError;
+	private double m_rightDistance, m_leftDistance;
+	private double m_rightError, m_leftError;
 
-    private PGains m_rightPGains, m_leftPGains;
+	private PGains m_rightPGains, m_leftPGains;
 
-    private double m_startTime, m_timeout;
+	private double m_startTime, m_timeout;
 
-    /**
-     * @param rightDistance
-     * @param leftDistance
-     * @param timeout
-     */
-    public DriveDistancePID(double rightDistance, double leftDistance, double timeout) {
-	m_timeout = timeout;
-	m_rightDistance = rightDistance;
-	m_leftDistance = leftDistance;
+	/**
+	 * @param rightDistance
+	 * @param leftDistance
+	 * @param timeout
+	 */
+	public DriveDistancePID(double rightDistance, double leftDistance, double timeout) {
+		m_timeout = timeout;
+		m_rightDistance = rightDistance;
+		m_leftDistance = leftDistance;
 
-	requires(Robot.drive);
-    }
+		requires(Robot.drive);
+	}
 
-    @Override
-    protected void initialize() {
-	SmartDashboard.putString("Current Drive Command", "DriveDistancePID");
-	Robot.drive.stopDrive();
-	Robot.drive.resetEncoders();
+	@Override
+	protected void initialize() {
+		SmartDashboard.putString("Current Drive Command", "DriveDistancePID");
+		Robot.drive.stopDrive();
+		Robot.drive.resetEncoders();
 
-	m_rightPGains = DriveConstants.kDistRightPGains;
-	m_leftPGains = DriveConstants.kDistLeftPGains;
+		m_rightPGains = DriveConstants.kDistRightPGains;
+		m_leftPGains = DriveConstants.kDistLeftPGains;
 
-	m_startTime = Timer.getFPGATimestamp();
-    }
+		m_startTime = Timer.getFPGATimestamp();
+	}
 
-    @Override
-    protected void execute() {
-	m_rightError = m_rightDistance - Robot.drive.getRightPosition();
-	m_leftError = m_leftDistance - Robot.drive.getLeftPosition();
+	@Override
+	protected void execute() {
+		m_rightError = m_rightDistance - Robot.drive.getRightPosition();
+		m_leftError = m_leftDistance - Robot.drive.getLeftPosition();
 
-	double straightRightPower = m_rightPGains.getP() * m_rightError;
-	double straightLeftPower = m_leftPGains.getP() * m_leftError;
+		double straightRightPower = m_rightPGains.getP() * m_rightError;
+		double straightLeftPower = m_leftPGains.getP() * m_leftError;
 
-	straightRightPower = NerdyMath.threshold(straightRightPower, m_rightPGains.getMinPower(),
-		m_rightPGains.getMaxPower());
-	straightLeftPower = NerdyMath.threshold(straightLeftPower, m_leftPGains.getMinPower(),
-		m_leftPGains.getMaxPower());
+		straightRightPower = NerdyMath.threshold(straightRightPower, m_rightPGains.getMinPower(),
+				m_rightPGains.getMaxPower());
+		straightLeftPower = NerdyMath.threshold(straightLeftPower, m_leftPGains.getMinPower(),
+				m_leftPGains.getMaxPower());
 
-	Robot.drive.setPower(straightLeftPower, straightRightPower);
-    }
+		Robot.drive.setPower(straightLeftPower, straightRightPower);
+	}
 
-    @Override
-    protected boolean isFinished() {
-	boolean reachedGoal = Math.abs(m_leftError) < DriveConstants.kDriveDistanceTolerance
-		&& Math.abs(m_rightError) < DriveConstants.kDriveDistanceTolerance;
-	return reachedGoal || Timer.getFPGATimestamp() - m_startTime > m_timeout;
-    }
+	@Override
+	protected boolean isFinished() {
+		boolean reachedGoal = Math.abs(m_leftError) < DriveConstants.kDriveDistanceTolerance
+				&& Math.abs(m_rightError) < DriveConstants.kDriveDistanceTolerance;
+		return reachedGoal; //|| Timer.getFPGATimestamp() - m_startTime > m_timeout;
+	}
 
-    @Override
-    protected void end() {
-	Robot.drive.stopDrive();
-    }
+	@Override
+	protected void end() {
+		Robot.drive.stopDrive();
+	}
 
-    @Override
-    protected void interrupted() {
-	end();
-    }
+	@Override
+	protected void interrupted() {
+		end();
+	}
 
 }

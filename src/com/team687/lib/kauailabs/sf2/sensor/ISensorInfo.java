@@ -27,15 +27,15 @@ package com.team687.lib.kauailabs.sf2.sensor;
 import com.team687.lib.kauailabs.sf2.time.TimestampInfo;
 
 public interface ISensorInfo {
-    String getMake();
+	String getMake();
 
-    String getModel();
+	String getModel();
 
-    String getName();
+	String getName();
 
-    ISensorDataSource getSensorDataSource();
+	ISensorDataSource getSensorDataSource();
 
-    TimestampInfo getSensorTimestampInfo();
+	TimestampInfo getSensorTimestampInfo();
 
-    IProcessorInfo getHostProcessorInfo();
+	IProcessorInfo getHostProcessorInfo();
 }

@@ -27,5 +27,5 @@ package com.team687.lib.kauailabs.sf2.sensor;
 import com.team687.lib.kauailabs.sf2.quantity.Scalar;
 
 public interface IWheelAngleSensor<T extends Scalar> {
-    boolean getCurrent(T t);
+	boolean getCurrent(T t);
 }

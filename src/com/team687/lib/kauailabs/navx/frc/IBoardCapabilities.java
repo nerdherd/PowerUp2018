@@ -10,11 +10,11 @@
 package com.team687.lib.kauailabs.navx.frc;
 
 interface IBoardCapabilities {
-    public boolean isOmniMountSupported();
+	public boolean isOmniMountSupported();
 
-    public boolean isBoardYawResetSupported();
+	public boolean isBoardYawResetSupported();
 
-    public boolean isDisplacementSupported();
+	public boolean isDisplacementSupported();
 
-    public boolean isAHRSPosTimestampSupported();
+	public boolean isAHRSPosTimestampSupported();
 }

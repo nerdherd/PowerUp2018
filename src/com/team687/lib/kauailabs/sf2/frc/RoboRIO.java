@@ -35,19 +35,19 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class RoboRIO implements IProcessorInfo {
 
-    @Override
-    public String getName() {
-	try {
-	    return InetAddress.getLocalHost().getHostName();
-	} catch (UnknownHostException e) {
-	    return "RoboRIO";
+	@Override
+	public String getName() {
+		try {
+			return InetAddress.getLocalHost().getHostName();
+		} catch (UnknownHostException e) {
+			return "RoboRIO";
+		}
 	}
-    }
 
-    @Override
-    public void getProcessorTimestamp(Timestamp t) {
-	t.setResolution(TimestampResolution.Millisecond);
-	t.fromSeconds(Timer.getFPGATimestamp());
-    }
+	@Override
+	public void getProcessorTimestamp(Timestamp t) {
+		t.setResolution(TimestampResolution.Millisecond);
+		t.fromSeconds(Timer.getFPGATimestamp());
+	}
 
 }

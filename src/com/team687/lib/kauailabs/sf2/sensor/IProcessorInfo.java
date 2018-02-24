@@ -27,7 +27,7 @@ package com.team687.lib.kauailabs.sf2.sensor;
 import com.team687.lib.kauailabs.sf2.time.Timestamp;
 
 public interface IProcessorInfo {
-    public String getName();
+	public String getName();
 
-    public void getProcessorTimestamp(Timestamp out);
+	public void getProcessorTimestamp(Timestamp out);
 }

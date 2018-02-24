@@ -15,130 +15,131 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 
 public class Robot extends TimedRobot {
 
-    public static Drive drive;
-    public static Arm arm;
-    public static Wrist wrist;
-    public static Intake intake;
+	public static Drive drive;
+	public static Arm arm;
+	public static Wrist wrist;
+	public static Intake intake;
 
-    public static PowerDistributionPanel pdp;
-    public static OI oi;
+	public static PowerDistributionPanel pdp;
+	public static OI oi;
 
-    public static VisionAdapter visionAdapter;
+	public static VisionAdapter visionAdapter;
 
-    public static CSVLogger logger;
+	public static CSVLogger logger;
 
-    @Override
-    public void robotInit() {
-//	logger = CSVLogger.getInstance();
+	@Override
+	public void robotInit() {
+		// logger = CSVLogger.getInstance();
 
-	pdp = new PowerDistributionPanel();
+		pdp = new PowerDistributionPanel();
 
-	arm = new Arm();
-	arm.setVoltage(0);
-	arm.resetEncoder();
+		arm = new Arm();
+		arm.setVoltage(0);
+		arm.resetEncoder();
 
-	wrist = new Wrist();
-	wrist.setPercentOutput(0);
-	wrist.resetEncoder();
+		wrist = new Wrist();
+		wrist.setPercentOutput(0);
+		wrist.resetEncoder();
 
-	intake = new Intake();
-	intake.setRollerPower(0);
+		intake = new Intake();
+		intake.setRollerPower(0);
 
-	drive = new Drive();
-	drive.stopDrive();
-	drive.resetEncoders();
-	drive.resetGyro();
+		drive = new Drive();
+		drive.stopDrive();
+		drive.resetEncoders();
+		drive.resetGyro();
 
-	oi = new OI();
-    }
+		oi = new OI();
+	}
 
-    @Override
-    public void disabledInit() {
-	Scheduler.getInstance().removeAll();
+	@Override
+	public void disabledInit() {
+		Scheduler.getInstance().removeAll();
 
-	arm.updateYawPitchRoll();
-	wrist.updateYawPitchRoll();
-//	drive.reportToSmartDashboard();
-	arm.reportToSmartDashboard();
-	wrist.reportToSmartDashboard();
-	
-//	drive.stopLog();
-	wrist.stopLog();
-	arm.stopLog();
-    }
+//		arm.updateYawPitchRoll();
+//		wrist.updateYawPitchRoll();
+		 drive.reportToSmartDashboard();
+		arm.reportToSmartDashboard();
+		wrist.reportToSmartDashboard();
 
-    @Override
-    public void disabledPeriodic() {
-	Scheduler.getInstance().removeAll();
+		// drive.stopLog();
+		wrist.stopLog();
+		arm.stopLog();
+	}
 
-	arm.updateYawPitchRoll();
-	wrist.updateYawPitchRoll();
-//	drive.reportToSmartDashboard();
-	arm.reportToSmartDashboard();
-	wrist.reportToSmartDashboard();
-    }
+	@Override
+	public void disabledPeriodic() {
+		Scheduler.getInstance().removeAll();
 
-    @Override
-    public void autonomousInit() {
-	// Scheduler.getInstance().removeAll();
+//		arm.updateYawPitchRoll();
+//		wrist.updateYawPitchRoll();
+		 drive.reportToSmartDashboard();
+		arm.reportToSmartDashboard();
+		wrist.reportToSmartDashboard();
+	}
 
-	arm.updateYawPitchRoll();
-	wrist.updateYawPitchRoll();
-//	drive.reportToSmartDashboard();
-	arm.reportToSmartDashboard();
-	wrist.reportToSmartDashboard();
-    }
+	@Override
+	public void autonomousInit() {
+		// Scheduler.getInstance().removeAll();
 
-    @Override
-    public void autonomousPeriodic() {
-	Scheduler.getInstance().run();
+//		arm.updateYawPitchRoll();
+//		wrist.updateYawPitchRoll();
+		 drive.reportToSmartDashboard();
+		arm.reportToSmartDashboard();
+		wrist.reportToSmartDashboard();
+	}
 
-	arm.updateYawPitchRoll();
-	wrist.updateYawPitchRoll();
-//	drive.reportToSmartDashboard();
-	arm.reportToSmartDashboard();
-	wrist.reportToSmartDashboard();
-    }
+	@Override
+	public void autonomousPeriodic() {
+		Scheduler.getInstance().run();
 
-    @Override
-    public void teleopInit() {
-//	 Scheduler.getInstance().removeAll();
-    Scheduler.getInstance().add(new ResetWristEncoder());
-    Scheduler.getInstance().add(new ResetArmEncoder());
-	arm.updateYawPitchRoll();
-	wrist.updateYawPitchRoll();
-//	drive.reportToSmartDashboard();
-	arm.reportToSmartDashboard();
-	wrist.reportToSmartDashboard();
-	
-//	drive.startLog();
-	wrist.startLog();
-	arm.startLog();
-    }
+//		arm.updateYawPitchRoll();
+//		wrist.updateYawPitchRoll();
+		 drive.reportToSmartDashboard();
+		arm.reportToSmartDashboard();
+		wrist.reportToSmartDashboard();
+	}
 
-    @Override
-    public void teleopPeriodic() {
-	Scheduler.getInstance().run();
+	@Override
+	public void teleopInit() {
+		// Scheduler.getInstance().removeAll();
+//		Scheduler.getInstance().add(new ResetWristEncoder());
+//		Scheduler.getInstance().add(new ResetArmEncoder());
+		
+		arm.updateYawPitchRoll();
+		wrist.updateYawPitchRoll();
+		 drive.reportToSmartDashboard();
+		arm.reportToSmartDashboard();
+		wrist.reportToSmartDashboard();
 
-	arm.updateYawPitchRoll();
-	wrist.updateYawPitchRoll();
-//	drive.reportToSmartDashboard();
-	arm.reportToSmartDashboard();
-	wrist.reportToSmartDashboard();
-	
-//	drive.logToCSV();
-	wrist.logToCSV();
-	arm.logToCSV();
-    }
+		// drive.startLog();
+		wrist.startLog();
+		arm.startLog();
+	}
 
-    @Override
-    public void testPeriodic() {
-	Scheduler.getInstance().run();
+	@Override
+	public void teleopPeriodic() {
+		Scheduler.getInstance().run();
 
-	arm.updateYawPitchRoll();
-	wrist.updateYawPitchRoll();
-//	drive.reportToSmartDashboard();
-	arm.reportToSmartDashboard();
-	wrist.reportToSmartDashboard();
-    }
+//		arm.updateYawPitchRoll();
+//		wrist.updateYawPitchRoll();
+		 drive.reportToSmartDashboard();
+		arm.reportToSmartDashboard();
+		wrist.reportToSmartDashboard();
+
+		// drive.logToCSV();
+		wrist.logToCSV();
+		arm.logToCSV();
+	}
+
+	@Override
+	public void testPeriodic() {
+		Scheduler.getInstance().run();
+
+//		arm.updateYawPitchRoll();
+//		wrist.updateYawPitchRoll();
+		 drive.reportToSmartDashboard();
+		arm.reportToSmartDashboard();
+		wrist.reportToSmartDashboard();
+	}
 }

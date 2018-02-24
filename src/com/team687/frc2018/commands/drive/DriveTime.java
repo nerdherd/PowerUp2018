@@ -12,45 +12,45 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTime extends Command {
 
-    private double m_straightPower;
-    private double m_timeout;
-    private double m_startTime;
+	private double m_straightPower;
+	private double m_timeout;
+	private double m_startTime;
 
-    /**
-     * @param straightPower
-     * @param timeout
-     */
-    public DriveTime(double straightPower, double timeout) {
-	m_straightPower = straightPower;
-	m_timeout = timeout;
+	/**
+	 * @param straightPower
+	 * @param timeout
+	 */
+	public DriveTime(double straightPower, double timeout) {
+		m_straightPower = straightPower;
+		m_timeout = timeout;
 
-	requires(Robot.drive);
-    }
+		requires(Robot.drive);
+	}
 
-    @Override
-    protected void initialize() {
-	SmartDashboard.putString("Current Drive Command", "DriveTime");
-	m_startTime = Timer.getFPGATimestamp();
-    }
+	@Override
+	protected void initialize() {
+		SmartDashboard.putString("Current Drive Command", "DriveTime");
+		m_startTime = Timer.getFPGATimestamp();
+	}
 
-    @Override
-    protected void execute() {
-	Robot.drive.setPower(m_straightPower, m_straightPower);
-    }
+	@Override
+	protected void execute() {
+		Robot.drive.setPower(m_straightPower, m_straightPower);
+	}
 
-    @Override
-    protected boolean isFinished() {
-	return Timer.getFPGATimestamp() - m_startTime > m_timeout;
-    }
+	@Override
+	protected boolean isFinished() {
+		return Timer.getFPGATimestamp() - m_startTime > m_timeout;
+	}
 
-    @Override
-    protected void end() {
-	Robot.drive.stopDrive();
-    }
+	@Override
+	protected void end() {
+		Robot.drive.stopDrive();
+	}
 
-    @Override
-    protected void interrupted() {
-	end();
-    }
+	@Override
+	protected void interrupted() {
+		end();
+	}
 
 }

@@ -13,59 +13,59 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriftTurnToAngle extends Command {
 
-    private double m_straightPower;
-    private double m_desiredAngle;
-    private double m_distance;
-    private double m_kRotP;
+	private double m_straightPower;
+	private double m_desiredAngle;
+	private double m_distance;
+	private double m_kRotP;
 
-    /**
-     * @param straightPower
-     * @param angle
-     * @param distance
-     *            (absolute value)
-     * @param kRotP
-     */
-    public DriftTurnToAngle(double straightPower, double angle, double distance, double kRotP) {
-	m_straightPower = straightPower;
-	m_desiredAngle = angle;
-	m_distance = distance;
-	m_kRotP = kRotP;
+	/**
+	 * @param straightPower
+	 * @param angle
+	 * @param distance
+	 *            (absolute value)
+	 * @param kRotP
+	 */
+	public DriftTurnToAngle(double straightPower, double angle, double distance, double kRotP) {
+		m_straightPower = straightPower;
+		m_desiredAngle = angle;
+		m_distance = distance;
+		m_kRotP = kRotP;
 
-	requires(Robot.drive);
-    }
+		requires(Robot.drive);
+	}
 
-    @Override
-    protected void initialize() {
-	SmartDashboard.putString("Current Drive Command", "DriftTurnToAngle");
-    }
+	@Override
+	protected void initialize() {
+		SmartDashboard.putString("Current Drive Command", "DriftTurnToAngle");
+	}
 
-    @Override
-    protected void execute() {
-	double doneness = Math.abs(Robot.drive.getDrivetrainPosition() / m_distance);
-	// doneness = Math.sqrt(doneness); // this makes the arc turn more gradual
+	@Override
+	protected void execute() {
+		double doneness = Math.abs(Robot.drive.getDrivetrainPosition() / m_distance);
+		// doneness = Math.sqrt(doneness); // this makes the arc turn more gradual
 
-	double robotAngle = (360 - Robot.drive.getCurrentYaw()) % 360;
-	double rotError = -m_desiredAngle - robotAngle;
-	rotError = (rotError > 180) ? rotError - 360 : rotError;
-	rotError = (rotError < -180) ? rotError + 360 : rotError;
-	double rotPower = m_kRotP * rotError * doneness;
+		double robotAngle = (360 - Robot.drive.getCurrentYaw()) % 360;
+		double rotError = -m_desiredAngle - robotAngle;
+		rotError = (rotError > 180) ? rotError - 360 : rotError;
+		rotError = (rotError < -180) ? rotError + 360 : rotError;
+		double rotPower = m_kRotP * rotError * doneness;
 
-	Robot.drive.setPower(m_straightPower + rotPower, m_straightPower - rotPower);
-    }
+		Robot.drive.setPower(m_straightPower + rotPower, m_straightPower - rotPower);
+	}
 
-    @Override
-    protected boolean isFinished() {
-	return Math.abs(Robot.drive.getDrivetrainPosition()) >= m_distance;
-    }
+	@Override
+	protected boolean isFinished() {
+		return Math.abs(Robot.drive.getDrivetrainPosition()) >= m_distance;
+	}
 
-    @Override
-    protected void end() {
-	Robot.drive.stopDrive();
-    }
+	@Override
+	protected void end() {
+		Robot.drive.stopDrive();
+	}
 
-    @Override
-    protected void interrupted() {
-	end();
-    }
+	@Override
+	protected void interrupted() {
+		end();
+	}
 
 }

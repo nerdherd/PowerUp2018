@@ -25,7 +25,7 @@ THE SOFTWARE.
 package com.team687.lib.kauailabs.sf2.quantity;
 
 public interface ICopy<T> {
-    public void copy(T t);
+	public void copy(T t);
 
-    public T instantiate_copy();
+	public T instantiate_copy();
 }

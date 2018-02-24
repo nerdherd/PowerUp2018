@@ -61,6 +61,7 @@ public class Arm extends Subsystem {
 
 	m_arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
 	m_arm.setSensorPhase(true);
+	m_arm.setInverted(true);
 	m_arm.setNeutralMode(NeutralMode.Coast);
 
 	m_arm.config_kF(0, SuperstructureConstants.kArmF, 0);
@@ -123,11 +124,11 @@ public class Arm extends Subsystem {
     }
     
     public double ticksToDegrees(double ticks) {
-    	return (ticks / 4096) * (360 / 12) - 55;
+    	return (ticks / 4096) * (360 / SuperstructureConstants.kArmGearRatio) - SuperstructureConstants.kArmAngleOffsetWhenDown;
     }
     
     public double degreesToTicks(double degrees) {
-    	return (degrees + 55) * 12 / 360 * 4096;
+    	return (degrees + SuperstructureConstants.kArmAngleOffsetWhenDown) * SuperstructureConstants.kArmGearRatio / 360 * 4096;
     }
     
     public double getAbsoluteAngle() {
@@ -248,9 +249,9 @@ public class Arm extends Subsystem {
 		File logFolder2 = new File(m_filePath2);
 		Path filePrefix = Paths.get("");
 		if(logFolder1.exists() && logFolder1.isDirectory())
-			filePrefix = Paths.get(logFolder1.toString(), SmartDashboard.getString("log_file_name", "2018_02_18_Arm"));
+			filePrefix = Paths.get(logFolder1.toString(), SmartDashboard.getString("log_file_name", "2018_02_24_Arm"));
 		else if(logFolder2.exists() && logFolder2.isDirectory())
-			filePrefix = Paths.get(logFolder2.toString(), SmartDashboard.getString("log_file_name", "2018_02_18_Arm"));
+			filePrefix = Paths.get(logFolder2.toString(), SmartDashboard.getString("log_file_name", "2018_02_24_Arm"));
 		else writeException = true;
 
 		if(!writeException) {
@@ -268,7 +269,7 @@ public class Arm extends Subsystem {
 			}
 			try {
 				m_writer = new FileWriter(m_file);
-				m_writer.append("Time,Position,Velocity,PigeonArmAngle,EncoderArmAngle,TowerAngle,Voltage,Current\n");
+				m_writer.append("Time,Position,Velocity,EncoderArmAngle,Voltage,Current\n");
 				m_logStartTime = Timer.getFPGATimestamp();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -294,9 +295,7 @@ public class Arm extends Subsystem {
 				m_writer.append(String.valueOf(timestamp) + "," + 
 						String.valueOf(getPosition()) + "," +
 						String.valueOf(getVelocity()) + "," + 
-						String.valueOf(getArmYaw()) + "," + 
 						String.valueOf(getAbsoluteAngle()) + "," + 
-						String.valueOf(getTowerYaw()) +"," + 
 						String.valueOf(getVoltage()) + "," + 
 						String.valueOf(getCurrent()) + "\n");
 				m_writer.flush();

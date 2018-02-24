@@ -29,6 +29,7 @@ public class DriveAtHeading extends Command {
 	m_heading = heading;
 	m_distance = distance;
 	m_kRotP = kRotP;
+	
 
 	requires(Robot.drive);
     }
@@ -40,13 +41,19 @@ public class DriveAtHeading extends Command {
 
     @Override
     protected void execute() {
-	double robotAngle = (360 - Robot.drive.getCurrentYaw()) % 360;
+    double rawYaw = Robot.drive.getCurrentYaw();
+    if (m_straightPower < 0) {
+    	rawYaw = rawYaw + 180;
+    }
+	double robotAngle = (360 - rawYaw) % 360;
 	double rotError = -m_heading - robotAngle;
 	rotError = (rotError > 180) ? rotError - 360 : rotError;
 	rotError = (rotError < -180) ? rotError + 360 : rotError;
 	double rotPower = m_kRotP * rotError;
+	SmartDashboard.putNumber("Rot Error", rotError);
+	SmartDashboard.putNumber("Rot Power", rotPower);
 
-	Robot.drive.setPower(m_straightPower + rotPower, m_straightPower - rotPower);
+	Robot.drive.setPower(m_straightPower - rotPower, m_straightPower + rotPower);
     }
 
     @Override
@@ -63,5 +70,6 @@ public class DriveAtHeading extends Command {
     protected void interrupted() {
 	end();
     }
+    
 
 }

@@ -17,50 +17,50 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Intake extends Subsystem {
 
-    private final TalonSRX m_rollers;
-    private final DigitalInput m_switch;
+	private final TalonSRX m_rollers;
+	private final DigitalInput m_switch;
 
-    public Intake() {
-	m_rollers = new TalonSRX(RobotMap.kIntakeRollersID);
-	m_rollers.setNeutralMode(NeutralMode.Coast);
-	m_rollers.setStatusFramePeriod(StatusFrame.Status_1_General, 15, 0);
-	
-	m_rollers.configPeakOutputForward(1, 0);
-	m_rollers.configPeakOutputReverse(-1, 0);
-	m_rollers.enableCurrentLimit(false);
+	public Intake() {
+		m_rollers = new TalonSRX(RobotMap.kIntakeRollersID);
+		m_rollers.setNeutralMode(NeutralMode.Coast);
+		m_rollers.setStatusFramePeriod(StatusFrame.Status_1_General, 15, 0);
 
-	m_switch = new DigitalInput(RobotMap.kLimitSwitchID);
-    }
+		m_rollers.configPeakOutputForward(1, 0);
+		m_rollers.configPeakOutputReverse(-1, 0);
+		m_rollers.enableCurrentLimit(false);
 
-    @Override
-    protected void initDefaultCommand() {
-    }
+		m_switch = new DigitalInput(RobotMap.kLimitSwitchID);
+	}
 
-    public boolean hasCube() {
-	return !m_switch.get();
-    }
+	@Override
+	protected void initDefaultCommand() {
+	}
 
-    public boolean isMaxCurrent() {
-	return getCurrent() > SuperstructureConstants.kRollerMaxCurrent;
-    }
+	public boolean hasCube() {
+		return isMaxCurrent();
+	}
 
-    public void setRollerPower(double power) {
-	m_rollers.set(ControlMode.PercentOutput, power);
-    }
+	public boolean isMaxCurrent() {
+		return getCurrent() > SuperstructureConstants.kRollerMaxCurrent;
+	}
 
-    public double getVoltage() {
-	return m_rollers.getMotorOutputVoltage();
-    }
+	public void setRollerPower(double power) {
+		m_rollers.set(ControlMode.PercentOutput, power);
+	}
 
-    public double getCurrent() {
-	return m_rollers.getOutputCurrent();
-    }
+	public double getVoltage() {
+		return m_rollers.getMotorOutputVoltage();
+	}
 
-    public void reportToSmartDashboard() {
-	SmartDashboard.putNumber("Roller Voltage", getVoltage());
-	SmartDashboard.putNumber("Roller Current", getCurrent());
-	SmartDashboard.putBoolean("Has Cube", hasCube());
-	SmartDashboard.putBoolean("Reached Max Current", isMaxCurrent());
-    }
+	public double getCurrent() {
+		return m_rollers.getOutputCurrent();
+	}
+
+	public void reportToSmartDashboard() {
+		SmartDashboard.putNumber("Roller Voltage", getVoltage());
+		SmartDashboard.putNumber("Roller Current", getCurrent());
+		SmartDashboard.putBoolean("Has Cube", hasCube());
+		SmartDashboard.putBoolean("Reached Max Current", isMaxCurrent());
+	}
 
 }

@@ -12,42 +12,42 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class WaitTime extends Command {
 
-    private double m_time;
-    private double m_startTime;
+	private double m_time;
+	private double m_startTime;
 
-    /**
-     * @param time
-     */
-    public WaitTime(double time) {
-	m_time = time;
+	/**
+	 * @param time
+	 */
+	public WaitTime(double time) {
+		m_time = time;
 
-	requires(Robot.drive);
-    }
+//		requires(Robot.drive);
+	}
 
-    @Override
-    protected void initialize() {
-	SmartDashboard.putString("Current Drive Command", "WaitTime");
-	Robot.drive.stopDrive();
+	@Override
+	protected void initialize() {
+		SmartDashboard.putString("Current Drive Command", "WaitTime");
+//		Robot.drive.stopDrive();
 
-	m_startTime = Timer.getFPGATimestamp();
-    }
+		m_startTime = Timer.getFPGATimestamp();
+	}
 
-    @Override
-    protected void execute() {
-    }
+	@Override
+	protected void execute() {
+	}
 
-    @Override
-    protected boolean isFinished() {
-	return Timer.getFPGATimestamp() <= m_time + m_startTime;
-    }
+	@Override
+	protected boolean isFinished() {
+		return Timer.getFPGATimestamp() - m_startTime > m_time;
+	}
 
-    @Override
-    protected void end() {
-    }
+	@Override
+	protected void end() {
+	}
 
-    @Override
-    protected void interrupted() {
-	end();
-    }
+	@Override
+	protected void interrupted() {
+		end();
+	}
 
 }

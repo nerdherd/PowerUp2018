@@ -4,17 +4,23 @@ import com.team687.frc2018.commands.arm.ResetArmEncoder;
 import com.team687.frc2018.commands.arm.SetArmPosition;
 import com.team687.frc2018.commands.arm.SetArmVoltage;
 import com.team687.frc2018.commands.auto.CenterToRightScale;
+import com.team687.frc2018.commands.auto.CenterToSwitch;
+import com.team687.frc2018.commands.drive.DriveDistancePID;
 import com.team687.frc2018.commands.drive.ResetDriveEncoders;
 import com.team687.frc2018.commands.drive.ResetGyro;
+import com.team687.frc2018.commands.drive.TurnToAngleEncoders;
+import com.team687.frc2018.commands.intake.IntakeSequence;
 import com.team687.frc2018.commands.intake.SetIntakeRollerPower;
 import com.team687.frc2018.commands.superstructure.CalibrateGyro;
 import com.team687.frc2018.commands.superstructure.ForwardsScaleToStow;
 import com.team687.frc2018.commands.superstructure.IntakeWithoutIntaking;
 import com.team687.frc2018.commands.superstructure.ResetPigeons;
+import com.team687.frc2018.commands.superstructure.BackwardsScaleToStowPosition;
 import com.team687.frc2018.commands.superstructure.BackwardsScaleToStow;
 import com.team687.frc2018.commands.superstructure.StowToBackwardsScale;
 import com.team687.frc2018.commands.superstructure.StowToForwardsScale;
 import com.team687.frc2018.commands.superstructure.StowToIntake;
+import com.team687.frc2018.commands.superstructure.Superstructure2MinTest;
 import com.team687.frc2018.commands.wrist.ResetWristEncoder;
 import com.team687.frc2018.commands.wrist.SetWristPercentOutput;
 import com.team687.frc2018.commands.wrist.SetWristPosition;
@@ -32,9 +38,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class OI {
 
+	
     public Joystick driveJoyLeft = new Joystick(0);
     public Joystick driveJoyRight = new Joystick(1);
-    public Joystick driveJoyArtic = new Joystick(2);
+//    public Joystick driveJoyArtic = new Joystick(2);
 
 //     public Joystick gamepadJoy = new Joystick(0);
 
@@ -52,97 +59,123 @@ public class OI {
     
     public JoystickButton forwardsToStow_9;
     public JoystickButton stowToForwards_7;
-    public JoystickButton stowToBackwards_6;
-    public JoystickButton backwardsToStow_4;
+    public JoystickButton stowToBackwards_8;
+    public JoystickButton backwardsToStow_10;
     
     public JoystickButton wristIntakeWithoutIntake_8;
-    public JoystickButton wristStow_10;
-    public JoystickButton wristIntake_12;
+    public JoystickButton wristStow_12;
+    public JoystickButton wristIntake_4;
 
     public OI() {
 //	quickTurn_1 = new JoystickButton(driveJoyRight, 1);
     	
-    intake_1 = new JoystickButton(driveJoyArtic, 1);
-    intake_1.whenPressed(new SetIntakeRollerPower(-1));
-    outtake_2 = new JoystickButton(driveJoyArtic, 2);
+    intake_1 = new JoystickButton(driveJoyLeft, 1);
+    intake_1.whenPressed(new IntakeSequence());
+    outtake_2 = new JoystickButton(driveJoyLeft, 2);
     outtake_2.whenPressed(new SetIntakeRollerPower(0.4));
-    stopIntake_3 = new JoystickButton(driveJoyArtic, 3);
+    stopIntake_3 = new JoystickButton(driveJoyLeft, 3);
     stopIntake_3.whenPressed(new SetIntakeRollerPower(0));
     
-    armOffset_11 = new JoystickButton(driveJoyArtic, 11);
+    armOffset_11 = new JoystickButton(driveJoyLeft, 11);
     armOffset_11.whenPressed(new SetArmPosition(SuperstructureConstants.kArmOffsetPos));
 //    armHorizontal_9 = new JoystickButton(driveJoyArtic, 9);
 //    armHorizontal_9.whenPressed(new SetArmPosition(SuperstructureConstants.kArmHorizontalPos));
 //    armVertical_7 = new JoystickButton(driveJoyArtic, 7);
 //    armVertical_7.whenPressed(new SetArmPosition(SuperstructureConstants.kArmVerticalPos));
     
-    forwardsToStow_9 = new JoystickButton(driveJoyArtic, 9);
+    forwardsToStow_9 = new JoystickButton(driveJoyLeft, 9);
     forwardsToStow_9.whenPressed(new ForwardsScaleToStow());
-    stowToForwards_7 = new JoystickButton(driveJoyArtic, 7);
+    stowToForwards_7 = new JoystickButton(driveJoyLeft, 7);
     stowToForwards_7.whenPressed(new StowToForwardsScale());
     
-    stowToBackwards_6 = new JoystickButton(driveJoyArtic, 6);
-    stowToBackwards_6.whenPressed(new StowToBackwardsScale());
-    backwardsToStow_4 = new JoystickButton(driveJoyArtic, 4);
-    backwardsToStow_4.whenPressed(new BackwardsScaleToStow());
     
-    wristIntakeWithoutIntake_8 = new JoystickButton(driveJoyArtic, 8);
-    wristIntakeWithoutIntake_8.whenPressed(new IntakeWithoutIntaking());
-    wristStow_10 = new JoystickButton(driveJoyArtic, 10);
-    wristStow_10.whenPressed(new SetWristPosition(Robot.wrist.angleAbsoluteToTicks(90)));
-    wristIntake_12 = new JoystickButton(driveJoyArtic, 12);
-    wristIntake_12.whenPressed(new StowToIntake());
+    stowToBackwards_8 = new JoystickButton(driveJoyLeft, 8);
+    stowToBackwards_8.whenPressed(new StowToBackwardsScale());
+    backwardsToStow_10 = new JoystickButton(driveJoyLeft, 10);
+    backwardsToStow_10.whenPressed(new BackwardsScaleToStow());
     
-	
+//    wristIntakeWithoutIntake_8 = new JoystickButton(driveJoyLeft, 6);
+//    wristIntakeWithoutIntake_8.whenPressed(new IntakeWithoutIntaking());
+    wristStow_12 = new JoystickButton(driveJoyLeft, 12);
+    wristStow_12.whenPressed(new SetWristPosition(Robot.wrist.angleAbsoluteToTicks(90)));
+    wristIntake_4 = new JoystickButton(driveJoyLeft, 4);
+    wristIntake_4.whenPressed(new StowToIntake());
+    
+//    SmartDashboard.putData("Center To Scale Auto", new CenterToRightScale());
+//    SmartDashboard.putData("Reset Drive Encoders", new ResetDriveEncoders());
+//    SmartDashboard.putData("Reset Yaw", new ResetGyro());
+////    
+//    SmartDashboard.putData("Turn to 90 degrees", new TurnToAngleEncoders(90));
+//    SmartDashboard.putData("Turn to 0 degrees", new TurnToAngleEncoders(0));
+//    SmartDashboard.putData("Turn to 180 degrees", new TurnToAngleEncoders(180));
+//    SmartDashboard.putData("Turn to 360 degrees", new TurnToAngleEncoders(360));
+//    SmartDashboard.putData("Turn to 270 degrees", new TurnToAngleEncoders(270));
+//    SmartDashboard.putData("Turn to 45 degrees", new TurnToAngleEncoders(45));
+//    
+//    SmartDashboard.putData("Drive PID Test", new DriveDistancePID(3309, 3309, 0));
+    
 	SmartDashboard.putData("Arm Position Vertical", new SetArmPosition(SuperstructureConstants.kArmVerticalPos));
-//	SmartDashboard.putData("Arm Position Horizontal", new SetArmPosition(SuperstructureConstants.kArmHorizontalPos));
+	SmartDashboard.putData("Arm Position Horizontal", new SetArmPosition(SuperstructureConstants.kArmHorizontalPos));
 	SmartDashboard.putData("Arm Position Offset", new SetArmPosition(SuperstructureConstants.kArmOffsetPos));
 //	SmartDashboard.putData("Arm Voltage 0", new SetArmVoltage(0));
 	SmartDashboard.putData("Arm Reset Encoder", new ResetArmEncoder());
-	SmartDashboard.putData("Arm Reset Pigeon", new ResetPigeons());
+//	SmartDashboard.putData("Arm Reset Pigeon", new ResetPigeons());
+	
+	SmartDashboard.putData("Intake Sequence", new IntakeSequence());
 	
 	SmartDashboard.putData("Wrist Reset Encoders", new ResetWristEncoder());
-	SmartDashboard.putData("Wrist 0 Percent Output", new SetWristPercentOutput(0));
-	SmartDashboard.putData("Wrist 3V", new SetWristVoltage(3));
-	SmartDashboard.putData("Wrist 6V", new SetWristVoltage(6));
-	SmartDashboard.putData("Wrist 9V", new SetWristVoltage(9));
-	SmartDashboard.putData("Wrist 12V", new SetWristVoltage(12));
-	SmartDashboard.putData("Wrist -3V", new SetWristVoltage(-3));
-	SmartDashboard.putData("Wrist -6V", new SetWristVoltage(-6));
-	SmartDashboard.putData("Wrist -9V", new SetWristVoltage(-9));
-	SmartDashboard.putData("Wrist -12V", new SetWristVoltage(-12));
+//	SmartDashboard.putData("Wrist 0 Percent Output", new SetWristPercentOutput(0));
+//	SmartDashboard.putData("Wrist 3V", new SetWristVoltage(3));
+//	SmartDashboard.putData("Wrist 6V", new SetWristVoltage(6));
+//	SmartDashboard.putData("Wrist 9V", new SetWristVoltage(9));
+//	SmartDashboard.putData("Wrist 12V", new SetWristVoltage(12));
+//	SmartDashboard.putData("Wrist -3V", new SetWristVoltage(-3));
+//	SmartDashboard.putData("Wrist -6V", new SetWristVoltage(-6));
+//	SmartDashboard.putData("Wrist -9V", new SetWristVoltage(-9));
+//	SmartDashboard.putData("Wrist -12V", new SetWristVoltage(-12));
 
 	SmartDashboard.putData("Wrist Position Intake", new SetWristPosition(-3309));
 	SmartDashboard.putData("Wrist Position 90 Deg", new SetWristPosition(Robot.wrist.angleAbsoluteToTicks(90)));
 	SmartDashboard.putData("Wrist Position Score", new SetWristPosition(-7155));
 	
-	SmartDashboard.putData("Set Positive Arm Voltage", new SetArmVoltage(.75));	
-	SmartDashboard.putData("Set Negative Arm Voltage", new SetArmVoltage(-.75));	
+//	SmartDashboard.putData("Set Positive Arm Voltage", new SetArmVoltage(.75));	
+//	SmartDashboard.putData("Set Negative Arm Voltage", new SetArmVoltage(-.75));	
 
-//	SmartDashboard.putData("Wrist Position Stow", new SetWristPosition(SuperstructureConstants.kWristStowPos));
-//	SmartDashboard.putData("Wrist Position Score", new SetWristPosition(SuperstructureConstants.kWristScoreBackwardsScalePos));
+	SmartDashboard.putData("Wrist Position Stow", new SetWristPosition(SuperstructureConstants.kWristStowPos));
+	SmartDashboard.putData("Wrist Position Score Backwards", new SetWristPosition(SuperstructureConstants.kWristScoreBackwardsScalePos));
 	
-//	SmartDashboard.putData("Wrist Position Vertical Upwards", new SetWristPosition(-2500));
-//	SmartDashboard.putData("Wrist Position Intake", new SetWristPosition(-5000));
-//	SmartDashboard.putData("Wrist Position Downwards", new SetWristPosition(-7300));
+	SmartDashboard.putData("Wrist Position Vertical Upwards", new SetWristPosition(-2500));
+	SmartDashboard.putData("Wrist Position Intake", new SetWristPosition(-5000));
+	SmartDashboard.putData("Wrist Position Downwards", new SetWristPosition(-7300));
 	
-	SmartDashboard.putData("Calibrate Gyro", new CalibrateGyro());
-	SmartDashboard.putData("Reset All Pigeons", new ResetPigeons());
+//	SmartDashboard.putData("Calibrate Gyro", new CalibrateGyro());
+//	SmartDashboard.putData("Reset All Pigeons", new ResetPigeons());
 	
-	SmartDashboard.putData("Set Intake Power 1", new SetIntakeRollerPower(1));
-	SmartDashboard.putData("Set Intake Power -0.5", new SetIntakeRollerPower(-0.5));
-	SmartDashboard.putData("Set Intake Power 0", new SetIntakeRollerPower(0));
+//	SmartDashboard.putData("Set Intake Power 1", new SetIntakeRollerPower(1));
+//	SmartDashboard.putData("Set Intake Power -0.5", new SetIntakeRollerPower(-0.5));
+//	SmartDashboard.putData("Set Intake Power 0", new SetIntakeRollerPower(0));
 	
-//	SmartDashboard.putData("Superstructure Stow Position", new StowPosition());
-//	SmartDashboard.putData("Superstructure Stow to Backwards Scale", new StowToBackwardsScale());
+	SmartDashboard.putData("Superstructure Stow Position", new BackwardsScaleToStow());
+	SmartDashboard.putData("Superstructure Stow to Backwards Scale", new StowToBackwardsScale());
 	SmartDashboard.putData("Superstructure Stow to Forwards Scale", new StowToForwardsScale());
 	SmartDashboard.putData("Superstructure Forwards Scale to Stow", new ForwardsScaleToStow());
 	SmartDashboard.putData("Superstructure Intake", new StowToIntake());
-//	
+	
 //	SmartDashboard.putData("Reset Gyro", new ResetGyro());
 //	SmartDashboard.putData("Reset Drive Encoders", new ResetDriveEncoders());
 //	SmartDashboard.putData("Center to right Scale", new CenterToRightScale());
 	
+	SmartDashboard.putData("2 Minute Test of Doom", new Superstructure2MinTest());
+	
+	SmartDashboard.putData("Set 0 Arm Voltage", new SetArmVoltage(0));
+	SmartDashboard.putData("Set 3 Arm Voltage", new SetArmVoltage(3));
+	SmartDashboard.putData("Set 6 Arm Voltage", new SetArmVoltage(6));
+	SmartDashboard.putData("Set 9 Arm Voltage", new SetArmVoltage(9));
+	SmartDashboard.putData("Set 12 Arm Voltage", new SetArmVoltage(12));
+	SmartDashboard.putData("Set -3 Arm Voltage", new SetArmVoltage(-3));
+	SmartDashboard.putData("Set -6 Arm Voltage", new SetArmVoltage(-6));
+	SmartDashboard.putData("Set -9 Arm Voltage", new SetArmVoltage(-9));
+	SmartDashboard.putData("Set -12 Arm Voltage", new SetArmVoltage(-12));
 	
     }
 
