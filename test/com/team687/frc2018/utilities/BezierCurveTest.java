@@ -83,7 +83,7 @@ public class BezierCurveTest {
 	int counter = 1;
 	for (counter = 1; counter < headingList.size(); counter++) {
 	    double headingError = headingList.get(counter) - headingList.get(counter - 1);
-	    double rotPower = DriveConstants.kBezierRotPGains.getP() * headingError;
+	    double rotPower = 0.04 * headingError;
 	    // double deltaSegmentLength = arcLengthList.get(counter) -
 	    // arcLengthList.get(counter - 1);
 	    // double curvature = Math.abs(headingError / deltaSegmentLength);
@@ -91,11 +91,11 @@ public class BezierCurveTest {
 	    double straightPower = 0.7;
 
 	    double sign = Math.signum(straightPower);
-	    if (Math.abs(straightPower) > DriveConstants.kBezierDistPGains.getMaxPower()) {
-		straightPower = DriveConstants.kBezierDistPGains.getMaxPower() * sign;
+	    if (Math.abs(straightPower) > 0.8) {
+		straightPower = 0.8 * sign;
 	    }
-	    if (Math.abs(straightPower) < DriveConstants.kBezierDistPGains.getMinPower()) {
-		straightPower = DriveConstants.kBezierDistPGains.getMinPower() * direction;
+	    if (Math.abs(straightPower) < DriveConstants.kMinStraightPower) {
+		straightPower = DriveConstants.kMinStraightPower * direction;
 	    }
 
 	    double leftPower = straightPower + rotPower;

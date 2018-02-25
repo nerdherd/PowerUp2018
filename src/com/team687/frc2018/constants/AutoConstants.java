@@ -58,6 +58,7 @@ public class AutoConstants {
     public static BezierCurve kRedRightScaleToCubePath = new BezierCurve(kScaleX, kScaleY, kMidX,
 	    kSwitchBackY + (kRedSwitchToScale / 2), kSwitchX, kSwitchBackY + (kRedSwitchToScale / 2), kSwitchX,
 	    kSwitchBackY);
+
     public static BezierCurve kBlueCenterToRightSwitchPath = new BezierCurve(0, 0, 0, 0, 0, 0, 0, 0);
     public static BezierCurve kBlueCenterToLeftSwitchPath = new BezierCurve(0, 0, 0, 0, 0, 0, 0, 0);
     public static BezierCurve kBlueCenterToRightMidPath = new BezierCurve(0, 0, 0, 0, 0, 0, 0, 0);
