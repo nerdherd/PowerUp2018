@@ -38,6 +38,7 @@ public class DriveConstants {
     // Distance PID
     public final static PGains kDistRightPGains = new PGains(0, 0, 1.0);
     public final static PGains kDistLeftPGains = new PGains(0, 0, 1.0);
+    public final static double kDistRotP = 0.004;
     public final static double kDistD = 0;
     public final static double kDriveDistanceTolerance = 0;
     public final static double kDriveDistanceOscillationCount = 0;

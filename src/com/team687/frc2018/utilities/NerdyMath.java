@@ -72,9 +72,9 @@ public class NerdyMath {
      */
     public static double threshold(double value, double minimum, double maximum) {
 	double sign = Math.signum(value);
-	if (Math.abs(value) < minimum) {
+	if (Math.abs(value) < Math.abs(minimum)) {
 	    value = minimum * sign;
-	} else if (Math.abs(value) > maximum) {
+	} else if (Math.abs(value) > Math.abs(maximum)) {
 	    value = maximum * sign;
 	}
 	return value;
