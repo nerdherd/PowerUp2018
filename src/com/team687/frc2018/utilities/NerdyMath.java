@@ -25,7 +25,7 @@ public class NerdyMath {
     }
 
     public static int inchesToTicks(double inches) {
-	return (int) (inches / Math.PI / 6 * 4096);
+	return (int) (inches / Math.PI / DriveConstants.kWheelDiameter * 4096);
     }
 
     public static double ticksToRotations(int ticks) {
