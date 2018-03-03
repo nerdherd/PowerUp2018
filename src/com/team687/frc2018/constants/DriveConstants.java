@@ -8,9 +8,13 @@ import com.team687.frc2018.utilities.PGains;
 
 public class DriveConstants {
 
-    // Drivetrain
-    public final static double kWheelDiameter = 6.25; // practice bot
-    public final static double kDrivetrainWidth = 25;
+    // Drivetrain stuff in inches
+    // practice robot
+    public final static double kWheelDiameter = 6.25;
+    public final static double kBumperWidth = 3;
+    public final static double kWheelToWheelDist = 25;
+    public final static double kDrivetrainWidth = 27 + 2 * kBumperWidth; // without bumpers
+    public final static double kDrivetrainLength = 31 + 2 * kBumperWidth; // without bumpers
 
     // Safety
     public final static int kPeakCurrentLimit = 0;
