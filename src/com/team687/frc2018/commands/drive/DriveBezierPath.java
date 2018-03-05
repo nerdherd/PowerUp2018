@@ -81,7 +81,7 @@ public class DriveBezierPath extends Command {
 		m_desiredHeading = m_headingList.get(m_counter);
 
 		// going reverse
-		if (m_direction > 0) {
+		if (m_direction < 0) {
 		    m_desiredHeading += 180;
 		}
 		// change in sign is necessary because of how P loop is structured
