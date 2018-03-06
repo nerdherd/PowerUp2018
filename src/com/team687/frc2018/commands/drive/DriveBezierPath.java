@@ -82,7 +82,7 @@ public class DriveBezierPath extends Command {
 
 		// going reverse
 		if (m_direction < 0) {
-		    m_desiredHeading += 180;
+		    m_desiredHeading -= 180;
 		}
 		// change in sign is necessary because of how P loop is structured
 		m_desiredHeading = -m_desiredHeading;
