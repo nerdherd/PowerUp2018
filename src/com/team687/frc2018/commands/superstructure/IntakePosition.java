@@ -6,9 +6,9 @@ import com.team687.frc2018.constants.SuperstructureConstants;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class StowPosition extends Command {
+public class IntakePosition extends Command {
 
-    public StowPosition() {
+    public IntakePosition() {
 	requires(Robot.arm);
 	requires(Robot.wrist);
 	requires(Robot.intake);
@@ -16,16 +16,14 @@ public class StowPosition extends Command {
 
     @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "StowPosition");
+	SmartDashboard.putString("Current Command", "IntakePosition");
     }
 
     @Override
     protected void execute() {
+	Robot.wrist.setPosition(SuperstructureConstants.kWristIntakePos);
+	Robot.arm.setPosition(SuperstructureConstants.kArmOffsetPos);
 	Robot.intake.setRollerPower(0);
-	Robot.wrist.setPosition(SuperstructureConstants.kWristStowArmOffsetPos);
-	if (Robot.wrist.getPosition() > SuperstructureConstants.kWristStowArmOffsetPos - 200) {
-	    Robot.arm.setPosition(SuperstructureConstants.kArmOffsetPos);
-	}
     }
 
     @Override

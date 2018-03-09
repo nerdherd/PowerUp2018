@@ -35,141 +35,165 @@ public class Robot extends TimedRobot {
 		arm.setVoltage(0);
 		arm.resetEncoder();
 
-		wrist = new Wrist();
-		wrist.setPercentOutput(0);
-		wrist.resetEncoder();
+    public static CSVLogger logger;
 
-		intake = new Intake();
-		intake.setRollerPower(0);
+    @Override
+    public void robotInit() {
+	logger = CSVLogger.getInstance();
 
-		drive = new Drive();
-		drive.stopDrive();
-		drive.resetEncoders();
-		drive.resetGyro();
+	pdp = new PowerDistributionPanel();
 
-		oi = new OI();
+	arm = new Arm();
+	arm.setVoltage(0);
+	arm.resetEncoder();
 
-		visionAdapter = VisionAdapter.getInstance();
-		odometry = Odometry.getInstance();
-	}
+	wrist = new Wrist();
+	wrist.setPercentOutput(0);
+	wrist.resetEncoder();
 
-	@Override
-	public void disabledInit() {
-		Scheduler.getInstance().removeAll();
+	intake = new Intake();
+	intake.setRollerPower(0);
 
-		drive.reportToSmartDashboard();
-		arm.reportToSmartDashboard();
-		wrist.reportToSmartDashboard();
-		intake.reportToSmartDashboard();
+	drive = new Drive();
+	drive.stopDrive();
+	drive.resetEncoders();
+	drive.resetGyro();
 
-		visionAdapter.reportToSmartDashboard();
-		odometry.update();
-		odometry.reportToSmartDashboard();
-		wrist.stopLog();
-		arm.stopLog();
-	}
+	oi = new OI();
 
-	@Override
-	public void disabledPeriodic() {
-		Scheduler.getInstance().removeAll();
+	visionAdapter = VisionAdapter.getInstance();
+	odometry = Odometry.getInstance();
+    }
 
-		drive.reportToSmartDashboard();
-		arm.reportToSmartDashboard();
-		wrist.reportToSmartDashboard();
-		intake.reportToSmartDashboard();
+    @Override
+    public void disabledInit() {
+	Scheduler.getInstance().removeAll();
 
-		visionAdapter.reportToSmartDashboard();
-		odometry.update();
-		odometry.reportToSmartDashboard();
-	}
+	arm.updateYawPitchRoll();
+	wrist.updateYawPitchRoll();
 
-	@Override
-	public void autonomousInit() {
-		// Scheduler.getInstance().removeAll();
+	drive.reportToSmartDashboard();
+	arm.reportToSmartDashboard();
+	wrist.reportToSmartDashboard();
+	intake.reportToSmartDashboard();
 
-		drive.reportToSmartDashboard();
-		arm.reportToSmartDashboard();
-		wrist.reportToSmartDashboard();
-		intake.reportToSmartDashboard();
+	visionAdapter.reportToSmartDashboard();
+	odometry.update();
+	odometry.reportToSmartDashboard();
+	logger.stopLog();
+    }
 
-		visionAdapter.reportToSmartDashboard();
-		odometry.update();
-		odometry.reportToSmartDashboard();
-	}
+    @Override
+    public void disabledPeriodic() {
+	Scheduler.getInstance().removeAll();
 
-	@Override
-	public void autonomousPeriodic() {
-		Scheduler.getInstance().run();
+	arm.updateYawPitchRoll();
+	wrist.updateYawPitchRoll();
 
-		drive.reportToSmartDashboard();
-		arm.reportToSmartDashboard();
-		wrist.reportToSmartDashboard();
-		intake.reportToSmartDashboard();
+	drive.reportToSmartDashboard();
+	arm.reportToSmartDashboard();
+	wrist.reportToSmartDashboard();
+	intake.reportToSmartDashboard();
 
-		visionAdapter.reportToSmartDashboard();
-		odometry.update();
-		odometry.reportToSmartDashboard();
-	}
+	visionAdapter.reportToSmartDashboard();
+	odometry.update();
+	odometry.reportToSmartDashboard();
+    }
 
-	@Override
-	public void teleopInit() {
-		// Scheduler.getInstance().removeAll();
+    @Override
+    public void autonomousInit() {
+	// Scheduler.getInstance().removeAll();
 
-		drive.reportToSmartDashboard();
-		arm.reportToSmartDashboard();
-		wrist.reportToSmartDashboard();
-		intake.reportToSmartDashboard();
+	arm.updateYawPitchRoll();
+	wrist.updateYawPitchRoll();
 
-		visionAdapter.reportToSmartDashboard();
-		odometry.update();
-		odometry.reportToSmartDashboard();
+	drive.reportToSmartDashboard();
+	arm.reportToSmartDashboard();
+	wrist.reportToSmartDashboard();
+	intake.reportToSmartDashboard();
 
-		// drive.addLoggedData();
-		// odometry.addLoggedData();
-		// // arm.addLoggedData();
-		// wrist.addLoggedData();
-		// logger.startLog();
+	visionAdapter.reportToSmartDashboard();
+	odometry.update();
+	odometry.reportToSmartDashboard();
+    }
 
-		wrist.startLog();
-		arm.startLog();
+    @Override
+    public void autonomousPeriodic() {
+	Scheduler.getInstance().run();
 
-	}
+	arm.updateYawPitchRoll();
+	wrist.updateYawPitchRoll();
 
-	@Override
-	public void teleopPeriodic() {
-		Scheduler.getInstance().run();
+	drive.reportToSmartDashboard();
+	arm.reportToSmartDashboard();
+	wrist.reportToSmartDashboard();
+	intake.reportToSmartDashboard();
 
-		drive.reportToSmartDashboard();
-		arm.reportToSmartDashboard();
-		wrist.reportToSmartDashboard();
-		intake.reportToSmartDashboard();
+	visionAdapter.reportToSmartDashboard();
+	odometry.update();
+	odometry.reportToSmartDashboard();
+    }
 
-		visionAdapter.reportToSmartDashboard();
-		odometry.update();
-		odometry.reportToSmartDashboard();
+    @Override
+    public void teleopInit() {
+	// Scheduler.getInstance().removeAll();
 
-		// drive.updateLog();
-		// odometry.updateLog();
-		// // arm.updateLog();
-		// wrist.updateLog();
-		// logger.logToCSV();
+	arm.updateYawPitchRoll();
+	wrist.updateYawPitchRoll();
 
-		wrist.logToCSV();
-		arm.logToCSV();
+	drive.reportToSmartDashboard();
+	arm.reportToSmartDashboard();
+	wrist.reportToSmartDashboard();
+	intake.reportToSmartDashboard();
 
-	}
+	visionAdapter.reportToSmartDashboard();
+	odometry.update();
+	odometry.reportToSmartDashboard();
 
-	@Override
-	public void testPeriodic() {
-		Scheduler.getInstance().run();
+	drive.addLoggedData();
+	odometry.addLoggedData();
+	// arm.addLoggedData();
+	wrist.addLoggedData();
+	logger.startLog();
+    }
 
-		drive.reportToSmartDashboard();
-		arm.reportToSmartDashboard();
-		wrist.reportToSmartDashboard();
-		intake.reportToSmartDashboard();
+    @Override
+    public void teleopPeriodic() {
+	Scheduler.getInstance().run();
 
-		visionAdapter.reportToSmartDashboard();
-		odometry.update();
-		odometry.reportToSmartDashboard();
-	}
+	arm.updateYawPitchRoll();
+	wrist.updateYawPitchRoll();
+
+	drive.reportToSmartDashboard();
+	arm.reportToSmartDashboard();
+	wrist.reportToSmartDashboard();
+	intake.reportToSmartDashboard();
+
+	visionAdapter.reportToSmartDashboard();
+	odometry.update();
+	odometry.reportToSmartDashboard();
+
+	drive.updateLog();
+	odometry.updateLog();
+	// arm.updateLog();
+	wrist.updateLog();
+	logger.logToCSV();
+    }
+
+    @Override
+    public void testPeriodic() {
+	Scheduler.getInstance().run();
+
+	arm.updateYawPitchRoll();
+	wrist.updateYawPitchRoll();
+
+	drive.reportToSmartDashboard();
+	arm.reportToSmartDashboard();
+	wrist.reportToSmartDashboard();
+	intake.reportToSmartDashboard();
+
+	visionAdapter.reportToSmartDashboard();
+	odometry.update();
+	odometry.reportToSmartDashboard();
+    }
 }

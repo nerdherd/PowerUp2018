@@ -11,8 +11,13 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.sensors.PigeonIMU;
+import com.ctre.phoenix.sensors.PigeonIMU.CalibrationMode;
+import com.team687.frc2018.Robot;
 import com.team687.frc2018.RobotMap;
 import com.team687.frc2018.constants.SuperstructureConstants;
+import com.team687.frc2018.utilities.CSVDatum;
+import com.team687.frc2018.utilities.NerdyMath;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -24,201 +29,186 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Arm extends Subsystem {
 
-	private final TalonSRX m_arm;
+    private final TalonSRX m_arm;
+    private double m_desiredPos = 0;
 
-	private double m_desiredPos = 0;
+    private final PigeonIMU m_towerPigeon, m_armPigeon;
+    private double[] m_towerYpr = new double[3];
+    private double m_towerResetOffset = 0;
+    private double[] m_armYpr = new double[3];
+    private double m_armResetOffset = 0;
 
-	private String m_filePath1 = "/media/sda1/logs/";
-	private String m_filePath2 = "/home/lvuser/logs/";
-	private File m_file;
-	private FileWriter m_writer;
-	private boolean writeException = false;
+    public Arm() {
+	m_arm = new TalonSRX(RobotMap.kArmID);
 
-	// Status Frame Docs in Section 20 of Software Reference Manual
-	public static final int loggingFrameRate = 20;
+	m_towerPigeon = new PigeonIMU(RobotMap.kTowerPigeonID);
+	m_armPigeon = new PigeonIMU(RobotMap.kArmPigeonID);
 
-	private double m_logStartTime;
+	m_arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
+	m_arm.setSensorPhase(true);
+	m_arm.setInverted(false);
+	m_arm.setNeutralMode(NeutralMode.Coast);
 
-	public Arm() {
-		m_arm = new TalonSRX(RobotMap.kArmID);
+	m_arm.config_kF(0, SuperstructureConstants.kArmF, 0);
+	m_arm.config_kP(0, SuperstructureConstants.kArmP, 0);
+	m_arm.config_kI(0, SuperstructureConstants.kArmI, 0);
+	m_arm.config_kD(0, SuperstructureConstants.kArmD, 0);
 
-		m_arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
-		m_arm.setSensorPhase(true);
-		m_arm.setInverted(false);
-		m_arm.setNeutralMode(NeutralMode.Coast);
+	m_arm.configMotionAcceleration(SuperstructureConstants.kArmAcceleration, 0);
+	m_arm.configMotionCruiseVelocity(SuperstructureConstants.kArmCruiseVelocity, 0);
 
-		m_arm.config_kF(0, SuperstructureConstants.kArmF, 0);
-		m_arm.config_kP(0, SuperstructureConstants.kArmP, 0);
-		m_arm.config_kI(0, SuperstructureConstants.kArmI, 0);
-		m_arm.config_kD(0, SuperstructureConstants.kArmD, 0);
+	m_arm.configPeakOutputForward(SuperstructureConstants.kArmMaxVoltageForward / 12, 0);
+	m_arm.configPeakOutputReverse(SuperstructureConstants.kArmMaxVoltageReverse / 12, 0);
+	m_arm.configNominalOutputForward(0, 0);
+	m_arm.configNominalOutputReverse(0, 0);
+	m_arm.configClosedloopRamp(SuperstructureConstants.kArmRampRate, 0);
+	m_arm.configVoltageCompSaturation(12, 0);
+	m_arm.enableVoltageCompensation(false);
 
-		m_arm.configMotionAcceleration(SuperstructureConstants.kArmAcceleration, 0);
-		m_arm.configMotionCruiseVelocity(SuperstructureConstants.kArmCruiseVelocity, 0);
+	m_arm.configPeakCurrentLimit(SuperstructureConstants.kArmPeakCurrent, 0);
+	m_arm.configContinuousCurrentLimit(SuperstructureConstants.kArmContinuousCurrent, 0);
+	m_arm.enableCurrentLimit(false);
 
-		m_arm.configPeakOutputForward(SuperstructureConstants.kArmMaxVoltageForward / 12, 0);
-		m_arm.configPeakOutputReverse(SuperstructureConstants.kArmMaxVoltageReverse / 12, 0);
-		m_arm.configNominalOutputForward(0, 0);
-		m_arm.configNominalOutputReverse(0, 0);
-		m_arm.configClosedloopRamp(SuperstructureConstants.kArmRampRate, 0);
-		m_arm.configVoltageCompSaturation(12, 0);
-		m_arm.enableVoltageCompensation(false);
+	m_arm.configForwardSoftLimitThreshold(SuperstructureConstants.kArmForwardSoftLimit, 0);
+	m_arm.configReverseSoftLimitThreshold(SuperstructureConstants.kArmReverseSoftLimit, 0);
+	m_arm.configForwardSoftLimitEnable(false, 0);
+	m_arm.configReverseSoftLimitEnable(false, 0);
 
-		m_arm.configPeakCurrentLimit(SuperstructureConstants.kArmPeakCurrent, 0);
-		m_arm.configContinuousCurrentLimit(SuperstructureConstants.kArmContinuousCurrent, 0);
-		m_arm.enableCurrentLimit(false);
+	m_arm.setStatusFramePeriod(StatusFrame.Status_1_General, 20, 0);
+	m_arm.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 20, 0);
+	m_arm.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 20, 0);
+    }
 
-		m_arm.configForwardSoftLimitThreshold(SuperstructureConstants.kArmForwardSoftLimit, 0);
-		m_arm.configReverseSoftLimitThreshold(SuperstructureConstants.kArmReverseSoftLimit, 0);
-		m_arm.configForwardSoftLimitEnable(false, 0);
-		m_arm.configReverseSoftLimitEnable(false, 0);
+    @Override
+    protected void initDefaultCommand() {
+    }
 
-		m_arm.setStatusFramePeriod(StatusFrame.Status_1_General, 20, 0);
-		m_arm.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 20, 0);
-		m_arm.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 20, 0);
-	}
+    public void setPosition(double position) {
+	m_desiredPos = position;
+	m_arm.set(ControlMode.MotionMagic, m_desiredPos);
+    }
 
-	@Override
-	protected void initDefaultCommand() {
-	}
+    public void setVoltage(double voltage) {
+	m_arm.set(ControlMode.PercentOutput, voltage / m_arm.getBusVoltage());
+    }
 
-	public void setPosition(double position) {
-		m_desiredPos = position;
-		m_arm.set(ControlMode.MotionMagic, position);
-	}
+    public double getPosition() {
+	return m_arm.getSelectedSensorPosition(0);
+    }
 
-	public void setVoltage(double voltage) {
-		m_arm.set(ControlMode.PercentOutput, voltage / m_arm.getBusVoltage());
-	}
+    public double getVelocity() {
+	return m_arm.getSelectedSensorVelocity(0);
+    }
 
-	public double getPosition() {
-		return m_arm.getSelectedSensorPosition(0);
-	}
+    public double ticksToDegrees(double ticks) {
+	return (ticks / 4096) * (360 / 12) - 55;
+    }
 
-	public double getVelocity() {
-		return m_arm.getSelectedSensorVelocity(0);
-	}
+    public double degreesToTicks(double degrees) {
+	return (degrees + 55) * 12 / 360 * 4096;
+    }
 
-	public double ticksToDegrees(double ticks) {
-		return (ticks / 4096) * (360 / 12) - 52;
-	}
+    /**
+     * @return calculated angle from encoders
+     */
+    public double getAngleAbsolute() {
+	return ticksToDegrees(getPosition());
+    }
 
-	public double degreesToTicks(double degrees) {
-		return (degrees + 52) * 12 / 360 * 4096;
-	}
+    public void resetEncoder() {
+	m_arm.setSelectedSensorPosition(0, 0, 0);
+    }
 
-	public double getAngleAbsolute() {
-		return ticksToDegrees(getPosition());
-	}
+    public void updateYawPitchRoll() {
+	m_towerPigeon.getYawPitchRoll(m_towerYpr);
+	m_armPigeon.getYawPitchRoll(m_armYpr);
+    }
 
-	public void resetEncoder() {
-		m_arm.setSelectedSensorPosition(0, 0, 0);
-	}
+    public double getTowerPigeonAngle() {
+	return ((360 - m_towerYpr[0]) % 360) - m_towerResetOffset + 90; // converted to correct frame
+    }
 
-	public double getVoltage() {
-		return m_arm.getMotorOutputVoltage();
-	}
+    public void resetTowerAngle() {
+	m_towerResetOffset += getTowerPigeonAngle();
+    }
 
-	public double getCurrent() {
-		return m_arm.getOutputCurrent();
-	}
+    public double getArmPigeonAngle() {
+	return ((360 - m_armYpr[0]) % 360) - m_armResetOffset - 55; // TODO: convert to correct frame
+    }
 
-	public void reportToSmartDashboard() {
-		SmartDashboard.putNumber("Arm Position", getPosition());
-		SmartDashboard.putNumber("Arm Angle", getAngleAbsolute());
-		SmartDashboard.putNumber("Arm Velocity", getVelocity());
-		SmartDashboard.putNumber("Arm Voltage", getVoltage());
-		SmartDashboard.putNumber("Arm Current", getCurrent());
-		SmartDashboard.putNumber("Arm Desired Position", m_desiredPos);
-	}
+    public void resetArmAngle() {
+	m_armResetOffset += getArmPigeonAngle();
+    }
 
-	// private CSVDatum m_armPositionData, m_armDesiredPosData,
-	// m_armVelocityData, m_armAngleData, m_armVoltageData,
-	// m_armCurrentData;
-	//
-	// public void addLoggedData() {
-	// m_armPositionData = new CSVDatum("arm_position");
-	// m_armDesiredPosData = new CSVDatum("arm_desiredPos");
-	// m_armVelocityData = new CSVDatum("arm_velocity");
-	// m_armAngleData = new CSVDatum("arm_angle");
-	// m_armVoltageData = new CSVDatum("arm_voltage");
-	// m_armCurrentData = new CSVDatum("arm_current");
-	//
-	// Robot.logger.addCSVDatum(m_armPositionData);
-	// Robot.logger.addCSVDatum(m_armDesiredPosData);
-	// Robot.logger.addCSVDatum(m_armVelocityData);
-	// Robot.logger.addCSVDatum(m_armAngleData);
-	// Robot.logger.addCSVDatum(m_armVoltageData);
-	// Robot.logger.addCSVDatum(m_armCurrentData);
-	// }
-	//
-	// public void updateLog() {
-	// m_armPositionData.updateValue(getPosition());
-	// m_armDesiredPosData.updateValue(m_desiredPos);
-	// m_armVelocityData.updateValue(getVelocity());
-	// m_armAngleData.updateValue(getAngleAbsolute());
-	// m_armVoltageData.updateValue(getVoltage());
-	// m_armCurrentData.updateValue(getCurrent());
-	// }
+    public void enterCalibrationMode() {
+	m_towerPigeon.enterCalibrationMode(CalibrationMode.Temperature, 0);
+	m_armPigeon.enterCalibrationMode(CalibrationMode.Temperature, 0);
+    }
 
-	public void startLog() {
-		// Check to see if flash drive is mounted.
-		File logFolder1 = new File(m_filePath1);
-		File logFolder2 = new File(m_filePath2);
-		Path filePrefix = Paths.get("");
-		if (logFolder1.exists() && logFolder1.isDirectory())
-			filePrefix = Paths.get(logFolder1.toString(), SmartDashboard.getString("log_file_name", "2018_02_19_Arm"));
-		else if (logFolder2.exists() && logFolder2.isDirectory())
-			filePrefix = Paths.get(logFolder2.toString(), SmartDashboard.getString("log_file_name", "2018_02_19_Arm"));
-		else
-			writeException = true;
+    // aliasing
+    public double _x1 = SuperstructureConstants.kShoulderPivotX;
+    public double _y1 = SuperstructureConstants.kShoulderPivotY;
+    public double _r2 = SuperstructureConstants.kShoulderToWristPivot;
 
-		if (!writeException) {
-			int counter = 0;
-			while (counter <= 99) {
-				m_file = new File(filePrefix.toString() + String.format("%02d", counter) + ".csv");
-				if (m_file.exists()) {
-					counter++;
-				} else {
-					break;
-				}
-				if (counter == 99) {
-					System.out.println("file creation counter at 99!");
-				}
-			}
-			try {
-				m_writer = new FileWriter(m_file);
-				m_writer.append("Time,Position,Velocity,Voltage,Current,DesiredPos\n");
-				m_logStartTime = Timer.getFPGATimestamp();
-			} catch (IOException e) {
-				e.printStackTrace();
-				writeException = true;
-			}
-		}
-	}
+    public double getX() {
+	return _x1 + _r2 * Math.cos(NerdyMath.degreesToRadians(getArmPigeonAngle()));
+    }
 
-	public void stopLog() {
-		try {
-			if (null != m_writer)
-				m_writer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-			writeException = true;
-		}
-	}
+    public double getY() {
+	return _y1 + _r2 * Math.sin(NerdyMath.degreesToRadians(getArmPigeonAngle()));
+    }
 
-	public void logToCSV() {
-		if (!writeException) {
-			try {
-				double timestamp = Timer.getFPGATimestamp() - m_logStartTime;
-				m_writer.append(String.valueOf(timestamp) + "," + String.valueOf(getPosition()) + ","
-						+ String.valueOf(getVelocity()) + "," + String.valueOf(getVoltage()) + ","
-						+ String.valueOf(getCurrent()) + "," + String.valueOf(m_desiredPos) + "\n");
-				m_writer.flush();
-			} catch (IOException e) {
-				e.printStackTrace();
-				writeException = true;
-			}
-		}
-	}
+    public double getVoltage() {
+	return m_arm.getMotorOutputVoltage();
+    }
 
+    public double getCurrent() {
+	return m_arm.getOutputCurrent();
+    }
+
+    public void reportToSmartDashboard() {
+	SmartDashboard.putNumber("Arm Position", getPosition());
+	SmartDashboard.putNumber("Arm Angle from Encoder", getAngleAbsolute());
+	SmartDashboard.putNumber("Arm Angle from Pigeon", getArmPigeonAngle());
+	SmartDashboard.putNumber("Tower Angle from Pigeon", getTowerPigeonAngle());
+	SmartDashboard.putNumber("Arm Velocity", getVelocity());
+	SmartDashboard.putNumber("Arm Voltage", getVoltage());
+	SmartDashboard.putNumber("Arm Current", getCurrent());
+	SmartDashboard.putNumber("Arm Desired Position", m_desiredPos);
+    }
+
+    private CSVDatum m_armPositionData, m_armDesiredPosData, m_armVelocityData, m_armEncoderAngleData, m_armPigeonAngle,
+	    m_towerPigeonAngle, m_armVoltageData, m_armCurrentData;
+
+    public void addLoggedData() {
+	m_armPositionData = new CSVDatum("arm_position");
+	m_armDesiredPosData = new CSVDatum("arm_desiredPos");
+	m_armVelocityData = new CSVDatum("arm_velocity");
+	m_armEncoderAngleData = new CSVDatum("arm_encoderAngle");
+	m_armPigeonAngle = new CSVDatum("arm_pigeonAngle");
+	m_towerPigeonAngle = new CSVDatum("tower_pigeonAngle");
+	m_armVoltageData = new CSVDatum("arm_voltage");
+	m_armCurrentData = new CSVDatum("arm_current");
+
+	Robot.logger.addCSVDatum(m_armPositionData);
+	Robot.logger.addCSVDatum(m_armDesiredPosData);
+	Robot.logger.addCSVDatum(m_armVelocityData);
+	Robot.logger.addCSVDatum(m_armEncoderAngleData);
+	Robot.logger.addCSVDatum(m_armPigeonAngle);
+	Robot.logger.addCSVDatum(m_towerPigeonAngle);
+	Robot.logger.addCSVDatum(m_armVoltageData);
+	Robot.logger.addCSVDatum(m_armCurrentData);
+    }
+
+    public void updateLog() {
+	m_armPositionData.updateValue(getPosition());
+	m_armDesiredPosData.updateValue(m_desiredPos);
+	m_armVelocityData.updateValue(getVelocity());
+	m_armEncoderAngleData.updateValue(getAngleAbsolute());
+	m_armPigeonAngle.updateValue(getArmPigeonAngle());
+	m_towerPigeonAngle.updateValue(getTowerPigeonAngle());
+	m_armVoltageData.updateValue(getVoltage());
+	m_armCurrentData.updateValue(getCurrent());
+    }
+  
 }
