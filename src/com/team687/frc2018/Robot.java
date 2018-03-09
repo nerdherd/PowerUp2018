@@ -12,16 +12,28 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 
 public class Robot extends TimedRobot {
 
-    public static Drive drive;
-    public static Arm arm;
-    public static Wrist wrist;
-    public static Intake intake;
+	public static Drive drive;
+	public static Arm arm;
+	public static Wrist wrist;
+	public static Intake intake;
 
-    public static PowerDistributionPanel pdp;
-    public static OI oi;
+	public static PowerDistributionPanel pdp;
+	public static OI oi;
 
-    public static VisionAdapter visionAdapter;
-    public static Odometry odometry;
+	public static VisionAdapter visionAdapter;
+	public static Odometry odometry;
+
+	public static CSVLogger logger;
+
+	@Override
+	public void robotInit() {
+		logger = CSVLogger.getInstance();
+
+		pdp = new PowerDistributionPanel();
+
+		arm = new Arm();
+		arm.setVoltage(0);
+		arm.resetEncoder();
 
     public static CSVLogger logger;
 

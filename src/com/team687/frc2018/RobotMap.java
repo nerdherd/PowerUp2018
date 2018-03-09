@@ -1,7 +1,5 @@
 package com.team687.frc2018;
 
-import edu.wpi.first.wpilibj.I2C.Port;
-
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -11,16 +9,19 @@ import edu.wpi.first.wpilibj.I2C.Port;
 
 public class RobotMap {
 
-    public static final int kRightMasterTalonID = 15;
-    public static final int kRightSlaveTalon1ID = 14;
-    public static final int kLeftMasterTalonID = 12;
-    public static final int kLeftSlaveTalon1ID = 13;
+	public static final int kRightMasterTalonID = 0;
+	public static final int kRightSlaveTalon1ID = 4;
+	public static final int kLeftMasterTalonID = 1;
+	public static final int kLeftSlaveTalon1ID = 5;
 
-    public static final Port navID = Port.kMXP;
+	public static final int kRightSlaveVictor1ID = 4;
+	public static final int kLeftSlaveVictor1ID = 5;
 
-    public static final int kArmID = 3;
-    public static final int kWristID = 2;
-    public static final int kIntakeRollersID = 1;
+	// public static final Port navID = Port.kMXP;
+
+	public static final int kArmID = 7;
+	public static final int kWristID = 2;
+	public static final int kIntakeRollersID = 6;
 
     public static final int kTowerPigeonID = 3;
     public static final int kArmPigeonID = 2;
