@@ -1,5 +1,11 @@
 package com.team687.frc2018.subsystems;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -10,7 +16,6 @@ import com.team687.frc2018.Robot;
 import com.team687.frc2018.RobotMap;
 import com.team687.frc2018.commands.drive.teleop.ArcadeDrive;
 import com.team687.frc2018.constants.DriveConstants;
-import com.team687.frc2018.utilities.CSVDatum;
 import com.team687.frc2018.utilities.NerdyMath;
 import com.team687.lib.kauailabs.navx.frc.AHRS;
 import com.team687.lib.kauailabs.sf2.frc.navXSensor;
@@ -18,6 +23,7 @@ import com.team687.lib.kauailabs.sf2.orientation.OrientationHistory;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -41,6 +47,13 @@ public class Drive extends Subsystem {
     private double m_currentTime;
 
     private boolean m_brakeModeOn;
+
+    private String m_filePath1 = "/media/sda1/logs/";
+    private String m_filePath2 = "/home/lvuser/logs/";
+    private File m_file;
+    private FileWriter m_writer;
+    private boolean writeException = false;
+    private double m_logStartTime = 0;
 
     public Drive() {
 	m_leftMaster = new TalonSRX(RobotMap.kLeftMasterTalonID);
@@ -359,48 +372,75 @@ public class Drive extends Subsystem {
 	SmartDashboard.putNumber("Right Slave 1 Current", getRightSlaveCurrent());
     }
 
-    private CSVDatum m_leftMasterVoltage, m_leftSlaveVoltage, m_rightMasterVoltage, m_rightSlaveVoltage;
-    private CSVDatum m_leftMasterCurrent, m_leftSlaveCurrent, m_rightMasterCurrent, m_rightSlaveCurrent;
-    private CSVDatum m_busVoltage;
+    public void startLog() {
+	// Check to see if flash drive is mounted.
+	File logFolder1 = new File(m_filePath1);
+	File logFolder2 = new File(m_filePath2);
+	Path filePrefix = Paths.get("");
+	if (logFolder1.exists() && logFolder1.isDirectory()) {
+	    filePrefix = Paths.get(logFolder1.toString(),
+		    "2018_03_10_" + Robot.ds.getMatchType().toString() + Robot.ds.getMatchNumber() + "Drive");
+	} else if (logFolder2.exists() && logFolder2.isDirectory()) {
+	    filePrefix = Paths.get(logFolder2.toString(),
+		    "2018_03_10_" + Robot.ds.getMatchType().toString() + Robot.ds.getMatchNumber() + "Drive");
+	} else {
+	    writeException = true;
+	}
 
-    public void addLoggedData() {
-	m_leftMasterVoltage = new CSVDatum("drive_leftMasterVoltage");
-	m_leftSlaveVoltage = new CSVDatum("drive_leftSlaveVoltage");
-	m_rightMasterVoltage = new CSVDatum("drive_rightMasterVoltage");
-	m_rightSlaveVoltage = new CSVDatum("drive_rightSlaveVoltage");
-
-	m_leftMasterCurrent = new CSVDatum("drive_leftMasterCurrent");
-	m_leftSlaveCurrent = new CSVDatum("drive_leftSlaveCurrent");
-	m_rightMasterCurrent = new CSVDatum("drive_rightMasterCurrent");
-	m_rightSlaveCurrent = new CSVDatum("drive_rightSlaveCurrent");
-
-	m_busVoltage = new CSVDatum("busVoltage");
-
-	Robot.logger.addCSVDatum(m_leftMasterVoltage);
-	Robot.logger.addCSVDatum(m_leftSlaveVoltage);
-	Robot.logger.addCSVDatum(m_rightMasterVoltage);
-	Robot.logger.addCSVDatum(m_rightSlaveVoltage);
-
-	Robot.logger.addCSVDatum(m_leftMasterCurrent);
-	Robot.logger.addCSVDatum(m_leftSlaveCurrent);
-	Robot.logger.addCSVDatum(m_rightMasterCurrent);
-	Robot.logger.addCSVDatum(m_rightSlaveCurrent);
-
-	Robot.logger.addCSVDatum(m_busVoltage);
+	if (!writeException) {
+	    int counter = 0;
+	    while (counter <= 99) {
+		m_file = new File(filePrefix.toString() + String.format("%02d", counter) + ".csv");
+		if (m_file.exists()) {
+		    counter++;
+		} else {
+		    break;
+		}
+		if (counter == 99) {
+		    System.out.println("file creation counter at 99!");
+		}
+	    }
+	    try {
+		m_writer = new FileWriter(m_file);
+		m_writer.append("Time,MatchTime,RightPosition,LeftPosition,RightVelocity,LeftVelocity,Yaw"
+			+ "RightMasterVoltage,RightSlaveVoltage,LeftMasterVoltage,LeftSlaveVoltage,"
+			+ "RightMasterCurrent,RightSlaveCurrent,LeftMasterCurrent,LeftSlaveCurrent\n");
+		m_logStartTime = Timer.getFPGATimestamp();
+	    } catch (IOException e) {
+		e.printStackTrace();
+		writeException = true;
+	    }
+	}
     }
 
-    public void updateLog() {
-	m_leftMasterVoltage.updateValue(getLeftMasterVoltage());
-	m_leftSlaveVoltage.updateValue(getLeftSlaveVoltage());
-	m_rightMasterVoltage.updateValue(getRightMasterVoltage());
-	m_rightSlaveVoltage.updateValue(getRightSlaveVoltage());
+    public void stopLog() {
+	try {
+	    if (null != m_writer)
+		m_writer.close();
+	} catch (IOException e) {
+	    e.printStackTrace();
+	    writeException = true;
+	}
+    }
 
-	m_leftMasterCurrent.updateValue(getLeftMasterCurrent());
-	m_leftSlaveCurrent.updateValue(getLeftSlaveCurrent());
-	m_rightMasterCurrent.updateValue(getRightMasterCurrent());
-	m_rightSlaveCurrent.updateValue(getRightSlaveCurrent());
-
-	m_busVoltage.updateValue(Robot.pdp.getVoltage());
+    public void logToCSV() {
+	if (!writeException) {
+	    try {
+		double timestamp = Timer.getFPGATimestamp() - m_logStartTime;
+		m_writer.append(String.valueOf(timestamp) + "," + String.valueOf(Robot.ds.getMatchTime()) + ","
+			+ String.valueOf(getRightPosition()) + "," + String.valueOf(getLeftPosition()) + ","
+			+ String.valueOf(getRightVelocity()) + "," + String.valueOf(getLeftVelocity()) + ","
+			+ String.valueOf(getCurrentYaw()) + "," + String.valueOf(getRightMasterVoltage()) + ","
+			+ String.valueOf(getRightSlaveVoltage()) + "," + String.valueOf(getLeftMasterVoltage()) + ","
+			+ String.valueOf(getLeftSlaveVoltage()) + "," + String.valueOf(getRightMasterCurrent()) + ","
+			+ String.valueOf(getRightSlaveCurrent()) + "," + String.valueOf(getLeftMasterCurrent()) + ","
+			+ String.valueOf(getLeftSlaveCurrent()) + "\n");
+		m_writer.flush();
+	    } catch (IOException e) {
+		e.printStackTrace();
+		writeException = true;
+	    }
+	}
     }
 
 }

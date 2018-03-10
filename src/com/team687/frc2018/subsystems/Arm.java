@@ -1,5 +1,11 @@
 package com.team687.frc2018.subsystems;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -10,9 +16,9 @@ import com.ctre.phoenix.sensors.PigeonIMU.CalibrationMode;
 import com.team687.frc2018.Robot;
 import com.team687.frc2018.RobotMap;
 import com.team687.frc2018.constants.SuperstructureConstants;
-import com.team687.frc2018.utilities.CSVDatum;
 import com.team687.frc2018.utilities.NerdyMath;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -24,6 +30,13 @@ public class Arm extends Subsystem {
 
     private final TalonSRX m_arm;
     private double m_desiredPos = 0;
+
+    private String m_filePath1 = "/media/sda1/logs/";
+    private String m_filePath2 = "/home/lvuser/logs/";
+    private File m_file;
+    private FileWriter m_writer;
+    private boolean writeException = false;
+    private double m_logStartTime = 0;
 
     private final PigeonIMU m_towerPigeon, m_armPigeon;
     private double[] m_towerYpr = new double[3];
@@ -184,38 +197,69 @@ public class Arm extends Subsystem {
 	SmartDashboard.putNumber("Arm Desired Position", m_desiredPos);
     }
 
-    private CSVDatum m_armPositionData, m_armDesiredPosData, m_armVelocityData, m_armEncoderAngleData, m_armPigeonAngle,
-	    m_towerPigeonAngle, m_armVoltageData, m_armCurrentData;
+    public void startLog() {
+	// Check to see if flash drive is mounted.
+	File logFolder1 = new File(m_filePath1);
+	File logFolder2 = new File(m_filePath2);
+	Path filePrefix = Paths.get("");
+	if (logFolder1.exists() && logFolder1.isDirectory()) {
+	    filePrefix = Paths.get(logFolder1.toString(),
+		    "2018_03_10_" + Robot.ds.getMatchType().toString() + Robot.ds.getMatchNumber() + "Arm");
+	} else if (logFolder2.exists() && logFolder2.isDirectory()) {
+	    filePrefix = Paths.get(logFolder2.toString(),
+		    "2018_03_10_" + Robot.ds.getMatchType().toString() + Robot.ds.getMatchNumber() + "Arm");
+	} else {
+	    writeException = true;
+	}
 
-    public void addLoggedData() {
-	m_armPositionData = new CSVDatum("arm_position");
-	m_armDesiredPosData = new CSVDatum("arm_desiredPos");
-	m_armVelocityData = new CSVDatum("arm_velocity");
-	m_armEncoderAngleData = new CSVDatum("arm_encoderAngle");
-	m_armPigeonAngle = new CSVDatum("arm_pigeonAngle");
-	m_towerPigeonAngle = new CSVDatum("tower_pigeonAngle");
-	m_armVoltageData = new CSVDatum("arm_voltage");
-	m_armCurrentData = new CSVDatum("arm_current");
-
-	Robot.logger.addCSVDatum(m_armPositionData);
-	Robot.logger.addCSVDatum(m_armDesiredPosData);
-	Robot.logger.addCSVDatum(m_armVelocityData);
-	Robot.logger.addCSVDatum(m_armEncoderAngleData);
-	Robot.logger.addCSVDatum(m_armPigeonAngle);
-	Robot.logger.addCSVDatum(m_towerPigeonAngle);
-	Robot.logger.addCSVDatum(m_armVoltageData);
-	Robot.logger.addCSVDatum(m_armCurrentData);
+	if (!writeException) {
+	    int counter = 0;
+	    while (counter <= 99) {
+		m_file = new File(filePrefix.toString() + String.format("%02d", counter) + ".csv");
+		if (m_file.exists()) {
+		    counter++;
+		} else {
+		    break;
+		}
+		if (counter == 99) {
+		    System.out.println("file creation counter at 99!");
+		}
+	    }
+	    try {
+		m_writer = new FileWriter(m_file);
+		m_writer.append("Time,MatchTime,Position,Velocity,EncoderAngle,Voltage,Current\n");
+		m_logStartTime = Timer.getFPGATimestamp();
+	    } catch (IOException e) {
+		e.printStackTrace();
+		writeException = true;
+	    }
+	}
     }
 
-    public void updateLog() {
-	m_armPositionData.updateValue(getPosition());
-	m_armDesiredPosData.updateValue(m_desiredPos);
-	m_armVelocityData.updateValue(getVelocity());
-	m_armEncoderAngleData.updateValue(getAngleAbsolute());
-	m_armPigeonAngle.updateValue(getArmPigeonAngle());
-	m_towerPigeonAngle.updateValue(getTowerPigeonAngle());
-	m_armVoltageData.updateValue(getVoltage());
-	m_armCurrentData.updateValue(getCurrent());
+    public void stopLog() {
+	try {
+	    if (null != m_writer)
+		m_writer.close();
+	} catch (IOException e) {
+	    e.printStackTrace();
+	    writeException = true;
+	}
+    }
+
+    public void logToCSV() {
+	if (!writeException) {
+	    try {
+		double timestamp = Timer.getFPGATimestamp() - m_logStartTime;
+		m_writer.append(String.valueOf(timestamp) + "," + String.valueOf(Robot.ds.getMatchTime()) + ","
+			+ String.valueOf(getPosition()) + "," + String.valueOf(getVelocity()) + ","
+			+ String.valueOf(getAngleAbsolute()) + "," + String.valueOf(getVoltage()) + ","
+			+ String.valueOf(getCurrent()) + "\n");
+		m_writer.flush();
+	    } catch (IOException e) {
+		e.printStackTrace();
+		writeException = true;
+	    }
+	}
     }
 
 }

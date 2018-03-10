@@ -1,5 +1,11 @@
 package com.team687.frc2018.subsystems;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -10,9 +16,9 @@ import com.ctre.phoenix.sensors.PigeonIMU.CalibrationMode;
 import com.team687.frc2018.Robot;
 import com.team687.frc2018.RobotMap;
 import com.team687.frc2018.constants.SuperstructureConstants;
-import com.team687.frc2018.utilities.CSVDatum;
 import com.team687.frc2018.utilities.NerdyMath;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -28,6 +34,13 @@ public class Wrist extends Subsystem {
     private final PigeonIMU m_pigeon;
     private double[] m_ypr = new double[3];
     private double m_resetOffset = 0;
+
+    private String m_filePath1 = "/media/sda1/logs/";
+    private String m_filePath2 = "/home/lvuser/logs/";
+    private File m_file;
+    private FileWriter m_writer;
+    private boolean writeException = false;
+    private double m_logStartTime = 0;
 
     public Wrist() {
 	m_wrist = new TalonSRX(RobotMap.kWristID);
@@ -198,34 +211,69 @@ public class Wrist extends Subsystem {
 	SmartDashboard.putNumber("Wrist Current", getCurrent());
     }
 
-    private CSVDatum m_wristPositionData, m_wristDesiredPosData, m_wristVelocityData, m_wristEncoderAngleData,
-	    m_wristPigeonAngleData, m_wristVoltageData, m_wristCurrentData;
+    public void startLog() {
+	// Check to see if flash drive is mounted.
+	File logFolder1 = new File(m_filePath1);
+	File logFolder2 = new File(m_filePath2);
+	Path filePrefix = Paths.get("");
+	if (logFolder1.exists() && logFolder1.isDirectory()) {
+	    filePrefix = Paths.get(logFolder1.toString(),
+		    "2018_03_10_" + Robot.ds.getMatchType().toString() + Robot.ds.getMatchNumber() + "Wrist");
+	} else if (logFolder2.exists() && logFolder2.isDirectory()) {
+	    filePrefix = Paths.get(logFolder2.toString(),
+		    "2018_03_10_" + Robot.ds.getMatchType().toString() + Robot.ds.getMatchNumber() + "Wrist");
+	} else {
+	    writeException = true;
+	}
 
-    public void addLoggedData() {
-	m_wristPositionData = new CSVDatum("wrist_position");
-	m_wristDesiredPosData = new CSVDatum("wrist_desiredPos");
-	m_wristVelocityData = new CSVDatum("wrist_velocity");
-	m_wristEncoderAngleData = new CSVDatum("wrist_encoderAngle");
-	m_wristPigeonAngleData = new CSVDatum("wrist_pigeonAngle");
-	m_wristVoltageData = new CSVDatum("wrist_voltage");
-	m_wristCurrentData = new CSVDatum("wrist_current");
-
-	Robot.logger.addCSVDatum(m_wristPositionData);
-	Robot.logger.addCSVDatum(m_wristDesiredPosData);
-	Robot.logger.addCSVDatum(m_wristVelocityData);
-	Robot.logger.addCSVDatum(m_wristEncoderAngleData);
-	Robot.logger.addCSVDatum(m_wristVoltageData);
-	Robot.logger.addCSVDatum(m_wristCurrentData);
+	if (!writeException) {
+	    int counter = 0;
+	    while (counter <= 99) {
+		m_file = new File(filePrefix.toString() + String.format("%02d", counter) + ".csv");
+		if (m_file.exists()) {
+		    counter++;
+		} else {
+		    break;
+		}
+		if (counter == 99) {
+		    System.out.println("file creation counter at 99!");
+		}
+	    }
+	    try {
+		m_writer = new FileWriter(m_file);
+		m_writer.append("Time,MatchTime,Position,Velocity,EncoderAngle,Voltage,Current\n");
+		m_logStartTime = Timer.getFPGATimestamp();
+	    } catch (IOException e) {
+		e.printStackTrace();
+		writeException = true;
+	    }
+	}
     }
 
-    public void updateLog() {
-	m_wristPositionData.updateValue(getPosition());
-	m_wristDesiredPosData.updateValue(m_desiredPos);
-	m_wristVelocityData.updateValue(getVelocity());
-	m_wristEncoderAngleData.updateValue(getAngleAbsolute());
-	m_wristPigeonAngleData.updateValue(getPigeonAngle());
-	m_wristVoltageData.updateValue(getVoltage());
-	m_wristCurrentData.updateValue(getCurrent());
+    public void stopLog() {
+	try {
+	    if (null != m_writer)
+		m_writer.close();
+	} catch (IOException e) {
+	    e.printStackTrace();
+	    writeException = true;
+	}
+    }
+
+    public void logToCSV() {
+	if (!writeException) {
+	    try {
+		double timestamp = Timer.getFPGATimestamp() - m_logStartTime;
+		m_writer.append(String.valueOf(timestamp) + "," + String.valueOf(Robot.ds.getMatchTime()) + ","
+			+ String.valueOf(getPosition()) + "," + String.valueOf(getVelocity()) + ","
+			+ String.valueOf(getAngleAbsolute()) + "," + String.valueOf(getVoltage()) + ","
+			+ String.valueOf(getCurrent()) + "\n");
+		m_writer.flush();
+	    } catch (IOException e) {
+		e.printStackTrace();
+		writeException = true;
+	    }
+	}
     }
 
 }

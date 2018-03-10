@@ -10,7 +10,6 @@ import com.team687.frc2018.subsystems.Arm;
 import com.team687.frc2018.subsystems.Drive;
 import com.team687.frc2018.subsystems.Intake;
 import com.team687.frc2018.subsystems.Wrist;
-import com.team687.frc2018.utilities.CSVLogger;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -31,9 +30,6 @@ public class Robot extends TimedRobot {
     public static OI oi;
 
     public static VisionAdapter visionAdapter;
-    public static Odometry odometry;
-
-    public static CSVLogger logger;
 
     SendableChooser<String> sideChooser = new SendableChooser<>();
     public static Command autonomousCommand;
@@ -42,8 +38,6 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
-	logger = CSVLogger.getInstance();
-
 	pdp = new PowerDistributionPanel();
 
 	arm = new Arm();
@@ -62,11 +56,9 @@ public class Robot extends TimedRobot {
 	drive.resetEncoders();
 	drive.resetGyro();
 
-	oi = new OI();
-
 	visionAdapter = VisionAdapter.getInstance();
-	odometry = Odometry.getInstance();
 
+	oi = new OI();
 	ds = DriverStation.getInstance();
 
 	sideChooser.addDefault("Center", "center");
@@ -85,11 +77,11 @@ public class Robot extends TimedRobot {
 	arm.reportToSmartDashboard();
 	wrist.reportToSmartDashboard();
 	intake.reportToSmartDashboard();
-
 	visionAdapter.reportToSmartDashboard();
-	odometry.update();
-	odometry.reportToSmartDashboard();
-	logger.stopLog();
+
+	drive.stopLog();
+	arm.stopLog();
+	wrist.stopLog();
     }
 
     @Override
@@ -103,27 +95,16 @@ public class Robot extends TimedRobot {
 	arm.reportToSmartDashboard();
 	wrist.reportToSmartDashboard();
 	intake.reportToSmartDashboard();
-
 	visionAdapter.reportToSmartDashboard();
-	odometry.update();
-	odometry.reportToSmartDashboard();
     }
 
     @Override
     public void autonomousInit() {
 	// Scheduler.getInstance().removeAll();
 
-	arm.updateYawPitchRoll();
-	wrist.updateYawPitchRoll();
-
-	drive.reportToSmartDashboard();
-	arm.reportToSmartDashboard();
-	wrist.reportToSmartDashboard();
-	intake.reportToSmartDashboard();
-
-	visionAdapter.reportToSmartDashboard();
-	odometry.update();
-	odometry.reportToSmartDashboard();
+	drive.startLog();
+	arm.startLog();
+	wrist.startLog();
 
 	String msg = DriverStation.getInstance().getGameSpecificMessage();
 	while (msg == null || msg.length() < 2) {
@@ -166,10 +147,11 @@ public class Robot extends TimedRobot {
 	arm.reportToSmartDashboard();
 	wrist.reportToSmartDashboard();
 	intake.reportToSmartDashboard();
-
 	visionAdapter.reportToSmartDashboard();
-	odometry.update();
-	odometry.reportToSmartDashboard();
+
+	drive.logToCSV();
+	arm.logToCSV();
+	wrist.logToCSV();
     }
 
     @Override
@@ -187,16 +169,7 @@ public class Robot extends TimedRobot {
 	arm.reportToSmartDashboard();
 	wrist.reportToSmartDashboard();
 	intake.reportToSmartDashboard();
-
 	visionAdapter.reportToSmartDashboard();
-	odometry.update();
-	odometry.reportToSmartDashboard();
-
-	drive.addLoggedData();
-	odometry.addLoggedData();
-	arm.addLoggedData();
-	wrist.addLoggedData();
-	logger.startLog();
     }
 
     @Override
@@ -212,14 +185,10 @@ public class Robot extends TimedRobot {
 	intake.reportToSmartDashboard();
 
 	visionAdapter.reportToSmartDashboard();
-	odometry.update();
-	odometry.reportToSmartDashboard();
 
-	drive.updateLog();
-	odometry.updateLog();
-	arm.updateLog();
-	wrist.updateLog();
-	logger.logToCSV();
+	drive.logToCSV();
+	arm.logToCSV();
+	wrist.logToCSV();
     }
 
     @Override
@@ -235,7 +204,5 @@ public class Robot extends TimedRobot {
 	intake.reportToSmartDashboard();
 
 	visionAdapter.reportToSmartDashboard();
-	odometry.update();
-	odometry.reportToSmartDashboard();
     }
 }
