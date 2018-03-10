@@ -11,7 +11,6 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.team687.frc2018.Robot;
 import com.team687.frc2018.RobotMap;
 import com.team687.frc2018.commands.drive.teleop.ArcadeDrive;
@@ -36,8 +35,8 @@ public class Drive extends Subsystem {
     private final TalonSRX m_leftMaster;
     private final TalonSRX m_rightMaster;
 
-    private final VictorSPX m_leftSlave1;
-    private final VictorSPX m_rightSlave1;
+    private final TalonSRX m_leftSlave1;
+    private final TalonSRX m_rightSlave1;
 
     private final AHRS m_nav;
     private final navXSensor m_navxsensor;
@@ -57,9 +56,9 @@ public class Drive extends Subsystem {
 
     public Drive() {
 	m_leftMaster = new TalonSRX(RobotMap.kLeftMasterTalonID);
-	m_leftSlave1 = new VictorSPX(RobotMap.kLeftSlaveVictorID);
+	m_leftSlave1 = new TalonSRX(RobotMap.kLeftSlaveVictorID);
 	m_rightMaster = new TalonSRX(RobotMap.kRightMasterTalonID);
-	m_rightSlave1 = new VictorSPX(RobotMap.kRightSlaveVictorID);
+	m_rightSlave1 = new TalonSRX(RobotMap.kRightSlaveVictorID);
 
 	m_leftSlave1.follow(m_leftMaster);
 	m_rightSlave1.follow(m_rightMaster);
@@ -102,7 +101,7 @@ public class Drive extends Subsystem {
 	m_leftMaster.configPeakCurrentDuration(0, 0);
 	m_leftMaster.configContinuousCurrentLimit(DriveConstants.kContinuousCurrentLimit, 0);
 	m_leftMaster.enableCurrentLimit(true);
-	// m_leftSlave1.enableCurrentLimit(false);
+	m_leftSlave1.enableCurrentLimit(false);
 	m_leftMaster.configOpenloopRamp(DriveConstants.kVoltageRampRate, 0);
 	m_leftMaster.configClosedloopRamp(DriveConstants.kVoltageRampRate, 0);
 
@@ -110,7 +109,7 @@ public class Drive extends Subsystem {
 	m_rightMaster.configPeakCurrentDuration(0, 0);
 	m_rightMaster.configContinuousCurrentLimit(DriveConstants.kContinuousCurrentLimit, 0);
 	m_rightMaster.enableCurrentLimit(true);
-	// m_rightSlave1.enableCurrentLimit(false);
+	m_rightSlave1.enableCurrentLimit(false);
 	m_rightMaster.configOpenloopRamp(DriveConstants.kVoltageRampRate, 0);
 	m_rightMaster.configClosedloopRamp(DriveConstants.kVoltageRampRate, 0);
 
