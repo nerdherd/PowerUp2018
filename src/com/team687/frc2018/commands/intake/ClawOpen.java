@@ -1,20 +1,20 @@
-package com.team687.frc2018.commands.wrist;
+package com.team687.frc2018.commands.intake;
 
 import com.team687.frc2018.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class CalibratePigeons extends Command {
+public class ClawOpen extends Command {
 
-    public CalibratePigeons() {
-	requires(Robot.wrist);
-	requires(Robot.arm);
+    public ClawOpen() {
+	requires(Robot.intake);
     }
 
     @Override
     protected void initialize() {
-	Robot.wrist.enterCalibrationMode();
-	Robot.arm.enterCalibrationMode();
+	SmartDashboard.putString("Current Command", "ClawOpen");
+	Robot.intake.openClaw();
     }
 
     @Override
@@ -32,6 +32,7 @@ public class CalibratePigeons extends Command {
 
     @Override
     protected void interrupted() {
+	end();
     }
 
 }

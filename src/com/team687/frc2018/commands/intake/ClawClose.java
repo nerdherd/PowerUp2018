@@ -1,23 +1,20 @@
-package com.team687.frc2018.commands.arm;
+package com.team687.frc2018.commands.intake;
 
 import com.team687.frc2018.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- * Reset angle of the arm and tower by setting offset
- */
+public class ClawClose extends Command {
 
-public class ResetArmTowerPigeons extends Command {
-
-    public ResetArmTowerPigeons() {
-	requires(Robot.arm);
+    public ClawClose() {
+	requires(Robot.intake);
     }
 
     @Override
     protected void initialize() {
-	Robot.arm.resetArmAngle();
-	Robot.arm.resetTowerAngle();
+	SmartDashboard.putString("Current Command", "ClawClose");
+	Robot.intake.closeClaw();
     }
 
     @Override
@@ -35,6 +32,7 @@ public class ResetArmTowerPigeons extends Command {
 
     @Override
     protected void interrupted() {
+	end();
     }
 
 }

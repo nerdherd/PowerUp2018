@@ -24,6 +24,7 @@ public class IntakePosition extends Command {
 	Robot.wrist.setPosition(SuperstructureConstants.kWristIntakePos);
 	Robot.arm.setPosition(SuperstructureConstants.kArmOffsetPos);
 	Robot.intake.setRollerPower(0);
+	Robot.intake.closeClaw();
     }
 
     @Override
