@@ -14,7 +14,9 @@ import com.team687.frc2018.commands.drive.ResetDriveEncoders;
 import com.team687.frc2018.commands.drive.ResetGyro;
 import com.team687.frc2018.commands.drive.TurnToAngle;
 import com.team687.frc2018.commands.drive.teleop.TestDrive;
+import com.team687.frc2018.commands.intake.CloseClaw;
 import com.team687.frc2018.commands.intake.IntakeSequence;
+import com.team687.frc2018.commands.intake.OpenClaw;
 import com.team687.frc2018.commands.intake.SetIntakeRollerPower;
 import com.team687.frc2018.commands.superstructure.ForwardsScaleToStow;
 import com.team687.frc2018.commands.superstructure.IntakeToStow;
@@ -48,7 +50,11 @@ public class OI {
     public Joystick driveJoyArtic = new Joystick(2);
 
 //     public Joystick gamepadJoy = new Joystick(0);
-
+    
+//    Change claw buttons to whatever drivers want
+    public JoystickButton openClaw_7;
+    public JoystickButton closeClaw_8;
+    
     public JoystickButton quickTurn_1;
     
     public JoystickButton intake_1;
@@ -71,6 +77,14 @@ public class OI {
     public JoystickButton wristIntake_4;
 
     public OI() {
+    
+//   change buttons for drivers
+    openClaw_7 = new JoystickButton(driveJoyRight, 7);
+    openClaw_7.whenPressed(new OpenClaw());
+    
+    closeClaw_8 = new JoystickButton(driveJoyRight, 8);
+    closeClaw_8.whenPressed(new CloseClaw());
+    
 //	quickTurn_1 = new JoystickButton(driveJoyRight, 1);
     
     intake_1 = new JoystickButton(driveJoyArtic, 1);
