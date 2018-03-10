@@ -1,12 +1,19 @@
 package com.team687.frc2018;
 
 import com.team687.frc2018.commands.arm.ResetArmEncoder;
-import com.team687.frc2018.commands.arm.ResetArmTowerPigeons;
 import com.team687.frc2018.commands.arm.SetArmPosition;
 import com.team687.frc2018.commands.arm.SetArmVoltage;
+import com.team687.frc2018.commands.drive.ResetDriveEncoders;
+import com.team687.frc2018.commands.drive.ResetGyro;
 import com.team687.frc2018.commands.intake.SetIntakeRollerPower;
+import com.team687.frc2018.commands.superstructure.BackwardsScaleToStow;
+import com.team687.frc2018.commands.superstructure.DefaultIntake;
+import com.team687.frc2018.commands.superstructure.DefaultStow;
+import com.team687.frc2018.commands.superstructure.ForwardsScaleToStow;
+import com.team687.frc2018.commands.superstructure.IntakePosition;
+import com.team687.frc2018.commands.superstructure.StowToBackwardsScale;
+import com.team687.frc2018.commands.superstructure.StowToForwardsScale;
 import com.team687.frc2018.commands.wrist.ResetWristEncoder;
-import com.team687.frc2018.commands.wrist.ResetWristPigeon;
 import com.team687.frc2018.commands.wrist.SetWristPercentOutput;
 import com.team687.frc2018.commands.wrist.SetWristPosition;
 import com.team687.frc2018.constants.SuperstructureConstants;
@@ -29,50 +36,55 @@ public class OI {
     // public Joystick gamepadJoy = new Joystick(0);
 
     public JoystickButton intake_1;
-
     public JoystickButton outtake_2;
     public JoystickButton stopIntake_3;
-    public JoystickButton holdIntake_4;
 
-    public JoystickButton armOffset_11;
-    public JoystickButton armHorizontal_9;
-    public JoystickButton armVertical_7;
+    public JoystickButton armOffset_5;
+    public JoystickButton forwardsToStow_9;
+    public JoystickButton stowToForwards_7;
+    public JoystickButton stowToBackwards_8;
+    public JoystickButton backwardsToStow_10;
 
-    public JoystickButton wristStow_10;
-    public JoystickButton wristIntake_12;
+    public JoystickButton stow_6;
+    public JoystickButton intake_4;
 
     public OI() {
 	intake_1 = new JoystickButton(driveJoyArtic, 1);
-	intake_1.whenPressed(new SetIntakeRollerPower(-1));
+	intake_1.whenPressed(new DefaultIntake());
 	outtake_2 = new JoystickButton(driveJoyArtic, 2);
-	outtake_2.whenPressed(new SetIntakeRollerPower(0.5));
+	outtake_2.whenPressed(new SetIntakeRollerPower(0.4));
 	stopIntake_3 = new JoystickButton(driveJoyArtic, 3);
 	stopIntake_3.whenPressed(new SetIntakeRollerPower(0));
-	holdIntake_4 = new JoystickButton(driveJoyArtic, 4);
-	holdIntake_4.whenPressed(new SetIntakeRollerPower(-0.3));
 
-	armOffset_11 = new JoystickButton(driveJoyArtic, 11);
-	armOffset_11.whenPressed(new SetArmPosition(SuperstructureConstants.kArmOffsetPos));
-	armHorizontal_9 = new JoystickButton(driveJoyArtic, 9);
-	armHorizontal_9.whenPressed(new SetArmPosition(SuperstructureConstants.kArmHorizontalPos));
-	armVertical_7 = new JoystickButton(driveJoyArtic, 7);
-	armVertical_7.whenPressed(new SetArmPosition(SuperstructureConstants.kArmVerticalPos));
+	armOffset_5 = new JoystickButton(driveJoyArtic, 5);
+	armOffset_5.whenPressed(new SetArmPosition(SuperstructureConstants.kArmOffsetPos));
 
-	wristStow_10 = new JoystickButton(driveJoyArtic, 10);
-	wristStow_10.whenPressed(new SetWristPosition(SuperstructureConstants.kWristStowArmOffsetPos));
-	wristIntake_12 = new JoystickButton(driveJoyArtic, 12);
-	wristIntake_12.whenPressed(new SetWristPosition(SuperstructureConstants.kWristIntakePos));
+	forwardsToStow_9 = new JoystickButton(driveJoyArtic, 9);
+	forwardsToStow_9.whenPressed(new ForwardsScaleToStow());
+	stowToForwards_7 = new JoystickButton(driveJoyArtic, 7);
+	stowToForwards_7.whenPressed(new StowToForwardsScale());
 
-	SmartDashboard.putData("Arm Tower Reset Pigeons", new ResetArmTowerPigeons());
+	stowToBackwards_8 = new JoystickButton(driveJoyArtic, 8);
+	stowToBackwards_8.whenPressed(new StowToBackwardsScale());
+	backwardsToStow_10 = new JoystickButton(driveJoyArtic, 10);
+	backwardsToStow_10.whenPressed(new BackwardsScaleToStow());
+
+	stow_6 = new JoystickButton(driveJoyArtic, 6);
+	stow_6.whenPressed(new DefaultStow());
+	intake_4 = new JoystickButton(driveJoyArtic, 4);
+	intake_4.whenPressed(new DefaultIntake());
+
 	SmartDashboard.putData("Arm Reset Encoder", new ResetArmEncoder());
+	SmartDashboard.putData("Wrist Reset Encoder", new ResetWristEncoder());
+	SmartDashboard.putData("Drive Reset Encoders", new ResetDriveEncoders());
+	SmartDashboard.putData("Drive Reset Gyro", new ResetGyro());
+
 	SmartDashboard.putData("Arm Voltage 0", new SetArmVoltage(0));
 	SmartDashboard.putData("Arm Position Vertical", new SetArmPosition(SuperstructureConstants.kArmVerticalPos));
 	SmartDashboard.putData("Arm Position Horizontal",
 		new SetArmPosition(SuperstructureConstants.kArmHorizontalPos));
 	SmartDashboard.putData("Arm Position Offset", new SetArmPosition(SuperstructureConstants.kArmOffsetPos));
 
-	SmartDashboard.putData("Wrist Reset Pigeon", new ResetWristPigeon());
-	SmartDashboard.putData("Wrist Reset Encoder", new ResetWristEncoder());
 	SmartDashboard.putData("Wrist Voltage 0", new SetWristPercentOutput(0));
 	SmartDashboard.putData("Wrist Position Intake", new SetWristPosition(SuperstructureConstants.kWristIntakePos));
 	SmartDashboard.putData("Wrist Position Offset Stow",
@@ -82,6 +94,16 @@ public class OI {
 	SmartDashboard.putData("Set Intake Power 1", new SetIntakeRollerPower(1));
 	SmartDashboard.putData("Set Intake Power -1", new SetIntakeRollerPower(-1));
 	SmartDashboard.putData("Set Intake Power 0", new SetIntakeRollerPower(0));
+	SmartDashboard.putData("Outtake", new SetIntakeRollerPower(0.4));
+
+	SmartDashboard.putData("Superstructure Stow to Backwards Scale", new StowToBackwardsScale());
+	SmartDashboard.putData("Superstructure Stow to Forwards Scale", new StowToForwardsScale());
+	SmartDashboard.putData("Superstructure Backwards Scale To Stow", new BackwardsScaleToStow());
+	SmartDashboard.putData("Superstructure Forwards Scale to Stow", new ForwardsScaleToStow());
+
+	SmartDashboard.putData("Superstructure Stow", new DefaultStow());
+	SmartDashboard.putData("Superstructure Intake", new DefaultIntake());
+	SmartDashboard.putData("Superstructure Intake Position", new IntakePosition());
     }
 
     /**
