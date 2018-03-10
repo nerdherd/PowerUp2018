@@ -84,7 +84,7 @@ public class Kinematics {
      */
     public static double getAngularVelocity(double rightVelocity, double leftVelocity) {
 	double diffVelocity = rightVelocity - leftVelocity;
-	return diffVelocity / DriveConstants.kDrivetrainWidth;
+	return diffVelocity / DriveConstants.kWheelToWheelDist;
     }
 
     /**
@@ -97,7 +97,7 @@ public class Kinematics {
 	if (diffVelocity == 0) {
 	    return Double.POSITIVE_INFINITY;
 	} else {
-	    return (DriveConstants.kDrivetrainWidth * sigmaVelocity) / (2 * diffVelocity);
+	    return (DriveConstants.kWheelToWheelDist * sigmaVelocity) / (2 * diffVelocity);
 	}
     }
 
@@ -108,7 +108,7 @@ public class Kinematics {
      */
     public static double getDerivedDeltaYaw(double rightVelocity, double leftVelocity, double deltaTime) {
 	double diffVelocity = rightVelocity - leftVelocity;
-	return diffVelocity * deltaTime / DriveConstants.kDrivetrainWidth;
+	return diffVelocity * deltaTime / DriveConstants.kWheelToWheelDist;
     }
 
 }
