@@ -14,5 +14,7 @@
 	<classpathentry kind="lib" path="/Users/tedlin/Documents/hamcrest-core-1.3.jar"/>
 	<classpathentry kind="lib" path="/Users/tedlin/wpilib/user/java/lib/Pathfinder-Java-1.8.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/Pathfinder-Java-1.8.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/CTRLib.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/navx_frc.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
