@@ -57,9 +57,9 @@ public class Drive extends Subsystem {
 
     public Drive() {
 	m_leftMaster = new TalonSRX(RobotMap.kLeftMasterTalonID);
-	m_leftSlave1 = new VictorSPX(RobotMap.kLeftSlaveVictor1ID);
+	m_leftSlave1 = new VictorSPX(RobotMap.kLeftSlaveVictorID);
 	m_rightMaster = new TalonSRX(RobotMap.kRightMasterTalonID);
-	m_rightSlave1 = new VictorSPX(RobotMap.kRightSlaveVictor1ID);
+	m_rightSlave1 = new VictorSPX(RobotMap.kRightSlaveVictorID);
 
 	m_leftSlave1.follow(m_leftMaster);
 	m_rightSlave1.follow(m_rightMaster);
