@@ -38,6 +38,8 @@ public class Robot extends TimedRobot {
 	public static CSVLogger logger;
 	
 	public static int m_counter = 0;
+	
+	public static Compressor compressor;
 
 	SendableChooser<String> startingPosition = new SendableChooser<>();	
 	
@@ -50,7 +52,9 @@ public class Robot extends TimedRobot {
 		// logger = CSVLogger.getInstance();
 
 		pdp = new PowerDistributionPanel();
-
+		compressor = new Compressor();
+		compressor.start();
+		
 		arm = new Arm();
 		arm.setVoltage(0);
 		arm.resetEncoder();
