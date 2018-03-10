@@ -32,11 +32,11 @@ public class IntakeSequence extends Command {
     	if (!m_isFirstPartDone) {
     		Robot.wrist.setPosition(SuperstructureConstants.kWristIntakePos);
     		if (Robot.wrist.getPosition() < SuperstructureConstants.kWristIntakePos) {
-    			Robot.intake.setRollerPower(-0.4);
+    			Robot.intake.setRollerPower(-0.5);
     			Timer.delay(.330);
     		}
     	} else if (m_isFirstPartDone) {
-    		Robot.intake.setRollerPower(0.1);
+    		Robot.intake.setRollerPower(-0.1);
     		Robot.wrist.setPosition(SuperstructureConstants.kWristStowArmOffsetPos);
     	}
     	if (Robot.intake.hasCube()) {

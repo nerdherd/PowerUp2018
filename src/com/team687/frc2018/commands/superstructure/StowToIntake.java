@@ -21,11 +21,12 @@ public class StowToIntake extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.wrist.setAngleAbsolute(1);
+		Robot.wrist.setAngleAbsolute(5);
 		Robot.arm.setPosition(SuperstructureConstants.kArmOffsetPos);
 		if (Robot.wrist.getPositionRelative() < SuperstructureConstants.kWristIntakePos + 500) {
 			Robot.intake.setRollerPower(-1);
 		}
+		
 	}
 
 	@Override

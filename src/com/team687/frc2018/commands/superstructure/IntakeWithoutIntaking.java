@@ -23,7 +23,7 @@ public class IntakeWithoutIntaking extends Command {
     @Override
     protected void execute() {
     Robot.intake.setRollerPower(0);
-	Robot.wrist.setAngleAbsolute(1);
+	Robot.wrist.setAngleAbsolute(5);
 	Robot.arm.setPosition(SuperstructureConstants.kArmOffsetPos);
     }
 

@@ -9,11 +9,11 @@ import com.team687.frc2018.constants.DriveConstants;
 public class NerdyMath {
 
 	public static double radiansToDegrees(double rads) {
-		return rads * 360 / (2 * Math.PI);
+		return rads * 180 / Math.PI;
 	}
 
 	public static double degreesToRadians(double deg) {
-		return deg * (2 * Math.PI) / 360;
+		return deg * Math.PI / 180;
 	}
 
 	public static double inchesToRotations(double inches) {
@@ -24,9 +24,9 @@ public class NerdyMath {
 		return (int) (rotations * 4096);
 	}
 
-	public static int inchesToTicks(double inches) {
-		return (int) (rotationsToTicks(inchesToRotations(inches)));
-	}
+    public static int inchesToTicks(double inches) {
+    	return (int) (inches / Math.PI / DriveConstants.kWheelDiameter * 4096);
+    }
 
 	public static double ticksToRotations(int ticks) {
 		return ticks / rotationsToTicks(1);

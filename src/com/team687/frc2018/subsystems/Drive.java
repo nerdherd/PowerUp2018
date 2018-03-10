@@ -14,8 +14,10 @@ import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import com.team687.frc2018.Robot;
+import com.team687.frc2018.RobotMap;
 import com.team687.frc2018.commands.drive.teleop.ArcadeDrive;
 import com.team687.frc2018.commands.drive.teleop.SetDriveVoltage;
+import com.team687.frc2018.constants.DriveConstants;
 
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
@@ -39,20 +41,12 @@ public class Drive extends Subsystem {
 
 	private boolean m_brakeModeOn;
 
-	public static final double kDriveRightF = 0.271352785;
-	public static final double kDriveRightP = 0;
-	public static final double kDriveRightI = 0;
-	public static final double kDriveRightD = 0;
-
-	public static final double kDriveLeftF = 0.276411781;
-	public static final double kDriveLeftP = 0;
-	public static final double kDriveLeftI = 0;
-	public static final double kDriveLeftD = 0;
-
 	public static final int kCruiseVelocity = 2500;
 	public static final int kAcceleration = 2500;
 
 	public static final int kTestDistance = 67000;
+	
+	private double m_rightDesiredVel, m_leftDesiredVel;
 
 	private String m_filePath1 = "/media/sda1/logs/";
 	private String m_filePath2 = "/home/lvuser/logs/";
@@ -66,10 +60,10 @@ public class Drive extends Subsystem {
 	private double m_logStartTime;
 
 	public Drive() {
-		m_leftMaster = new TalonSRX(12);
-		m_leftSlave1 = new TalonSRX(13);
-		m_rightMaster = new TalonSRX(15);
-		m_rightSlave1 = new TalonSRX(14);
+		m_leftMaster = new TalonSRX(RobotMap.kLeftMasterTalonID);
+		m_leftSlave1 = new TalonSRX(RobotMap.kLeftSlaveTalon1ID);
+		m_rightMaster = new TalonSRX(RobotMap.kRightMasterTalonID);
+		m_rightSlave1 = new TalonSRX(RobotMap.kRightSlaveTalon1ID);
 
 		m_leftSlave1.follow(m_leftMaster);
 		m_rightSlave1.follow(m_rightMaster);
@@ -95,19 +89,15 @@ public class Drive extends Subsystem {
 		m_rightMaster.setNeutralMode(NeutralMode.Brake);
 		m_rightSlave1.setNeutralMode(NeutralMode.Brake);
 
-		m_leftMaster.config_kF(0, kDriveLeftF, 0);
-		m_leftMaster.config_kP(0, kDriveLeftP, 0);
-		m_leftMaster.config_kI(0, kDriveLeftI, 0);
-		m_leftMaster.config_kD(0, kDriveLeftD, 0);
-		m_leftMaster.configMotionCruiseVelocity(kCruiseVelocity, 3500);
-		m_leftMaster.configMotionAcceleration(kAcceleration, 0);
+		m_leftMaster.config_kF(0, DriveConstants.kLeftVelocityF, 0);
+		m_leftMaster.config_kP(0, DriveConstants.kLeftVelocityP, 0);
+		m_leftMaster.config_kI(0, DriveConstants.kLeftVelocityI, 0);
+		m_leftMaster.config_kD(0, DriveConstants.kLeftVelocityD, 0);
 
-		m_rightMaster.config_kF(0, kDriveRightF, 0);
-		m_rightMaster.config_kP(0, kDriveRightP, 0);
-		m_rightMaster.config_kI(0, kDriveRightI, 0);
-		m_rightMaster.config_kD(0, kDriveRightD, 0);
-		m_rightMaster.configMotionCruiseVelocity(kCruiseVelocity, 3500);
-		m_rightMaster.configMotionAcceleration(kAcceleration, 0);
+		m_rightMaster.config_kF(0, DriveConstants.kRightVelocityF, 0);
+		m_rightMaster.config_kP(0, DriveConstants.kRightVelocityP, 0);
+		m_rightMaster.config_kI(0, DriveConstants.kRightVelocityI, 0);
+		m_rightMaster.config_kD(0, DriveConstants.kRightVelocityD, 0);
 
 		m_leftMaster.configPeakCurrentLimit(0, 0);
 		m_leftMaster.configPeakCurrentDuration(0, 0);
@@ -130,6 +120,9 @@ public class Drive extends Subsystem {
 
 		m_nav = new AHRS(SPI.Port.kMXP);
 		
+		m_leftDesiredVel = 0;
+		m_rightDesiredVel = 0;
+		
 	}
 
 	@Override
@@ -144,6 +137,8 @@ public class Drive extends Subsystem {
 	 * @param rightPercent
 	 */
 	public void setPower(double leftPercent, double rightPercent) {
+		m_leftDesiredVel = 0;
+		m_rightDesiredVel = 0;
 		// setPercentVelocity(leftPercent, rightPercent);
 		m_leftMaster.set(ControlMode.PercentOutput, leftPercent);
 		m_rightMaster.set(ControlMode.PercentOutput, rightPercent);
@@ -175,8 +170,10 @@ public class Drive extends Subsystem {
 	}
 
 	public void setPercentVelocity(double leftPercent, double rightPercent) {
-		m_leftMaster.set(ControlMode.Velocity, leftPercent * 3492);
-		m_rightMaster.set(ControlMode.Velocity, rightPercent * 3492);
+		m_rightDesiredVel = rightPercent * DriveConstants.kMaxVelocity;
+		m_leftDesiredVel = leftPercent * DriveConstants.kMaxVelocity;
+		m_leftMaster.set(ControlMode.Velocity, m_leftDesiredVel);
+		m_rightMaster.set(ControlMode.Velocity, m_rightDesiredVel);
 	}
 
 	public void setVelocity(double leftVelocity, double rightVelocity) {
@@ -302,10 +299,10 @@ public class Drive extends Subsystem {
 		File logFolder2 = new File(m_filePath2);
 		Path filePrefix = Paths.get("");
 		if (logFolder1.exists() && logFolder1.isDirectory())
-			filePrefix = Paths.get(logFolder1.toString(), "2018_02_10_Drive");
+			filePrefix = Paths.get(logFolder1.toString(), "2018_03_03_Drive");
 		else if (logFolder2.exists() && logFolder2.isDirectory())
 			filePrefix = Paths.get(logFolder2.toString(),
-					SmartDashboard.getString("log_file_name", "2018_02_10_Drive"));
+					SmartDashboard.getString("log_file_name", "2018_03_03_Drive"));
 		else
 			writeException = true;
 
@@ -324,8 +321,8 @@ public class Drive extends Subsystem {
 			}
 			try {
 				m_writer = new FileWriter(m_file);
-				m_writer.append("Time,RightPosition,LeftPosition,RightVelocity,LeftVelocity,RightVoltage,LeftVoltage,"
-						+ "RightMasterCurrent,LeftMasterCurrent,RightSlaveCurrent,LeftSlaveCurrent,BusVoltage\n");
+				m_writer.append("Time,RightPosition,LeftPosition,RightVelocity,LeftVelocity,RightDesiredVel,LeftDesiredVel,RightVoltage,LeftVoltage,"
+						+ "RightMasterCurrent,LeftMasterCurrent,RightSlaveCurrent,LeftSlaveCurrent,BusVoltage,Yaw\n");
 				m_writer.flush();
 				m_logStartTime = Timer.getFPGATimestamp();
 			} catch (IOException e) {
@@ -351,13 +348,14 @@ public class Drive extends Subsystem {
 				double timestamp = Timer.getFPGATimestamp() - m_logStartTime;
 				m_writer.append(String.valueOf(timestamp) + "," + String.valueOf(getRightPosition()) + ","
 						+ String.valueOf(getLeftPosition()) + "," + String.valueOf(getRightSpeed()) + ","
-						+ String.valueOf(getLeftSpeed()) + "," + String.valueOf(m_rightMaster.getMotorOutputVoltage())
+						+ String.valueOf(getLeftSpeed()) + "," + String.valueOf(m_rightDesiredVel) + "," + String.valueOf(m_leftDesiredVel)
+						+ "," + String.valueOf(m_rightMaster.getMotorOutputVoltage())
 						+ "," + String.valueOf(m_leftMaster.getMotorOutputVoltage()) + ","
 						+ String.valueOf(m_rightMaster.getOutputCurrent()) + ","
 						+ String.valueOf(m_leftMaster.getOutputCurrent()) + ","
 						+ String.valueOf(m_rightSlave1.getOutputCurrent()) + ","
-						+ String.valueOf(m_leftSlave1.getOutputCurrent()) + "," + String.valueOf(Robot.pdp.getVoltage())
-						+ "\n");
+						+ String.valueOf(m_leftSlave1.getOutputCurrent()) + "," + String.valueOf(Robot.pdp.getVoltage()) + ","
+						+ String.valueOf(getCurrentYaw()) + "\n");
 				m_writer.flush();
 			} catch (IOException e) {
 				e.printStackTrace();

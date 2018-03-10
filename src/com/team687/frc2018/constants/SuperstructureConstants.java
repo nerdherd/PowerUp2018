@@ -58,6 +58,10 @@ public class SuperstructureConstants {
 
     // wrist synced with arm
 //    public static final double kWristP = 6.7;
+    
+    public static final int kWristCruiseVelocity = 1241;
+    public static final double kWristAcceletration = 1254;
+    
     public static final double kWristP = 1;
     public static final double kWristI = 0;
     public static final double kWristD = 0;
@@ -70,7 +74,7 @@ public class SuperstructureConstants {
 
 //    public static final int kWristResetPosition = -420;
     public static final int kWristResetPosition = 0;   
-    public static final int kWristIntakePos = -3200;
+    public static final int kWristIntakePos = -3000;
     public static final int kWristStowPos = 0;
     
 //    public static final int kWristIntakePos = -3350;
@@ -78,10 +82,10 @@ public class SuperstructureConstants {
 //    public static final int kWristScoreForwardsScalePos = -7400;
 //    
     public static final int kWristStowArmOffsetPos  = -1000;
-    public static final int kWristBackwardsScorePos = -1254;
+    public static final int kWristBackwardsScorePos = -2000;
 //    public static final int kWristScoreForwardsScalePos = -6300;
 //    public static final int kWristStowArmHorizontalPos = -2000;
-    public static final int kWristScoreBackwardsScalePos = -3000;
+    public static final int kWristScoreBackwardsScalePos = -3000; 
 
     public static final int kWristTolerance = 67;
     public static final int kWristForwardSoftLimit = -1678;

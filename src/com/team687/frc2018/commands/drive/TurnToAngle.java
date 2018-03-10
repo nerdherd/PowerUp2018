@@ -18,8 +18,13 @@ public class TurnToAngle extends Command {
     private double m_desiredAngle;
     private double m_startTime, m_timeout;
     private double m_error;
+    private double m_prevTimestamp;
+    private double m_prevError;
+    private double m_dTerm;
 
     private PGains m_rotPGains;
+    
+    private int m_counter;
 
     public TurnToAngle(double angle) {
 	m_desiredAngle = angle;
@@ -45,6 +50,7 @@ public class TurnToAngle extends Command {
 	SmartDashboard.putString("Current Drive Command", "TurnToAngle");
 	m_startTime = Timer.getFPGATimestamp();
 	m_rotPGains = DriveConstants.kRotPGains;
+	m_counter = 0;
     }
 
     @Override
@@ -53,19 +59,32 @@ public class TurnToAngle extends Command {
 	m_error = -m_desiredAngle - robotAngle;
 	m_error = (m_error > 180) ? m_error - 360 : m_error;
 	m_error = (m_error < -180) ? m_error + 360 : m_error;
+	
+	m_dTerm = (m_prevError - m_error)/(m_prevTimestamp - Timer.getFPGATimestamp());
+	m_prevTimestamp = Timer.getFPGATimestamp();
 
-	double power = m_rotPGains.getP() * m_error;
-	double rawSign = Math.signum(power);
-	power = NerdyMath.threshold(Math.abs(power), m_rotPGains.getMinPower(), m_rotPGains.getMaxPower());
-	power = Math.abs(power) * rawSign;
+	double power = DriveConstants.kRotP * m_error + DriveConstants.kRotD * m_dTerm;
+	power = NerdyMath.threshold(power, DriveConstants.kRotMinPower, DriveConstants.kRotPMaxPower);
+//	power = Math.min(DriveConstants.kRotPMaxPower, Math.max(-DriveConstants.kRotPMaxPower, power));
 
-	Robot.drive.setPower(power, -power);
+	Robot.drive.setPower(-power, power);
+	SmartDashboard.putNumber("Error", m_error);
+	SmartDashboard.putNumber("Power", power);
+	SmartDashboard.putNumber("Robot Angle", robotAngle);
+	if (Math.abs(m_error) <= DriveConstants.kDriveRotationTolerance) {
+		m_counter += 1;
+	} else {
+		m_counter = 0;
+	}
+	m_prevError = m_error;
     }
 
     @Override
     protected boolean isFinished() {
-	return Math.abs(m_error) <= DriveConstants.kDriveRotationTolerance
+    	
+	return m_counter > 4
 		|| Timer.getFPGATimestamp() - m_startTime > m_timeout;
+//    return false;
     }
 
     @Override

@@ -21,7 +21,7 @@ public class TestDrive extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.drive.setPower(m_power, m_power);
+		Robot.drive.setPercentVelocity(m_power, m_power);
 	}
 
 	@Override

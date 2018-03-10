@@ -53,7 +53,7 @@ public class DriveAtHeading extends Command {
 	SmartDashboard.putNumber("Rot Error", rotError);
 	SmartDashboard.putNumber("Rot Power", rotPower);
 
-	Robot.drive.setPower(m_straightPower - rotPower, m_straightPower + rotPower);
+	Robot.drive.setPercentVelocity(m_straightPower - rotPower, m_straightPower + rotPower);
     }
 
     @Override

@@ -40,24 +40,18 @@ public class Wrist extends Subsystem {
 	public static final int loggingFrameRate = 20;
 
 	private double m_logStartTime;
-
-	private final PigeonIMU m_pigeon;
-	private double[] m_ypr = new double[3];
-
-	private double m_yawOffset, m_pitchOffset, m_rollOffset = 0;
-
+	
 	public Wrist() {
 		m_wrist = new TalonSRX(RobotMap.kWristID);
-		m_pigeon = new PigeonIMU(RobotMap.kPigeonWristID);
-
+		
 		m_wrist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
 		m_wrist.config_kF(0, 0.681318681, 0);
 		// m_wrist.config_kF(0, 0, 0);
 		m_wrist.config_kP(0, 3, 0);
 		m_wrist.config_kI(0, 0, 0);
 		m_wrist.config_kD(0, 0, 0);
-		m_wrist.configMotionCruiseVelocity(1241, 0);
-		m_wrist.configMotionAcceleration(1254, 0);
+		m_wrist.configMotionCruiseVelocity(SuperstructureConstants.kWristCruiseVelocity, 0);
+		m_wrist.configMotionAcceleration(SuperstructureConstants.kArmAcceleration, 0);
 		m_wrist.setNeutralMode(NeutralMode.Coast);
 
 		m_wrist.configPeakOutputForward(SuperstructureConstants.kWristMaxVoltageForward / 12, 0);
@@ -98,40 +92,6 @@ public class Wrist extends Subsystem {
 
 	public void setVoltage(double voltage) {
 		m_wrist.set(ControlMode.PercentOutput, voltage / m_wrist.getBusVoltage());
-	}
-
-	public void updateYawPitchRoll() {
-		m_pigeon.getYawPitchRoll(m_ypr);
-	}
-
-	private double m_restingWristYaw = 0;
-
-	public double getYaw() {
-		return ((360 - m_ypr[0]) % 360) - m_yawOffset + m_restingWristYaw;
-	}
-
-	public double getPitch() {
-		return ((360 - m_ypr[1]) % 360) - m_pitchOffset;
-	}
-
-	public double getRoll() {
-		return ((360 - m_ypr[2]) % 360) - m_rollOffset;
-	}
-
-	public void resetYaw() {
-		m_yawOffset += getYaw();
-	}
-
-	public void resetPitch() {
-		m_pitchOffset += getPitch();
-	}
-
-	public void resetRoll() {
-		m_rollOffset += getRoll();
-	}
-
-	public void enterCalibrationMode() {
-		m_pigeon.enterCalibrationMode(CalibrationMode.Temperature, 0);
 	}
 
 	public double getPositionRelative() {
@@ -201,22 +161,22 @@ public class Wrist extends Subsystem {
 		}
 	}
 
-	public double getDesiredAbsoluteAngleGoingDown() {
-		double _r3 = SuperstructureConstants.kWristPivotToTip;
-		double theta2 = Robot.arm.getAbsoluteAngle();
-		double x2 = Robot.arm.getX();
-		double y2 = Robot.arm.getY();
-		double _theta3_offset = -16;
-		if (theta2 <= 55) {
-			return 90 - _theta3_offset; // DEGREES(ACOS((45-[@x2])/_r3))-theta3_offset
-		} else if (theta2 <= 100) {
-			double alpha = (90 - theta2) / (90 - 55);
-			return alpha * 45 + (1 - alpha) * 90 - _theta3_offset; // -1.75*[@theta2]+135.3-theta3_offset THIS HAS BEEN
-																	// CHANGED
-		} else {
-			return NerdyMath.radiansToDegrees(Math.asin((92 - y2) / _r3)) - _theta3_offset; // DEGREES(ASIN((88-[@y2])/_r3))-theta3_offset
-		}
-	}
+//	public double getDesiredAbsoluteAngleGoingDown() {
+//		double _r3 = SuperstructureConstants.kWristPivotToTip;
+//		double theta2 = Robot.arm.getAbsoluteAngle();
+//		double x2 = Robot.arm.getX();
+//		double y2 = Robot.arm.getY();
+//		double _theta3_offset = -16;
+//		if (theta2 <= 55) {
+//			return 90 - _theta3_offset; // DEGREES(ACOS((45-[@x2])/_r3))-theta3_offset
+//		} else if (theta2 <= 100) {
+//			double alpha = (90 - theta2) / (90 - 55);
+//			return alpha * 45 + (1 - alpha) * 90 - _theta3_offset; // -1.75*[@theta2]+135.3-theta3_offset THIS HAS BEEN
+//																	// CHANGED
+//		} else {
+//			return NerdyMath.radiansToDegrees(Math.asin((92 - y2) / _r3)) - _theta3_offset; // DEGREES(ASIN((88-[@y2])/_r3))-theta3_offset
+//		}
+//	}
 
 	public double getSpeed() {
 		return m_wrist.getSelectedSensorVelocity(0);
@@ -252,9 +212,7 @@ public class Wrist extends Subsystem {
 		// getDesiredAbsoluteAngle());
 		// SmartDashboard.putNumber("Wrist Voltage", getVoltage());
 		// SmartDashboard.putNumber("Wrist Current", getCurrent());
-		// SmartDashboard.putNumber("Wrist Yaw", getYaw());
-		// SmartDashboard.putNumber("Wrist Pitch", getPitch());
-		// SmartDashboard.putNumber("Wrist Roll", getRoll());
+
 	}
 
 	public void startLog() {
@@ -287,7 +245,7 @@ public class Wrist extends Subsystem {
 			try {
 				m_writer = new FileWriter(m_file);
 				m_writer.append(
-						"Time,Position,DesiredPos,DesiredAngle,Velocity,PigeonAngle,EncoderAngle,Voltage,Current\n");
+						"Time,Position,DesiredPos,DesiredAngle,Velocity,EncoderAngle,Voltage,Current\n");
 				m_writer.flush();
 				m_logStartTime = Timer.getFPGATimestamp();
 			} catch (IOException e) {
@@ -313,7 +271,7 @@ public class Wrist extends Subsystem {
 				double timestamp = Timer.getFPGATimestamp() - m_logStartTime;
 				m_writer.append(String.valueOf(timestamp) + "," + String.valueOf(getPositionRelative()) + ","
 						+ String.valueOf(m_desiredPos) + "," + String.valueOf(getDesiredAngle()) + ","
-						+ String.valueOf(getSpeed()) + "," + String.valueOf(getYaw()) + ","
+						+ String.valueOf(getSpeed()) + ","
 						+ String.valueOf(getAngleAbsolute()) + "," + String.valueOf(getVoltage()) + ","
 						+ String.valueOf(getCurrent()) + "\n");
 				m_writer.flush();

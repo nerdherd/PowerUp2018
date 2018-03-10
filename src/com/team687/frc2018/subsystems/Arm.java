@@ -44,21 +44,9 @@ public class Arm extends Subsystem {
 	
 	private double m_logStartTime;
 	
-    private final PigeonIMU m_armPigeon;
-    private double[] m_arm_ypr = new double[3];
-
-    private double m_armYawOffset, m_armPitchOffset, m_armRollOffset = 0;
-    
-    private final PigeonIMU m_towerPigeon;
-    private double[] m_tower_ypr = new double[3];
-
-    private double m_towerYawOffset, m_towerPitchOffset, m_towerRollOffset = 0;
-
     public Arm() {
 	m_arm = new TalonSRX(RobotMap.kArmID);
-	m_armPigeon = new PigeonIMU(RobotMap.kPigeonArmID);
-	m_towerPigeon = new PigeonIMU(RobotMap.kPigeonTowerID);
-
+	
 	m_arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
 	m_arm.setSensorPhase(true);
 	m_arm.setInverted(true);
@@ -150,69 +138,7 @@ public class Arm extends Subsystem {
     public double getCurrent() {
 	return m_arm.getOutputCurrent();
     }
-    
-    public void updateYawPitchRoll() {
-	m_armPigeon.getYawPitchRoll(m_arm_ypr);
-	m_towerPigeon.getYawPitchRoll(m_tower_ypr);
-    }
-
-    public double getArmYaw() {
-	return ((360 - m_arm_ypr[0]) % 360) - m_armYawOffset - 55;
-    }
-
-    public double getArmPitch() {
-	return ((360 - m_arm_ypr[1]) % 360) - m_armPitchOffset - 55;
-    }
-
-    public double getArmRoll() {
-	return ((360 - m_arm_ypr[2]) % 360) - m_armRollOffset - 55;
-    }
-
-    public void resetArmYaw() {
-	m_armYawOffset += getArmYaw();
-    }
-
-    public void resetArmPitch() {
-	m_armPitchOffset += getArmPitch();
-    }
-
-    public void resetArmRoll() {
-	m_armRollOffset += getArmRoll();
-    }
-    
-    public double getTowerYaw() {
-	return ((360 - m_tower_ypr[0]) % 360) - m_towerYawOffset;
-    }
-
-    public double getTowerPitch() {
-	return ((360 - m_tower_ypr[1]) % 360) - m_towerPitchOffset;
-    }
-
-    public double getTowerRoll() {
-	return ((360 - m_tower_ypr[2]) % 360) - m_towerRollOffset;
-    }
-
-    public void resetTowerYaw() {
-	m_towerYawOffset += getTowerYaw();
-    }
-
-    public void resetTowerPitch() {
-	m_towerPitchOffset += getTowerPitch();
-    }
-
-    public void resetTowerRoll() {
-	m_towerRollOffset += getTowerRoll();
-    }
-
-    public void enterCalibrationMode() {
-	m_armPigeon.enterCalibrationMode(CalibrationMode.Temperature, 0);
-	m_towerPigeon.enterCalibrationMode(CalibrationMode.Temperature, 0);
-    }
-    
-    public double getArmPigeonAngle() {
-    	return getArmYaw();
-    }
-    
+     
     // aliasing
     public double _x1 = SuperstructureConstants.kShoulderPivotX;
     public double _y1 = SuperstructureConstants.kShoulderPivotY;
@@ -230,13 +156,8 @@ public class Arm extends Subsystem {
     public void reportToSmartDashboard() {
 	SmartDashboard.putNumber("Arm Position", getPosition());
 	SmartDashboard.putNumber("Arm Encoder Angle", getAbsoluteAngle());
-//	SmartDashboard.putNumber("Arm Pigeon Yaw", getArmYaw());
-//	SmartDashboard.putNumber("Arm Pigeon Pitch", getArmPitch());
-//	SmartDashboard.putNumber("Arm Pigeon Roll", getArmRoll());
 //	SmartDashboard.putNumber("Arm X", getX());
 //	SmartDashboard.putNumber("Arm Y", getY());
-//	SmartDashboard.putNumber("Arm Pigeon Angle", getArmPigeonAngle());
-//	SmartDashboard.putNumber("Tower Pigeon Angle", getTowerYaw());
 //	SmartDashboard.putNumber("Arm Velocity", getVelocity());
 //	SmartDashboard.putNumber("Arm Voltage", getVoltage());
 //	SmartDashboard.putNumber("Arm Current", getCurrent());
