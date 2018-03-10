@@ -25,6 +25,6 @@ public class RobotMap {
 	public static final int kLimitSwitchID = 9;
 	
 	public static final int kClawSolenoid1ID = 0;
-	public static final int kClawSolenoid2ID = 0;
+	public static final int kClawSolenoid2ID = 2;
 
 }

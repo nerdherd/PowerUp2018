@@ -32,20 +32,16 @@ public class Robot extends TimedRobot {
 
 	public static PowerDistributionPanel pdp;
 	public static OI oi;
-
-	public static VisionAdapter visionAdapter;
-
-	public static CSVLogger logger;
 	
 	public static int m_counter = 0;
 	
 	public static Compressor compressor;
 
-	SendableChooser<String> startingPosition = new SendableChooser<>();	
-	
-	String gameData;
-	String switchPosition;
-	String scalePosition;
+//	SendableChooser<String> startingPosition = new SendableChooser<>();	
+//	
+//	String gameData;
+//	String switchPosition;
+//	String scalePosition;
 	
 	@Override
 	public void robotInit() {
@@ -73,9 +69,9 @@ public class Robot extends TimedRobot {
 
 		oi = new OI();
 		
-		startingPosition.addObject("Left", "left");
-		startingPosition.addObject("Right", "right");
-		startingPosition.addObject("Center", "center");
+//		startingPosition.addObject("Left", "left");
+//		startingPosition.addObject("Right", "right");
+//		startingPosition.addObject("Center", "center");
 	}
 
 	@Override
@@ -116,58 +112,58 @@ public class Robot extends TimedRobot {
 		
 		
 		
-		gameData = DriverStation.getInstance().getGameSpecificMessage();
-		while (m_counter < 100) {
-			Timer.delay(0.001);
-			if (gameData.length() <=  0) {
-				m_counter++;
-			} else {
-				m_counter = 0;
-			}
-		}
-	
-		if(gameData.charAt(0) == 'L') {
-			switchPosition = "L";
-		}
-		else if(gameData.charAt(0) == 'R') {
-			switchPosition = "R";
-		}
-		
-		if(gameData.charAt(1) == 'L') {
-			scalePosition = "L";
-		}
-		else if(gameData.charAt(1) == 'R') {
-			scalePosition = "R";
-		}
-			
-		if (startingPosition.equals("center")) {
-			if (switchPosition == "L") {
-				Scheduler.getInstance().add(new CenterToLeftSwitch());
-			}
-			else if (switchPosition == "R") {
-				Scheduler.getInstance().add(new CenterToRightSwitch());
-			}
-			
-		}
-		
-		
-		else if (startingPosition.equals("left")) {
-			if (scalePosition == "L") {
-				Scheduler.getInstance().add(new SideToSameSideScaleLeft());
-			}
-			else if (scalePosition == "R") {
-//				Scheduler.getInstance().add(new LeftSideToRightScale());
-			}
-		}
-		
-		else if (startingPosition.equals("right")) {
-			if (scalePosition == "L") {
-//				Scheduler.getInstance().add(new RightSideToLeftScale);
-			}
-			else if (scalePosition == "R") {
-				Scheduler.getInstance().add(new SideToSameSideScaleRight());
-			}
-		}
+//		gameData = DriverStation.getInstance().getGameSpecificMessage();
+//		while (m_counter < 100) {
+//			Timer.delay(0.001);
+//			if (gameData.length() <=  0) {
+//				m_counter++;
+//			} else {
+//				m_counter = 0;
+//			}
+//		}
+//	
+//		if(gameData.charAt(0) == 'L') {
+//			switchPosition = "L";
+//		}
+//		else if(gameData.charAt(0) == 'R') {
+//			switchPosition = "R";
+//		}
+//		
+//		if(gameData.charAt(1) == 'L') {
+//			scalePosition = "L";
+//		}
+//		else if(gameData.charAt(1) == 'R') {
+//			scalePosition = "R";
+//		}
+//			
+//		if (startingPosition.equals("center")) {
+//			if (switchPosition == "L") {
+//				Scheduler.getInstance().add(new CenterToLeftSwitch());
+//			}
+//			else if (switchPosition == "R") {
+//				Scheduler.getInstance().add(new CenterToRightSwitch());
+//			}
+//			
+//		}
+//		
+//		
+//		else if (startingPosition.equals("left")) {
+//			if (scalePosition == "L") {
+//				Scheduler.getInstance().add(new SideToSameSideScaleLeft());
+//			}
+//			else if (scalePosition == "R") {
+////				Scheduler.getInstance().add(new LeftSideToRightScale());
+//			}
+//		}
+//		
+//		else if (startingPosition.equals("right")) {
+//			if (scalePosition == "L") {
+////				Scheduler.getInstance().add(new RightSideToLeftScale);
+//			}
+//			else if (scalePosition == "R") {
+//				Scheduler.getInstance().add(new SideToSameSideScaleRight());
+//			}
+//		}
 		
 		
 		
