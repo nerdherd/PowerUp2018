@@ -1,11 +1,5 @@
 package com.team687.frc2018.subsystems;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -16,9 +10,9 @@ import com.ctre.phoenix.sensors.PigeonIMU.CalibrationMode;
 import com.team687.frc2018.Robot;
 import com.team687.frc2018.RobotMap;
 import com.team687.frc2018.constants.SuperstructureConstants;
+import com.team687.frc2018.utilities.CSVDatum;
 import com.team687.frc2018.utilities.NerdyMath;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -58,7 +52,6 @@ public class Wrist extends Subsystem {
 	m_wrist.configNominalOutputForward(0, 0);
 	m_wrist.configNominalOutputReverse(0, 0);
 	m_wrist.configClosedloopRamp(SuperstructureConstants.kWristRampRate, 0);
-	m_wrist.configVoltageCompSaturation(12, 0);
 	m_wrist.enableVoltageCompensation(false);
 
 	m_wrist.configPeakCurrentLimit(0, 0);
@@ -178,11 +171,6 @@ public class Wrist extends Subsystem {
     public void enterCalibrationMode() {
 	m_pigeon.enterCalibrationMode(CalibrationMode.Temperature, 0);
     }
-
-    // public double getEncoderCorrection() {
-    // double diff = getPigeonAngle() - getAngleAbsolute();
-    // return degreesToTicks(diff);
-    // }
 
     public double getVoltage() {
 	return m_wrist.getMotorOutputVoltage();

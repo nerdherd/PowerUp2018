@@ -6,9 +6,9 @@ import com.team687.frc2018.constants.SuperstructureConstants;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class StowToIntake extends Command {
+public class DefaultIntake extends Command {
 
-    public StowToIntake() {
+    public DefaultIntake() {
 	requires(Robot.arm);
 	requires(Robot.wrist);
 	requires(Robot.intake);

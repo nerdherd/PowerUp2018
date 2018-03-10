@@ -1,11 +1,5 @@
 package com.team687.frc2018.subsystems;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -19,7 +13,6 @@ import com.team687.frc2018.constants.SuperstructureConstants;
 import com.team687.frc2018.utilities.CSVDatum;
 import com.team687.frc2018.utilities.NerdyMath;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -85,11 +78,23 @@ public class Arm extends Subsystem {
 
     public void setPosition(double position) {
 	m_desiredPos = position;
-	m_arm.set(ControlMode.MotionMagic, m_desiredPos);
+	if (position < getPosition()) {
+	    m_arm.configMotionAcceleration(SuperstructureConstants.kArmAcceleration, 0);
+	    m_arm.configMotionCruiseVelocity(SuperstructureConstants.kArmCruiseVelocity - 300, 0);
+	} else {
+	    m_arm.configMotionAcceleration(SuperstructureConstants.kArmAcceleration, 0);
+	    m_arm.configMotionCruiseVelocity(SuperstructureConstants.kArmCruiseVelocity, 0);
+	}
+
+	m_arm.set(ControlMode.MotionMagic, position);
     }
 
     public void setVoltage(double voltage) {
 	m_arm.set(ControlMode.PercentOutput, voltage / m_arm.getBusVoltage());
+    }
+
+    public void setAngle(double angle) {
+	setPosition(degreesToTicks(angle));
     }
 
     public double getPosition() {
@@ -101,11 +106,13 @@ public class Arm extends Subsystem {
     }
 
     public double ticksToDegrees(double ticks) {
-	return (ticks / 4096) * (360 / 12) - 55;
+	return (ticks / 4096) * (360 / SuperstructureConstants.kArmGearRatio)
+		- SuperstructureConstants.kArmAngleOffsetWhenDown;
     }
 
     public double degreesToTicks(double degrees) {
-	return (degrees + 55) * 12 / 360 * 4096;
+	return (degrees + SuperstructureConstants.kArmAngleOffsetWhenDown) * SuperstructureConstants.kArmGearRatio / 360
+		* 4096;
     }
 
     /**
@@ -210,5 +217,5 @@ public class Arm extends Subsystem {
 	m_armVoltageData.updateValue(getVoltage());
 	m_armCurrentData.updateValue(getCurrent());
     }
-  
+
 }
