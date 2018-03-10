@@ -1,11 +1,13 @@
 package com.team687.frc2018;
 
+import com.team687.frc2018.commands.arm.ResetArmEncoder;
 import com.team687.frc2018.commands.auto.CenterToLeftSwitchAuto;
 import com.team687.frc2018.commands.auto.CenterToRightSwitchAuto;
 import com.team687.frc2018.commands.auto.LeftToLeftScaleAuto;
 import com.team687.frc2018.commands.auto.LeftToRightScaleAuto;
 import com.team687.frc2018.commands.auto.RightToLeftScaleAuto;
 import com.team687.frc2018.commands.auto.RightToRightScaleAuto;
+import com.team687.frc2018.commands.wrist.ResetWristEncoder;
 import com.team687.frc2018.subsystems.Arm;
 import com.team687.frc2018.subsystems.Drive;
 import com.team687.frc2018.subsystems.Intake;
@@ -17,6 +19,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TimedRobot {
 
@@ -102,6 +105,9 @@ public class Robot extends TimedRobot {
     public void autonomousInit() {
 	// Scheduler.getInstance().removeAll();
 
+	Scheduler.getInstance().add(new ResetArmEncoder());
+	Scheduler.getInstance().add(new ResetWristEncoder());
+
 	drive.startLog();
 	arm.startLog();
 	wrist.startLog();
@@ -114,6 +120,18 @@ public class Robot extends TimedRobot {
 	fmsSwitchOnLeft = msg.substring(0, 1).equals("L");
 	fmsScaleOnLeft = msg.substring(1, 2).equals("L");
 	startingPosition = sideChooser.getSelected();
+
+	if (fmsSwitchOnLeft) {
+	    SmartDashboard.putString("Switch Position", "Left");
+	} else {
+	    SmartDashboard.putString("Switch Position", "Right");
+	}
+
+	if (fmsScaleOnLeft) {
+	    SmartDashboard.putString("Scale Position", "Left");
+	} else {
+	    SmartDashboard.putString("Scale Position", "Right");
+	}
 
 	if (startingPosition == "center" && fmsSwitchOnLeft) {
 	    autonomousCommand = new CenterToLeftSwitchAuto();
