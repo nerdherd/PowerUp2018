@@ -11,8 +11,6 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.sensors.PigeonIMU;
-import com.ctre.phoenix.sensors.PigeonIMU.CalibrationMode;
 import com.team687.frc2018.Robot;
 import com.team687.frc2018.RobotMap;
 import com.team687.frc2018.constants.SuperstructureConstants;
@@ -31,10 +29,6 @@ public class Wrist extends Subsystem {
     private final TalonSRX m_wrist;
     private double m_desiredPos = 0;
 
-    private final PigeonIMU m_pigeon;
-    private double[] m_ypr = new double[3];
-    private double m_resetOffset = 0;
-
     private String m_filePath1 = "/media/sda1/logs/";
     private String m_filePath2 = "/home/lvuser/logs/";
     private File m_file;
@@ -44,8 +38,6 @@ public class Wrist extends Subsystem {
 
     public Wrist() {
 	m_wrist = new TalonSRX(RobotMap.kWristID);
-
-	m_pigeon = new PigeonIMU(RobotMap.kWristPigeonID);
 
 	m_wrist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
 	m_wrist.setSensorPhase(true);
@@ -130,7 +122,7 @@ public class Wrist extends Subsystem {
     }
 
     public double angleRelativeToTicks(double angleRelative) {
-	return degreesToTicks(angleRelative - 52) - 650 - 2560;
+	return degreesToTicks(angleRelative - SuperstructureConstants.kArmAngleOffsetWhenDown) - 650 - 2560;
     }
 
     public double angleAbsoluteToTicks(double angle) {
@@ -146,7 +138,7 @@ public class Wrist extends Subsystem {
      */
     public double getDesiredAbsoluteAngle() {
 	double _r3 = SuperstructureConstants.kWristPivotToTip;
-	double theta2 = Robot.arm.getArmPigeonAngle();
+	double theta2 = Robot.arm.getAngleAbsolute();
 	double x2 = Robot.arm.getX();
 	double y2 = Robot.arm.getY();
 	double _theta3_offset = -16;
@@ -169,22 +161,6 @@ public class Wrist extends Subsystem {
 	m_wrist.setSelectedSensorPosition(0, 0, 0);
     }
 
-    public void updateYawPitchRoll() {
-	m_pigeon.getYawPitchRoll(m_ypr);
-    }
-
-    public double getPigeonAngle() {
-	return ((360 - m_ypr[0]) % 360) - m_resetOffset + 113; // TODO: convert to correct frame
-    }
-
-    public void resetAngle() {
-	m_resetOffset += getPigeonAngle();
-    }
-
-    public void enterCalibrationMode() {
-	m_pigeon.enterCalibrationMode(CalibrationMode.Temperature, 0);
-    }
-
     public double getVoltage() {
 	return m_wrist.getMotorOutputVoltage();
     }
@@ -205,7 +181,6 @@ public class Wrist extends Subsystem {
 	SmartDashboard.putNumber("Wrist Position", getPosition());
 	SmartDashboard.putNumber("Wrist Desired Absolute Angle", getDesiredAbsoluteAngle());
 	SmartDashboard.putNumber("Wrist Absolute Angle", getAngleAbsolute());
-	SmartDashboard.putNumber("Wrist Pigeon Angle", getPigeonAngle());
 	SmartDashboard.putNumber("Wrist Velocity", getVelocity());
 	SmartDashboard.putNumber("Wrist Voltage", getVoltage());
 	SmartDashboard.putNumber("Wrist Current", getCurrent());

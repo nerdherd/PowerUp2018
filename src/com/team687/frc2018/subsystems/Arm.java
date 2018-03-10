@@ -11,8 +11,6 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.sensors.PigeonIMU;
-import com.ctre.phoenix.sensors.PigeonIMU.CalibrationMode;
 import com.team687.frc2018.Robot;
 import com.team687.frc2018.RobotMap;
 import com.team687.frc2018.constants.SuperstructureConstants;
@@ -38,17 +36,8 @@ public class Arm extends Subsystem {
     private boolean writeException = false;
     private double m_logStartTime = 0;
 
-    private final PigeonIMU m_towerPigeon, m_armPigeon;
-    private double[] m_towerYpr = new double[3];
-    private double m_towerResetOffset = 0;
-    private double[] m_armYpr = new double[3];
-    private double m_armResetOffset = 0;
-
     public Arm() {
 	m_arm = new TalonSRX(RobotMap.kArmID);
-
-	m_towerPigeon = new PigeonIMU(RobotMap.kTowerPigeonID);
-	m_armPigeon = new PigeonIMU(RobotMap.kArmPigeonID);
 
 	m_arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
 	m_arm.setSensorPhase(true);
@@ -139,43 +128,17 @@ public class Arm extends Subsystem {
 	m_arm.setSelectedSensorPosition(0, 0, 0);
     }
 
-    public void updateYawPitchRoll() {
-	m_towerPigeon.getYawPitchRoll(m_towerYpr);
-	m_armPigeon.getYawPitchRoll(m_armYpr);
-    }
-
-    public double getTowerPigeonAngle() {
-	return ((360 - m_towerYpr[0]) % 360) - m_towerResetOffset + 90; // converted to correct frame
-    }
-
-    public void resetTowerAngle() {
-	m_towerResetOffset += getTowerPigeonAngle();
-    }
-
-    public double getArmPigeonAngle() {
-	return ((360 - m_armYpr[0]) % 360) - m_armResetOffset - 55; // TODO: convert to correct frame
-    }
-
-    public void resetArmAngle() {
-	m_armResetOffset += getArmPigeonAngle();
-    }
-
-    public void enterCalibrationMode() {
-	m_towerPigeon.enterCalibrationMode(CalibrationMode.Temperature, 0);
-	m_armPigeon.enterCalibrationMode(CalibrationMode.Temperature, 0);
-    }
-
     // aliasing
     public double _x1 = SuperstructureConstants.kShoulderPivotX;
     public double _y1 = SuperstructureConstants.kShoulderPivotY;
     public double _r2 = SuperstructureConstants.kShoulderToWristPivot;
 
     public double getX() {
-	return _x1 + _r2 * Math.cos(NerdyMath.degreesToRadians(getArmPigeonAngle()));
+	return _x1 + _r2 * Math.cos(NerdyMath.degreesToRadians(getAngleAbsolute()));
     }
 
     public double getY() {
-	return _y1 + _r2 * Math.sin(NerdyMath.degreesToRadians(getArmPigeonAngle()));
+	return _y1 + _r2 * Math.sin(NerdyMath.degreesToRadians(getAngleAbsolute()));
     }
 
     public double getVoltage() {
@@ -189,8 +152,6 @@ public class Arm extends Subsystem {
     public void reportToSmartDashboard() {
 	SmartDashboard.putNumber("Arm Position", getPosition());
 	SmartDashboard.putNumber("Arm Angle from Encoder", getAngleAbsolute());
-	SmartDashboard.putNumber("Arm Angle from Pigeon", getArmPigeonAngle());
-	SmartDashboard.putNumber("Tower Angle from Pigeon", getTowerPigeonAngle());
 	SmartDashboard.putNumber("Arm Velocity", getVelocity());
 	SmartDashboard.putNumber("Arm Voltage", getVoltage());
 	SmartDashboard.putNumber("Arm Current", getCurrent());

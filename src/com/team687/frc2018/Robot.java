@@ -73,9 +73,6 @@ public class Robot extends TimedRobot {
     public void disabledInit() {
 	Scheduler.getInstance().removeAll();
 
-	arm.updateYawPitchRoll();
-	wrist.updateYawPitchRoll();
-
 	drive.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
 	wrist.reportToSmartDashboard();
@@ -90,9 +87,6 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledPeriodic() {
 	Scheduler.getInstance().removeAll();
-
-	arm.updateYawPitchRoll();
-	wrist.updateYawPitchRoll();
 
 	drive.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
@@ -158,9 +152,6 @@ public class Robot extends TimedRobot {
     public void autonomousPeriodic() {
 	Scheduler.getInstance().run();
 
-	arm.updateYawPitchRoll();
-	wrist.updateYawPitchRoll();
-
 	drive.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
 	wrist.reportToSmartDashboard();
@@ -180,9 +171,6 @@ public class Robot extends TimedRobot {
 	    autonomousCommand.cancel();
 	}
 
-	arm.updateYawPitchRoll();
-	wrist.updateYawPitchRoll();
-
 	drive.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
 	wrist.reportToSmartDashboard();
@@ -194,14 +182,10 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
 	Scheduler.getInstance().run();
 
-	arm.updateYawPitchRoll();
-	wrist.updateYawPitchRoll();
-
 	drive.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
 	wrist.reportToSmartDashboard();
 	intake.reportToSmartDashboard();
-
 	visionAdapter.reportToSmartDashboard();
 
 	drive.logToCSV();
@@ -213,14 +197,10 @@ public class Robot extends TimedRobot {
     public void testPeriodic() {
 	Scheduler.getInstance().run();
 
-	arm.updateYawPitchRoll();
-	wrist.updateYawPitchRoll();
-
 	drive.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
 	wrist.reportToSmartDashboard();
 	intake.reportToSmartDashboard();
-
 	visionAdapter.reportToSmartDashboard();
     }
 }
