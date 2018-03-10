@@ -25,6 +25,7 @@ public class DefaultIntake extends Command {
 	Robot.arm.setPosition(SuperstructureConstants.kArmOffsetPos);
 	if (Robot.wrist.getPosition() < SuperstructureConstants.kWristIntakePos + 500) {
 	    Robot.intake.setRollerPower(-1);
+	    Robot.intake.openClaw();
 	}
     }
 

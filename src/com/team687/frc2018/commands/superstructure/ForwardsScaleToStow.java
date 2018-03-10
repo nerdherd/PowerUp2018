@@ -4,13 +4,11 @@ import com.team687.frc2018.Robot;
 import com.team687.frc2018.constants.SuperstructureConstants;
 import com.team687.frc2018.utilities.NerdyMath;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ForwardsScaleToStow extends Command {
 
-    private double m_startTime;
     private boolean m_isInitialActionFinished = false;
 
     public ForwardsScaleToStow() {
@@ -23,7 +21,6 @@ public class ForwardsScaleToStow extends Command {
     protected void initialize() {
 	SmartDashboard.putString("Current Command", "ForwardsScaleToStow");
 
-	m_startTime = Timer.getFPGATimestamp();
 	m_isInitialActionFinished = false;
     }
 

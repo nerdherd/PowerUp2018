@@ -7,7 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.team687.frc2018.RobotMap;
 import com.team687.frc2018.constants.SuperstructureConstants;
 
-import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Intake extends Subsystem {
 
     private final TalonSRX m_rollers;
-    private final DigitalInput m_switch;
+    private final DoubleSolenoid m_claw;
 
     public Intake() {
 	m_rollers = new TalonSRX(RobotMap.kIntakeRollersID);
@@ -31,11 +31,23 @@ public class Intake extends Subsystem {
 	m_rollers.configPeakOutputReverse(-1, 0);
 	m_rollers.enableCurrentLimit(false);
 
-	m_switch = new DigitalInput(RobotMap.kLimitSwitchID);
+	m_claw = new DoubleSolenoid(RobotMap.kIntakeClawID1, RobotMap.kIntakeClawID2);
     }
 
     @Override
     protected void initDefaultCommand() {
+    }
+
+    public void openClaw() {
+	m_claw.set(DoubleSolenoid.Value.kReverse);
+    }
+
+    public void closeClaw() {
+	m_claw.set(DoubleSolenoid.Value.kForward);
+    }
+
+    public boolean isClawOpen() {
+	return m_claw.get() == DoubleSolenoid.Value.kReverse;
     }
 
     public boolean hasCube() {
@@ -64,6 +76,7 @@ public class Intake extends Subsystem {
 	SmartDashboard.putNumber("Roller Current", getCurrent());
 	SmartDashboard.putBoolean("Has Cube", hasCube());
 	SmartDashboard.putBoolean("Reached Max Current", isMaxCurrent());
+	SmartDashboard.putBoolean("Claw Open", isClawOpen());
     }
 
 }

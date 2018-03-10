@@ -37,7 +37,7 @@ public class Robot extends TimedRobot {
     SendableChooser<String> sideChooser = new SendableChooser<>();
     public static Command autonomousCommand;
     public static String startingPosition;
-    public static boolean fmsSwitchOnLeft, fmsScaleOnLeft;
+    public static boolean switchOnLeft, scaleOnLeft;
 
     @Override
     public void robotInit() {
@@ -111,33 +111,33 @@ public class Robot extends TimedRobot {
 	    msg = DriverStation.getInstance().getGameSpecificMessage();
 	}
 
-	fmsSwitchOnLeft = msg.substring(0, 1).equals("L");
-	fmsScaleOnLeft = msg.substring(1, 2).equals("L");
+	switchOnLeft = msg.substring(0, 1).equals("L");
+	scaleOnLeft = msg.substring(1, 2).equals("L");
 	startingPosition = sideChooser.getSelected();
 
-	if (fmsSwitchOnLeft) {
+	if (switchOnLeft) {
 	    SmartDashboard.putString("Switch Position", "Left");
 	} else {
 	    SmartDashboard.putString("Switch Position", "Right");
 	}
 
-	if (fmsScaleOnLeft) {
+	if (scaleOnLeft) {
 	    SmartDashboard.putString("Scale Position", "Left");
 	} else {
 	    SmartDashboard.putString("Scale Position", "Right");
 	}
 
-	if (startingPosition == "center" && fmsSwitchOnLeft) {
+	if (startingPosition == "center" && switchOnLeft) {
 	    autonomousCommand = new CenterToLeftSwitchAuto();
-	} else if (startingPosition == "center" && !fmsSwitchOnLeft) {
+	} else if (startingPosition == "center" && !switchOnLeft) {
 	    autonomousCommand = new CenterToRightSwitchAuto();
-	} else if (startingPosition == "left" && fmsScaleOnLeft) {
+	} else if (startingPosition == "left" && scaleOnLeft) {
 	    autonomousCommand = new LeftToLeftScaleAuto();
-	} else if (startingPosition == "left" && !fmsScaleOnLeft) {
+	} else if (startingPosition == "left" && !scaleOnLeft) {
 	    autonomousCommand = new LeftToRightScaleAuto();
-	} else if (startingPosition == "right" && fmsScaleOnLeft) {
+	} else if (startingPosition == "right" && scaleOnLeft) {
 	    autonomousCommand = new RightToLeftScaleAuto();
-	} else if (startingPosition == "right" && !fmsScaleOnLeft) {
+	} else if (startingPosition == "right" && !scaleOnLeft) {
 	    autonomousCommand = new RightToRightScaleAuto();
 	} else {
 	    autonomousCommand = null;
@@ -195,12 +195,5 @@ public class Robot extends TimedRobot {
 
     @Override
     public void testPeriodic() {
-	Scheduler.getInstance().run();
-
-	drive.reportToSmartDashboard();
-	arm.reportToSmartDashboard();
-	wrist.reportToSmartDashboard();
-	intake.reportToSmartDashboard();
-	visionAdapter.reportToSmartDashboard();
     }
 }
