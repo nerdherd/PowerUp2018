@@ -5,6 +5,8 @@ import com.team687.frc2018.commands.arm.SetArmPosition;
 import com.team687.frc2018.commands.arm.SetArmVoltage;
 import com.team687.frc2018.commands.drive.ResetDriveEncoders;
 import com.team687.frc2018.commands.drive.ResetGyro;
+import com.team687.frc2018.commands.intake.ClawClose;
+import com.team687.frc2018.commands.intake.ClawOpen;
 import com.team687.frc2018.commands.intake.SetIntakeRollerPower;
 import com.team687.frc2018.commands.superstructure.BackwardsScaleToStow;
 import com.team687.frc2018.commands.superstructure.DefaultIntake;
@@ -95,6 +97,8 @@ public class OI {
 	SmartDashboard.putData("Set Intake Power -1", new SetIntakeRollerPower(-1));
 	SmartDashboard.putData("Set Intake Power 0", new SetIntakeRollerPower(0));
 	SmartDashboard.putData("Outtake", new SetIntakeRollerPower(0.4));
+	SmartDashboard.putData("Open Intake Claw", new ClawOpen());
+	SmartDashboard.putData("Close Intake Claw", new ClawClose());
 
 	SmartDashboard.putData("Superstructure Stow to Backwards Scale", new StowToBackwardsScale());
 	SmartDashboard.putData("Superstructure Stow to Forwards Scale", new StowToForwardsScale());
