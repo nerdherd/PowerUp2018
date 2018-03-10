@@ -25,6 +25,8 @@ public class Intake extends Subsystem {
 	m_rollers.setNeutralMode(NeutralMode.Coast);
 	m_rollers.setStatusFramePeriod(StatusFrame.Status_1_General, 20, 0);
 
+	m_rollers.setInverted(true);
+
 	m_rollers.configPeakOutputForward(1, 0);
 	m_rollers.configPeakOutputReverse(-1, 0);
 	m_rollers.enableCurrentLimit(false);

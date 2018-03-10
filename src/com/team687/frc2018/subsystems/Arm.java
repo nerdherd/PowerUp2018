@@ -39,7 +39,7 @@ public class Arm extends Subsystem {
 
 	m_arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
 	m_arm.setSensorPhase(true);
-	m_arm.setInverted(false);
+	m_arm.setInverted(true);
 	m_arm.setNeutralMode(NeutralMode.Coast);
 
 	m_arm.config_kF(0, SuperstructureConstants.kArmF, 0);
