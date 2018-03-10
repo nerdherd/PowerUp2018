@@ -13,6 +13,7 @@ import com.team687.frc2018.subsystems.Drive;
 import com.team687.frc2018.subsystems.Intake;
 import com.team687.frc2018.subsystems.Wrist;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -34,6 +35,8 @@ public class Robot extends TimedRobot {
 
     public static VisionAdapter visionAdapter;
 
+    public static Compressor compressor;
+
     SendableChooser<String> sideChooser = new SendableChooser<>();
     public static Command autonomousCommand;
     public static String startingPosition;
@@ -42,6 +45,8 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
 	pdp = new PowerDistributionPanel();
+	compressor = new Compressor();
+	compressor.start();
 
 	arm = new Arm();
 	arm.setVoltage(0);
