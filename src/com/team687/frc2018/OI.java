@@ -3,6 +3,7 @@ package com.team687.frc2018;
 import com.team687.frc2018.commands.arm.ResetArmEncoder;
 import com.team687.frc2018.commands.arm.SetArmPosition;
 import com.team687.frc2018.commands.arm.SetArmVoltage;
+import com.team687.frc2018.commands.auto.CenterToLeftSwitchAuto;
 import com.team687.frc2018.commands.drive.ResetDriveEncoders;
 import com.team687.frc2018.commands.drive.ResetGyro;
 import com.team687.frc2018.commands.intake.ClawClose;
@@ -108,6 +109,7 @@ public class OI {
 	SmartDashboard.putData("Superstructure Stow", new DefaultStow());
 	SmartDashboard.putData("Superstructure Intake", new DefaultIntake());
 	SmartDashboard.putData("Superstructure Intake Position", new IntakePosition());
+	SmartDashboard.putData("CenterToLeftSwitchAuto", new CenterToLeftSwitchAuto());
     }
 
     /**
