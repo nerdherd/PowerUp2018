@@ -149,20 +149,20 @@ public class Odometry {
 	m_xData = new CSVDatum("drive_x");
 	m_yData = new CSVDatum("drive_y");
 
-	Robot.logger.addCSVDatum(m_leftPositionData);
-	Robot.logger.addCSVDatum(m_rightPositionData);
-	Robot.logger.addCSVDatum(m_leftVelocityData);
-	Robot.logger.addCSVDatum(m_rightVelocityData);
-
-	Robot.logger.addCSVDatum(m_yawData);
-	Robot.logger.addCSVDatum(m_pitchData);
-	Robot.logger.addCSVDatum(m_rollData);
-	Robot.logger.addCSVDatum(m_accelXData);
-	Robot.logger.addCSVDatum(m_accelYData);
-	Robot.logger.addCSVDatum(m_accelZData);
-
-	Robot.logger.addCSVDatum(m_xData);
-	Robot.logger.addCSVDatum(m_yData);
+	// Robot.logger.addCSVDatum(m_leftPositionData);
+	// Robot.logger.addCSVDatum(m_rightPositionData);
+	// Robot.logger.addCSVDatum(m_leftVelocityData);
+	// Robot.logger.addCSVDatum(m_rightVelocityData);
+	//
+	// Robot.logger.addCSVDatum(m_yawData);
+	// Robot.logger.addCSVDatum(m_pitchData);
+	// Robot.logger.addCSVDatum(m_rollData);
+	// Robot.logger.addCSVDatum(m_accelXData);
+	// Robot.logger.addCSVDatum(m_accelYData);
+	// Robot.logger.addCSVDatum(m_accelZData);
+	//
+	// Robot.logger.addCSVDatum(m_xData);
+	// Robot.logger.addCSVDatum(m_yData);
     }
 
     public void updateLog() {

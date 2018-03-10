@@ -10,12 +10,12 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Pure PID distance control
+ * Distance + heading control
  */
 
-public class DriveDistancePID extends Command {
+public class DriveStraightDistance extends Command {
 
-    private double m_rightDistance, m_leftDistance;
+    private double m_distance, m_heading;
     private double m_rightError, m_leftError;
 
     private PGains m_rightPGains, m_leftPGains;
@@ -23,14 +23,14 @@ public class DriveDistancePID extends Command {
     private double m_startTime, m_timeout;
 
     /**
-     * @param rightDistance
-     * @param leftDistance
+     * @param distance
+     * @param heading
      * @param timeout
      */
-    public DriveDistancePID(double rightDistance, double leftDistance, double timeout) {
+    public DriveStraightDistance(double distance, double heading, double timeout) {
+	m_distance = distance;
+	m_heading = heading;
 	m_timeout = timeout;
-	m_rightDistance = rightDistance;
-	m_leftDistance = leftDistance;
 
 	requires(Robot.drive);
     }
@@ -49,8 +49,8 @@ public class DriveDistancePID extends Command {
 
     @Override
     protected void execute() {
-	m_rightError = m_rightDistance - Robot.drive.getRightPosition();
-	m_leftError = m_leftDistance - Robot.drive.getLeftPosition();
+	m_rightError = m_distance - Robot.drive.getRightPosition();
+	m_leftError = m_distance - Robot.drive.getLeftPosition();
 
 	double straightRightPower = m_rightPGains.getP() * m_rightError;
 	double straightLeftPower = m_leftPGains.getP() * m_leftError;
@@ -60,13 +60,23 @@ public class DriveDistancePID extends Command {
 	straightLeftPower = NerdyMath.threshold(straightLeftPower, m_leftPGains.getMinPower(),
 		m_leftPGains.getMaxPower());
 
-	Robot.drive.setPower(straightLeftPower, straightRightPower);
+	double yaw = Robot.drive.getCurrentYaw();
+	if (m_distance < 0) {
+	    yaw += 180;
+	}
+	double robotAngle = (360 - yaw) % 360;
+	double rotError = -m_heading - robotAngle;
+	rotError = (rotError > 180) ? rotError - 360 : rotError;
+	rotError = (rotError < -180) ? rotError + 360 : rotError;
+	double rotPower = DriveConstants.kDistRotP * rotError;
+
+	Robot.drive.setPower(straightLeftPower - rotPower, straightRightPower + rotPower);
     }
 
     @Override
     protected boolean isFinished() {
-	boolean reachedGoal = Math.abs(m_leftError) < DriveConstants.kDriveDistanceTolerance
-		&& Math.abs(m_rightError) < DriveConstants.kDriveDistanceTolerance;
+	boolean reachedGoal = Math.abs(Robot.drive.getRightPosition()) > Math.abs(m_distance)
+		&& Math.abs(Robot.drive.getLeftPosition()) > Math.abs(m_distance);
 	return reachedGoal || Timer.getFPGATimestamp() - m_startTime > m_timeout;
     }
 

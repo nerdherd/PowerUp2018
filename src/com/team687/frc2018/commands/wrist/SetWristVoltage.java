@@ -1,7 +1,6 @@
 package com.team687.frc2018.commands.wrist;
 
 import com.team687.frc2018.Robot;
-import com.team687.frc2018.constants.SuperstructureConstants;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -30,11 +29,7 @@ public class SetWristVoltage extends Command {
 
     @Override
     protected boolean isFinished() {
-	if (m_voltage > 0) {
-	    return Robot.wrist.getPosition() > SuperstructureConstants.kWristTestingForwardSoftLimit;
-	} else {
-	    return Robot.wrist.getPosition() < SuperstructureConstants.kWristTestingReverseSoftLimit;
-	}
+	return false;
     }
 
     @Override
