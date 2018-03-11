@@ -7,23 +7,23 @@ public class AutoConstants {
 
     // field measurements (absolute inches)
     // change these
-    public static final double kRedStartingWallToSwitchInches = 138.5;
+    public static final double kRedStartingWallToSwitchInches = 143;
     public static final double kRedCenterToRightSwitchFence = 76.75;
     public static final double kRedCenterToRightSwitchInner = 32.25;
     public static final double kRedCenterToLeftSwitchFence = 76.75;
     public static final double kRedCenterToLeftSwitchInner = 32.25;
-    public static final double kRedRightSwitchLength = 56;
-    public static final double kRedLeftSwitchLength = 56;
-    public static final double kRedRightSwitchToScale = 103.65;
-    public static final double kRedLeftSwitchToScale = 103.65;
-    public static final double kRedRightSideWallToScale = 71.57;
-    public static final double kRedLeftSideWallToScale = 71.57;
+    public static final double kRedRightSwitchLength = 52;
+    public static final double kRedLeftSwitchLength = 52;
+    public static final double kRedRightSwitchToScale = 110;
+    public static final double kRedLeftSwitchToScale = 110;
+    public static final double kRedRightSideWallToScale = 72;
+    public static final double kRedLeftSideWallToScale = 72;
 
     // field measurements for origin (absolute inches)
     // don't change these unless we have time and they aren't far off from expected
     public static final double kRedExchangeLineToCenterLine = 12;
-    public static final double kRedRightSideWallToAllianceStationEdge = 29.69;
-    public static final double kRedLeftSideWallToAllianceStationEdge = 29.69;
+    public static final double kRedRightSideWallToAllianceStationEdge = 31;
+    public static final double kRedLeftSideWallToAllianceStationEdge = 31;
 
     // robot origins
     // center means center line is y-axis

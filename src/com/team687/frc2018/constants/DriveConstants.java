@@ -13,7 +13,7 @@ public class DriveConstants {
     public final static double kWheelDiameter = 6;
     public final static double kBumperWidth = 3;
     public final static double kWheelToWheelDist = 25;
-    public final static double kDrivetrainWidth = 27 + 2 * kBumperWidth; // without bumpers
+    public final static double kDrivetrainWidth = 27 + 2 * 0; // without bumpers
     public final static double kDrivetrainLength = 31 + 2 * kBumperWidth; // without bumpers
 
     // Safety
