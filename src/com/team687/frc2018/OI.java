@@ -4,6 +4,11 @@ import com.team687.frc2018.commands.arm.ResetArmEncoder;
 import com.team687.frc2018.commands.arm.SetArmPosition;
 import com.team687.frc2018.commands.arm.SetArmVoltage;
 import com.team687.frc2018.commands.auto.CenterToLeftSwitchAuto;
+import com.team687.frc2018.commands.auto.CenterToRightSwitchAuto;
+import com.team687.frc2018.commands.auto.LeftToLeftScaleAuto;
+import com.team687.frc2018.commands.auto.LeftToRightScaleAuto;
+import com.team687.frc2018.commands.auto.RightToLeftScaleAuto;
+import com.team687.frc2018.commands.auto.RightToRightScaleAuto;
 import com.team687.frc2018.commands.drive.ResetDriveEncoders;
 import com.team687.frc2018.commands.drive.ResetGyro;
 import com.team687.frc2018.commands.intake.ClawClose;
@@ -113,7 +118,13 @@ public class OI {
 	SmartDashboard.putData("Superstructure Stow", new DefaultStow());
 	SmartDashboard.putData("Superstructure Intake", new DefaultIntake());
 	SmartDashboard.putData("Superstructure Intake Position", new IntakePosition());
+	
 	SmartDashboard.putData("CenterToLeftSwitchAuto", new CenterToLeftSwitchAuto());
+	SmartDashboard.putData("Center To Right Switch", new CenterToRightSwitchAuto());
+	SmartDashboard.putData("Left To Left Scale", new LeftToLeftScaleAuto());
+	SmartDashboard.putData("Left To Right Scale", new LeftToRightScaleAuto());
+	SmartDashboard.putData("Right To Left Scale", new RightToLeftScaleAuto());
+	SmartDashboard.putData("Right To Right Scale", new RightToRightScaleAuto());
     }
 
     /**

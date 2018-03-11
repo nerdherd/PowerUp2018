@@ -82,7 +82,7 @@ public class DriveBezierPath extends Command {
 
 		// going reverse
 		if (m_direction < 0) {
-		    m_desiredHeading -= 180;
+		    m_desiredHeading += 180;
 		}
 		// change in sign is necessary because of how P loop is structured
 		m_desiredHeading = -m_desiredHeading;
@@ -96,12 +96,12 @@ public class DriveBezierPath extends Command {
 		// default is specified straight power
 		double straightPower = m_straightPower;
 		double maxStraightPower = Math.abs(m_straightPower);
-		if (m_softStop) {
-		    double straightError = m_arcLengthList.get(m_arcLengthList.size() - 1)
-			    - Math.abs(Robot.drive.getDrivetrainPosition());
-		    double newMaxStraightPower = m_kDistP * straightError;
-		    maxStraightPower = Math.min(Math.abs(maxStraightPower), Math.abs(newMaxStraightPower));
-		}
+//		if (m_softStop) {
+//		    double straightError = m_arcLengthList.get(m_arcLengthList.size() - 1)
+//			    - Math.abs(Robot.drive.getDrivetrainPosition());
+//		    double newMaxStraightPower = m_kDistP * straightError;
+//		    maxStraightPower = Math.min(Math.abs(maxStraightPower), Math.abs(newMaxStraightPower));
+//		}
 
 		// limit straight power to maintain rotPower to straightPower ratio
 		// also for soft stops
@@ -128,7 +128,7 @@ public class DriveBezierPath extends Command {
     @Override
     protected boolean isFinished() {
 	return m_pathIsFinished
-		|| Math.abs(Robot.drive.getDrivetrainPosition()) >= m_arcLengthList.get(m_arcLengthList.size() - 1);
+		|| Math.abs(Robot.drive.getDrivetrainPosition()) > m_arcLengthList.get(m_arcLengthList.size() - 1);
     }
 
     @Override
