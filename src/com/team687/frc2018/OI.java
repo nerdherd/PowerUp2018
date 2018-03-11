@@ -74,7 +74,7 @@ public class OI {
    
     public JoystickButton wristIntakeWithoutIntake_8;
     public JoystickButton wristStow_6;
-    public JoystickButton wristIntake_4;
+    public JoystickButton outtake12V_4;
 
     public OI() {
     
@@ -118,8 +118,8 @@ public class OI {
     
     wristStow_6 = new JoystickButton(driveJoyArtic, 6);
     wristStow_6.whenPressed(new IntakeToStow());
-    wristIntake_4 = new JoystickButton(driveJoyArtic, 4);
-    wristIntake_4.whenPressed(new IntakeWithoutIntaking());
+    outtake12V_4 = new JoystickButton(driveJoyArtic, 4);
+    outtake12V_4.whenPressed(new SetIntakeRollerPower(1));
     
 //    SmartDashboard.putData("Center To Scale Auto", new CenterToRightScale());
     SmartDashboard.putData("Reset Drive Encoders", new ResetDriveEncoders());
