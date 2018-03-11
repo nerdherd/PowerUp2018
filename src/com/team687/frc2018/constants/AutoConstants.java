@@ -1,5 +1,3 @@
-package com.team687.frc2018.constants;
-
 import com.team687.frc2018.utilities.BezierCurve;
 import com.team687.frc2018.utilities.NerdyMath;
 
@@ -37,6 +35,10 @@ public class AutoConstants {
     public static double kRobotOriginY = NerdyMath.inchesToTicks(DriveConstants.kDrivetrainLength / 2);
 
     // path parameters
+    public static double kXOffset = 9.5763;
+    public static double kYOffset = 35.73925;
+    public static double kXHalfOffset = kXOffset / 2;
+    public static double kYHalfOffset = kYOffset / 2;
     public static double kRedSwitchRightX = NerdyMath
 	    .inchesToTicks((kRedCenterToRightSwitchFence + kRedCenterToRightSwitchInner) / 2); // duncan is a walrus
     public static double kRedSwitchLeftX = NerdyMath
@@ -44,14 +46,15 @@ public class AutoConstants {
     public static double kRedSwitchFrontY = NerdyMath
 	    .inchesToTicks(kRedStartingWallToSwitchInches - DriveConstants.kDrivetrainLength);
     public static double kRedMidRightY = NerdyMath
-	    .inchesToTicks(kRedStartingWallToSwitchInches + kRedRightSwitchLength);
-    public static double kRedMidLeftY = NerdyMath.inchesToTicks(kRedStartingWallToSwitchInches + kRedLeftSwitchLength);
-    public static double kRedScaleRightX = NerdyMath.inchesToTicks(-kRedRightSideWallToScale);
-    public static double kRedScaleLeftX = NerdyMath.inchesToTicks(kRedLeftSideWallToScale);
-    public static double kRedScaleRightY = NerdyMath
-	    .inchesToTicks(kRedStartingWallToSwitchInches + kRedRightSwitchLength + kRedRightSwitchToScale);
-    public static double kRedScaleLeftY = NerdyMath
-	    .inchesToTicks(kRedStartingWallToSwitchInches + kRedLeftSwitchLength + kRedLeftSwitchToScale);
+	    .inchesToTicks(kRedStartingWallToSwitchInches + kRedRightSwitchLength - kYOffset);
+    public static double kRedMidLeftY = NerdyMath
+	    .inchesToTicks(kRedStartingWallToSwitchInches + kRedLeftSwitchLength - kYOffset);
+    public static double kRedScaleRightX = NerdyMath.inchesToTicks(-kRedRightSideWallToScale + kXOffset);
+    public static double kRedScaleLeftX = NerdyMath.inchesToTicks(kRedLeftSideWallToScale - kXOffset);
+    public static double kRedScaleRightY = NerdyMath.inchesToTicks(
+	    kRedStartingWallToSwitchInches + kRedRightSwitchLength + kRedRightSwitchToScale - kYHalfOffset);
+    public static double kRedScaleLeftY = NerdyMath.inchesToTicks(
+	    kRedStartingWallToSwitchInches + kRedLeftSwitchLength + kRedLeftSwitchToScale - kYHalfOffset);
 
     // Bezier curve paths
     public static BezierCurve kRedCenterToRightSwitchPath = new BezierCurve(kRobotCenterOriginX, kRobotOriginY,
