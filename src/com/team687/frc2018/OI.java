@@ -52,8 +52,8 @@ public class OI {
 //     public Joystick gamepadJoy = new Joystick(0);
     
 //    Change claw buttons to whatever drivers want
-    public JoystickButton openClaw_7;
-    public JoystickButton closeClaw_8;
+    public JoystickButton openClaw_5;
+    public JoystickButton closeClaw_6;
     
     public JoystickButton quickTurn_1;
     
@@ -63,7 +63,7 @@ public class OI {
     public JoystickButton stopIntake_3;
     public JoystickButton finishedIntake_4;
     
-    public JoystickButton armOffset_5;
+    public JoystickButton armOffset_11;
 //    public JoystickButton armHorizontal_9;
 //    public JoystickButton armVertical_7;
     
@@ -79,11 +79,11 @@ public class OI {
     public OI() {
     
 //   change buttons for drivers
-    openClaw_7 = new JoystickButton(driveJoyRight, 7);
-    openClaw_7.whenPressed(new OpenClaw());
+    openClaw_5 = new JoystickButton(driveJoyArtic, 5);
+    openClaw_5.whenPressed(new OpenClaw());
     
-    closeClaw_8 = new JoystickButton(driveJoyRight, 8);
-    closeClaw_8.whenPressed(new CloseClaw());
+    closeClaw_6 = new JoystickButton(driveJoyArtic, 6);
+    closeClaw_6.whenPressed(new CloseClaw());
     
 //	quickTurn_1 = new JoystickButton(driveJoyRight, 1);
     
@@ -96,8 +96,8 @@ public class OI {
     stopIntake_3 = new JoystickButton(driveJoyArtic, 3);
     stopIntake_3.whenPressed(new SetIntakeRollerPower(0));
     
-    armOffset_5 = new JoystickButton(driveJoyArtic, 5);
-    armOffset_5.whenPressed(new SetArmPosition(SuperstructureConstants.kArmOffsetPos));
+    armOffset_11 = new JoystickButton(driveJoyArtic, 11);
+    armOffset_11.whenPressed(new SetArmPosition(SuperstructureConstants.kArmOffsetPos));
 //    armHorizontal_9 = new JoystickButton(driveJoyArtic, 9);
 //    armHorizontal_9.whenPressed(new SetArmPosition(SuperstructureConstants.kArmHorizontalPos));
 //    armVertical_7 = new JoystickButton(driveJoyArtic, 7);
@@ -107,7 +107,6 @@ public class OI {
     forwardsToStow_9.whenPressed(new ForwardsScaleToStow());
     stowToForwards_7 = new JoystickButton(driveJoyArtic, 7);
     stowToForwards_7.whenPressed(new StowToForwardsScale());
-    
     
     stowToBackwards_8 = new JoystickButton(driveJoyArtic, 8);
     stowToBackwards_8.whenPressed(new StowToBackwardsScale());
@@ -186,7 +185,7 @@ public class OI {
 //	SmartDashboard.putData("Set Intake Power -0.5", new SetIntakeRollerPower(-0.5));
 //	SmartDashboard.putData("Set Intake Power 0", new SetIntakeRollerPower(0));
 	
-	SmartDashboard.putData("Superstructure Stow Position", new BackwardsScaleToStow());
+	SmartDashboard.putData("Superstructure Stow Position", new IntakeToStow());
 	SmartDashboard.putData("Superstructure Stow to Backwards Scale", new StowToBackwardsScale());
 	SmartDashboard.putData("Superstructure Stow to Forwards Scale", new StowToForwardsScale());
 	SmartDashboard.putData("Superstructure Forwards Scale to Stow", new ForwardsScaleToStow());

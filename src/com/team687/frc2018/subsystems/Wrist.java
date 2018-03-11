@@ -114,11 +114,11 @@ public class Wrist extends Subsystem {
 		// 650 is the offset that accounts for our zeroing because we don't zero our
 		// encoder at exactly 0 degrees)
 		// 2560 converts our 0 angle to the positive x-axis
-		return ticksToDegrees(getPosition() + 700 + 2560) + 55;
+		return ticksToDegrees(getPosition() + 500 + 2560) + 55;
 	}
 
 	public double getDesiredAngle() {
-		return ticksToDegrees(m_desiredPos + 700 + 2560) + 55;
+		return ticksToDegrees(m_desiredPos + 500 + 2560) + 55;
 	}
 
 	public double getAngleAbsolute() {
@@ -130,7 +130,7 @@ public class Wrist extends Subsystem {
 	}
 
 	public double angleRelativeToTicks(double angleRelative) {
-		return degreesToTicks(angleRelative - 55) - 700 - 2560;
+		return degreesToTicks(angleRelative - 55) - 500 - 2560;
 	}
 
 	public double angleAbsoluteToTicks(double angle) {

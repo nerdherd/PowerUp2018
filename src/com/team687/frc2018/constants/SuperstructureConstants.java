@@ -74,7 +74,7 @@ public class SuperstructureConstants {
 
 //    public static final int kWristResetPosition = -420;
     public static final int kWristResetPosition = 0;   
-    public static final int kWristIntakePos = -3000;
+    public static final int kWristIntakePos = -2512;
     public static final int kWristStowPos = 0;
     
 //    public static final int kWristIntakePos = -3350;
