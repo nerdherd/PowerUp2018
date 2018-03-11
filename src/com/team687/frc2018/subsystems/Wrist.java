@@ -27,60 +27,61 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Wrist extends Subsystem {
 
     private final TalonSRX m_wrist;
-    private double m_desiredPos = 0;
 
     private String m_filePath1 = "/media/sda1/logs/";
     private String m_filePath2 = "/home/lvuser/logs/";
     private File m_file;
     private FileWriter m_writer;
     private boolean writeException = false;
-    private double m_logStartTime = 0;
+
+    // Status Frame Docs in Section 20 of Software Reference Manual
+    public static final int loggingFrameRate = 20;
+
+    private double m_logStartTime;
 
     public Wrist() {
 	m_wrist = new TalonSRX(RobotMap.kWristID);
 
 	m_wrist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
-	m_wrist.setSensorPhase(true);
-	m_wrist.setInverted(true);
-	m_wrist.setNeutralMode(NeutralMode.Coast);
-
-	m_wrist.config_kF(0, SuperstructureConstants.kWristF, 0);
-	m_wrist.config_kP(0, SuperstructureConstants.kWristP, 0);
-	m_wrist.config_kI(0, SuperstructureConstants.kWristI, 0);
-	m_wrist.config_kD(0, SuperstructureConstants.kWristD, 0);
-
+	m_wrist.config_kF(0, 0.681318681, 0);
+	// m_wrist.config_kF(0, 0, 0);
+	m_wrist.config_kP(0, 3, 0);
+	m_wrist.config_kI(0, 0, 0);
+	m_wrist.config_kD(0, 0, 0);
 	m_wrist.configMotionCruiseVelocity(SuperstructureConstants.kWristCruiseVelocity, 0);
-	m_wrist.configMotionAcceleration(SuperstructureConstants.kWristAcceleration, 0);
+	m_wrist.configMotionAcceleration(SuperstructureConstants.kArmAcceleration, 0);
+	m_wrist.setNeutralMode(NeutralMode.Coast);
 
 	m_wrist.configPeakOutputForward(SuperstructureConstants.kWristMaxVoltageForward / 12, 0);
 	m_wrist.configPeakOutputReverse(SuperstructureConstants.kWristMaxVoltageReverse / 12, 0);
-	m_wrist.configNominalOutputForward(0, 0);
-	m_wrist.configNominalOutputReverse(0, 0);
 	m_wrist.configClosedloopRamp(SuperstructureConstants.kWristRampRate, 0);
-	m_wrist.enableVoltageCompensation(false);
+	m_wrist.configOpenloopRamp(SuperstructureConstants.kWristRampRate, 0);
 
 	m_wrist.configPeakCurrentLimit(0, 0);
 	m_wrist.configContinuousCurrentLimit(SuperstructureConstants.kWristContinuousCurrent, 0);
-	m_wrist.enableCurrentLimit(true);
+	m_wrist.enableCurrentLimit(false);
 
 	m_wrist.configForwardSoftLimitThreshold(SuperstructureConstants.kWristForwardSoftLimit, 0);
 	m_wrist.configReverseSoftLimitThreshold(SuperstructureConstants.kWristReverseSoftLimit, 0);
 	m_wrist.configForwardSoftLimitEnable(false, 0);
 	m_wrist.configReverseSoftLimitEnable(false, 0);
 
+	m_wrist.setInverted(true);
+	m_wrist.setSensorPhase(true);
 	m_wrist.setStatusFramePeriod(StatusFrame.Status_1_General, 10, 0);
 	m_wrist.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 20, 0);
-	m_wrist.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 20, 0);
     }
 
     @Override
     protected void initDefaultCommand() {
+	// setDefaultCommand(new MySpecialCommand());
     }
 
+    private double m_desiredPos = 0;
+
     public void setPosition(double position) {
-	// m_desiredPos = position + getEncoderCorrection();
 	m_desiredPos = position;
-	m_wrist.set(ControlMode.MotionMagic, m_desiredPos);
+	m_wrist.set(ControlMode.MotionMagic, position);
     }
 
     public void setPercentOutput(double power) {
@@ -89,6 +90,10 @@ public class Wrist extends Subsystem {
 
     public void setVoltage(double voltage) {
 	m_wrist.set(ControlMode.PercentOutput, voltage / m_wrist.getBusVoltage());
+    }
+
+    public double getPositionRelative() {
+	return m_wrist.getSelectedSensorPosition(0);
     }
 
     public double getPosition() {
@@ -107,12 +112,13 @@ public class Wrist extends Subsystem {
 	// 650 is the offset that accounts for our zeroing because we don't zero our
 	// encoder at exactly 0 degrees)
 	// 2560 converts our 0 angle to the positive x-axis
-	return ticksToDegrees(getPosition() + 500 + 2560) + 52;
+	return ticksToDegrees(getPosition() + 500 + 2560) + 55;
     }
 
-    /**
-     * @return calculated angle from encoders
-     */
+    public double getDesiredAngle() {
+	return ticksToDegrees(m_desiredPos + 500 + 2560) + 55;
+    }
+
     public double getAngleAbsolute() {
 	return getAngleRelative() + Robot.arm.getAngleAbsolute();
     }
@@ -122,7 +128,7 @@ public class Wrist extends Subsystem {
     }
 
     public double angleRelativeToTicks(double angleRelative) {
-	return degreesToTicks(angleRelative - SuperstructureConstants.kArmAngleOffsetWhenDown) - 500 - 2560;
+	return degreesToTicks(angleRelative - 55) - 500 - 2560;
     }
 
     public double angleAbsoluteToTicks(double angle) {
@@ -136,7 +142,7 @@ public class Wrist extends Subsystem {
     /**
      * @return desired angle when going to/from forwards scale scoring position
      */
-    public double getDesiredAbsoluteAngle() {
+    public double getDesiredAbsoluteAngleGoingUp() {
 	double _r3 = SuperstructureConstants.kWristPivotToTip;
 	double theta2 = Robot.arm.getAngleAbsolute();
 	double x2 = Robot.arm.getX();
@@ -153,12 +159,32 @@ public class Wrist extends Subsystem {
 	}
     }
 
-    public double getVelocity() {
+    // public double getDesiredAbsoluteAngleGoingDown() {
+    // double _r3 = SuperstructureConstants.kWristPivotToTip;
+    // double theta2 = Robot.arm.getAbsoluteAngle();
+    // double x2 = Robot.arm.getX();
+    // double y2 = Robot.arm.getY();
+    // double _theta3_offset = -16;
+    // if (theta2 <= 55) {
+    // return 90 - _theta3_offset; // DEGREES(ACOS((45-[@x2])/_r3))-theta3_offset
+    // } else if (theta2 <= 100) {
+    // double alpha = (90 - theta2) / (90 - 55);
+    // return alpha * 45 + (1 - alpha) * 90 - _theta3_offset; //
+    // -1.75*[@theta2]+135.3-theta3_offset THIS HAS BEEN
+    // // CHANGED
+    // } else {
+    // return NerdyMath.radiansToDegrees(Math.asin((92 - y2) / _r3)) -
+    // _theta3_offset; // DEGREES(ASIN((88-[@y2])/_r3))-theta3_offset
+    // }
+    // }
+
+    public double getSpeed() {
 	return m_wrist.getSelectedSensorVelocity(0);
     }
 
+    // see if we can avoid using this for the wrist
     public void resetEncoder() {
-	m_wrist.setSelectedSensorPosition(0, 0, 0);
+	m_wrist.setSelectedSensorPosition(0 + SuperstructureConstants.kWristResetPosition, 0, 0);
     }
 
     public double getVoltage() {
@@ -169,30 +195,39 @@ public class Wrist extends Subsystem {
 	return m_wrist.getOutputCurrent();
     }
 
+    /**
+     * @return if arm can safely move down without crushing wrist
+     */
+    public boolean isWristSafe() {
+	return getPositionRelative() <= SuperstructureConstants.kWristStowPos
+		&& getPositionRelative() >= SuperstructureConstants.kWristIntakePos;
+    }
+
     public void reportToSmartDashboard() {
 	SmartDashboard.putNumber("Wrist Position", getPosition());
-	SmartDashboard.putNumber("Wrist Desired Absolute Angle", getDesiredAbsoluteAngle());
+	// SmartDashboard.putNumber("Wrist Desired Position",
+	// angleAbsoluteToTicks(getDesiredAbsoluteAngle()));
 	SmartDashboard.putNumber("Wrist Absolute Angle", getAngleAbsolute());
-	SmartDashboard.putNumber("Wrist Velocity", getVelocity());
-	SmartDashboard.putNumber("Wrist Voltage", getVoltage());
-	SmartDashboard.putNumber("Wrist Current", getCurrent());
-	SmartDashboard.putNumber("Stuff", Robot.wrist.angleAbsoluteToTicks(0));
+	// SmartDashboard.putNumber("Wrist Desired Absolute Angle",
+	// getDesiredAbsoluteAngle());
+	// SmartDashboard.putNumber("Wrist Voltage", getVoltage());
+	// SmartDashboard.putNumber("Wrist Current", getCurrent());
+
     }
 
     public void startLog() {
+	writeException = false;
 	// Check to see if flash drive is mounted.
 	File logFolder1 = new File(m_filePath1);
 	File logFolder2 = new File(m_filePath2);
 	Path filePrefix = Paths.get("");
-	if (logFolder1.exists() && logFolder1.isDirectory()) {
-	    filePrefix = Paths.get(logFolder1.toString(),
-		    "2018_03_10_" + Robot.ds.getMatchType().toString() + Robot.ds.getMatchNumber() + "Wrist");
-	} else if (logFolder2.exists() && logFolder2.isDirectory()) {
+	if (logFolder1.exists() && logFolder1.isDirectory())
+	    filePrefix = Paths.get(logFolder1.toString(), "2018_02_24_Wrist");
+	else if (logFolder2.exists() && logFolder2.isDirectory())
 	    filePrefix = Paths.get(logFolder2.toString(),
-		    "2018_03_10_" + Robot.ds.getMatchType().toString() + Robot.ds.getMatchNumber() + "Wrist");
-	} else {
+		    SmartDashboard.getString("log_file_name", "2018_02_24_Wrist"));
+	else
 	    writeException = true;
-	}
 
 	if (!writeException) {
 	    int counter = 0;
@@ -209,7 +244,8 @@ public class Wrist extends Subsystem {
 	    }
 	    try {
 		m_writer = new FileWriter(m_file);
-		m_writer.append("Time,MatchTime,Position,Velocity,EncoderAngle,Voltage,Current\n");
+		m_writer.append("Time,Position,DesiredPos,DesiredAngle,Velocity,EncoderAngle,Voltage,Current\n");
+		m_writer.flush();
 		m_logStartTime = Timer.getFPGATimestamp();
 	    } catch (IOException e) {
 		e.printStackTrace();
@@ -232,10 +268,10 @@ public class Wrist extends Subsystem {
 	if (!writeException) {
 	    try {
 		double timestamp = Timer.getFPGATimestamp() - m_logStartTime;
-		m_writer.append(String.valueOf(timestamp) + "," + String.valueOf(Robot.ds.getMatchTime()) + ","
-			+ String.valueOf(getPosition()) + "," + String.valueOf(getVelocity()) + ","
-			+ String.valueOf(getAngleAbsolute()) + "," + String.valueOf(getVoltage()) + ","
-			+ String.valueOf(getCurrent()) + "\n");
+		m_writer.append(String.valueOf(timestamp) + "," + String.valueOf(getPositionRelative()) + ","
+			+ String.valueOf(m_desiredPos) + "," + String.valueOf(getDesiredAngle()) + ","
+			+ String.valueOf(getSpeed()) + "," + String.valueOf(getAngleAbsolute()) + ","
+			+ String.valueOf(getVoltage()) + "," + String.valueOf(getCurrent()) + "\n");
 		m_writer.flush();
 	    } catch (IOException e) {
 		e.printStackTrace();
