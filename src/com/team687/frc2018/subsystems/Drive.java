@@ -260,7 +260,7 @@ public class Drive extends Subsystem {
     }
 
     public double getDrivetrainPosition() {
-	return (getLeftPosition() + getRightPosition() / 2);
+	return (getLeftPosition() + getRightPosition()) / 2;
     }
 
     public double getLeftVelocity() {
@@ -369,6 +369,11 @@ public class Drive extends Subsystem {
 	SmartDashboard.putNumber("Left Slave 1 Current", getLeftSlaveCurrent());
 	SmartDashboard.putNumber("Right Master Current", getRightMasterCurrent());
 	SmartDashboard.putNumber("Right Slave 1 Current", getRightSlaveCurrent());
+	
+	SmartDashboard.putNumber("*Right Postion", getRightPosition());
+	SmartDashboard.putNumber("*Left Position", getLeftPosition());
+	SmartDashboard.putNumber("Yaw", getCurrentYaw());
+	
     }
 
     public void startLog() {

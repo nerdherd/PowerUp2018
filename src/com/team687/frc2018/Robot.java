@@ -34,6 +34,7 @@ public class Robot extends TimedRobot {
     public static OI oi;
 
     public static VisionAdapter visionAdapter;
+    public static Odometry odometry;
 
     public static Compressor compressor;
 
@@ -65,6 +66,7 @@ public class Robot extends TimedRobot {
 	drive.resetGyro();
 
 	visionAdapter = VisionAdapter.getInstance();
+	odometry = Odometry.getInstance();
 
 	oi = new OI();
 	ds = DriverStation.getInstance();
@@ -79,6 +81,7 @@ public class Robot extends TimedRobot {
 	Scheduler.getInstance().removeAll();
 
 	drive.reportToSmartDashboard();
+	odometry.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
 	wrist.reportToSmartDashboard();
 	intake.reportToSmartDashboard();
@@ -94,6 +97,7 @@ public class Robot extends TimedRobot {
 //	Scheduler.getInstance().removeAll();
 
 	drive.reportToSmartDashboard();
+	odometry.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
 	wrist.reportToSmartDashboard();
 	intake.reportToSmartDashboard();
@@ -106,6 +110,7 @@ public class Robot extends TimedRobot {
 
 	Scheduler.getInstance().add(new ResetArmEncoder());
 	Scheduler.getInstance().add(new ResetWristEncoder());
+
 
 	drive.startLog();
 	arm.startLog();
@@ -158,6 +163,7 @@ public class Robot extends TimedRobot {
 	Scheduler.getInstance().run();
 
 	drive.reportToSmartDashboard();
+	odometry.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
 	wrist.reportToSmartDashboard();
 	intake.reportToSmartDashboard();
@@ -175,6 +181,7 @@ public class Robot extends TimedRobot {
 	wrist.startLog();
     	
 	drive.reportToSmartDashboard();
+	odometry.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
 	wrist.reportToSmartDashboard();
 	intake.reportToSmartDashboard();
@@ -186,6 +193,7 @@ public class Robot extends TimedRobot {
 	Scheduler.getInstance().run();
 
 	drive.reportToSmartDashboard();
+	odometry.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
 	wrist.reportToSmartDashboard();
 	intake.reportToSmartDashboard();

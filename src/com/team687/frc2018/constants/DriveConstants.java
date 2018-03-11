@@ -72,7 +72,7 @@ public class DriveConstants {
     public final static double kJoystickDeadband = 0.02;
 
     // Bezier Curves
-    public final static double kBezierStep = 30;
+    public final static double kBezierStep = 40;
     public final static double kMinStraightPower = 0.1;
 
     // the higher the curvature function is, the slower the robot will go during a
