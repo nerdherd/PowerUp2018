@@ -24,7 +24,7 @@ public class ResetWristEncoder extends Command {
 
     @Override
     protected boolean isFinished() {
-	return Robot.wrist.getPosition() == 0;
+	return false;
     }
 
     @Override

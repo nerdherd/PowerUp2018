@@ -39,11 +39,11 @@ public class Intake extends Subsystem {
     }
 
     public void openClaw() {
-	m_claw.set(DoubleSolenoid.Value.kReverse);
+	m_claw.set(DoubleSolenoid.Value.kForward);
     }
 
     public void closeClaw() {
-	m_claw.set(DoubleSolenoid.Value.kForward);
+	m_claw.set(DoubleSolenoid.Value.kReverse);
     }
 
     public boolean isClawOpen() {

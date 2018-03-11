@@ -28,7 +28,7 @@ public class ResetDriveEncoders extends Command {
 
     @Override
     protected boolean isFinished() {
-	return Robot.drive.getRightPosition() == 0 && Robot.drive.getLeftPosition() == 0;
+	return false;
     }
 
     @Override

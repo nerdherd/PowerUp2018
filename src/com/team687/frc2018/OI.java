@@ -41,15 +41,17 @@ public class OI {
     public JoystickButton intake_1;
     public JoystickButton outtake_2;
     public JoystickButton stopIntake_3;
+    public JoystickButton intakePosition_4;
 
-    public JoystickButton armOffset_5;
+    public JoystickButton armOffset_11;
     public JoystickButton forwardsToStow_9;
     public JoystickButton stowToForwards_7;
     public JoystickButton stowToBackwards_8;
     public JoystickButton backwardsToStow_10;
-
-    public JoystickButton stow_6;
-    public JoystickButton intake_4;
+    
+    
+    public JoystickButton openClaw_6;
+    public JoystickButton closeClaw_5;
 
     public OI() {
 	intake_1 = new JoystickButton(driveJoyArtic, 1);
@@ -58,9 +60,11 @@ public class OI {
 	outtake_2.whenPressed(new SetIntakeRollerPower(0.4));
 	stopIntake_3 = new JoystickButton(driveJoyArtic, 3);
 	stopIntake_3.whenPressed(new SetIntakeRollerPower(0));
+	intakePosition_4 = new JoystickButton(driveJoyArtic, 4);
+	intakePosition_4.whenPressed(new DefaultIntake());
 
-	armOffset_5 = new JoystickButton(driveJoyArtic, 5);
-	armOffset_5.whenPressed(new SetArmPosition(SuperstructureConstants.kArmOffsetPos));
+	armOffset_11 = new JoystickButton(driveJoyArtic, 11);
+	armOffset_11.whenPressed(new SetArmPosition(SuperstructureConstants.kArmOffsetPos));
 
 	forwardsToStow_9 = new JoystickButton(driveJoyArtic, 9);
 	forwardsToStow_9.whenPressed(new ForwardsScaleToStow());
@@ -71,11 +75,11 @@ public class OI {
 	stowToBackwards_8.whenPressed(new StowToBackwardsScale());
 	backwardsToStow_10 = new JoystickButton(driveJoyArtic, 10);
 	backwardsToStow_10.whenPressed(new BackwardsScaleToStow());
-
-	stow_6 = new JoystickButton(driveJoyArtic, 6);
-	stow_6.whenPressed(new DefaultStow());
-	intake_4 = new JoystickButton(driveJoyArtic, 4);
-	intake_4.whenPressed(new DefaultIntake());
+	
+	openClaw_6 = new JoystickButton(driveJoyArtic, 5);
+	openClaw_6.whenPressed(new ClawOpen());
+	closeClaw_5 = new JoystickButton(driveJoyArtic, 6);
+	closeClaw_5.whenPressed(new ClawClose());
 
 	SmartDashboard.putData("Arm Reset Encoder", new ResetArmEncoder());
 	SmartDashboard.putData("Wrist Reset Encoder", new ResetWristEncoder());
@@ -89,10 +93,10 @@ public class OI {
 	SmartDashboard.putData("Arm Position Offset", new SetArmPosition(SuperstructureConstants.kArmOffsetPos));
 
 	SmartDashboard.putData("Wrist Voltage 0", new SetWristPercentOutput(0));
-	SmartDashboard.putData("Wrist Position Intake", new SetWristPosition(SuperstructureConstants.kWristIntakePos));
+	SmartDashboard.putData("Wrist Position Intake", new SetWristPosition(Robot.wrist.angleAbsoluteToTicks(0)));
 	SmartDashboard.putData("Wrist Position Offset Stow",
 		new SetWristPosition(SuperstructureConstants.kWristStowArmOffsetPos));
-	SmartDashboard.putData("Wrist Position Stow", new SetWristPosition(SuperstructureConstants.kWristStowPos));
+	SmartDashboard.putData("Wrist Position Stow", new SetWristPosition(Robot.wrist.angleAbsoluteToTicks(90)));
 
 	SmartDashboard.putData("Set Intake Power 1", new SetIntakeRollerPower(1));
 	SmartDashboard.putData("Set Intake Power -1", new SetIntakeRollerPower(-1));

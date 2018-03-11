@@ -107,7 +107,7 @@ public class Wrist extends Subsystem {
 	// 650 is the offset that accounts for our zeroing because we don't zero our
 	// encoder at exactly 0 degrees)
 	// 2560 converts our 0 angle to the positive x-axis
-	return ticksToDegrees(getPosition() + 650 + 2560) + 52;
+	return ticksToDegrees(getPosition() + 500 + 2560) + 52;
     }
 
     /**
@@ -122,7 +122,7 @@ public class Wrist extends Subsystem {
     }
 
     public double angleRelativeToTicks(double angleRelative) {
-	return degreesToTicks(angleRelative - SuperstructureConstants.kArmAngleOffsetWhenDown) - 650 - 2560;
+	return degreesToTicks(angleRelative - SuperstructureConstants.kArmAngleOffsetWhenDown) - 500 - 2560;
     }
 
     public double angleAbsoluteToTicks(double angle) {
@@ -169,14 +169,6 @@ public class Wrist extends Subsystem {
 	return m_wrist.getOutputCurrent();
     }
 
-    /**
-     * @return if arm can safely move down without crushing wrist
-     */
-    public boolean isWristSafe() {
-	return getPosition() <= SuperstructureConstants.kWristStowPos
-		&& getPosition() >= SuperstructureConstants.kWristIntakePos;
-    }
-
     public void reportToSmartDashboard() {
 	SmartDashboard.putNumber("Wrist Position", getPosition());
 	SmartDashboard.putNumber("Wrist Desired Absolute Angle", getDesiredAbsoluteAngle());
@@ -184,6 +176,7 @@ public class Wrist extends Subsystem {
 	SmartDashboard.putNumber("Wrist Velocity", getVelocity());
 	SmartDashboard.putNumber("Wrist Voltage", getVoltage());
 	SmartDashboard.putNumber("Wrist Current", getCurrent());
+	SmartDashboard.putNumber("Stuff", Robot.wrist.angleAbsoluteToTicks(0));
     }
 
     public void startLog() {
