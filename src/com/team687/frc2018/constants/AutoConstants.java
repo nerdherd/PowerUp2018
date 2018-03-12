@@ -58,11 +58,12 @@ public class AutoConstants {
 	    kRedStartingWallToSwitchInches + kRedRightSwitchLength + kRedRightSwitchToScale - 1.25 * kYOffset);
     public static double kRedScaleLeftY = NerdyMath.inchesToTicks(
 	    kRedStartingWallToSwitchInches + kRedLeftSwitchLength + kRedLeftSwitchToScale - 1.25 * kYOffset);
-    
+
     // straight and turn autos
-    public static double kRedLeftWallToPivotPoint = NerdyMath.inchesToTicks(kRedStartingWallToSwitchInches + kRedLeftSwitchLength + 2 * kPowerCubeLength - 0.5 * DriveConstants.kDrivetrainLength);
-//    public static double kRedLeftRedSwtichToRightRedScale = NerdyMath.inchesToTicks(kRobotLeftOriginX)
-    
+    public static double kRedLeftWallToPivotPoint = NerdyMath.inchesToTicks(kRedStartingWallToSwitchInches
+	    + kRedLeftSwitchLength + 2 * kPowerCubeLength - 0.5 * DriveConstants.kDrivetrainLength);
+    public static double kRedLeftRedSwtichToRightRedScale = NerdyMath.inchesToTicks(235 - kRobotLeftOriginX);
+
     // Bezier curve paths
     public static BezierCurve kRedCenterToRightSwitchPath = new BezierCurve(kRobotCenterOriginX, kRobotOriginY,
 	    kRobotCenterOriginX, kRedSwitchFrontY / 2, kRedSwitchRightX, kRedSwitchFrontY / 3, kRedSwitchRightX,
