@@ -14,7 +14,7 @@ public class LeftToRightScaleAuto extends CommandGroup {
     	addSequential(new DriveStraightDistance(-AutoConstants.kRedLeftWallToPivotPoint, -180, 5));
     	addSequential(new TurnToAngle(-90));
     	addSequential(new ResetDriveEncoders());
-    	addSequential(new DriveStraightDistance(AutoConstants.kRedLeftRedSwtichToRightRedScale, -90, 5));
+    	addSequential(new DriveStraightDistance(AutoConstants.kRedLeftRedSwitchToRightRedScale, -90, 10));
     	addSequential(new TurnToAngle(0));
     	addSequential(new ResetDriveEncoders());
     	addSequential(new DriveStraightDistance(-AutoConstants.kRedScaleLeftY + AutoConstants.kRedLeftWallToPivotPoint,-180, 5));
