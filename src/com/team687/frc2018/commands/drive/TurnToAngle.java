@@ -28,7 +28,7 @@ public class TurnToAngle extends Command {
 
     public TurnToAngle(double angle) {
 	m_desiredAngle = angle;
-	m_timeout = 10; // default timeout is 10 seconds
+	m_timeout = 2; // default timeout is 10 seconds
 
 	requires(Robot.drive);
     }
