@@ -18,8 +18,6 @@ public class DriveStraightDistance extends Command {
     private double m_distance, m_heading;
     private double m_rightError, m_leftError;
 
-    private PGains m_rightPGains, m_leftPGains;
-
     private double m_startTime, m_timeout;
 
     /**
@@ -41,9 +39,6 @@ public class DriveStraightDistance extends Command {
 	Robot.drive.stopDrive();
 	Robot.drive.resetEncoders();
 
-	m_rightPGains = DriveConstants.kDistRightPGains;
-	m_leftPGains = DriveConstants.kDistLeftPGains;
-
 	m_startTime = Timer.getFPGATimestamp();
     }
 
@@ -52,13 +47,13 @@ public class DriveStraightDistance extends Command {
 	m_rightError = m_distance - Robot.drive.getRightPosition();
 	m_leftError = m_distance - Robot.drive.getLeftPosition();
 
-	double straightRightPower = m_rightPGains.getP() * m_rightError;
-	double straightLeftPower = m_leftPGains.getP() * m_leftError;
+	double straightRightPower = DriveConstants.kDistP * m_rightError;
+	double straightLeftPower = DriveConstants.kDistP * m_leftError;
 
-	straightRightPower = NerdyMath.threshold(straightRightPower, m_rightPGains.getMinPower(),
-		m_rightPGains.getMaxPower());
-	straightLeftPower = NerdyMath.threshold(straightLeftPower, m_leftPGains.getMinPower(),
-		m_leftPGains.getMaxPower());
+	straightRightPower = NerdyMath.threshold(straightRightPower, DriveConstants.kDistMinPower,
+		DriveConstants.kDistMaxPower);
+	straightLeftPower = NerdyMath.threshold(straightLeftPower, DriveConstants.kDistMinPower,
+		DriveConstants.kDistMaxPower);
 
 	double yaw = Robot.drive.getCurrentYaw();
 	if (m_distance < 0) {
@@ -75,8 +70,7 @@ public class DriveStraightDistance extends Command {
 
     @Override
     protected boolean isFinished() {
-	boolean reachedGoal = Math.abs(Robot.drive.getRightPosition()) > Math.abs(m_distance)
-		&& Math.abs(Robot.drive.getLeftPosition()) > Math.abs(m_distance);
+	boolean reachedGoal = Math.abs(Robot.drive.getDrivetrainPosition()) > Math.abs(m_distance);
 	return reachedGoal || Timer.getFPGATimestamp() - m_startTime > m_timeout;
     }
 

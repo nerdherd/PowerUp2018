@@ -18,6 +18,7 @@ public class AutoConstants {
     public static final double kRedLeftSwitchToScale = 110;
     public static final double kRedRightSideWallToScale = 72;
     public static final double kRedLeftSideWallToScale = 72;
+    public static final double kPowerCubeLength = 13;
 
     // field measurements for origin (absolute inches)
     // don't change these unless we have time and they aren't far off from expected
@@ -51,13 +52,17 @@ public class AutoConstants {
 	    .inchesToTicks(kRedStartingWallToSwitchInches + kRedRightSwitchLength - kYOffset);
     public static double kRedMidLeftY = NerdyMath
 	    .inchesToTicks(kRedStartingWallToSwitchInches + kRedLeftSwitchLength - kYOffset);
-    public static double kRedScaleRightX = NerdyMath.inchesToTicks(-kRedRightSideWallToScale + kXOffset);
-    public static double kRedScaleLeftX = NerdyMath.inchesToTicks(kRedLeftSideWallToScale - kXOffset);
+    public static double kRedScaleRightX = NerdyMath.inchesToTicks(-kRedRightSideWallToScale);
+    public static double kRedScaleLeftX = NerdyMath.inchesToTicks(kRedLeftSideWallToScale);
     public static double kRedScaleRightY = NerdyMath.inchesToTicks(
-	    kRedStartingWallToSwitchInches + kRedRightSwitchLength + kRedRightSwitchToScale - kYHalfOffset);
+	    kRedStartingWallToSwitchInches + kRedRightSwitchLength + kRedRightSwitchToScale - 1.25 * kYOffset);
     public static double kRedScaleLeftY = NerdyMath.inchesToTicks(
-	    kRedStartingWallToSwitchInches + kRedLeftSwitchLength + kRedLeftSwitchToScale - kYHalfOffset);
-
+	    kRedStartingWallToSwitchInches + kRedLeftSwitchLength + kRedLeftSwitchToScale - 1.25 * kYOffset);
+    
+    // straight and turn autos
+    public static double kRedLeftWallToPivotPoint = NerdyMath.inchesToTicks(kRedStartingWallToSwitchInches + kRedLeftSwitchLength + 2 * kPowerCubeLength - 0.5 * DriveConstants.kDrivetrainLength);
+//    public static double kRedLeftRedSwtichToRightRedScale = NerdyMath.inchesToTicks(kRobotLeftOriginX)
+    
     // Bezier curve paths
     public static BezierCurve kRedCenterToRightSwitchPath = new BezierCurve(kRobotCenterOriginX, kRobotOriginY,
 	    kRobotCenterOriginX, kRedSwitchFrontY / 2, kRedSwitchRightX, kRedSwitchFrontY / 3, kRedSwitchRightX,

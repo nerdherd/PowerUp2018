@@ -55,7 +55,7 @@ public class SuperstructureConstants {
     public static final int kWristIntakePos = -3000;
     public static final int kWristStowPos = 0;
     public static final int kWristStowArmOffsetPos = -1000;
-    public static final int kWristBackwardsScorePos = -4000;
+    public static final int kWristBackwardsScorePos = -2512;
     public static final int kWristScoreBackwardsScalePos = -3000;
 
     public static final int kWristTolerance = 67;

@@ -38,7 +38,7 @@ public class WaitTime extends Command {
 
     @Override
     protected boolean isFinished() {
-	return Timer.getFPGATimestamp() <= m_time + m_startTime;
+	return Timer.getFPGATimestamp() >= m_time + m_startTime;
     }
 
     @Override
