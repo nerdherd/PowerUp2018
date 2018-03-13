@@ -8,6 +8,7 @@ import com.team687.frc2018.commands.auto.SideToSameSideScaleLeft;
 import com.team687.frc2018.commands.auto.SideToSameSideScaleRight;
 import com.team687.frc2018.commands.climber.ClimberDown;
 import com.team687.frc2018.commands.climber.ClimberUp;
+import com.team687.frc2018.commands.climber.ResetClimberEncoders;
 import com.team687.frc2018.commands.drive.ResetDriveEncoders;
 import com.team687.frc2018.commands.drive.ResetGyro;
 import com.team687.frc2018.commands.drive.TurnToAngle;
@@ -69,7 +70,7 @@ public class OI {
 	public JoystickButton armoffset_4;
 
 	public OI() {
-
+		
 		// change buttons for drivers
 		openClaw_5 = new JoystickButton(driveJoyArtic, 5);
 		openClaw_5.whenPressed(new OpenClaw());
@@ -154,6 +155,8 @@ public class OI {
 		SmartDashboard.putData("SideToSameSideScaleRight", new SideToSameSideScaleRight());
 
 		SmartDashboard.putData("Wrist Reset Encoders", new ResetWristEncoder());
+		
+		SmartDashboard.putData("Climber Reset Encoders", new ResetClimberEncoders());
 		// SmartDashboard.putData("Wrist 0 Percent Output", new
 		// SetWristPercentOutput(0));
 		// SmartDashboard.putData("Wrist 3V", new SetWristVoltage(3));
