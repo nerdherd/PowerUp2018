@@ -33,11 +33,11 @@ public class Robot extends TimedRobot {
 
     public static DriverStation ds;
     public static PowerDistributionPanel pdp;
+    public static Compressor compressor;
+    
     public static OI oi;
 
-    public static Compressor compressor;
-
-    SendableChooser<String> sideChooser = new SendableChooser<>();
+    SendableChooser<String> sideChooser;
     public static Command autonomousCommand;
     public static String startingPosition;
     public static boolean switchOnLeft, scaleOnLeft;
@@ -67,9 +67,11 @@ public class Robot extends TimedRobot {
 	oi = new OI();
 	ds = DriverStation.getInstance();
 
+	sideChooser = new SendableChooser<>();
 	sideChooser.addDefault("Center", "center");
 	sideChooser.addObject("Left", "left");
 	sideChooser.addObject("Right", "right");
+	SmartDashboard.putData("Auto Chooser", sideChooser);
     }
 
     @Override
@@ -153,18 +155,25 @@ public class Robot extends TimedRobot {
 
 	if (startingPosition == "center" && switchOnLeft) {
 	    autonomousCommand = new CenterToLeftSwitchAuto();
+	    SmartDashboard.putString("Selected Auto", "Center To Left Switch");
 	} else if (startingPosition == "center" && !switchOnLeft) {
 	    autonomousCommand = new CenterToRightSwitchAuto();
+	    SmartDashboard.putString("Selected Auto", "Center To Right Switch");
 	} else if (startingPosition == "left" && scaleOnLeft) {
 	    autonomousCommand = new LeftToLeftScaleAuto();
+	    SmartDashboard.putString("Selected Auto", "Left To Left Scale");
 	} else if (startingPosition == "left" && !scaleOnLeft) {
 	    autonomousCommand = new LeftToRightScaleAuto();
+	    SmartDashboard.putString("Selected Auto", "Left To Right Scale");
 	} else if (startingPosition == "right" && scaleOnLeft) {
 	    autonomousCommand = new RightToLeftScaleAuto();
+	    SmartDashboard.putString("Selected Auto", "Right To Left Scale");
 	} else if (startingPosition == "right" && !scaleOnLeft) {
 	    autonomousCommand = new RightToRightScaleAuto();
+	    SmartDashboard.putString("Selected Auto", "Right To Right Scale");
 	} else {
 	    autonomousCommand = null;
+	    SmartDashboard.putString("Selected Auto", "None");
 	}
 
 	if (autonomousCommand != null) {

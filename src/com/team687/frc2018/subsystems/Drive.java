@@ -368,12 +368,12 @@ public class Drive extends Subsystem {
 	SmartDashboard.putNumber("Left Slave 1 Current", getLeftSlaveCurrent());
 	SmartDashboard.putNumber("Right Master Current", getRightMasterCurrent());
 	SmartDashboard.putNumber("Right Slave 1 Current", getRightSlaveCurrent());
-	SmartDashboard.putNumber("Right Velocity", getRightVelocity());
-	SmartDashboard.putNumber("Left Velocity", getLeftVelocity());
+	SmartDashboard.putNumber("Right Drive Velocity", getRightVelocity());
+	SmartDashboard.putNumber("Left Drive Velocity", getLeftVelocity());
     // ----- COMMENT THESE OUT WHEN GOING TO FIELD ----- // 
 	
-	SmartDashboard.putNumber("Right Postion", getRightPosition());
-	SmartDashboard.putNumber("Left Position", getLeftPosition());
+	SmartDashboard.putNumber("Right Drive Postion", getRightPosition());
+	SmartDashboard.putNumber("Left Drive Position", getLeftPosition());
 	SmartDashboard.putNumber("Yaw", getCurrentYaw());
     }
 

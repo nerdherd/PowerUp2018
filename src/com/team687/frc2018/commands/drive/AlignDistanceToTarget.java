@@ -1,6 +1,7 @@
 package com.team687.frc2018.commands.drive;
 
 import com.team687.frc2018.Robot;
+import com.team687.frc2018.VisionAdapter;
 import com.team687.frc2018.constants.DriveConstants;
 import com.team687.frc2018.utilities.NerdyMath;
 import com.team687.frc2018.utilities.PGains;
@@ -53,7 +54,7 @@ public class AlignDistanceToTarget extends Command {
 
     @Override
     protected void execute() {
-	double robotInchesFromTarget = Robot.visionAdapter.getDistanceFromTarget();
+	double robotInchesFromTarget = VisionAdapter.getInstance().getDistanceFromTarget();
 	m_error = NerdyMath.inchesToTicks(NerdyMath.feetToInches(m_distanceFromTargetInFeet) - robotInchesFromTarget);
 
 	double straightRightPower = m_rightPGains.getP() * m_error;
