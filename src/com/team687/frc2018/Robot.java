@@ -1,13 +1,13 @@
 package com.team687.frc2018;
 
-import com.team687.frc2018.commands.arm.ResetArmEncoder;
 import com.team687.frc2018.commands.auto.CenterToLeftSwitchAuto;
 import com.team687.frc2018.commands.auto.CenterToRightSwitchAuto;
 import com.team687.frc2018.commands.auto.LeftToLeftScaleAuto;
 import com.team687.frc2018.commands.auto.LeftToRightScaleAuto;
 import com.team687.frc2018.commands.auto.RightToLeftScaleAuto;
 import com.team687.frc2018.commands.auto.RightToRightScaleAuto;
-import com.team687.frc2018.commands.wrist.ResetWristEncoder;
+import com.team687.frc2018.constants.DriveConstants;
+import com.team687.frc2018.constants.SuperstructureConstants;
 import com.team687.frc2018.subsystems.Arm;
 import com.team687.frc2018.subsystems.Drive;
 import com.team687.frc2018.subsystems.Intake;
@@ -32,9 +32,6 @@ public class Robot extends TimedRobot {
     public static DriverStation ds;
     public static PowerDistributionPanel pdp;
     public static OI oi;
-
-    public static VisionAdapter visionAdapter;
-    public static Odometry odometry;
 
     public static Compressor compressor;
 
@@ -65,9 +62,6 @@ public class Robot extends TimedRobot {
 	drive.resetEncoders();
 	drive.resetGyro();
 
-	visionAdapter = VisionAdapter.getInstance();
-	odometry = Odometry.getInstance();
-
 	oi = new OI();
 	ds = DriverStation.getInstance();
 
@@ -81,11 +75,15 @@ public class Robot extends TimedRobot {
 	Scheduler.getInstance().removeAll();
 
 	drive.reportToSmartDashboard();
-	odometry.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
 	wrist.reportToSmartDashboard();
 	intake.reportToSmartDashboard();
-	visionAdapter.reportToSmartDashboard();
+	SmartDashboard.putBoolean("HEALTHY DRIVE CURRENT", !(drive.getLeftMasterCurrent() > DriveConstants.kDriveSafeCurrent || 
+			drive.getRightMasterCurrent() > DriveConstants.kDriveSafeCurrent || 
+			drive.getLeftSlaveCurrent() > DriveConstants.kDriveSafeCurrent || 
+			drive.getRightSlaveCurrent() > DriveConstants.kDriveSafeCurrent));
+	SmartDashboard.putBoolean("HEALTHY SUPERSTRUCTURE CURRENT", !(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent ||
+			wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
 
 	drive.stopLog();
 	arm.stopLog();
@@ -95,23 +93,38 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledPeriodic() {
 //	Scheduler.getInstance().removeAll();
+    if (Robot.oi.driveJoyLeft.getRawButton(5) || Robot.oi.driveJoyRight.getRawButton(5)) {
+    	wrist.resetEncoder();
+    }
+    if (Robot.oi.driveJoyLeft.getRawButton(6) || Robot.oi.driveJoyRight.getRawButton(6)) {
+    	arm.setVoltage(0.75); // get rid of backlash
+    	arm.resetEncoder();
+    }
+    if (Robot.oi.driveJoyLeft.getRawButton(3) || Robot.oi.driveJoyRight.getRawButton(3)) {
+    	drive.resetEncoders();
+    }
+    if (Robot.oi.driveJoyLeft.getRawButton(4) || Robot.oi.driveJoyRight.getRawButton(4)) {
+    	drive.resetGyro();
+    }
 
 	drive.reportToSmartDashboard();
-	odometry.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
 	wrist.reportToSmartDashboard();
 	intake.reportToSmartDashboard();
-	visionAdapter.reportToSmartDashboard();
+	SmartDashboard.putBoolean("HEALTHY DRIVE CURRENT", !(drive.getLeftMasterCurrent() > DriveConstants.kDriveSafeCurrent || 
+			drive.getRightMasterCurrent() > DriveConstants.kDriveSafeCurrent || 
+			drive.getLeftSlaveCurrent() > DriveConstants.kDriveSafeCurrent || 
+			drive.getRightSlaveCurrent() > DriveConstants.kDriveSafeCurrent));
+	SmartDashboard.putBoolean("HEALTHY SUPERSTRUCTURE CURRENT", !(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent ||
+			wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
+	
+	startingPosition = sideChooser.getSelected();
+	SmartDashboard.putString("Selected starting position", startingPosition);
     }
 
     @Override
     public void autonomousInit() {
 	// Scheduler.getInstance().removeAll();
-
-	Scheduler.getInstance().add(new ResetArmEncoder());
-	Scheduler.getInstance().add(new ResetWristEncoder());
-
-
 	drive.startLog();
 	arm.startLog();
 	wrist.startLog();
@@ -123,7 +136,6 @@ public class Robot extends TimedRobot {
 
 	switchOnLeft = msg.substring(0, 1).equals("L");
 	scaleOnLeft = msg.substring(1, 2).equals("L");
-	startingPosition = sideChooser.getSelected();
 
 	if (switchOnLeft) {
 	    SmartDashboard.putString("Switch Position", "Left");
@@ -163,11 +175,15 @@ public class Robot extends TimedRobot {
 	Scheduler.getInstance().run();
 
 	drive.reportToSmartDashboard();
-	odometry.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
 	wrist.reportToSmartDashboard();
 	intake.reportToSmartDashboard();
-	visionAdapter.reportToSmartDashboard();
+	SmartDashboard.putBoolean("HEALTHY DRIVE CURRENT", !(drive.getLeftMasterCurrent() > DriveConstants.kDriveSafeCurrent || 
+			drive.getRightMasterCurrent() > DriveConstants.kDriveSafeCurrent || 
+			drive.getLeftSlaveCurrent() > DriveConstants.kDriveSafeCurrent || 
+			drive.getRightSlaveCurrent() > DriveConstants.kDriveSafeCurrent));
+	SmartDashboard.putBoolean("HEALTHY SUPERSTRUCTURE CURRENT", !(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent ||
+			wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
 
 	drive.logToCSV();
 	arm.logToCSV();
@@ -181,11 +197,15 @@ public class Robot extends TimedRobot {
 	wrist.startLog();
     	
 	drive.reportToSmartDashboard();
-	odometry.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
 	wrist.reportToSmartDashboard();
 	intake.reportToSmartDashboard();
-	visionAdapter.reportToSmartDashboard();
+	SmartDashboard.putBoolean("HEALTHY DRIVE CURRENT", !(drive.getLeftMasterCurrent() > DriveConstants.kDriveSafeCurrent || 
+			drive.getRightMasterCurrent() > DriveConstants.kDriveSafeCurrent || 
+			drive.getLeftSlaveCurrent() > DriveConstants.kDriveSafeCurrent || 
+			drive.getRightSlaveCurrent() > DriveConstants.kDriveSafeCurrent));
+	SmartDashboard.putBoolean("HEALTHY SUPERSTRUCTURE CURRENT", !(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent ||
+			wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
     }
 
     @Override
@@ -193,11 +213,15 @@ public class Robot extends TimedRobot {
 	Scheduler.getInstance().run();
 
 	drive.reportToSmartDashboard();
-	odometry.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
 	wrist.reportToSmartDashboard();
 	intake.reportToSmartDashboard();
-	visionAdapter.reportToSmartDashboard();
+	SmartDashboard.putBoolean("HEALTHY DRIVE CURRENT", !(drive.getLeftMasterCurrent() > DriveConstants.kDriveSafeCurrent || 
+			drive.getRightMasterCurrent() > DriveConstants.kDriveSafeCurrent || 
+			drive.getLeftSlaveCurrent() > DriveConstants.kDriveSafeCurrent || 
+			drive.getRightSlaveCurrent() > DriveConstants.kDriveSafeCurrent));
+	SmartDashboard.putBoolean("HEALTHY SUPERSTRUCTURE CURRENT", !(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent ||
+			wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
 
 	drive.logToCSV();
 	arm.logToCSV();

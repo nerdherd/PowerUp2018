@@ -72,10 +72,13 @@ public class Intake extends Subsystem {
     }
 
     public void reportToSmartDashboard() {
+    // ----- COMMENT THESE OUT WHEN GOING TO FIELD ----- // 
 	SmartDashboard.putNumber("Roller Voltage", getVoltage());
 	SmartDashboard.putNumber("Roller Current", getCurrent());
 	SmartDashboard.putBoolean("Has Cube", hasCube());
 	SmartDashboard.putBoolean("Reached Max Current", isMaxCurrent());
+    // ----- COMMENT THESE OUT WHEN GOING TO FIELD ----- // 
+	
 	SmartDashboard.putBoolean("Claw Open", isClawOpen());
     }
 

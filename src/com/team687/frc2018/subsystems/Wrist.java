@@ -43,11 +43,10 @@ public class Wrist extends Subsystem {
 	m_wrist = new TalonSRX(RobotMap.kWristID);
 
 	m_wrist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
-	m_wrist.config_kF(0, 0.681318681, 0);
-	// m_wrist.config_kF(0, 0, 0);
-	m_wrist.config_kP(0, 3, 0);
-	m_wrist.config_kI(0, 0, 0);
-	m_wrist.config_kD(0, 0, 0);
+	m_wrist.config_kF(0, SuperstructureConstants.kWristF, 0);
+	m_wrist.config_kP(0, SuperstructureConstants.kWristP, 0);
+	m_wrist.config_kI(0, SuperstructureConstants.kWristI, 0);
+	m_wrist.config_kD(0, SuperstructureConstants.kWristD, 0);
 	m_wrist.configMotionCruiseVelocity(SuperstructureConstants.kWristCruiseVelocity, 0);
 	m_wrist.configMotionAcceleration(SuperstructureConstants.kArmAcceleration, 0);
 	m_wrist.setNeutralMode(NeutralMode.Coast);
@@ -195,23 +194,16 @@ public class Wrist extends Subsystem {
 	return m_wrist.getOutputCurrent();
     }
 
-    /**
-     * @return if arm can safely move down without crushing wrist
-     */
-    public boolean isWristSafe() {
-	return getPositionRelative() <= SuperstructureConstants.kWristStowPos
-		&& getPositionRelative() >= SuperstructureConstants.kWristIntakePos;
-    }
-
     public void reportToSmartDashboard() {
-	SmartDashboard.putNumber("Wrist Position", getPosition());
-	// SmartDashboard.putNumber("Wrist Desired Position",
-	// angleAbsoluteToTicks(getDesiredAbsoluteAngle()));
-	SmartDashboard.putNumber("Wrist Absolute Angle", getAngleAbsolute());
-	// SmartDashboard.putNumber("Wrist Desired Absolute Angle",
-	// getDesiredAbsoluteAngle());
-	// SmartDashboard.putNumber("Wrist Voltage", getVoltage());
-	// SmartDashboard.putNumber("Wrist Current", getCurrent());
+        // ----- COMMENT THESE OUT WHEN GOING TO FIELD ----- // 
+	SmartDashboard.putNumber("Wrist Desired Position", angleAbsoluteToTicks(getDesiredAbsoluteAngleGoingUp()));
+	 SmartDashboard.putNumber("Wrist Desired Absolute Angle", getDesiredAbsoluteAngleGoingUp());
+	 SmartDashboard.putNumber("Wrist Voltage", getVoltage());
+	 SmartDashboard.putNumber("Wrist Current", getCurrent());
+     // ----- COMMENT THESE OUT WHEN GOING TO FIELD ----- // 
+	 
+		SmartDashboard.putNumber("Wrist Position", getPosition());
+		SmartDashboard.putNumber("Wrist Absolute Angle", getAngleAbsolute());
 
     }
 

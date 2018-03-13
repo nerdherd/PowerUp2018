@@ -358,22 +358,23 @@ public class Drive extends Subsystem {
     }
 
     public void reportToSmartDashboard() {
+    // ----- COMMENT THESE OUT WHEN GOING TO FIELD ----- // 
 	SmartDashboard.putBoolean("Brake Mode On", m_brakeModeOn);
-
 	SmartDashboard.putNumber("Left Master Voltage", getLeftMasterVoltage());
 	SmartDashboard.putNumber("Left Slave 1 Voltage", getLeftSlaveVoltage());
 	SmartDashboard.putNumber("Right Master Voltage", getRightMasterVoltage());
 	SmartDashboard.putNumber("Right Slave 1 Voltage", getRightSlaveVoltage());
-
 	SmartDashboard.putNumber("Left Master Current", getLeftMasterCurrent());
 	SmartDashboard.putNumber("Left Slave 1 Current", getLeftSlaveCurrent());
 	SmartDashboard.putNumber("Right Master Current", getRightMasterCurrent());
 	SmartDashboard.putNumber("Right Slave 1 Current", getRightSlaveCurrent());
+	SmartDashboard.putNumber("Right Velocity", getRightVelocity());
+	SmartDashboard.putNumber("Left Velocity", getLeftVelocity());
+    // ----- COMMENT THESE OUT WHEN GOING TO FIELD ----- // 
 	
-	SmartDashboard.putNumber("*Right Postion", getRightPosition());
-	SmartDashboard.putNumber("*Left Position", getLeftPosition());
+	SmartDashboard.putNumber("Right Postion", getRightPosition());
+	SmartDashboard.putNumber("Left Position", getLeftPosition());
 	SmartDashboard.putNumber("Yaw", getCurrentYaw());
-	
     }
 
     public void startLog() {

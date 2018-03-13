@@ -87,5 +87,7 @@ public class DriveConstants {
     public final static double kVelocityEpsilon = 254;
     public final static double kCurrentEpsilon = 10;
     public final static double kVoltageEpsilon = 2;
+    
+    public final static double kDriveSafeCurrent = 40;
 
 }
