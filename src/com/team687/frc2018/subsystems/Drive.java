@@ -384,10 +384,10 @@ public class Drive extends Subsystem {
 	Path filePrefix = Paths.get("");
 	if (logFolder1.exists() && logFolder1.isDirectory()) {
 	    filePrefix = Paths.get(logFolder1.toString(),
-		    "2018_03_10_" + Robot.ds.getMatchType().toString() + Robot.ds.getMatchNumber() + "Drive");
+		    Robot.kDate + Robot.ds.getMatchType().toString() + Robot.ds.getMatchNumber() + "Drive");
 	} else if (logFolder2.exists() && logFolder2.isDirectory()) {
 	    filePrefix = Paths.get(logFolder2.toString(),
-		    "2018_03_10_" + Robot.ds.getMatchType().toString() + Robot.ds.getMatchNumber() + "Drive");
+		    Robot.kDate + Robot.ds.getMatchType().toString() + Robot.ds.getMatchNumber() + "Drive");
 	} else {
 	    writeException = true;
 	}

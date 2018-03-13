@@ -33,10 +33,6 @@ public class Wrist extends Subsystem {
     private File m_file;
     private FileWriter m_writer;
     private boolean writeException = false;
-
-    // Status Frame Docs in Section 20 of Software Reference Manual
-    public static final int loggingFrameRate = 20;
-
     private double m_logStartTime;
 
     public Wrist() {
@@ -73,7 +69,6 @@ public class Wrist extends Subsystem {
 
     @Override
     protected void initDefaultCommand() {
-	// setDefaultCommand(new MySpecialCommand());
     }
 
     private double m_desiredPos = 0;
@@ -158,32 +153,13 @@ public class Wrist extends Subsystem {
 	}
     }
 
-    // public double getDesiredAbsoluteAngleGoingDown() {
-    // double _r3 = SuperstructureConstants.kWristPivotToTip;
-    // double theta2 = Robot.arm.getAbsoluteAngle();
-    // double x2 = Robot.arm.getX();
-    // double y2 = Robot.arm.getY();
-    // double _theta3_offset = -16;
-    // if (theta2 <= 55) {
-    // return 90 - _theta3_offset; // DEGREES(ACOS((45-[@x2])/_r3))-theta3_offset
-    // } else if (theta2 <= 100) {
-    // double alpha = (90 - theta2) / (90 - 55);
-    // return alpha * 45 + (1 - alpha) * 90 - _theta3_offset; //
-    // -1.75*[@theta2]+135.3-theta3_offset THIS HAS BEEN
-    // // CHANGED
-    // } else {
-    // return NerdyMath.radiansToDegrees(Math.asin((92 - y2) / _r3)) -
-    // _theta3_offset; // DEGREES(ASIN((88-[@y2])/_r3))-theta3_offset
-    // }
-    // }
-
     public double getSpeed() {
 	return m_wrist.getSelectedSensorVelocity(0);
     }
 
     // see if we can avoid using this for the wrist
     public void resetEncoder() {
-	m_wrist.setSelectedSensorPosition(0 + SuperstructureConstants.kWristResetPosition, 0, 0);
+	m_wrist.setSelectedSensorPosition(0, 0, 0);
     }
 
     public double getVoltage() {
@@ -213,13 +189,15 @@ public class Wrist extends Subsystem {
 	File logFolder1 = new File(m_filePath1);
 	File logFolder2 = new File(m_filePath2);
 	Path filePrefix = Paths.get("");
-	if (logFolder1.exists() && logFolder1.isDirectory())
-	    filePrefix = Paths.get(logFolder1.toString(), "2018_02_24_Wrist");
-	else if (logFolder2.exists() && logFolder2.isDirectory())
-	    filePrefix = Paths.get(logFolder2.toString(),
-		    SmartDashboard.getString("log_file_name", "2018_02_24_Wrist"));
-	else
-	    writeException = true;
+	if (logFolder1.exists() && logFolder1.isDirectory()) {
+	    filePrefix = Paths.get(logFolder1.toString(),
+			    Robot.kDate + Robot.ds.getMatchType().toString() + Robot.ds.getMatchNumber() + "Wrist");
+	} else if (logFolder2.exists() && logFolder2.isDirectory()) {
+	    filePrefix = Paths.get(logFolder1.toString(),
+			    Robot.kDate + Robot.ds.getMatchType().toString() + Robot.ds.getMatchNumber() + "Wrist");
+	} else {
+		writeException = true;
+	}
 
 	if (!writeException) {
 	    int counter = 0;
