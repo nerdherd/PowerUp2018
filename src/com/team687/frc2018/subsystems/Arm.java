@@ -41,7 +41,7 @@ public class Arm extends Subsystem {
 
 	m_arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
 	m_arm.setSensorPhase(true);
-	m_arm.setInverted(true);
+	m_arm.setInverted(false);
 	m_arm.setNeutralMode(NeutralMode.Coast);
 
 	m_arm.config_kF(0, SuperstructureConstants.kArmF, 0);
@@ -150,13 +150,13 @@ public class Arm extends Subsystem {
     }
 
     public void reportToSmartDashboard() {
-    // ----- COMMENT THESE OUT WHEN GOING TO FIELD ----- // 
+	// ----- COMMENT THESE OUT WHEN GOING TO FIELD ----- //
 	SmartDashboard.putNumber("Arm Velocity", getVelocity());
 	SmartDashboard.putNumber("Arm Voltage", getVoltage());
 	SmartDashboard.putNumber("Arm Current", getCurrent());
 	SmartDashboard.putNumber("Arm Desired Position", m_desiredPos);
-    // ----- COMMENT THESE OUT WHEN GOING TO FIELD ----- // 
-    	
+	// ----- COMMENT THESE OUT WHEN GOING TO FIELD ----- //
+
 	SmartDashboard.putNumber("Arm Position", getPosition());
 	SmartDashboard.putNumber("Arm Angle from Encoder", getAngleAbsolute());
     }

@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.team687.frc2018.Robot;
 import com.team687.frc2018.RobotMap;
 import com.team687.frc2018.commands.drive.teleop.ArcadeDrive;
@@ -35,8 +36,8 @@ public class Drive extends Subsystem {
     private final TalonSRX m_leftMaster;
     private final TalonSRX m_rightMaster;
 
-    private final TalonSRX m_leftSlave1;
-    private final TalonSRX m_rightSlave1;
+    private final VictorSPX m_leftSlave1;
+    private final VictorSPX m_rightSlave1;
 
     private final AHRS m_nav;
     private final navXSensor m_navxsensor;
@@ -56,9 +57,9 @@ public class Drive extends Subsystem {
 
     public Drive() {
 	m_leftMaster = new TalonSRX(RobotMap.kLeftMasterTalonID);
-	m_leftSlave1 = new TalonSRX(RobotMap.kLeftSlaveVictorID);
+	m_leftSlave1 = new VictorSPX(RobotMap.kLeftSlaveVictorID);
 	m_rightMaster = new TalonSRX(RobotMap.kRightMasterTalonID);
-	m_rightSlave1 = new TalonSRX(RobotMap.kRightSlaveVictorID);
+	m_rightSlave1 = new VictorSPX(RobotMap.kRightSlaveVictorID);
 
 	m_leftSlave1.follow(m_leftMaster);
 	m_rightSlave1.follow(m_rightMaster);
@@ -101,7 +102,7 @@ public class Drive extends Subsystem {
 	m_leftMaster.configPeakCurrentDuration(0, 0);
 	m_leftMaster.configContinuousCurrentLimit(DriveConstants.kContinuousCurrentLimit, 0);
 	m_leftMaster.enableCurrentLimit(true);
-	m_leftSlave1.enableCurrentLimit(false);
+	// m_leftSlave1.enableCurrentLimit(false);
 	m_leftMaster.configOpenloopRamp(DriveConstants.kVoltageRampRate, 0);
 	m_leftMaster.configClosedloopRamp(DriveConstants.kVoltageRampRate, 0);
 
@@ -109,7 +110,7 @@ public class Drive extends Subsystem {
 	m_rightMaster.configPeakCurrentDuration(0, 0);
 	m_rightMaster.configContinuousCurrentLimit(DriveConstants.kContinuousCurrentLimit, 0);
 	m_rightMaster.enableCurrentLimit(true);
-	m_rightSlave1.enableCurrentLimit(false);
+	// m_rightSlave1.enableCurrentLimit(false);
 	m_rightMaster.configOpenloopRamp(DriveConstants.kVoltageRampRate, 0);
 	m_rightMaster.configClosedloopRamp(DriveConstants.kVoltageRampRate, 0);
 
@@ -264,11 +265,11 @@ public class Drive extends Subsystem {
     }
 
     public double getLeftVelocity() {
-	return m_leftMaster.getSelectedSensorVelocity(1);
+	return m_leftMaster.getSelectedSensorVelocity(0);
     }
 
     public double getRightVelocity() {
-	return m_rightMaster.getSelectedSensorVelocity(2);
+	return m_rightMaster.getSelectedSensorVelocity(0);
     }
 
     public double getRightMasterCurrent() {
@@ -358,7 +359,7 @@ public class Drive extends Subsystem {
     }
 
     public void reportToSmartDashboard() {
-    // ----- COMMENT THESE OUT WHEN GOING TO FIELD ----- // 
+	// ----- COMMENT THESE OUT WHEN GOING TO FIELD ----- //
 	SmartDashboard.putBoolean("Brake Mode On", m_brakeModeOn);
 	SmartDashboard.putNumber("Left Master Voltage", getLeftMasterVoltage());
 	SmartDashboard.putNumber("Left Slave 1 Voltage", getLeftSlaveVoltage());
@@ -370,8 +371,8 @@ public class Drive extends Subsystem {
 	SmartDashboard.putNumber("Right Slave 1 Current", getRightSlaveCurrent());
 	SmartDashboard.putNumber("Right Drive Velocity", getRightVelocity());
 	SmartDashboard.putNumber("Left Drive Velocity", getLeftVelocity());
-    // ----- COMMENT THESE OUT WHEN GOING TO FIELD ----- // 
-	
+	// ----- COMMENT THESE OUT WHEN GOING TO FIELD ----- //
+
 	SmartDashboard.putNumber("Right Drive Postion", getRightPosition());
 	SmartDashboard.putNumber("Left Drive Position", getLeftPosition());
 	SmartDashboard.putNumber("Yaw", getCurrentYaw());
