@@ -23,8 +23,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TimedRobot {
-	
-	public static final String kDate = "2018_03_12_";
+
+    public static final String kDate = "2018_03_12_";
 
     public static Drive drive;
     public static Arm arm;
@@ -34,7 +34,7 @@ public class Robot extends TimedRobot {
     public static DriverStation ds;
     public static PowerDistributionPanel pdp;
     public static Compressor compressor;
-    
+
     public static OI oi;
 
     SendableChooser<String> sideChooser;
@@ -82,12 +82,14 @@ public class Robot extends TimedRobot {
 	arm.reportToSmartDashboard();
 	wrist.reportToSmartDashboard();
 	intake.reportToSmartDashboard();
-	SmartDashboard.putBoolean("HEALTHY DRIVE CURRENT", !(drive.getLeftMasterCurrent() > DriveConstants.kDriveSafeCurrent || 
-			drive.getRightMasterCurrent() > DriveConstants.kDriveSafeCurrent || 
-			drive.getLeftSlaveCurrent() > DriveConstants.kDriveSafeCurrent || 
-			drive.getRightSlaveCurrent() > DriveConstants.kDriveSafeCurrent));
-	SmartDashboard.putBoolean("HEALTHY SUPERSTRUCTURE CURRENT", !(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent ||
-			wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
+	SmartDashboard.putBoolean("HEALTHY DRIVE CURRENT",
+		!(drive.getLeftMasterCurrent() > DriveConstants.kDriveSafeCurrent
+			|| drive.getRightMasterCurrent() > DriveConstants.kDriveSafeCurrent
+			|| drive.getLeftSlaveCurrent() > DriveConstants.kDriveSafeCurrent
+			|| drive.getRightSlaveCurrent() > DriveConstants.kDriveSafeCurrent));
+	SmartDashboard.putBoolean("HEALTHY SUPERSTRUCTURE CURRENT",
+		!(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent
+			|| wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
 
 	drive.stopLog();
 	arm.stopLog();
@@ -96,32 +98,34 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
-//	Scheduler.getInstance().removeAll();
-    if (Robot.oi.driveJoyLeft.getRawButton(5) || Robot.oi.driveJoyRight.getRawButton(5)) {
-    	wrist.resetEncoder();
-    }
-    if (Robot.oi.driveJoyLeft.getRawButton(6) || Robot.oi.driveJoyRight.getRawButton(6)) {
-    	arm.setVoltage(0.75); // get rid of backlash
-    	arm.resetEncoder();
-    }
-    if (Robot.oi.driveJoyLeft.getRawButton(3) || Robot.oi.driveJoyRight.getRawButton(3)) {
-    	drive.resetEncoders();
-    }
-    if (Robot.oi.driveJoyLeft.getRawButton(4) || Robot.oi.driveJoyRight.getRawButton(4)) {
-    	drive.resetGyro();
-    }
+	// Scheduler.getInstance().removeAll();
+	if (Robot.oi.driveJoyLeft.getRawButton(5) && Robot.oi.driveJoyRight.getRawButton(5)) {
+	    wrist.resetEncoder();
+	}
+	if (Robot.oi.driveJoyLeft.getRawButton(6) && Robot.oi.driveJoyRight.getRawButton(6)) {
+	    arm.setVoltage(0.75); // get rid of backlash
+	    arm.resetEncoder();
+	}
+	if (Robot.oi.driveJoyLeft.getRawButton(3) && Robot.oi.driveJoyRight.getRawButton(3)) {
+	    drive.resetEncoders();
+	}
+	if (Robot.oi.driveJoyLeft.getRawButton(4) && Robot.oi.driveJoyRight.getRawButton(4)) {
+	    drive.resetGyro();
+	}
 
 	drive.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
 	wrist.reportToSmartDashboard();
 	intake.reportToSmartDashboard();
-	SmartDashboard.putBoolean("HEALTHY DRIVE CURRENT", !(drive.getLeftMasterCurrent() > DriveConstants.kDriveSafeCurrent || 
-			drive.getRightMasterCurrent() > DriveConstants.kDriveSafeCurrent || 
-			drive.getLeftSlaveCurrent() > DriveConstants.kDriveSafeCurrent || 
-			drive.getRightSlaveCurrent() > DriveConstants.kDriveSafeCurrent));
-	SmartDashboard.putBoolean("HEALTHY SUPERSTRUCTURE CURRENT", !(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent ||
-			wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
-	
+	SmartDashboard.putBoolean("HEALTHY DRIVE CURRENT",
+		!(drive.getLeftMasterCurrent() > DriveConstants.kDriveSafeCurrent
+			|| drive.getRightMasterCurrent() > DriveConstants.kDriveSafeCurrent
+			|| drive.getLeftSlaveCurrent() > DriveConstants.kDriveSafeCurrent
+			|| drive.getRightSlaveCurrent() > DriveConstants.kDriveSafeCurrent));
+	SmartDashboard.putBoolean("HEALTHY SUPERSTRUCTURE CURRENT",
+		!(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent
+			|| wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
+
 	startingPosition = sideChooser.getSelected();
 	SmartDashboard.putString("Selected starting position", startingPosition);
     }
@@ -189,12 +193,14 @@ public class Robot extends TimedRobot {
 	arm.reportToSmartDashboard();
 	wrist.reportToSmartDashboard();
 	intake.reportToSmartDashboard();
-	SmartDashboard.putBoolean("HEALTHY DRIVE CURRENT", !(drive.getLeftMasterCurrent() > DriveConstants.kDriveSafeCurrent || 
-			drive.getRightMasterCurrent() > DriveConstants.kDriveSafeCurrent || 
-			drive.getLeftSlaveCurrent() > DriveConstants.kDriveSafeCurrent || 
-			drive.getRightSlaveCurrent() > DriveConstants.kDriveSafeCurrent));
-	SmartDashboard.putBoolean("HEALTHY SUPERSTRUCTURE CURRENT", !(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent ||
-			wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
+	SmartDashboard.putBoolean("HEALTHY DRIVE CURRENT",
+		!(drive.getLeftMasterCurrent() > DriveConstants.kDriveSafeCurrent
+			|| drive.getRightMasterCurrent() > DriveConstants.kDriveSafeCurrent
+			|| drive.getLeftSlaveCurrent() > DriveConstants.kDriveSafeCurrent
+			|| drive.getRightSlaveCurrent() > DriveConstants.kDriveSafeCurrent));
+	SmartDashboard.putBoolean("HEALTHY SUPERSTRUCTURE CURRENT",
+		!(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent
+			|| wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
 
 	drive.logToCSV();
 	arm.logToCSV();
@@ -206,17 +212,19 @@ public class Robot extends TimedRobot {
 	drive.startLog();
 	arm.startLog();
 	wrist.startLog();
-    	
+
 	drive.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
 	wrist.reportToSmartDashboard();
 	intake.reportToSmartDashboard();
-	SmartDashboard.putBoolean("HEALTHY DRIVE CURRENT", !(drive.getLeftMasterCurrent() > DriveConstants.kDriveSafeCurrent || 
-			drive.getRightMasterCurrent() > DriveConstants.kDriveSafeCurrent || 
-			drive.getLeftSlaveCurrent() > DriveConstants.kDriveSafeCurrent || 
-			drive.getRightSlaveCurrent() > DriveConstants.kDriveSafeCurrent));
-	SmartDashboard.putBoolean("HEALTHY SUPERSTRUCTURE CURRENT", !(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent ||
-			wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
+	SmartDashboard.putBoolean("HEALTHY DRIVE CURRENT",
+		!(drive.getLeftMasterCurrent() > DriveConstants.kDriveSafeCurrent
+			|| drive.getRightMasterCurrent() > DriveConstants.kDriveSafeCurrent
+			|| drive.getLeftSlaveCurrent() > DriveConstants.kDriveSafeCurrent
+			|| drive.getRightSlaveCurrent() > DriveConstants.kDriveSafeCurrent));
+	SmartDashboard.putBoolean("HEALTHY SUPERSTRUCTURE CURRENT",
+		!(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent
+			|| wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
     }
 
     @Override
@@ -227,12 +235,14 @@ public class Robot extends TimedRobot {
 	arm.reportToSmartDashboard();
 	wrist.reportToSmartDashboard();
 	intake.reportToSmartDashboard();
-	SmartDashboard.putBoolean("HEALTHY DRIVE CURRENT", !(drive.getLeftMasterCurrent() > DriveConstants.kDriveSafeCurrent || 
-			drive.getRightMasterCurrent() > DriveConstants.kDriveSafeCurrent || 
-			drive.getLeftSlaveCurrent() > DriveConstants.kDriveSafeCurrent || 
-			drive.getRightSlaveCurrent() > DriveConstants.kDriveSafeCurrent));
-	SmartDashboard.putBoolean("HEALTHY SUPERSTRUCTURE CURRENT", !(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent ||
-			wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
+	SmartDashboard.putBoolean("HEALTHY DRIVE CURRENT",
+		!(drive.getLeftMasterCurrent() > DriveConstants.kDriveSafeCurrent
+			|| drive.getRightMasterCurrent() > DriveConstants.kDriveSafeCurrent
+			|| drive.getLeftSlaveCurrent() > DriveConstants.kDriveSafeCurrent
+			|| drive.getRightSlaveCurrent() > DriveConstants.kDriveSafeCurrent));
+	SmartDashboard.putBoolean("HEALTHY SUPERSTRUCTURE CURRENT",
+		!(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent
+			|| wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
 
 	drive.logToCSV();
 	arm.logToCSV();
