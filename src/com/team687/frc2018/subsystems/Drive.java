@@ -442,6 +442,7 @@ public class Drive extends Subsystem {
     }
 
     public void logToCSV() {
+    System.out.println("test write");
 	if (!writeException) {
 	    try {
 		double timestamp = Timer.getFPGATimestamp() - m_logStartTime;
