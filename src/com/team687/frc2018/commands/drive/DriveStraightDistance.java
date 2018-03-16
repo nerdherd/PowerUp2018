@@ -64,6 +64,7 @@ public class DriveStraightDistance extends Command {
 	rotError = (rotError > 180) ? rotError - 360 : rotError;
 	rotError = (rotError < -180) ? rotError + 360 : rotError;
 	double rotPower = DriveConstants.kDistRotP * rotError;
+	
 
 	Robot.drive.setPower(straightLeftPower - rotPower, straightRightPower + rotPower);
     }

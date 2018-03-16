@@ -1,6 +1,7 @@
 package com.team687.frc2018;
 
-import java.io.IOException;
+import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
 
 import com.team687.frc2018.commands.auto.CenterToLeftSwitchAuto;
 import com.team687.frc2018.commands.auto.CenterToRightSwitchAuto;
@@ -9,7 +10,6 @@ import com.team687.frc2018.commands.auto.DriveStraightWithoutCube;
 import com.team687.frc2018.commands.auto.LeftToLeftScaleAuto;
 import com.team687.frc2018.commands.auto.LeftToRightScaleAuto;
 import com.team687.frc2018.commands.auto.RightToLeftScaleAuto;
-import com.team687.frc2018.commands.auto.RightToRightScaleAuto;
 import com.team687.frc2018.constants.DriveConstants;
 import com.team687.frc2018.constants.SuperstructureConstants;
 import com.team687.frc2018.subsystems.Arm;
@@ -17,6 +17,9 @@ import com.team687.frc2018.subsystems.Drive;
 import com.team687.frc2018.subsystems.Intake;
 import com.team687.frc2018.subsystems.Wrist;
 
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -50,6 +53,23 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
+//    	UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+
+//    new Thread(() -> {
+//	UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+//	camera.setResolution(320, 240);
+//	CvSink cvsink = CameraServer.getInstance().getVideo();
+//	CvSource outputStream = CameraServer.getInstance().putVideo("Capture", 320, 240);
+//    
+//	Mat source = new Mat();
+//	Mat output = new Mat();
+//	
+//	while(!Thread.interrupted()){
+//    cvsink.grabFrame(source);
+//    Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
+//    outputStream.putFrame(output);
+//    }   
+//	}).start();
 	pdp = new PowerDistributionPanel();
 	LiveWindow.disableTelemetry(pdp);
 	compressor = new Compressor();
@@ -74,7 +94,7 @@ public class Robot extends TimedRobot {
 	oi = new OI();
 	ds = DriverStation.getInstance();
 
-	CameraServer.getInstance().startAutomaticCapture();
+//	CameraServer.getInstance().startAutomaticCapture();
 	
 	sideChooser = new SendableChooser<>();
 	sideChooser.addDefault("Center", "center");
@@ -91,6 +111,7 @@ public class Robot extends TimedRobot {
     public void disabledInit() {
 	Scheduler.getInstance().removeAll();
 
+	
 	drive.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
 	wrist.reportToSmartDashboard();
@@ -112,7 +133,7 @@ public class Robot extends TimedRobot {
 //		e.printStackTrace();
 //	}
 	
-//	drive.stopLog();
+	drive.stopLog();
 //	arm.stopLog();
 //	wrist.stopLog();
     }
@@ -249,6 +270,8 @@ public class Robot extends TimedRobot {
 	SmartDashboard.putBoolean("HEALTHY SUPERSTRUCTURE CURRENT",
 		!(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent
 			|| wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
+	
+	drive.startLog();
     }
 
     @Override
@@ -268,7 +291,7 @@ public class Robot extends TimedRobot {
 		!(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent
 			|| wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
 
-//	drive.logToCSV();
+	drive.logToCSV();
 //	arm.logToCSV();
 //	wrist.logToCSV();
 	

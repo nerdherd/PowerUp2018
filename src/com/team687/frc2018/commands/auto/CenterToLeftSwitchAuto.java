@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class CenterToLeftSwitchAuto extends CommandGroup {
 
     public CenterToLeftSwitchAuto() {
-	addParallel(new DefaultStow());
-	addSequential(new DriveBezierPath(AutoConstants.kRedCenterToLeftSwitchPath, 0.5, 0.012, 0.001, true));
-	addParallel(new SetIntakeRollerPower(0.4));
+//	addParallel(new DefaultStow());
+	addSequential(new DriveBezierPath(AutoConstants.kRedCenterToLeftSwitchPath, 0.687, 0.1, 0.001, false));
+//	addParallel(new SetIntakeRollerPower(0.4));
     }
 }
