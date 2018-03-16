@@ -1,8 +1,5 @@
 package com.team687.frc2018;
 
-import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
-
 import com.team687.frc2018.commands.auto.CenterToLeftSwitchAuto;
 import com.team687.frc2018.commands.auto.CenterToRightSwitchAuto;
 import com.team687.frc2018.commands.auto.DriveStraightAuto;
@@ -17,10 +14,6 @@ import com.team687.frc2018.subsystems.Drive;
 import com.team687.frc2018.subsystems.Intake;
 import com.team687.frc2018.subsystems.Wrist;
 
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -53,23 +46,6 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
-//    	UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-
-//    new Thread(() -> {
-//	UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-//	camera.setResolution(320, 240);
-//	CvSink cvsink = CameraServer.getInstance().getVideo();
-//	CvSource outputStream = CameraServer.getInstance().putVideo("Capture", 320, 240);
-//    
-//	Mat source = new Mat();
-//	Mat output = new Mat();
-//	
-//	while(!Thread.interrupted()){
-//    cvsink.grabFrame(source);
-//    Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
-//    outputStream.putFrame(output);
-//    }   
-//	}).start();
 	pdp = new PowerDistributionPanel();
 	LiveWindow.disableTelemetry(pdp);
 	compressor = new Compressor();
@@ -94,24 +70,23 @@ public class Robot extends TimedRobot {
 	oi = new OI();
 	ds = DriverStation.getInstance();
 
-//	CameraServer.getInstance().startAutomaticCapture();
-	
+	// CameraServer.getInstance().startAutomaticCapture();
+
 	sideChooser = new SendableChooser<>();
 	sideChooser.addDefault("Center", "center");
 	sideChooser.addObject("Left", "left");
 	sideChooser.addObject("Right", "right");
 	SmartDashboard.putData("Auto Chooser", sideChooser);
-	
-//	drive.startLog();
-//	arm.startLog();
-//	wrist.startLog();
+
+	// drive.startLog();
+	// arm.startLog();
+	// wrist.startLog();
     }
 
     @Override
     public void disabledInit() {
 	Scheduler.getInstance().removeAll();
 
-	
 	drive.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
 	wrist.reportToSmartDashboard();
@@ -125,17 +100,17 @@ public class Robot extends TimedRobot {
 		!(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent
 			|| wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
 
-//	try {
-//		drive.m_writer.flush();
-//		arm.m_writer.flush();
-//		wrist.m_writer.flush();
-//	} catch (IOException e) {
-//		e.printStackTrace();
-//	}
-	
-	drive.stopLog();
-//	arm.stopLog();
-//	wrist.stopLog();
+	// try {
+	// drive.m_writer.flush();
+	// arm.m_writer.flush();
+	// wrist.m_writer.flush();
+	// } catch (IOException e) {
+	// e.printStackTrace();
+	// }
+
+	// drive.stopLog();
+	// arm.stopLog();
+	// wrist.stopLog();
     }
 
     @Override
@@ -218,11 +193,11 @@ public class Robot extends TimedRobot {
 	    autonomousCommand = null;
 	    SmartDashboard.putString("Selected Auto", "None");
 	}
-	
+
 	if ((startingPosition == "left" && switchOnLeft) || startingPosition == "right" && !switchOnLeft) {
 	    autonomousCommand = new DriveStraightAuto();
 	} else {
-		autonomousCommand = new DriveStraightWithoutCube();
+	    autonomousCommand = new DriveStraightWithoutCube();
 	}
 
 	if (autonomousCommand != null) {
@@ -247,10 +222,10 @@ public class Robot extends TimedRobot {
 		!(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent
 			|| wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
 
-//	drive.logToCSV();
-//	arm.logToCSV();
-//	wrist.logToCSV();
-	
+	// drive.logToCSV();
+	// arm.logToCSV();
+	// wrist.logToCSV();
+
 	SmartDashboard.putNumber("Right Drive Position End Auto", drive.getRightPosition());
 	SmartDashboard.putNumber("Left Drive Position End Auto", drive.getLeftPosition());
     }
@@ -270,8 +245,8 @@ public class Robot extends TimedRobot {
 	SmartDashboard.putBoolean("HEALTHY SUPERSTRUCTURE CURRENT",
 		!(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent
 			|| wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
-	
-	drive.startLog();
+
+	// drive.startLog();
     }
 
     @Override
@@ -291,15 +266,15 @@ public class Robot extends TimedRobot {
 		!(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent
 			|| wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
 
-	drive.logToCSV();
-//	arm.logToCSV();
-//	wrist.logToCSV();
-	
+	// drive.logToCSV();
+	// arm.logToCSV();
+	// wrist.logToCSV();
+
 	if (ds.getMatchTime() < 5) {
-		Robot.wrist.enableBrakeMode();
+	    Robot.wrist.enableBrakeMode();
 	}
     }
-    
+
     @Override
     public void testPeriodic() {
     }
