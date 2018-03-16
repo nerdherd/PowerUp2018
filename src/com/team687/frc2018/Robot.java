@@ -14,6 +14,7 @@ import com.team687.frc2018.subsystems.Drive;
 import com.team687.frc2018.subsystems.Intake;
 import com.team687.frc2018.subsystems.Wrist;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -70,7 +71,7 @@ public class Robot extends TimedRobot {
 	oi = new OI();
 	ds = DriverStation.getInstance();
 
-	// CameraServer.getInstance().startAutomaticCapture();
+//	CameraServer.getInstance().startAutomaticCapture();
 
 	sideChooser = new SendableChooser<>();
 	sideChooser.addDefault("Center", "center");
@@ -129,6 +130,9 @@ public class Robot extends TimedRobot {
 	if (Robot.oi.driveJoyLeft.getRawButton(4) && Robot.oi.driveJoyRight.getRawButton(4)) {
 	    drive.resetGyro();
 	}
+	
+	drive.resetEncoders();
+	drive.resetGyro();
 
 	drive.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
@@ -177,28 +181,30 @@ public class Robot extends TimedRobot {
 	} else if (startingPosition == "center" && !switchOnLeft) {
 	    autonomousCommand = new CenterToRightSwitchAuto();
 	    SmartDashboard.putString("Selected Auto", "Center To Right Switch");
-	} else if (startingPosition == "left" && scaleOnLeft) {
-	    autonomousCommand = new LeftToLeftScaleAuto();
-	    SmartDashboard.putString("Selected Auto", "Left To Left Scale");
-	} else if (startingPosition == "left" && !scaleOnLeft) {
-	    autonomousCommand = new LeftToRightScaleAuto();
-	    SmartDashboard.putString("Selected Auto", "Left To Right Scale");
-	} else if (startingPosition == "right" && scaleOnLeft) {
-	    autonomousCommand = new RightToLeftScaleAuto();
-	    SmartDashboard.putString("Selected Auto", "Right To Left Scale");
-	} else if (startingPosition == "right" && !scaleOnLeft) {
-	    autonomousCommand = new DriveStraightAuto();
-	    SmartDashboard.putString("Selected Auto", "Right To Right Scale");
 	} else {
-	    autonomousCommand = null;
-	    SmartDashboard.putString("Selected Auto", "None");
+		autonomousCommand = new DriveStraightWithoutCube();
 	}
-
-	if ((startingPosition == "left" && switchOnLeft) || startingPosition == "right" && !switchOnLeft) {
-	    autonomousCommand = new DriveStraightAuto();
-	} else {
-	    autonomousCommand = new DriveStraightWithoutCube();
-	}
+////	} else if (startingPosition == "left" && scaleOnLeft) {
+////	    autonomousCommand = new LeftToLeftScaleAuto();
+////	    SmartDashboard.putString("Selected Auto", "Left To Left Scale");
+////	} else if (startingPosition == "left" && !scaleOnLeft) {
+////	    autonomousCommand = new LeftToRightScaleAuto();
+////	    SmartDashboard.putString("Selected Auto", "Left To Right Scale");
+////	} else if (startingPosition == "right" && scaleOnLeft) {
+////	    autonomousCommand = new RightToLeftScaleAuto();
+////	    SmartDashboard.putString("Selected Auto", "Right To Left Scale");
+////	} else if (startingPosition == "right" && !scaleOnLeft) {
+////	    autonomousCommand = new DriveStraightAuto();
+////	    SmartDashboard.putString("Selected Auto", "Right To Right Scale");
+//	} else if ((startingPosition == "left" && switchOnLeft) || startingPosition == "right" && !switchOnLeft) {
+//	    autonomousCommand = new DriveStraightAuto();
+//	    SmartDashboard.putString("Selected Auto", "Side To Side Switch");
+//	} else {
+//	    autonomousCommand = new DriveStraightWithoutCube();
+//	    SmartDashboard.putString("Selected Auto", "Drive Straight Without Cube");
+//	}
+	
+	autonomousCommand = new DriveStraightWithoutCube();
 
 	if (autonomousCommand != null) {
 	    autonomousCommand.start();
@@ -225,9 +231,6 @@ public class Robot extends TimedRobot {
 	// drive.logToCSV();
 	// arm.logToCSV();
 	// wrist.logToCSV();
-
-	SmartDashboard.putNumber("Right Drive Position End Auto", drive.getRightPosition());
-	SmartDashboard.putNumber("Left Drive Position End Auto", drive.getLeftPosition());
     }
 
     @Override

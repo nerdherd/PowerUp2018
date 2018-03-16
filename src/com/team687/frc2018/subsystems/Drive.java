@@ -105,7 +105,7 @@ public class Drive extends Subsystem {
 	m_leftMaster.configPeakCurrentLimit(0, 0);
 	m_leftMaster.configPeakCurrentDuration(0, 0);
 	m_leftMaster.configContinuousCurrentLimit(DriveConstants.kContinuousCurrentLimit, 0);
-	m_leftMaster.enableCurrentLimit(true);
+	m_leftMaster.enableCurrentLimit(false);
 //	 m_leftSlave1.enableCurrentLimit(false);
 	m_leftMaster.configOpenloopRamp(DriveConstants.kVoltageRampRate, 0);
 	m_leftMaster.configClosedloopRamp(DriveConstants.kVoltageRampRate, 0);
@@ -117,7 +117,7 @@ public class Drive extends Subsystem {
 	m_rightMaster.configPeakCurrentLimit(0, 0);
 	m_rightMaster.configPeakCurrentDuration(0, 0);
 	m_rightMaster.configContinuousCurrentLimit(DriveConstants.kContinuousCurrentLimit, 0);
-	m_rightMaster.enableCurrentLimit(true);
+	m_rightMaster.enableCurrentLimit(false);
 	// m_rightSlave1.enableCurrentLimit(false);
 	m_rightMaster.configOpenloopRamp(DriveConstants.kVoltageRampRate, 0);
 	m_rightMaster.configClosedloopRamp(DriveConstants.kVoltageRampRate, 0);
@@ -143,6 +143,9 @@ public class Drive extends Subsystem {
      *            (from -1.0 to +1.0)
      */
     public void setPower(double leftPercentOutput, double rightPercentOutput) {
+    	SmartDashboard.putNumber("Left Out", leftPercentOutput);
+    	SmartDashboard.putNumber("Right Out", rightPercentOutput);
+    	
 	m_leftMaster.set(ControlMode.PercentOutput, leftPercentOutput);
 	m_rightMaster.set(ControlMode.PercentOutput, rightPercentOutput);
     }

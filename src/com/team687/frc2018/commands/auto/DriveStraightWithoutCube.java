@@ -17,7 +17,8 @@ public class DriveStraightWithoutCube extends CommandGroup {
 
     public DriveStraightWithoutCube() {
     	addParallel(new DefaultStow());
-    	addSequential(new DriveStraightDistance(NerdyMath.inchesToTicks(AutoConstants.kRedStartingWallToSwitchInches - DriveConstants.kDrivetrainLength), 0, 4));
+    	addSequential(new DriveStraightDistance(NerdyMath.inchesToTicks(AutoConstants.kRedStartingWallToSwitchInches - DriveConstants.kDrivetrainLength), 0, 6));
+//    	addSequential(new DriveStraightDistance(NerdyMath.inchesToTicks(AutoConstants.kRedStartingWallToSwitchInches), 0, 6));
     	addParallel(new SetWristPosition(Robot.wrist.angleAbsoluteToTicks(70)));
     }
 }

@@ -107,7 +107,11 @@ public class NerdyMath {
      * @return scaled output
      */
     public static double squareInput(double input) {
-	return Math.pow(input, 2) * (input / Math.abs(input));
+    	if (input != 0) {
+    		return Math.pow(input, 2) * (input / Math.abs(input));
+    	} else {
+    		return 0;
+    	}
     }
 
     /**

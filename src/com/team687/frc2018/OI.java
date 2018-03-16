@@ -93,7 +93,7 @@ public class OI {
 	SmartDashboard.putData("Drive Reset Encoders", new ResetDriveEncoders());
 	SmartDashboard.putData("Drive Reset Gyro", new ResetGyro());
 	
-	SmartDashboard.putData("Drive Straight Test", new TestDriveSubsystem());
+//	SmartDashboard.putData("Drive Straight Test", new TestDriveSubsystem());
 //
 //	SmartDashboard.putData("Arm Voltage 0", new SetArmVoltage(0));
 //	SmartDashboard.putData("Arm Position Vertical", new SetArmPosition(SuperstructureConstants.kArmVerticalPos));
@@ -123,14 +123,14 @@ public class OI {
 //	SmartDashboard.putData("Superstructure Intake", new DefaultIntake());
 //	SmartDashboard.putData("Superstructure Intake Position", new IntakePosition());
 //	
-	SmartDashboard.putData("Center To Left Switch", new CenterToLeftSwitchAuto());
-	SmartDashboard.putData("Center To Right Switch", new CenterToRightSwitchAuto());
-	SmartDashboard.putData("Left To Left Scale", new LeftToLeftScaleAuto());
-	SmartDashboard.putData("Left To Right Scale", new LeftToRightScaleAuto());
-	SmartDashboard.putData("Right To Left Scale", new RightToLeftScaleAuto());
-	SmartDashboard.putData("Right To Right Scale", new RightToRightScaleAuto());
-	
-	SmartDashboard.putData("Drive Straight Auto", new DriveStraightAuto());
+//	SmartDashboard.putData("Center To Left Switch", new CenterToLeftSwitchAuto());
+//	SmartDashboard.putData("Center To Right Switch", new CenterToRightSwitchAuto());
+//	SmartDashboard.putData("Left To Left Scale", new LeftToLeftScaleAuto());
+//	SmartDashboard.putData("Left To Right Scale", new LeftToRightScaleAuto());
+//	SmartDashboard.putData("Right To Left Scale", new RightToLeftScaleAuto());
+//	SmartDashboard.putData("Right To Right Scale", new RightToRightScaleAuto());
+//	
+//	SmartDashboard.putData("Drive Straight Auto", new DriveStraightAuto());
     }
 
     /**

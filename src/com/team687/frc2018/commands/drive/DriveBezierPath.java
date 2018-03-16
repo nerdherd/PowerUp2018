@@ -118,8 +118,6 @@ public class DriveBezierPath extends Command {
 		double leftPow = (DriveConstants.kLeftAdjustment * straightPower) - rotPower;
 		double rightPow = straightPower + rotPower;
 		Robot.drive.setPower(leftPow, rightPow);
-		SmartDashboard.putNumber("DESIRED LEFT PERCENT VELOCITY", leftPow);
-		SmartDashboard.putNumber("DESIRED RIGHT PERCENT VELOCITY", rightPow);
 	    } else {
 		m_counter++;
 	    }

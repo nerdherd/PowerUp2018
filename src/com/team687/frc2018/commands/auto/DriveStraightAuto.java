@@ -20,9 +20,8 @@ public class DriveStraightAuto extends CommandGroup {
 
     public DriveStraightAuto() {
     	addParallel(new DefaultStow());
+//    	addParallel(new SetWristPosition(Robot.wrist.angleAbsoluteToTicks(80)));
     	addSequential(new DriveStraightDistance(NerdyMath.inchesToTicks(AutoConstants.kRedStartingWallToSwitchInches - DriveConstants.kDrivetrainLength), 0, 4));
-    	addParallel(new SetWristPosition(Robot.wrist.angleAbsoluteToTicks(70)));
-    	addSequential(new WaitTime(1));
     	addParallel(new OuttakeRollers(0.7));
     }
 }

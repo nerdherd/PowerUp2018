@@ -10,8 +10,10 @@ public class AutoConstants {
     public static final double kRedStartingWallToSwitchInches = 139;
     public static final double kRedCenterToRightSwitchFence = 75.5;
     public static final double kRedCenterToRightSwitchInner = 34;
-    public static final double kRedCenterToLeftSwitchFence = 79;
+    public static final double kRedCenterToLeftSwitchFence = 79; // comp field
     public static final double kRedCenterToLeftSwitchInner = 35.5;
+//    public static final double kRedCenterToLeftSwitchFence = 50; // practice field
+//    public static final double kRedCenterToLeftSwitchInner = 25;
     public static final double kRedRightSwitchLength = 56;
     public static final double kRedLeftSwitchLength = 56;
     public static final double kRedRightSwitchToScale = 102;
