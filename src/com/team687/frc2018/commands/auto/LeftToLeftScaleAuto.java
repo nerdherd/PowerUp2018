@@ -23,7 +23,7 @@ public class LeftToLeftScaleAuto extends CommandGroup {
     	addSequential(new TurnToAngle(-30));
     	addSequential(new ResetDriveEncoders());
     	addSequential(new DriveStraightDistance((AutoConstants.kRedMidLeftY - AutoConstants.kRobotLeftOriginX) * 2
-    			, 30, 3));
+    			, -30, 3));
     	
     	addParallel(new StowToBackwardsScale());
     	addSequential(new WaitTime(3));
