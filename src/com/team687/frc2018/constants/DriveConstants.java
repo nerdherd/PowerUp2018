@@ -1,7 +1,5 @@
 package com.team687.frc2018.constants;
 
-import com.team687.frc2018.utilities.PGains;
-
 /**
  * Drive constants
  */
@@ -29,16 +27,15 @@ public class DriveConstants {
     public final static double kRightVelocityD = 0;
 
     public final static double kLeftVelocityF = 0.31322719;
-//    public final static double kLeftVelocityP = 0.288983;
+    // public final static double kLeftVelocityP = 0.288983;
     public final static double kLeftVelocityP = 0.2325;
     public final static double kLeftVelocityI = 0;
     public final static double kLeftVelocityD = 0;
 
     public final static double kMaxVelocity = 3150; // max velocity on ground
+    public final static double kLeftAdjustment = 0.818868;
 
     // Distance PID
-    public final static PGains kDistLeftPGains = new PGains(0.00, 0.00, 0.00);
-    public final static PGains kDistRightPGains = new PGains(0.00, 0.00, 0.00);
     public final static double kDistP = 0.0001;
     public final static double kDistMinPower = 0.118;
     public final static double kDistMaxPower = 0.4;
@@ -48,11 +45,10 @@ public class DriveConstants {
     public final static double kDriveDistanceOscillationCount = 0;
 
     // Rotation PID
-    public final static PGains kRotPGains = new PGains(0.04, 0, .5012);
     public final static double kRotP = .00971;
     public final static double kRotD = .00118;
     public final static double kRotMinPower = 0.1477;
-    public final static double kRotPMaxPower = .330;
+    public final static double kRotPMaxPower = 0.330;
 
     public final static double kDriveRotationTolerance = 1;
     public final static double kDriveRotationDeadband = 0.5;
@@ -88,7 +84,7 @@ public class DriveConstants {
     public final static double kVelocityEpsilon = 254;
     public final static double kCurrentEpsilon = 10;
     public final static double kVoltageEpsilon = 2;
-    
+
     public final static double kDriveSafeCurrent = 40;
 
 }

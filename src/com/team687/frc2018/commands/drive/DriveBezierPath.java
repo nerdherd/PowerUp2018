@@ -96,12 +96,13 @@ public class DriveBezierPath extends Command {
 		// default is specified straight power
 		double straightPower = m_straightPower;
 		double maxStraightPower = Math.abs(m_straightPower);
-//		if (m_softStop) {
-//		    double straightError = m_arcLengthList.get(m_arcLengthList.size() - 1)
-//			    - Math.abs(Robot.drive.getDrivetrainPosition());
-//		    double newMaxStraightPower = m_kDistP * straightError;
-//		    maxStraightPower = Math.min(Math.abs(maxStraightPower), Math.abs(newMaxStraightPower));
-//		}
+		// if (m_softStop) {
+		// double straightError = m_arcLengthList.get(m_arcLengthList.size() - 1)
+		// - Math.abs(Robot.drive.getDrivetrainPosition());
+		// double newMaxStraightPower = m_kDistP * straightError;
+		// maxStraightPower = Math.min(Math.abs(maxStraightPower),
+		// Math.abs(newMaxStraightPower));
+		// }
 
 		// limit straight power to maintain rotPower to straightPower ratio
 		// also for soft stops
@@ -114,9 +115,9 @@ public class DriveBezierPath extends Command {
 		    straightPower = DriveConstants.kMinStraightPower * m_direction;
 		}
 
-		double leftPow = straightPower - rotPower;
+		double leftPow = (DriveConstants.kLeftAdjustment * straightPower) - rotPower;
 		double rightPow = straightPower + rotPower;
-//		Robot.drive.setPercentVelocity(leftPow, rightPow);
+		Robot.drive.setPower(leftPow, rightPow);
 		SmartDashboard.putNumber("DESIRED LEFT PERCENT VELOCITY", leftPow);
 		SmartDashboard.putNumber("DESIRED RIGHT PERCENT VELOCITY", rightPow);
 	    } else {

@@ -3,7 +3,6 @@ package com.team687.frc2018.commands.drive;
 import com.team687.frc2018.Robot;
 import com.team687.frc2018.constants.DriveConstants;
 import com.team687.frc2018.utilities.NerdyMath;
-import com.team687.frc2018.utilities.PGains;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -53,7 +52,7 @@ public class DriveStraightDistance extends Command {
 	straightRightPower = NerdyMath.threshold(straightRightPower, DriveConstants.kDistMinPower,
 		DriveConstants.kDistMaxPower);
 	straightLeftPower = NerdyMath.threshold(straightLeftPower, DriveConstants.kDistMinPower,
-		DriveConstants.kDistMaxPower);
+		DriveConstants.kDistMaxPower) * DriveConstants.kLeftAdjustment;
 
 	double yaw = Robot.drive.getCurrentYaw();
 	if (m_distance < 0) {
@@ -64,7 +63,6 @@ public class DriveStraightDistance extends Command {
 	rotError = (rotError > 180) ? rotError - 360 : rotError;
 	rotError = (rotError < -180) ? rotError + 360 : rotError;
 	double rotPower = DriveConstants.kDistRotP * rotError;
-	
 
 	Robot.drive.setPower(straightLeftPower - rotPower, straightRightPower + rotPower);
     }
