@@ -204,7 +204,7 @@ public class Robot extends TimedRobot {
 //	    SmartDashboard.putString("Selected Auto", "Drive Straight Without Cube");
 //	}
 	
-	autonomousCommand = new DriveStraightWithoutCube();
+//	autonomousCommand = new DriveStraightWithoutCube();
 
 	if (autonomousCommand != null) {
 	    autonomousCommand.start();
