@@ -25,7 +25,7 @@ public class Intake extends Subsystem {
 	m_rollers.setNeutralMode(NeutralMode.Coast);
 	m_rollers.setStatusFramePeriod(StatusFrame.Status_1_General, 20, 0);
 
-	m_rollers.setInverted(false);
+	m_rollers.setInverted(true);
 
 	m_rollers.configPeakOutputForward(1, 0);
 	m_rollers.configPeakOutputReverse(-1, 0);
@@ -73,10 +73,10 @@ public class Intake extends Subsystem {
 
     public void reportToSmartDashboard() {
 	// ----- COMMENT THESE OUT WHEN GOING TO FIELD ----- //
-	SmartDashboard.putNumber("Roller Voltage", getVoltage());
-	SmartDashboard.putNumber("Roller Current", getCurrent());
-	SmartDashboard.putBoolean("Has Cube", hasCube());
-	SmartDashboard.putBoolean("Reached Max Current", isMaxCurrent());
+//	SmartDashboard.putNumber("Roller Voltage", getVoltage());
+//	SmartDashboard.putNumber("Roller Current", getCurrent());
+//	SmartDashboard.putBoolean("Has Cube", hasCube());
+//	SmartDashboard.putBoolean("Reached Max Current", isMaxCurrent());
 	// ----- COMMENT THESE OUT WHEN GOING TO FIELD ----- //
 
 	SmartDashboard.putBoolean("Claw Open", isClawOpen());

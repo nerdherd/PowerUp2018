@@ -51,7 +51,7 @@ public class Drive extends Subsystem {
     private String m_filePath1 = "/media/sda1/logs/";
     private String m_filePath2 = "/home/lvuser/logs/";
     private File m_file;
-    private FileWriter m_writer;
+    public FileWriter m_writer;
     private boolean writeException = false;
     private double m_logStartTime = 0;
 
@@ -72,6 +72,8 @@ public class Drive extends Subsystem {
 	m_leftMaster.setSensorPhase(true);
 	m_leftMaster.configForwardSoftLimitEnable(false, 0);
 	m_leftMaster.configReverseSoftLimitEnable(false, 0);
+	m_leftSlave1.configForwardSoftLimitEnable(false, 0);
+	m_leftSlave1.configReverseSoftLimitEnable(false, 0);
 
 	m_leftMaster.config_kF(0, DriveConstants.kLeftVelocityF, 0);
 	m_leftMaster.config_kP(0, DriveConstants.kLeftVelocityP, 0);
@@ -79,13 +81,15 @@ public class Drive extends Subsystem {
 	m_leftMaster.config_kD(0, DriveConstants.kLeftVelocityD, 0);
 
 	m_rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
-	m_leftMaster.setStatusFramePeriod(StatusFrame.Status_1_General, 20, 0);
+	m_rightMaster.setStatusFramePeriod(StatusFrame.Status_1_General, 20, 0);
 	m_rightMaster.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 20, 0);
 	m_rightMaster.setInverted(true);
 	m_rightSlave1.setInverted(true);
 	m_rightMaster.setSensorPhase(true);
 	m_rightMaster.configForwardSoftLimitEnable(false, 0);
 	m_rightMaster.configReverseSoftLimitEnable(false, 0);
+	m_rightSlave1.configForwardSoftLimitEnable(false, 0);
+	m_rightSlave1.configReverseSoftLimitEnable(false, 0);
 
 	m_rightMaster.config_kF(0, DriveConstants.kRightVelocityF, 0);
 	m_rightMaster.config_kP(0, DriveConstants.kRightVelocityP, 0);
@@ -102,9 +106,13 @@ public class Drive extends Subsystem {
 	m_leftMaster.configPeakCurrentDuration(0, 0);
 	m_leftMaster.configContinuousCurrentLimit(DriveConstants.kContinuousCurrentLimit, 0);
 	m_leftMaster.enableCurrentLimit(true);
-	// m_leftSlave1.enableCurrentLimit(false);
+//	 m_leftSlave1.enableCurrentLimit(false);
 	m_leftMaster.configOpenloopRamp(DriveConstants.kVoltageRampRate, 0);
 	m_leftMaster.configClosedloopRamp(DriveConstants.kVoltageRampRate, 0);
+	m_leftMaster.configPeakOutputForward(1, 0);
+	m_leftMaster.configPeakOutputReverse(-1, 0);
+	m_leftSlave1.configPeakOutputForward(1, 0);
+	m_leftSlave1.configPeakOutputReverse(-1, 0);
 
 	m_rightMaster.configPeakCurrentLimit(0, 0);
 	m_rightMaster.configPeakCurrentDuration(0, 0);
@@ -113,6 +121,10 @@ public class Drive extends Subsystem {
 	// m_rightSlave1.enableCurrentLimit(false);
 	m_rightMaster.configOpenloopRamp(DriveConstants.kVoltageRampRate, 0);
 	m_rightMaster.configClosedloopRamp(DriveConstants.kVoltageRampRate, 0);
+	m_rightMaster.configPeakOutputForward(1, 0);
+	m_rightMaster.configPeakOutputReverse(-1, 0);
+	m_rightSlave1.configPeakOutputForward(1, 0);
+	m_rightSlave1.configPeakOutputReverse(-1, 0);
 
 	m_nav = new AHRS(SPI.Port.kMXP);
 	m_navxsensor = new navXSensor(m_nav, "Drivetrain Orientation");
@@ -360,17 +372,17 @@ public class Drive extends Subsystem {
 
     public void reportToSmartDashboard() {
 	// ----- COMMENT THESE OUT WHEN GOING TO FIELD ----- //
-	SmartDashboard.putBoolean("Brake Mode On", m_brakeModeOn);
-	SmartDashboard.putNumber("Left Master Voltage", getLeftMasterVoltage());
-	SmartDashboard.putNumber("Left Slave 1 Voltage", getLeftSlaveVoltage());
-	SmartDashboard.putNumber("Right Master Voltage", getRightMasterVoltage());
-	SmartDashboard.putNumber("Right Slave 1 Voltage", getRightSlaveVoltage());
-	SmartDashboard.putNumber("Left Master Current", getLeftMasterCurrent());
-	SmartDashboard.putNumber("Left Slave 1 Current", getLeftSlaveCurrent());
-	SmartDashboard.putNumber("Right Master Current", getRightMasterCurrent());
-	SmartDashboard.putNumber("Right Slave 1 Current", getRightSlaveCurrent());
-	SmartDashboard.putNumber("Right Drive Velocity", getRightVelocity());
-	SmartDashboard.putNumber("Left Drive Velocity", getLeftVelocity());
+//	SmartDashboard.putBoolean("Brake Mode On", m_brakeModeOn);
+//	SmartDashboard.putNumber("Left Master Voltage", getLeftMasterVoltage());
+//	SmartDashboard.putNumber("Left Slave 1 Voltage", getLeftSlaveVoltage());
+//	SmartDashboard.putNumber("Right Master Voltage", getRightMasterVoltage());
+//	SmartDashboard.putNumber("Right Slave 1 Voltage", getRightSlaveVoltage());
+//	SmartDashboard.putNumber("Left Master Current", getLeftMasterCurrent());
+//	SmartDashboard.putNumber("Left Slave 1 Current", getLeftSlaveCurrent());
+//	SmartDashboard.putNumber("Right Master Current", getRightMasterCurrent());
+//	SmartDashboard.putNumber("Right Slave 1 Current", getRightSlaveCurrent());
+//	SmartDashboard.putNumber("Right Drive Velocity", getRightVelocity());
+//	SmartDashboard.putNumber("Left Drive Velocity", getLeftVelocity());
 	// ----- COMMENT THESE OUT WHEN GOING TO FIELD ----- //
 
 	SmartDashboard.putNumber("Right Drive Postion", getRightPosition());
@@ -441,7 +453,7 @@ public class Drive extends Subsystem {
 			+ String.valueOf(getLeftSlaveVoltage()) + "," + String.valueOf(getRightMasterCurrent()) + ","
 			+ String.valueOf(getRightSlaveCurrent()) + "," + String.valueOf(getLeftMasterCurrent()) + ","
 			+ String.valueOf(getLeftSlaveCurrent()) + "\n");
-		m_writer.flush();
+//		m_writer.flush();
 	    } catch (IOException e) {
 		e.printStackTrace();
 		writeException = true;

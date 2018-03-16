@@ -32,7 +32,7 @@ public class Arm extends Subsystem {
     private String m_filePath1 = "/media/sda1/logs/";
     private String m_filePath2 = "/home/lvuser/logs/";
     private File m_file;
-    private FileWriter m_writer;
+    public FileWriter m_writer;
     private boolean writeException = false;
     private double m_logStartTime = 0;
 
@@ -151,10 +151,10 @@ public class Arm extends Subsystem {
 
     public void reportToSmartDashboard() {
 	// ----- COMMENT THESE OUT WHEN GOING TO FIELD ----- //
-	SmartDashboard.putNumber("Arm Velocity", getVelocity());
-	SmartDashboard.putNumber("Arm Voltage", getVoltage());
-	SmartDashboard.putNumber("Arm Current", getCurrent());
-	SmartDashboard.putNumber("Arm Desired Position", m_desiredPos);
+//	SmartDashboard.putNumber("Arm Velocity", getVelocity());
+//	SmartDashboard.putNumber("Arm Voltage", getVoltage());
+//	SmartDashboard.putNumber("Arm Current", getCurrent());
+//	SmartDashboard.putNumber("Arm Desired Position", m_desiredPos);
 	// ----- COMMENT THESE OUT WHEN GOING TO FIELD ----- //
 
 	SmartDashboard.putNumber("Arm Position", getPosition());
@@ -218,7 +218,7 @@ public class Arm extends Subsystem {
 			+ String.valueOf(getPosition()) + "," + String.valueOf(getVelocity()) + ","
 			+ String.valueOf(getAngleAbsolute()) + "," + String.valueOf(getVoltage()) + ","
 			+ String.valueOf(getCurrent()) + "\n");
-		m_writer.flush();
+//		m_writer.flush();
 	    } catch (IOException e) {
 		e.printStackTrace();
 		writeException = true;

@@ -7,22 +7,24 @@ public class AutoConstants {
 
     // field measurements (absolute inches)
     // change these
-    public static final double kRedStartingWallToSwitchInches = 143;
-    public static final double kRedCenterToRightSwitchFence = 76.75;
-    public static final double kRedCenterToRightSwitchInner = 32.25;
-    public static final double kRedCenterToLeftSwitchFence = 76.75;
-    public static final double kRedCenterToLeftSwitchInner = 32.25;
-    public static final double kRedRightSwitchLength = 52;
-    public static final double kRedLeftSwitchLength = 52;
-    public static final double kRedRightSwitchToScale = 110;
-    public static final double kRedLeftSwitchToScale = 110;
-    public static final double kRedRightSideWallToScale = 72;
-    public static final double kRedLeftSideWallToScale = 72;
+    public static final double kRedStartingWallToSwitchInches = 139;
+    public static final double kRedCenterToRightSwitchFence = 75.5;
+    public static final double kRedCenterToRightSwitchInner = 34;
+    public static final double kRedCenterToLeftSwitchFence = 79;
+    public static final double kRedCenterToLeftSwitchInner = 35.5;
+    public static final double kRedRightSwitchLength = 56;
+    public static final double kRedLeftSwitchLength = 56;
+    public static final double kRedRightSwitchToScale = 102;
+    public static final double kRedLeftSwitchToScale = 102;
+    public static final double kRedRightSideWallToScale = 73.5;
+    public static final double kRedLeftSideWallToScale = 71;
+    public static final double kRedRightSideWallToCenterOfScale = 81;
+    public static final double kRedLeftSideWallToCenterOfScale = 78;
     public static final double kPowerCubeLength = 13;
 
     // field measurements for origin (absolute inches)
     // don't change these unless we have time and they aren't far off from expected
-    public static final double kRedExchangeLineToCenterLine = 12;
+    public static final double kRedExchangeLineToCenterLine = 11;
     public static final double kRedRightSideWallToAllianceStationEdge = 31;
     public static final double kRedLeftSideWallToAllianceStationEdge = 31;
 
@@ -62,8 +64,8 @@ public class AutoConstants {
     // straight and turn autos
     public static double kRedWallToPivotPoint = NerdyMath.inchesToTicks(kRedStartingWallToSwitchInches
 	    + kRedLeftSwitchLength + 2 * kPowerCubeLength - 0.5 * DriveConstants.kDrivetrainLength);
-    public static double kRedLeftSwitchToRightScale = NerdyMath.inchesToTicks(240) - kRobotLeftOriginX;
-    public static double kRedRightSwitchToLeftScale = NerdyMath.inchesToTicks(240) - kRobotLeftOriginX;
+    public static double kRedLeftSwitchToRightScale = NerdyMath.inchesToTicks(324 - kRedLeftSideWallToCenterOfScale) - kRobotLeftOriginX;
+    public static double kRedRightSwitchToLeftScale = NerdyMath.inchesToTicks(324 - kRedRightSideWallToCenterOfScale) - kRobotLeftOriginX;
 
     // Bezier curve paths
     public static BezierCurve kRedCenterToRightSwitchPath = new BezierCurve(kRobotCenterOriginX, kRobotOriginY,

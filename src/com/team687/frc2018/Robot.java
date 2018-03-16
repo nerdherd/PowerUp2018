@@ -1,7 +1,11 @@
 package com.team687.frc2018;
 
+import java.io.IOException;
+
 import com.team687.frc2018.commands.auto.CenterToLeftSwitchAuto;
 import com.team687.frc2018.commands.auto.CenterToRightSwitchAuto;
+import com.team687.frc2018.commands.auto.DriveStraightAuto;
+import com.team687.frc2018.commands.auto.DriveStraightWithoutCube;
 import com.team687.frc2018.commands.auto.LeftToLeftScaleAuto;
 import com.team687.frc2018.commands.auto.LeftToRightScaleAuto;
 import com.team687.frc2018.commands.auto.RightToLeftScaleAuto;
@@ -13,18 +17,20 @@ import com.team687.frc2018.subsystems.Drive;
 import com.team687.frc2018.subsystems.Intake;
 import com.team687.frc2018.subsystems.Wrist;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TimedRobot {
 
-    public static final String kDate = "2018_03_12_";
+    public static final String kDate = "2018_03_15_";
 
     public static Drive drive;
     public static Arm arm;
@@ -45,6 +51,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
 	pdp = new PowerDistributionPanel();
+	LiveWindow.disableTelemetry(pdp);
 	compressor = new Compressor();
 	compressor.start();
 
@@ -67,11 +74,17 @@ public class Robot extends TimedRobot {
 	oi = new OI();
 	ds = DriverStation.getInstance();
 
+	CameraServer.getInstance().startAutomaticCapture();
+	
 	sideChooser = new SendableChooser<>();
 	sideChooser.addDefault("Center", "center");
 	sideChooser.addObject("Left", "left");
 	sideChooser.addObject("Right", "right");
 	SmartDashboard.putData("Auto Chooser", sideChooser);
+	
+//	drive.startLog();
+//	arm.startLog();
+//	wrist.startLog();
     }
 
     @Override
@@ -91,9 +104,17 @@ public class Robot extends TimedRobot {
 		!(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent
 			|| wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
 
-	drive.stopLog();
-	arm.stopLog();
-	wrist.stopLog();
+//	try {
+//		drive.m_writer.flush();
+//		arm.m_writer.flush();
+//		wrist.m_writer.flush();
+//	} catch (IOException e) {
+//		e.printStackTrace();
+//	}
+	
+//	drive.stopLog();
+//	arm.stopLog();
+//	wrist.stopLog();
     }
 
     @Override
@@ -133,9 +154,6 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
 	// Scheduler.getInstance().removeAll();
-	drive.startLog();
-	arm.startLog();
-	wrist.startLog();
 
 	String msg = DriverStation.getInstance().getGameSpecificMessage();
 	while (msg == null || msg.length() < 2) {
@@ -173,11 +191,17 @@ public class Robot extends TimedRobot {
 	    autonomousCommand = new RightToLeftScaleAuto();
 	    SmartDashboard.putString("Selected Auto", "Right To Left Scale");
 	} else if (startingPosition == "right" && !scaleOnLeft) {
-	    autonomousCommand = new RightToRightScaleAuto();
+	    autonomousCommand = new DriveStraightAuto();
 	    SmartDashboard.putString("Selected Auto", "Right To Right Scale");
 	} else {
 	    autonomousCommand = null;
 	    SmartDashboard.putString("Selected Auto", "None");
+	}
+	
+	if ((startingPosition == "left" && switchOnLeft) || startingPosition == "right" && !switchOnLeft) {
+	    autonomousCommand = new DriveStraightAuto();
+	} else {
+		autonomousCommand = new DriveStraightWithoutCube();
 	}
 
 	if (autonomousCommand != null) {
@@ -202,16 +226,16 @@ public class Robot extends TimedRobot {
 		!(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent
 			|| wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
 
-	drive.logToCSV();
-	arm.logToCSV();
-	wrist.logToCSV();
+//	drive.logToCSV();
+//	arm.logToCSV();
+//	wrist.logToCSV();
+	
+	SmartDashboard.putNumber("Right Drive Position End Auto", drive.getRightPosition());
+	SmartDashboard.putNumber("Left Drive Position End Auto", drive.getLeftPosition());
     }
 
     @Override
     public void teleopInit() {
-	drive.startLog();
-	arm.startLog();
-	wrist.startLog();
 
 	drive.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
@@ -244,11 +268,15 @@ public class Robot extends TimedRobot {
 		!(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent
 			|| wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
 
-	drive.logToCSV();
-	arm.logToCSV();
-	wrist.logToCSV();
+//	drive.logToCSV();
+//	arm.logToCSV();
+//	wrist.logToCSV();
+	
+	if (ds.getMatchTime() < 5) {
+		Robot.wrist.enableBrakeMode();
+	}
     }
-
+    
     @Override
     public void testPeriodic() {
     }

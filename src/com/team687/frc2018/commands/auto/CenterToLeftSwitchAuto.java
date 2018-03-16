@@ -11,7 +11,7 @@ public class CenterToLeftSwitchAuto extends CommandGroup {
 
     public CenterToLeftSwitchAuto() {
 	addParallel(new DefaultStow());
-	addSequential(new DriveBezierPath(AutoConstants.kRedCenterToLeftSwitchPath, 0.5, 0.008, 0.001, true));
+	addSequential(new DriveBezierPath(AutoConstants.kRedCenterToLeftSwitchPath, 0.5, 0.012, 0.001, true));
 	addParallel(new SetIntakeRollerPower(0.4));
     }
 }

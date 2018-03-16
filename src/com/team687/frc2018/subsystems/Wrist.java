@@ -31,7 +31,7 @@ public class Wrist extends Subsystem {
     private String m_filePath1 = "/media/sda1/logs/";
     private String m_filePath2 = "/home/lvuser/logs/";
     private File m_file;
-    private FileWriter m_writer;
+    public FileWriter m_writer;
     private boolean writeException = false;
     private double m_logStartTime;
 
@@ -133,6 +133,10 @@ public class Wrist extends Subsystem {
     public void setAngleAbsolute(double angle) {
 	setPosition(angleAbsoluteToTicks(angle));
     }
+    
+    public void enableBrakeMode() {
+    	m_wrist.setNeutralMode(NeutralMode.Brake);
+    }
 
     /**
      * @return desired angle when going to/from forwards scale scoring position
@@ -173,15 +177,14 @@ public class Wrist extends Subsystem {
 
     public void reportToSmartDashboard() {
 	// ----- COMMENT THESE OUT WHEN GOING TO FIELD ----- //
-	SmartDashboard.putNumber("Wrist Desired Position", angleAbsoluteToTicks(getDesiredAbsoluteAngleGoingUp()));
-	SmartDashboard.putNumber("Wrist Desired Absolute Angle", getDesiredAbsoluteAngleGoingUp());
-	SmartDashboard.putNumber("Wrist Voltage", getVoltage());
-	SmartDashboard.putNumber("Wrist Current", getCurrent());
+//	SmartDashboard.putNumber("Wrist Desired Position", angleAbsoluteToTicks(getDesiredAbsoluteAngleGoingUp()));
+//	SmartDashboard.putNumber("Wrist Desired Absolute Angle", getDesiredAbsoluteAngleGoingUp());
+//	SmartDashboard.putNumber("Wrist Voltage", getVoltage());
+//	SmartDashboard.putNumber("Wrist Current", getCurrent());
 	// ----- COMMENT THESE OUT WHEN GOING TO FIELD ----- //
 
 	SmartDashboard.putNumber("Wrist Position", getPosition());
 	SmartDashboard.putNumber("Wrist Absolute Angle", getAngleAbsolute());
-
     }
 
     public void startLog() {
@@ -243,7 +246,7 @@ public class Wrist extends Subsystem {
 			+ String.valueOf(m_desiredPos) + "," + String.valueOf(getDesiredAngle()) + ","
 			+ String.valueOf(getSpeed()) + "," + String.valueOf(getAngleAbsolute()) + ","
 			+ String.valueOf(getVoltage()) + "," + String.valueOf(getCurrent()) + "\n");
-		m_writer.flush();
+//		m_writer.flush();
 	    } catch (IOException e) {
 		e.printStackTrace();
 		writeException = true;

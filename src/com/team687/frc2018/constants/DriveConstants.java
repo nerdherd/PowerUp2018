@@ -40,7 +40,7 @@ public class DriveConstants {
     public final static PGains kDistRightPGains = new PGains(0.00, 0.00, 0.00);
     public final static double kDistP = 0.0001;
     public final static double kDistMinPower = 0.118;
-    public final static double kDistMaxPower = 0.7;
+    public final static double kDistMaxPower = 0.4;
     public final static double kDistRotP = 0.004;
     public final static double kDistD = 0;
     public final static double kDriveDistanceTolerance = 0;
