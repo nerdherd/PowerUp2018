@@ -132,9 +132,10 @@ public class Robot extends TimedRobot {
 	}
 	if (Robot.oi.driveJoyLeft.getRawButton(3) && Robot.oi.driveJoyRight.getRawButton(3)) {
 	    drive.resetEncoders();
+	    drive.resetGyro();
 	}
 	if (Robot.oi.driveJoyLeft.getRawButton(4) && Robot.oi.driveJoyRight.getRawButton(4)) {
-	    drive.resetGyro();
+		antiFoulThing.resetEncoder();
 	}
 	
 	drive.resetEncoders();
