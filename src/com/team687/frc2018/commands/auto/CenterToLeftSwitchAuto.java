@@ -1,6 +1,7 @@
 package com.team687.frc2018.commands.auto;
 
 import com.team687.frc2018.Robot;
+import com.team687.frc2018.commands.antifoulthing.DeployAntiFoulThing;
 import com.team687.frc2018.commands.drive.DriveBezierPath;
 import com.team687.frc2018.commands.drive.WaitTime;
 import com.team687.frc2018.commands.intake.OuttakeRollers;
@@ -15,6 +16,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class CenterToLeftSwitchAuto extends CommandGroup {
 
     public CenterToLeftSwitchAuto() {
+    addParallel(new DeployAntiFoulThing());
 	addParallel(new SwitchScorePosition());
 //	addParallel(new SetWristPosition(Robot.wrist.angleAbsoluteToTicks(80)));
 	addSequential(new DriveBezierPath(AutoConstants.kRedCenterToLeftSwitchPath, 0.5, 0.008, 0.001, false));

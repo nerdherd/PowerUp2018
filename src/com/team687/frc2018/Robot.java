@@ -9,6 +9,7 @@ import com.team687.frc2018.commands.auto.LeftToRightScaleAuto;
 import com.team687.frc2018.commands.auto.RightToLeftScaleAuto;
 import com.team687.frc2018.constants.DriveConstants;
 import com.team687.frc2018.constants.SuperstructureConstants;
+import com.team687.frc2018.subsystems.AntiFoulThing;
 import com.team687.frc2018.subsystems.Arm;
 import com.team687.frc2018.subsystems.Drive;
 import com.team687.frc2018.subsystems.Intake;
@@ -33,6 +34,7 @@ public class Robot extends TimedRobot {
     public static Arm arm;
     public static Wrist wrist;
     public static Intake intake;
+    public static AntiFoulThing antiFoulThing;
 
     public static DriverStation ds;
     public static PowerDistributionPanel pdp;
@@ -67,6 +69,10 @@ public class Robot extends TimedRobot {
 	drive.stopDrive();
 	drive.resetEncoders();
 	drive.resetGyro();
+	
+	antiFoulThing = new AntiFoulThing();
+	antiFoulThing.resetEncoder();
+	antiFoulThing.setPower(0);
 
 	oi = new OI();
 	ds = DriverStation.getInstance();

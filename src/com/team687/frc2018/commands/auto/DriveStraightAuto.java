@@ -1,6 +1,7 @@
 package com.team687.frc2018.commands.auto;
 
 import com.team687.frc2018.Robot;
+import com.team687.frc2018.commands.antifoulthing.DeployAntiFoulThing;
 import com.team687.frc2018.commands.drive.DriveStraightDistance;
 import com.team687.frc2018.commands.drive.WaitTime;
 import com.team687.frc2018.commands.intake.OuttakeRollers;
@@ -19,6 +20,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class DriveStraightAuto extends CommandGroup {
 
     public DriveStraightAuto() {
+        addParallel(new DeployAntiFoulThing());
     	addParallel(new DefaultStow());
 //    	addParallel(new SetWristPosition(Robot.wrist.angleAbsoluteToTicks(80)));
     	addSequential(new DriveStraightDistance(NerdyMath.inchesToTicks(AutoConstants.kRedStartingWallToSwitchInches - DriveConstants.kDrivetrainLength), 0, 4));

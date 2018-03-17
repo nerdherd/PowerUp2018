@@ -67,5 +67,9 @@ public class SuperstructureConstants {
 
     public static final double kArmSafeCurrent = 40;
     public static final double kWristSafeCurrent = 40;
+    
+    public static final double kAntiFoulThingkP = 1;
+    
+    public static final double kAntiFoulThingDeployedPosition = 687;
 
 }

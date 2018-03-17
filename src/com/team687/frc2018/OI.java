@@ -1,5 +1,7 @@
 package com.team687.frc2018;
 
+import com.team687.frc2018.commands.antifoulthing.DeployAntiFoulThing;
+import com.team687.frc2018.commands.antifoulthing.RetractAntiFoulThing;
 import com.team687.frc2018.commands.arm.ResetArmEncoder;
 import com.team687.frc2018.commands.arm.SetArmPosition;
 import com.team687.frc2018.commands.arm.SetArmVoltage;
@@ -50,12 +52,13 @@ public class OI {
     public JoystickButton stopIntake_3;
     public JoystickButton intakePosition_4;
 
-    public JoystickButton armOffset_11;
     public JoystickButton forwardsToStow_9;
     public JoystickButton stowToForwards_7;
     public JoystickButton stowToBackwards_8;
     public JoystickButton backwardsToStow_10;
     
+    public JoystickButton deployAntiFoulThing_11;
+    public JoystickButton retractAntiFoulThing_12;
     
     public JoystickButton openClaw_6;
     public JoystickButton closeClaw_5;
@@ -70,8 +73,10 @@ public class OI {
 	intakePosition_4 = new JoystickButton(driveJoyArtic, 4);
 	intakePosition_4.whenPressed(new DefaultIntake());
 
-	armOffset_11 = new JoystickButton(driveJoyArtic, 11);
-	armOffset_11.whenPressed(new SetArmPosition(SuperstructureConstants.kArmOffsetPos));
+	deployAntiFoulThing_11 = new JoystickButton(driveJoyArtic, 11);
+	deployAntiFoulThing_11.whenPressed(new DeployAntiFoulThing());
+	retractAntiFoulThing_12 = new JoystickButton(driveJoyArtic, 12);
+	retractAntiFoulThing_12.whenPressed(new RetractAntiFoulThing());
 
 	forwardsToStow_9 = new JoystickButton(driveJoyArtic, 9);
 	forwardsToStow_9.whenPressed(new ForwardsScaleToStow());
@@ -113,6 +118,8 @@ public class OI {
 //	SmartDashboard.putData("Outtake", new SetIntakeRollerPower(0.4));
 //	SmartDashboard.putData("Open Intake Claw", new ClawOpen());
 //	SmartDashboard.putData("Close Intake Claw", new ClawClose());
+	
+	SmartDashboard.putData("DeployAntiFoulThing", new DeployAntiFoulThing());
 //
 //	SmartDashboard.putData("Superstructure Stow to Backwards Scale", new StowToBackwardsScale());
 //	SmartDashboard.putData("Superstructure Stow to Forwards Scale", new StowToForwardsScale());
@@ -123,14 +130,14 @@ public class OI {
 //	SmartDashboard.putData("Superstructure Intake", new DefaultIntake());
 //	SmartDashboard.putData("Superstructure Intake Position", new IntakePosition());
 //	
-//	SmartDashboard.putData("Center To Left Switch", new CenterToLeftSwitchAuto());
-//	SmartDashboard.putData("Center To Right Switch", new CenterToRightSwitchAuto());
-//	SmartDashboard.putData("Left To Left Scale", new LeftToLeftScaleAuto());
-//	SmartDashboard.putData("Left To Right Scale", new LeftToRightScaleAuto());
-//	SmartDashboard.putData("Right To Left Scale", new RightToLeftScaleAuto());
-//	SmartDashboard.putData("Right To Right Scale", new RightToRightScaleAuto());
-//	
-//	SmartDashboard.putData("Drive Straight Auto", new DriveStraightAuto());
+	SmartDashboard.putData("Center To Left Switch", new CenterToLeftSwitchAuto());
+	SmartDashboard.putData("Center To Right Switch", new CenterToRightSwitchAuto());
+	SmartDashboard.putData("Left To Left Scale", new LeftToLeftScaleAuto());
+	SmartDashboard.putData("Left To Right Scale", new LeftToRightScaleAuto());
+	SmartDashboard.putData("Right To Left Scale", new RightToLeftScaleAuto());
+	SmartDashboard.putData("Right To Right Scale", new RightToRightScaleAuto());
+	
+	SmartDashboard.putData("Drive Straight Auto", new DriveStraightAuto());
     }
 
     /**

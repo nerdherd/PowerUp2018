@@ -1,5 +1,6 @@
 package com.team687.frc2018.commands.auto;
 
+import com.team687.frc2018.commands.antifoulthing.DeployAntiFoulThing;
 import com.team687.frc2018.commands.drive.DriveBezierPath;
 import com.team687.frc2018.commands.drive.WaitTime;
 import com.team687.frc2018.commands.intake.SetIntakeRollerPower;
@@ -13,6 +14,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class RightToRightScaleAuto extends CommandGroup {
 
     public RightToRightScaleAuto() {
+    addParallel(new DeployAntiFoulThing());
 	addParallel(new DefaultStow());
 	addSequential(new DriveBezierPath(AutoConstants.kRedRightSameSideScalePath, -0.6, 0.008, 0.0005, true));
 
