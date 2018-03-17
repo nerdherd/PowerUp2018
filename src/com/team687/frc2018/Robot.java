@@ -7,6 +7,7 @@ import com.team687.frc2018.commands.auto.DriveStraightWithoutCube;
 import com.team687.frc2018.commands.auto.LeftToLeftScaleAuto;
 import com.team687.frc2018.commands.auto.LeftToRightScaleAuto;
 import com.team687.frc2018.commands.auto.RightToLeftScaleAuto;
+import com.team687.frc2018.commands.auto.RightToRightScaleAuto;
 import com.team687.frc2018.constants.DriveConstants;
 import com.team687.frc2018.constants.SuperstructureConstants;
 import com.team687.frc2018.subsystems.Arm;
@@ -181,30 +182,21 @@ public class Robot extends TimedRobot {
 	} else if (startingPosition == "center" && !switchOnLeft) {
 	    autonomousCommand = new CenterToRightSwitchAuto();
 	    SmartDashboard.putString("Selected Auto", "Center To Right Switch");
+//	} else if (startingPosition == "left" && scaleOnLeft) {
+//	    autonomousCommand = new LeftToLeftScaleAuto();
+//	    SmartDashboard.putString("Selected Auto", "Left To Left Scale");
+//	} else if (startingPosition == "left" && !scaleOnLeft) {
+//	    autonomousCommand = new LeftToRightScaleAuto();
+//	    SmartDashboard.putString("Selected Auto", "Left To Right Scale");
+//	} else if (startingPosition == "right" && scaleOnLeft) {
+//	    autonomousCommand = new RightToLeftScaleAuto();
+//	    SmartDashboard.putString("Selected Auto", "Right To Left Scale");
+//	} else if (startingPosition == "right" && !scaleOnLeft) {
+//	    autonomousCommand = new RightToRightScaleAuto();
+//	    SmartDashboard.putString("Selected Auto", "Right To Right Scale");
 	} else {
 		autonomousCommand = new DriveStraightWithoutCube();
 	}
-////	} else if (startingPosition == "left" && scaleOnLeft) {
-////	    autonomousCommand = new LeftToLeftScaleAuto();
-////	    SmartDashboard.putString("Selected Auto", "Left To Left Scale");
-////	} else if (startingPosition == "left" && !scaleOnLeft) {
-////	    autonomousCommand = new LeftToRightScaleAuto();
-////	    SmartDashboard.putString("Selected Auto", "Left To Right Scale");
-////	} else if (startingPosition == "right" && scaleOnLeft) {
-////	    autonomousCommand = new RightToLeftScaleAuto();
-////	    SmartDashboard.putString("Selected Auto", "Right To Left Scale");
-////	} else if (startingPosition == "right" && !scaleOnLeft) {
-////	    autonomousCommand = new DriveStraightAuto();
-////	    SmartDashboard.putString("Selected Auto", "Right To Right Scale");
-//	} else if ((startingPosition == "left" && switchOnLeft) || startingPosition == "right" && !switchOnLeft) {
-//	    autonomousCommand = new DriveStraightAuto();
-//	    SmartDashboard.putString("Selected Auto", "Side To Side Switch");
-//	} else {
-//	    autonomousCommand = new DriveStraightWithoutCube();
-//	    SmartDashboard.putString("Selected Auto", "Drive Straight Without Cube");
-//	}
-	
-//	autonomousCommand = new DriveStraightWithoutCube();
 
 	if (autonomousCommand != null) {
 	    autonomousCommand.start();
