@@ -16,7 +16,6 @@ public class CenterToRightSwitchAuto extends CommandGroup {
 
     public CenterToRightSwitchAuto() {
 	addParallel(new SwitchScorePosition());
-//	addParallel(new SetWristPosition(Robot.wrist.angleAbsoluteToTicks(80)));
 	addSequential(new DriveBezierPath(AutoConstants.kRedCenterToRightSwitchPath, 0.5, 0.008, 0.001, false));
 	addParallel(new OuttakeRollers(0.5));
     }
