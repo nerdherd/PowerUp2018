@@ -9,11 +9,9 @@ public class AutoConstants {
     // change these
     public static final double kRedStartingWallToSwitchInches = 139;
     public static final double kRedCenterToRightSwitchFence = 75.5;
-    public static final double kRedCenterToRightSwitchInner = 34;
-    public static final double kRedCenterToLeftSwitchFence = 75.5; // comp field
-    public static final double kRedCenterToLeftSwitchInner = 34;
-//    public static final double kRedCenterToLeftSwitchFence = 50; // practice field
-//    public static final double kRedCenterToLeftSwitchInner = 25;
+    public static final double kRedCenterToRightSwitchInner = 34; // X = 54.75
+    public static final double kRedCenterToLeftSwitchFence = 70;
+    public static final double kRedCenterToLeftSwitchInner = 30; // X = 50
     public static final double kRedRightSwitchLength = 56;
     public static final double kRedLeftSwitchLength = 56;
     public static final double kRedRightSwitchToScale = 102;
@@ -66,8 +64,10 @@ public class AutoConstants {
     // straight and turn autos
     public static double kRedWallToPivotPoint = NerdyMath.inchesToTicks(kRedStartingWallToSwitchInches
 	    + kRedLeftSwitchLength + 2 * kPowerCubeLength - 0.5 * DriveConstants.kDrivetrainLength);
-    public static double kRedLeftSwitchToRightScale = NerdyMath.inchesToTicks(324 - kRedLeftSideWallToCenterOfScale) - kRobotLeftOriginX;
-    public static double kRedRightSwitchToLeftScale = NerdyMath.inchesToTicks(324 - kRedRightSideWallToCenterOfScale) - kRobotLeftOriginX;
+    public static double kRedLeftSwitchToRightScale = NerdyMath.inchesToTicks(324 - kRedLeftSideWallToCenterOfScale)
+	    - kRobotLeftOriginX;
+    public static double kRedRightSwitchToLeftScale = NerdyMath.inchesToTicks(324 - kRedRightSideWallToCenterOfScale)
+	    - kRobotLeftOriginX;
 
     // Bezier curve paths
     public static BezierCurve kRedCenterToRightSwitchPath = new BezierCurve(kRobotCenterOriginX, kRobotOriginY,
