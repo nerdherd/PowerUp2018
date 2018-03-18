@@ -2,6 +2,7 @@ package com.team687.frc2018.commands.auto;
 
 import com.team687.frc2018.Robot;
 import com.team687.frc2018.commands.drive.DriveBezierPath;
+import com.team687.frc2018.commands.drive.DriveTime;
 import com.team687.frc2018.commands.drive.WaitTime;
 import com.team687.frc2018.commands.intake.OuttakeRollers;
 import com.team687.frc2018.commands.intake.SetIntakeRollerPower;
@@ -18,5 +19,6 @@ public class CenterToLeftSwitchAuto extends CommandGroup {
 	addParallel(new SwitchScorePosition());
 	addSequential(new DriveBezierPath(AutoConstants.kRedCenterToLeftSwitchPath, 0.5, 0.008, 0.001, false));
 	addParallel(new OuttakeRollers(0.5));
+	addSequential(new DriveTime(0.5, 0.5));
     }
 }

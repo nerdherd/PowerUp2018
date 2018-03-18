@@ -23,6 +23,7 @@ public class AutoConstants {
     public static final double kRedRightSideWallToCenterOfScale = 81;
     public static final double kRedLeftSideWallToCenterOfScale = 78;
     public static final double kPowerCubeLength = 13;
+    
 
     // field measurements for origin (absolute inches)
     // don't change these unless we have time and they aren't far off from expected
