@@ -19,16 +19,17 @@ public class LeftToRightScaleAuto extends CommandGroup {
 	addSequential(new DriveStraightDistance(-AutoConstants.kRedWallToPivotPoint, -180, 5));
 	addSequential(new TurnToAngle(-90));
 	addSequential(new ResetDriveEncoders());
-	addSequential(new DriveStraightDistance(AutoConstants.kRedLeftSwitchToRightScale, -90, 10));
+	addSequential(new DriveStraightDistance(AutoConstants.kRedLeftPivotPointToRightScale, -90, 10));
 	addSequential(new TurnToAngle(0));
 	addSequential(new ResetDriveEncoders());
-	addSequential(
-		new DriveStraightDistance(-AutoConstants.kRedScaleLeftY + AutoConstants.kRedWallToPivotPoint, -180, 5));
+	addSequential(new DriveStraightDistance(-AutoConstants.kRedScaleLeftY + AutoConstants.kRedWallToPivotPoint,
+		-180, 5, 0.4));
 
 	addParallel(new StowToBackwardsScale());
-	addSequential(new WaitTime(3));
+	addSequential(new WaitTime(2));
 	addParallel(new SetIntakeRollerPower(0.7));
-	addSequential(new WaitTime(1));
+	addSequential(new WaitTime(0.5));
 	addParallel(new BackwardsScaleToStow());
+	addSequential(new WaitTime(2));
     }
 }

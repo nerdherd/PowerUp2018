@@ -19,15 +19,29 @@ public class DriveStraightDistance extends Command {
 
     private double m_startTime, m_timeout;
 
-    /**
-     * @param distance
-     * @param heading
-     * @param timeout
-     */
+    private double m_maxStraightPower;
+
     public DriveStraightDistance(double distance, double heading, double timeout) {
 	m_distance = distance;
 	m_heading = heading;
 	m_timeout = timeout;
+	m_maxStraightPower = DriveConstants.kDistMaxPower;
+
+	requires(Robot.drive);
+    }
+
+    /**
+     * @param distance
+     * @param heading
+     * @param timeout
+     * @param maxStraightPower
+     *            (optional)
+     */
+    public DriveStraightDistance(double distance, double heading, double timeout, double maxStraightPower) {
+	m_distance = distance;
+	m_heading = heading;
+	m_timeout = timeout;
+	m_maxStraightPower = maxStraightPower;
 
 	requires(Robot.drive);
     }
@@ -49,10 +63,9 @@ public class DriveStraightDistance extends Command {
 	double straightRightPower = DriveConstants.kDistP * m_rightError;
 	double straightLeftPower = DriveConstants.kDistP * m_leftError;
 
-	straightRightPower = NerdyMath.threshold(straightRightPower, DriveConstants.kDistMinPower,
-		DriveConstants.kDistMaxPower);
-	straightLeftPower = NerdyMath.threshold(straightLeftPower, DriveConstants.kDistMinPower,
-		DriveConstants.kDistMaxPower) * DriveConstants.kLeftAdjustment;
+	straightRightPower = NerdyMath.threshold(straightRightPower, DriveConstants.kDistMinPower, m_maxStraightPower);
+	straightLeftPower = NerdyMath.threshold(straightLeftPower, DriveConstants.kDistMinPower, m_maxStraightPower)
+		* DriveConstants.kLeftAdjustment;
 
 	double yaw = Robot.drive.getCurrentYaw();
 	if (m_distance < 0) {

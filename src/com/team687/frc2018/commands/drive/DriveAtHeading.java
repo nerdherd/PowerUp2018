@@ -1,6 +1,7 @@
 package com.team687.frc2018.commands.drive;
 
 import com.team687.frc2018.Robot;
+import com.team687.frc2018.constants.DriveConstants;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -50,7 +51,7 @@ public class DriveAtHeading extends Command {
 	rotError = (rotError < -180) ? rotError + 360 : rotError;
 	double rotPower = m_kRotP * rotError;
 
-	Robot.drive.setPower(m_straightPower - rotPower, m_straightPower + rotPower);
+	Robot.drive.setPower((DriveConstants.kLeftAdjustment * m_straightPower) - rotPower, m_straightPower + rotPower);
     }
 
     @Override
