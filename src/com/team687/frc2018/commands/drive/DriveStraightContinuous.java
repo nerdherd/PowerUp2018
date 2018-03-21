@@ -1,6 +1,7 @@
 package com.team687.frc2018.commands.drive;
 
 import com.team687.frc2018.Robot;
+import com.team687.frc2018.constants.DriveConstants;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -33,7 +34,7 @@ public class DriveStraightContinuous extends Command {
 
     @Override
     protected void execute() {
-	Robot.drive.setPower(m_straightPower, m_straightPower);
+	Robot.drive.setPower((DriveConstants.kLeftAdjustment * m_straightPower), m_straightPower);
     }
 
     @Override

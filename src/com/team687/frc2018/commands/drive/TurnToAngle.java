@@ -64,10 +64,7 @@ public class TurnToAngle extends Command {
 	// power = Math.min(DriveConstants.kRotPMaxPower,
 	// Math.max(-DriveConstants.kRotPMaxPower, power));
 
-	Robot.drive.setPower(-power, power);
-	SmartDashboard.putNumber("Error", m_error);
-	SmartDashboard.putNumber("Power", power);
-	SmartDashboard.putNumber("Robot Angle", robotAngle);
+	Robot.drive.setPower((-DriveConstants.kLeftAdjustment * power), power);
 	if (Math.abs(m_error) <= DriveConstants.kDriveRotationTolerance) {
 	    m_counter += 1;
 	} else {
