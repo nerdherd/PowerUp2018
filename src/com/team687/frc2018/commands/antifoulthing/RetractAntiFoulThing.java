@@ -1,14 +1,10 @@
 package com.team687.frc2018.commands.antifoulthing;
 
 import com.team687.frc2018.Robot;
-import com.team687.frc2018.constants.SuperstructureConstants;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- *
- */
 public class RetractAntiFoulThing extends Command {
 
     public RetractAntiFoulThing() {
@@ -22,7 +18,7 @@ public class RetractAntiFoulThing extends Command {
 
     @Override
     protected void execute() {
-    	Robot.antiFoulThing.setPosition(0);
+	Robot.antiFoulThing.setPosition(0);
     }
 
     @Override
@@ -32,7 +28,7 @@ public class RetractAntiFoulThing extends Command {
 
     @Override
     protected void end() {
-    	Robot.antiFoulThing.setPower(0);
+	Robot.antiFoulThing.setPower(0);
     }
 
     @Override
