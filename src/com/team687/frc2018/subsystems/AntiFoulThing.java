@@ -11,48 +11,48 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * Thing that sticks out to avoid launching fouls
  */
-public class AntiFoulThing extends Subsystem {
-	
-	private TalonSRX m_deployerThing;
 
-	public AntiFoulThing() {
-		m_deployerThing = new TalonSRX(RobotMap.kAntiFoulThingID);
-		
-		m_deployerThing.config_kP(0, SuperstructureConstants.kAntiFoulThingkP, 0);
-		m_deployerThing.config_kI(0, 0, 0);
-		m_deployerThing.config_kD(0, 0, 0);
-		m_deployerThing.config_kF(0, 0, 0);
-		
-		m_deployerThing.setSensorPhase(false);
-		m_deployerThing.setInverted(false);
-		
-		m_deployerThing.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
-		m_deployerThing.setNeutralMode(NeutralMode.Brake);
-	}
+public class AntiFoulThing extends Subsystem {
+
+    private TalonSRX m_deployerThing;
+
+    public AntiFoulThing() {
+	m_deployerThing = new TalonSRX(RobotMap.kAntiFoulThingID);
+
+	m_deployerThing.config_kP(0, SuperstructureConstants.kAntiFoulThingkP, 0);
+	m_deployerThing.config_kI(0, 0, 0);
+	m_deployerThing.config_kD(0, 0, 0);
+	m_deployerThing.config_kF(0, 0, 0);
+
+	m_deployerThing.setSensorPhase(false);
+	m_deployerThing.setInverted(false);
+
+	m_deployerThing.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
+	m_deployerThing.setNeutralMode(NeutralMode.Brake);
+    }
 
     public void initDefaultCommand() {
     }
-    
+
     public void setPosition(double position) {
-    	m_deployerThing.set(ControlMode.Position, position);
+	m_deployerThing.set(ControlMode.Position, position);
     }
-    
+
     public void setPower(double percent) {
-    	m_deployerThing.set(ControlMode.PercentOutput, percent);
+	m_deployerThing.set(ControlMode.PercentOutput, percent);
     }
-    
+
     public double getPosition() {
-    	return m_deployerThing.getSelectedSensorPosition(0);
+	return m_deployerThing.getSelectedSensorPosition(0);
     }
-    
+
     public void resetEncoder() {
-    	m_deployerThing.setSelectedSensorPosition(0, 0, 0);
+	m_deployerThing.setSelectedSensorPosition(0, 0, 0);
     }
-    
+
     public void reportToSmartDashboard() {
-    	SmartDashboard.putNumber("Deployer thing position", getPosition());
+	SmartDashboard.putNumber("Anti Foul Thing Position", getPosition());
     }
 }
-

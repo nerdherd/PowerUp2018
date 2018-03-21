@@ -1,7 +1,9 @@
 package com.team687.frc2018;
 
 import com.team687.frc2018.commands.antifoulthing.DeployAntiFoulThing;
+import com.team687.frc2018.commands.antifoulthing.ResetAntiFoulThingEncoder;
 import com.team687.frc2018.commands.antifoulthing.RetractAntiFoulThing;
+import com.team687.frc2018.commands.antifoulthing.SetAntiFoulThingPower;
 import com.team687.frc2018.commands.arm.ResetArmEncoder;
 import com.team687.frc2018.commands.arm.SetArmPosition;
 import com.team687.frc2018.commands.arm.SetArmVoltage;
@@ -56,10 +58,10 @@ public class OI {
     public JoystickButton stowToForwards_7;
     public JoystickButton stowToBackwards_8;
     public JoystickButton backwardsToStow_10;
-    
+
     public JoystickButton deployAntiFoulThing_11;
     public JoystickButton retractAntiFoulThing_12;
-    
+
     public JoystickButton openClaw_6;
     public JoystickButton closeClaw_5;
 
@@ -119,8 +121,12 @@ public class OI {
 //	SmartDashboard.putData("Open Intake Claw", new ClawOpen());
 //	SmartDashboard.putData("Close Intake Claw", new ClawClose());
 	
-	SmartDashboard.putData("DeployAntiFoulThing", new DeployAntiFoulThing());
-//
+	SmartDashboard.putData("Deploy Anti Foul Thing", new DeployAntiFoulThing());
+	SmartDashboard.putData("Retract Anti Foul Thing", new RetractAntiFoulThing());
+	SmartDashboard.putData("Reset Anti Foul Thing", new ResetAntiFoulThingEncoder());
+	SmartDashboard.putData("Set Anti Foul Thing 0.5 Power", new SetAntiFoulThingPower(0.5));
+	SmartDashboard.putData("Set Anti Foul Thing 0 Power", new SetAntiFoulThingPower(0));
+	
 //	SmartDashboard.putData("Superstructure Stow to Backwards Scale", new StowToBackwardsScale());
 //	SmartDashboard.putData("Superstructure Stow to Forwards Scale", new StowToForwardsScale());
 //	SmartDashboard.putData("Superstructure Backwards Scale To Stow", new BackwardsScaleToStow());
@@ -130,14 +136,14 @@ public class OI {
 //	SmartDashboard.putData("Superstructure Intake", new DefaultIntake());
 //	SmartDashboard.putData("Superstructure Intake Position", new IntakePosition());
 //	
-	SmartDashboard.putData("Center To Left Switch", new CenterToLeftSwitchAuto());
-	SmartDashboard.putData("Center To Right Switch", new CenterToRightSwitchAuto());
-	SmartDashboard.putData("Left To Left Scale", new LeftToLeftScaleAuto());
-	SmartDashboard.putData("Left To Right Scale", new LeftToRightScaleAuto());
-	SmartDashboard.putData("Right To Left Scale", new RightToLeftScaleAuto());
-	SmartDashboard.putData("Right To Right Scale", new RightToRightScaleAuto());
-	
-	SmartDashboard.putData("Drive Straight Auto", new DriveStraightAuto());
+//	SmartDashboard.putData("Center To Left Switch", new CenterToLeftSwitchAuto());
+//	SmartDashboard.putData("Center To Right Switch", new CenterToRightSwitchAuto());
+//	SmartDashboard.putData("Left To Left Scale", new LeftToLeftScaleAuto());
+//	SmartDashboard.putData("Left To Right Scale", new LeftToRightScaleAuto());
+//	SmartDashboard.putData("Right To Left Scale", new RightToLeftScaleAuto());
+//	SmartDashboard.putData("Right To Right Scale", new RightToRightScaleAuto());
+//	
+//	SmartDashboard.putData("Drive Straight Auto", new DriveStraightAuto());
     }
 
     /**

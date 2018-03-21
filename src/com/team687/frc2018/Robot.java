@@ -15,7 +15,6 @@ import com.team687.frc2018.subsystems.Drive;
 import com.team687.frc2018.subsystems.Intake;
 import com.team687.frc2018.subsystems.Wrist;
 
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -28,7 +27,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TimedRobot {
 
-    public static final String kDate = "2018_03_15_";
+    public static final String kDate = "2018_03_20_";
 
     public static Drive drive;
     public static Arm arm;
@@ -69,7 +68,7 @@ public class Robot extends TimedRobot {
 	drive.stopDrive();
 	drive.resetEncoders();
 	drive.resetGyro();
-	
+
 	antiFoulThing = new AntiFoulThing();
 	antiFoulThing.resetEncoder();
 	antiFoulThing.setPower(0);
@@ -77,7 +76,7 @@ public class Robot extends TimedRobot {
 	oi = new OI();
 	ds = DriverStation.getInstance();
 
-//	CameraServer.getInstance().startAutomaticCapture();
+	// CameraServer.getInstance().startAutomaticCapture();
 
 	sideChooser = new SendableChooser<>();
 	sideChooser.addDefault("Center", "center");
@@ -135,9 +134,9 @@ public class Robot extends TimedRobot {
 	    drive.resetGyro();
 	}
 	if (Robot.oi.driveJoyLeft.getRawButton(4) && Robot.oi.driveJoyRight.getRawButton(4)) {
-		antiFoulThing.resetEncoder();
+	    antiFoulThing.resetEncoder();
 	}
-	
+
 	drive.resetEncoders();
 	drive.resetGyro();
 
@@ -188,30 +187,25 @@ public class Robot extends TimedRobot {
 	} else if (startingPosition == "center" && !switchOnLeft) {
 	    autonomousCommand = new CenterToRightSwitchAuto();
 	    SmartDashboard.putString("Selected Auto", "Center To Right Switch");
+	} else if (startingPosition == "left" && scaleOnLeft) {
+	    autonomousCommand = new LeftToLeftScaleAuto();
+	    SmartDashboard.putString("Selected Auto", "Left To Left Scale");
+	} else if (startingPosition == "left" && !scaleOnLeft) {
+	    autonomousCommand = new LeftToRightScaleAuto();
+	    SmartDashboard.putString("Selected Auto", "Left To Right Scale");
+	} else if (startingPosition == "right" && scaleOnLeft) {
+	    autonomousCommand = new RightToLeftScaleAuto();
+	    SmartDashboard.putString("Selected Auto", "Right To Left Scale");
+	} else if (startingPosition == "right" && !scaleOnLeft) {
+	    autonomousCommand = new DriveStraightAuto();
+	    SmartDashboard.putString("Selected Auto", "Right To Right Scale");
+	} else if ((startingPosition == "left" && switchOnLeft) || startingPosition == "right" && !switchOnLeft) {
+	    autonomousCommand = new DriveStraightAuto();
+	    SmartDashboard.putString("Selected Auto", "Side To Side Switch");
 	} else {
-		autonomousCommand = new DriveStraightWithoutCube();
+	    autonomousCommand = new DriveStraightWithoutCube();
+	    SmartDashboard.putString("Selected Auto", "Drive Straight Without Cube");
 	}
-////	} else if (startingPosition == "left" && scaleOnLeft) {
-////	    autonomousCommand = new LeftToLeftScaleAuto();
-////	    SmartDashboard.putString("Selected Auto", "Left To Left Scale");
-////	} else if (startingPosition == "left" && !scaleOnLeft) {
-////	    autonomousCommand = new LeftToRightScaleAuto();
-////	    SmartDashboard.putString("Selected Auto", "Left To Right Scale");
-////	} else if (startingPosition == "right" && scaleOnLeft) {
-////	    autonomousCommand = new RightToLeftScaleAuto();
-////	    SmartDashboard.putString("Selected Auto", "Right To Left Scale");
-////	} else if (startingPosition == "right" && !scaleOnLeft) {
-////	    autonomousCommand = new DriveStraightAuto();
-////	    SmartDashboard.putString("Selected Auto", "Right To Right Scale");
-//	} else if ((startingPosition == "left" && switchOnLeft) || startingPosition == "right" && !switchOnLeft) {
-//	    autonomousCommand = new DriveStraightAuto();
-//	    SmartDashboard.putString("Selected Auto", "Side To Side Switch");
-//	} else {
-//	    autonomousCommand = new DriveStraightWithoutCube();
-//	    SmartDashboard.putString("Selected Auto", "Drive Straight Without Cube");
-//	}
-	
-//	autonomousCommand = new DriveStraightWithoutCube();
 
 	if (autonomousCommand != null) {
 	    autonomousCommand.start();
