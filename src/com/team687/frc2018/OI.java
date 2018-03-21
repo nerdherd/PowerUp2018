@@ -16,7 +16,8 @@ import com.team687.frc2018.commands.auto.RightToLeftScaleAuto;
 import com.team687.frc2018.commands.auto.RightToRightScaleAuto;
 import com.team687.frc2018.commands.drive.ResetDriveEncoders;
 import com.team687.frc2018.commands.drive.ResetGyro;
-import com.team687.frc2018.commands.drive.TestDriveSubsystem; 
+import com.team687.frc2018.commands.drive.TestDriveSubsystem;
+import com.team687.frc2018.commands.drive.TurnToAngle;
 import com.team687.frc2018.commands.intake.ClawClose;
 import com.team687.frc2018.commands.intake.ClawOpen;
 import com.team687.frc2018.commands.intake.SetIntakeRollerPower;
@@ -134,10 +135,18 @@ public class OI {
 //
 //	SmartDashboard.putData("Superstructure Stow", new DefaultStow());
 //	SmartDashboard.putData("Superstructure Intake", new DefaultIntake());
-//	SmartDashboard.putData("Superstructure Intake Position", new IntakePosition());
-//	
-//	SmartDashboard.putData("Center To Left Switch", new CenterToLeftSwitchAuto());
-//	SmartDashboard.putData("Center To Right Switch", new CenterToRightSwitchAuto());
+//	SmartDashboard.putData("Superstructure Intake Position", new IntakePosition());	
+	
+	SmartDashboard.putData("Turn To 0", new TurnToAngle(0));
+	SmartDashboard.putData("Turn To 90", new TurnToAngle(90));
+	SmartDashboard.putData("Turn To -90", new TurnToAngle(-90));
+	SmartDashboard.putData("Turn To 5", new TurnToAngle(5));
+	SmartDashboard.putData("Turn To -5", new TurnToAngle(-5));
+	SmartDashboard.putData("Turn To 20", new TurnToAngle(20));
+	SmartDashboard.putData("Turn To -20", new TurnToAngle(-20));
+	
+	SmartDashboard.putData("Center To Left Switch", new CenterToLeftSwitchAuto());
+	SmartDashboard.putData("Center To Right Switch", new CenterToRightSwitchAuto());
 //	SmartDashboard.putData("Left To Left Scale", new LeftToLeftScaleAuto());
 //	SmartDashboard.putData("Left To Right Scale", new LeftToRightScaleAuto());
 //	SmartDashboard.putData("Right To Left Scale", new RightToLeftScaleAuto());
