@@ -29,10 +29,12 @@ public class RightToRightScaleAuto extends CommandGroup {
 
 //	addSequential(new TurnToAngle(5));
 //	addParallel(new DefaultIntake());
+//	addSequential(new ResetDriveEncoders());
 //	addSequential(new DriveStraightDistance(NerdyMath.inchesToTicks(AutoConstants.kRobotToSecondCube), 5, 5, 0.5));
 //	addSequential(new WaitTime(1));
 //
 //	addParallel(new DefaultStow());
+//	addSequential(new ResetDriveEncoders());
 //	addSequential(
 //		new DriveStraightDistance(-NerdyMath.inchesToTicks(AutoConstants.kRobotToSecondCube), -175, 5, 0.5));
 //	addSequential(new TurnToAngle(-20));

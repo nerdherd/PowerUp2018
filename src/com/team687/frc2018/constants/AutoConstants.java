@@ -22,7 +22,9 @@ public class AutoConstants {
     public static final double kRedLeftSideWallToCenterOfScale = 78;
     public static final double kPowerCubeLength = 13;
 
-    public static final double kRobotToSecondCube = 118;
+    public static final double kRobotToSecondCubeScale = 118;
+    public static final double kBackUpFromSwitch = 50;
+    public static final double kRobotToSecondCubeSwitch = 50;
 
     // field measurements for origin (absolute inches)
     // don't change these unless we have time and they aren't far off from expected
@@ -68,8 +70,8 @@ public class AutoConstants {
 	    + kRedLeftSwitchLength + 2 * kPowerCubeLength - 0.5 * DriveConstants.kDrivetrainLength);
     public static double kRedLeftPivotPointToRightScale = NerdyMath.inchesToTicks(324 - kRedLeftSideWallToCenterOfScale)
 	    - kRobotLeftOriginX;
-    public static double kRedRightPivotPointToLeftScale = NerdyMath.inchesToTicks(324 - kRedRightSideWallToCenterOfScale)
-	    - kRobotLeftOriginX;
+    public static double kRedRightPivotPointToLeftScale = NerdyMath
+	    .inchesToTicks(324 - kRedRightSideWallToCenterOfScale) - kRobotLeftOriginX;
 
     // Bezier curve paths
     public static BezierCurve kRedCenterToRightSwitchPath = new BezierCurve(kRobotCenterOriginX, kRobotOriginY,

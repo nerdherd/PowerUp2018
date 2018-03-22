@@ -2,6 +2,7 @@ package com.team687.frc2018.commands.auto;
 
 import com.team687.frc2018.commands.drive.DriveBezierPath;
 import com.team687.frc2018.commands.drive.DriveStraightDistance;
+import com.team687.frc2018.commands.drive.ResetDriveEncoders;
 import com.team687.frc2018.commands.drive.TurnToAngle;
 import com.team687.frc2018.commands.drive.WaitTime;
 import com.team687.frc2018.commands.intake.SetIntakeRollerPower;
@@ -29,10 +30,12 @@ public class LeftToLeftScaleAuto extends CommandGroup {
 
 //	addSequential(new TurnToAngle(-5));
 //	addParallel(new DefaultIntake());
+//	addSequential(new ResetDriveEncoders());
 //	addSequential(new DriveStraightDistance(NerdyMath.inchesToTicks(AutoConstants.kRobotToSecondCube), -5, 5, 0.5));
 //	addSequential(new WaitTime(1));
 //
 //	addParallel(new DefaultStow());
+//	addSequential(new ResetDriveEncoders());
 //	addSequential(
 //		new DriveStraightDistance(-NerdyMath.inchesToTicks(AutoConstants.kRobotToSecondCube), -185, 5, 0.5));
 //	addSequential(new TurnToAngle(20));

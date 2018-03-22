@@ -32,7 +32,7 @@ public class RightToRightScaleSwitchAuto extends CommandGroup {
 
 	addSequential(new TurnToAngle(-5));
 	addParallel(new DefaultIntake());
-	addSequential(new DriveStraightDistance(NerdyMath.inchesToTicks(AutoConstants.kRobotToSecondCube), -5, 5, 0.5));
+	addSequential(new DriveStraightDistance(NerdyMath.inchesToTicks(AutoConstants.kRobotToSecondCubeScale), -5, 5, 0.5));
 
 	addParallel(new SwitchScorePosition());
 	addSequential(new DriveTime(-0.4, 0.687));
