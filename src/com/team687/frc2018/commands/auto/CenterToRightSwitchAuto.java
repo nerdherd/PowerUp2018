@@ -1,6 +1,5 @@
 package com.team687.frc2018.commands.auto;
 
-import com.team687.frc2018.commands.antifoulthing.DeployAntiFoulThing;
 import com.team687.frc2018.commands.drive.DriveBezierPath;
 import com.team687.frc2018.commands.drive.DriveStraightDistance;
 import com.team687.frc2018.commands.drive.DriveTime;
@@ -18,7 +17,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class CenterToRightSwitchAuto extends CommandGroup {
 
     public CenterToRightSwitchAuto() {
-	addParallel(new DeployAntiFoulThing());
 	addParallel(new SwitchScorePosition());
 	addSequential(new DriveBezierPath(AutoConstants.kRedCenterToRightSwitchPath, 0.5, 0.008, 0.001, false));
 	addParallel(new OuttakeRollers(0.5));

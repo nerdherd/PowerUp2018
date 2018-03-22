@@ -1,6 +1,5 @@
 package com.team687.frc2018.commands.auto;
 
-import com.team687.frc2018.commands.antifoulthing.DeployAntiFoulThing;
 import com.team687.frc2018.commands.drive.DriveStraightDistance;
 import com.team687.frc2018.commands.intake.OuttakeRollers;
 import com.team687.frc2018.commands.superstructure.SwitchScorePosition;
@@ -16,7 +15,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class DriveStraightAuto extends CommandGroup {
 
     public DriveStraightAuto() {
-	addParallel(new DeployAntiFoulThing());
 	addParallel(new SwitchScorePosition());
 	addSequential(new DriveStraightDistance(NerdyMath
 		.inchesToTicks(AutoConstants.kRedStartingWallToSwitchInches - DriveConstants.kDrivetrainLength), 0, 4));
