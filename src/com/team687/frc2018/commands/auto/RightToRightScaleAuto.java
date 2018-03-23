@@ -21,13 +21,14 @@ public class RightToRightScaleAuto extends CommandGroup {
 	addSequential(new DriveBezierPath(AutoConstants.kRedRightSameSideScalePath, -0.6, 0.008, 0.0005, true));
 
 	addParallel(new StowToBackwardsScale());
-	addSequential(new WaitTime(2));
+	addSequential(new WaitTime(2.5));
 	addParallel(new SetIntakeRollerPower(0.7));
 	addSequential(new WaitTime(0.5));
 	addParallel(new BackwardsScaleToStow());
-	addSequential(new WaitTime(2));
+	addSequential(new WaitTime(2.5));
+	addParallel(new DefaultStow());
 
-//	addSequential(new TurnToAngle(5));
+//	addSequential(new TurnToAngle(0));
 //	addParallel(new DefaultIntake());
 //	addSequential(new ResetDriveEncoders());
 //	addSequential(new DriveStraightDistance(NerdyMath.inchesToTicks(AutoConstants.kRobotToSecondCube), 5, 5, 0.5));

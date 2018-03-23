@@ -1,3 +1,4 @@
+
 package com.team687.frc2018.constants;
 
 import com.team687.frc2018.utilities.BezierCurve;
@@ -7,30 +8,32 @@ public class AutoConstants {
 
     // field measurements (absolute inches)
     // change these
-    public static final double kRedStartingWallToSwitchInches = 139;
-    public static final double kRedCenterToRightSwitchFence = 75.5;
-    public static final double kRedCenterToRightSwitchInner = 34; // X = 54.75
-    public static final double kRedCenterToLeftSwitchFence = 70;
-    public static final double kRedCenterToLeftSwitchInner = 30; // X = 50
+    public static final double kRedStartingWallToSwitchInches = 140;
+    public static final double kRedCenterToRightSwitchFence = 77;
+    public static final double kRedCenterToRightSwitchInner = 36; // X = 54.75
+    public static final double kRedCenterToLeftSwitchFence = 72;
+    public static final double kRedCenterToLeftSwitchInner = 32; // X = 50
     public static final double kRedRightSwitchLength = 56;
     public static final double kRedLeftSwitchLength = 56;
-    public static final double kRedRightSwitchToScale = 102;
-    public static final double kRedLeftSwitchToScale = 102;
-    public static final double kRedRightSideWallToScale = 73.5;
-    public static final double kRedLeftSideWallToScale = 71;
-    public static final double kRedRightSideWallToCenterOfScale = 81;
-    public static final double kRedLeftSideWallToCenterOfScale = 78;
+    public static final double kRedRightSwitchToScale = 105;
+    public static final double kRedLeftSwitchToScale = 104;
+//    public static final double kRedRightSideWallToScale = 70;
+//    public static final double kRedLeftSideWallToScale = 72; // semi good
+    public static final double kRedRightSideWallToScale = 57; // 60 is good
+    public static final double kRedLeftSideWallToScale = 59; // 62 is good
+    public static final double kRedRightSideWallToCenterOfScale = 112;
+    public static final double kRedLeftSideWallToCenterOfScale = 110;
     public static final double kPowerCubeLength = 13;
 
-    public static final double kRobotToSecondCubeScale = 118;
+    public static final double kRobotToSecondCubeScale = 75;
     public static final double kBackUpFromSwitch = 50;
-    public static final double kRobotToSecondCubeSwitch = 50;
+    public static final double kRobotToSecondCubeSwitch = 65;
 
     // field measurements for origin (absolute inches)
     // don't change these unless we have time and they aren't far off from expected
-    public static final double kRedExchangeLineToCenterLine = 11;
-    public static final double kRedRightSideWallToAllianceStationEdge = 31;
-    public static final double kRedLeftSideWallToAllianceStationEdge = 31;
+    public static final double kRedExchangeLineToCenterLine = 12;
+    public static final double kRedRightSideWallToAllianceStationEdge = 30;
+    public static final double kRedLeftSideWallToAllianceStationEdge = 29;
 
     // robot origins
     // center means center line is y-axis

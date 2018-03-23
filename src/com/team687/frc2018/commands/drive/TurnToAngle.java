@@ -41,6 +41,10 @@ public class TurnToAngle extends Command {
 	// subsystem dependencies
 	requires(Robot.drive);
     }
+    
+    public TurnToAngle(double angle, double timeout, double tolerance) {
+    	
+    }
 
     @Override
     protected void initialize() {

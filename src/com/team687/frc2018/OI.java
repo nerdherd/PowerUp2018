@@ -1,6 +1,8 @@
 package com.team687.frc2018;
 
 import com.team687.frc2018.commands.arm.ResetArmEncoder;
+import com.team687.frc2018.commands.arm.SetArmPosition;
+import com.team687.frc2018.commands.arm.SetArmVoltage;
 import com.team687.frc2018.commands.auto.CenterToLeftSwitchAuto;
 import com.team687.frc2018.commands.auto.CenterToRightSwitchAuto;
 import com.team687.frc2018.commands.drive.ResetDriveEncoders;
@@ -14,7 +16,9 @@ import com.team687.frc2018.commands.superstructure.DefaultIntake;
 import com.team687.frc2018.commands.superstructure.ForwardsScaleToStow;
 import com.team687.frc2018.commands.superstructure.StowToBackwardsScale;
 import com.team687.frc2018.commands.superstructure.StowToForwardsScale;
+import com.team687.frc2018.commands.superstructure.SwitchScorePosition;
 import com.team687.frc2018.commands.wrist.ResetWristEncoder;
+import com.team687.frc2018.constants.SuperstructureConstants;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -45,6 +49,8 @@ public class OI {
 
     public JoystickButton openClaw_6;
     public JoystickButton closeClaw_5;
+    
+    public JoystickButton switchPosition_11;
 
     public OI() {
 	intake_1 = new JoystickButton(driveJoyArtic, 1);
@@ -70,6 +76,9 @@ public class OI {
 	openClaw_6.whenPressed(new ClawOpen());
 	closeClaw_5 = new JoystickButton(driveJoyArtic, 6);
 	closeClaw_5.whenPressed(new ClawClose());
+	
+	switchPosition_11 = new JoystickButton(driveJoyArtic, 11);
+	switchPosition_11.whenPressed(new SwitchScorePosition());
 
 	SmartDashboard.putData("Arm Reset Encoder", new ResetArmEncoder());
 	SmartDashboard.putData("Wrist Reset Encoder", new ResetWristEncoder());
@@ -78,13 +87,13 @@ public class OI {
 
 	// SmartDashboard.putData("Drive Straight Test", new TestDriveSubsystem());
 	//
-	// SmartDashboard.putData("Arm Voltage 0", new SetArmVoltage(0));
-	// SmartDashboard.putData("Arm Position Vertical", new
-	// SetArmPosition(SuperstructureConstants.kArmVerticalPos));
-	// SmartDashboard.putData("Arm Position Horizontal",
-	// new SetArmPosition(SuperstructureConstants.kArmHorizontalPos));
-	// SmartDashboard.putData("Arm Position Offset", new
-	// SetArmPosition(SuperstructureConstants.kArmOffsetPos));
+	 SmartDashboard.putData("Arm Voltage 0", new SetArmVoltage(0));
+	 SmartDashboard.putData("Arm Position Vertical", new
+	 SetArmPosition(SuperstructureConstants.kArmVerticalPos));
+	 SmartDashboard.putData("Arm Position Horizontal",
+	 new SetArmPosition(SuperstructureConstants.kArmHorizontalPos));
+	 SmartDashboard.putData("Arm Position Offset", new
+	 SetArmPosition(SuperstructureConstants.kArmOffsetPos));
 	//
 	// SmartDashboard.putData("Wrist Voltage 0", new SetWristPercentOutput(0));
 	// SmartDashboard.putData("Wrist Position Intake", new
@@ -133,6 +142,7 @@ public class OI {
 	// SmartDashboard.putData("Drive Straight Auto", new DriveStraightAuto());
     }
 
+    
     /**
      * @return input power from left drive joystick Y (-1.0 to +1.0)
      */

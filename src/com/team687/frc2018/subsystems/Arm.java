@@ -218,7 +218,7 @@ public class Arm extends Subsystem {
 			+ String.valueOf(getPosition()) + "," + String.valueOf(getVelocity()) + ","
 			+ String.valueOf(getAngleAbsolute()) + "," + String.valueOf(getVoltage()) + ","
 			+ String.valueOf(getCurrent()) + "\n");
-//		m_writer.flush();
+		m_writer.flush();
 	    } catch (IOException e) {
 		e.printStackTrace();
 		writeException = true;

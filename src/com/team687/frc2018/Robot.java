@@ -1,5 +1,7 @@
 package com.team687.frc2018;
 
+import java.io.IOException;
+
 import com.team687.frc2018.commands.auto.CenterToLeftSwitchAuto;
 import com.team687.frc2018.commands.auto.CenterToRightSwitchAuto;
 import com.team687.frc2018.commands.auto.DriveStraightWithoutCube;
@@ -7,6 +9,7 @@ import com.team687.frc2018.commands.auto.LeftToLeftScaleAuto;
 import com.team687.frc2018.commands.auto.LeftToRightScaleAuto;
 import com.team687.frc2018.commands.auto.RightToLeftScaleAuto;
 import com.team687.frc2018.commands.auto.RightToRightScaleAuto;
+import com.team687.frc2018.commands.superstructure.DefaultStow;
 import com.team687.frc2018.constants.DriveConstants;
 import com.team687.frc2018.constants.SuperstructureConstants;
 import com.team687.frc2018.subsystems.Arm;
@@ -78,9 +81,6 @@ public class Robot extends TimedRobot {
 	sideChooser.addObject("Right", "right");
 	SmartDashboard.putData("Auto Chooser", sideChooser);
 
-	// drive.startLog();
-	// arm.startLog();
-	// wrist.startLog();
     }
 
     @Override
@@ -99,18 +99,18 @@ public class Robot extends TimedRobot {
 	SmartDashboard.putBoolean("HEALTHY SUPERSTRUCTURE CURRENT",
 		!(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent
 			|| wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
+//
+//	 try {
+//	 drive.m_writer.flush();
+//	 arm.m_writer.flush();
+//	 wrist.m_writer.flush();
+//	 } catch (IOException e) {
+//	 e.printStackTrace();
+//	 }
 
-	// try {
-	// drive.m_writer.flush();
-	// arm.m_writer.flush();
-	// wrist.m_writer.flush();
-	// } catch (IOException e) {
-	// e.printStackTrace();
-	// }
-
-	// drive.stopLog();
-	// arm.stopLog();
-	// wrist.stopLog();
+	 drive.stopLog();
+	 arm.stopLog();
+	 wrist.stopLog();
     }
 
     @Override
@@ -180,26 +180,32 @@ public class Robot extends TimedRobot {
 	} else if (startingPosition == "center" && !switchOnLeft) {
 	    autonomousCommand = new CenterToRightSwitchAuto();
 	    SmartDashboard.putString("Selected Auto", "Center To Right Switch");
-	} else if (startingPosition == "left" && scaleOnLeft) {
-	    autonomousCommand = new LeftToLeftScaleAuto();
-	    SmartDashboard.putString("Selected Auto", "Left To Left Scale");
-	} else if (startingPosition == "left" && !scaleOnLeft) {
-	    autonomousCommand = new LeftToRightScaleAuto();
-	    SmartDashboard.putString("Selected Auto", "Left To Right Scale");
-	} else if (startingPosition == "right" && scaleOnLeft) {
-	    autonomousCommand = new RightToLeftScaleAuto();
-	    SmartDashboard.putString("Selected Auto", "Right To Left Scale");
-	} else if (startingPosition == "right" && !scaleOnLeft) {
-	    autonomousCommand = new RightToRightScaleAuto();
-	    SmartDashboard.putString("Selected Auto", "Right To Right Scale");
+//	} else if (startingPosition == "left" && scaleOnLeft) {
+//	    autonomousCommand = new LeftToLeftScaleAuto();
+//	    SmartDashboard.putString("Selected Auto", "Left To Left Scale");
+//	} else if (startingPosition == "left" && !scaleOnLeft) {
+//	    autonomousCommand = new LeftToRightScaleAuto();
+//	    SmartDashboard.putString("Selected Auto", "Left To Right Scale");
+//	} else if (startingPosition == "right" && scaleOnLeft) {
+//	    autonomousCommand = new RightToLeftScaleAuto();
+//	    SmartDashboard.putString("Selected Auto", "Right To Left Scale");
+//	} else if (startingPosition == "right" && !scaleOnLeft) {
+//	    autonomousCommand = new RightToRightScaleAuto();
+//	    SmartDashboard.putString("Selected Auto", "Right To Right Scale");
 	} else {
 	    autonomousCommand = new DriveStraightWithoutCube();
 	    SmartDashboard.putString("Selected Auto", "Drive Straight Without Cube");
 	}
+	
+	autonomousCommand = new LeftToRightScaleAuto();
 
 	if (autonomousCommand != null) {
 	    autonomousCommand.start();
 	}
+	
+	 drive.startLog();
+	 arm.startLog();
+	 wrist.startLog();
     }
 
     @Override
@@ -219,13 +225,15 @@ public class Robot extends TimedRobot {
 		!(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent
 			|| wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
 
-	// drive.logToCSV();
-	// arm.logToCSV();
-	// wrist.logToCSV();
+	 drive.logToCSV();
+	 arm.logToCSV();
+	 wrist.logToCSV();
     }
 
     @Override
     public void teleopInit() {
+//    Scheduler.getInstance().removeAll();
+//    Scheduler.getInstance().add(new DefaultStow());
 
 	drive.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
@@ -240,7 +248,9 @@ public class Robot extends TimedRobot {
 		!(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent
 			|| wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
 
-	// drive.startLog();
+//	 drive.startLog();
+//	 arm.startLog();
+//	 wrist.startLog();
     }
 
     @Override
@@ -260,9 +270,9 @@ public class Robot extends TimedRobot {
 		!(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent
 			|| wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
 
-	// drive.logToCSV();
-	// arm.logToCSV();
-	// wrist.logToCSV();
+//	 drive.logToCSV();
+//	 arm.logToCSV();
+//	 wrist.logToCSV();
 
 	if (ds.getMatchTime() < 5) {
 	    Robot.wrist.enableBrakeMode();
