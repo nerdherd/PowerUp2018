@@ -9,10 +9,10 @@ public class AutoConstants {
     // field measurements (absolute inches)
     // change these
     public static final double kRedStartingWallToSwitchInches = 140;
-    public static final double kRedCenterToRightSwitchFence = 77;
-    public static final double kRedCenterToRightSwitchInner = 36; // X = 54.75
-    public static final double kRedCenterToLeftSwitchFence = 72;
-    public static final double kRedCenterToLeftSwitchInner = 32; // X = 50
+    public static final double kRedCenterToRightSwitchFence = 70;
+    public static final double kRedCenterToRightSwitchInner = 30; // X = 54.75
+    public static final double kRedCenterToLeftSwitchFence = 60;
+    public static final double kRedCenterToLeftSwitchInner = 20; // X = 50
     public static final double kRedRightSwitchLength = 56;
     public static final double kRedLeftSwitchLength = 56;
     public static final double kRedRightSwitchToScale = 105;
@@ -21,13 +21,15 @@ public class AutoConstants {
 //    public static final double kRedLeftSideWallToScale = 72; // semi good
     public static final double kRedRightSideWallToScale = 57; // 60 is good
     public static final double kRedLeftSideWallToScale = 59; // 62 is good
-    public static final double kRedRightSideWallToCenterOfScale = 112;
-    public static final double kRedLeftSideWallToCenterOfScale = 110;
+//    public static final double kRedRightSideWallToCenterOfScale = 112; // good for scale auto
+//    public static final double kRedLeftSideWallToCenterOfScale = 110;
+    public static final double kRedRightSideWallToCenterOfScale = 254; // good for incomplete scale auto
+    public static final double kRedLeftSideWallToCenterOfScale = 254;
     public static final double kPowerCubeLength = 13;
 
-    public static final double kRobotToSecondCubeScale = 75;
+    public static final double kRobotToSecondCubeScale = 50;
     public static final double kBackUpFromSwitch = 50;
-    public static final double kRobotToSecondCubeSwitch = 65;
+    public static final double kRobotToSecondCubeSwitch = 40;
 
     // field measurements for origin (absolute inches)
     // don't change these unless we have time and they aren't far off from expected

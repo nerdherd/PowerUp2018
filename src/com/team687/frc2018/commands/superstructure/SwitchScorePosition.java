@@ -13,6 +13,7 @@ public class SwitchScorePosition extends Command {
     public SwitchScorePosition() {
     	requires(Robot.wrist);
     	requires(Robot.arm);
+    	requires(Robot.intake);
     }
 
     // Called just before this Command runs the first time
@@ -21,6 +22,7 @@ public class SwitchScorePosition extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.intake.setRollerPower(-0.1);
     	Robot.wrist.setAngleAbsolute(80);
     	Robot.arm.setPosition(SuperstructureConstants.kArmOffsetPos);
     }

@@ -180,24 +180,22 @@ public class Robot extends TimedRobot {
 	} else if (startingPosition == "center" && !switchOnLeft) {
 	    autonomousCommand = new CenterToRightSwitchAuto();
 	    SmartDashboard.putString("Selected Auto", "Center To Right Switch");
-//	} else if (startingPosition == "left" && scaleOnLeft) {
-//	    autonomousCommand = new LeftToLeftScaleAuto();
-//	    SmartDashboard.putString("Selected Auto", "Left To Left Scale");
-//	} else if (startingPosition == "left" && !scaleOnLeft) {
-//	    autonomousCommand = new LeftToRightScaleAuto();
-//	    SmartDashboard.putString("Selected Auto", "Left To Right Scale");
-//	} else if (startingPosition == "right" && scaleOnLeft) {
-//	    autonomousCommand = new RightToLeftScaleAuto();
-//	    SmartDashboard.putString("Selected Auto", "Right To Left Scale");
-//	} else if (startingPosition == "right" && !scaleOnLeft) {
-//	    autonomousCommand = new RightToRightScaleAuto();
-//	    SmartDashboard.putString("Selected Auto", "Right To Right Scale");
+	} else if (startingPosition == "left" && scaleOnLeft) {
+	    autonomousCommand = new LeftToLeftScaleAuto();
+	    SmartDashboard.putString("Selected Auto", "Left To Left Scale");
+	} else if (startingPosition == "left" && !scaleOnLeft) {
+	    autonomousCommand = new LeftToRightScaleAuto();
+	    SmartDashboard.putString("Selected Auto", "Left To Right Scale");
+	} else if (startingPosition == "right" && scaleOnLeft) {
+	    autonomousCommand = new RightToLeftScaleAuto();
+	    SmartDashboard.putString("Selected Auto", "Right To Left Scale");
+	} else if (startingPosition == "right" && !scaleOnLeft) {
+	    autonomousCommand = new RightToRightScaleAuto();
+	    SmartDashboard.putString("Selected Auto", "Right To Right Scale");
 	} else {
 	    autonomousCommand = new DriveStraightWithoutCube();
 	    SmartDashboard.putString("Selected Auto", "Drive Straight Without Cube");
 	}
-	
-	autonomousCommand = new LeftToRightScaleAuto();
 
 	if (autonomousCommand != null) {
 	    autonomousCommand.start();

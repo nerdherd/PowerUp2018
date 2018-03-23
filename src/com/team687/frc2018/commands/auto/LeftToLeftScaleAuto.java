@@ -37,7 +37,7 @@ public class LeftToLeftScaleAuto extends CommandGroup {
 
 	addSequential(new ResetDriveEncoders());
 	addSequential(
-		new DriveStraightDistance(-NerdyMath.inchesToTicks(AutoConstants.kRobotToSecondCubeScale), -185, 5, 0.5));
+		new DriveStraightDistance(-NerdyMath.inchesToTicks(AutoConstants.kRobotToSecondCubeScale), -185, 5, 0.5)); // check if this is too high
 	addParallel(new DefaultStow());
 	addSequential(new TurnToAngle(20));
 //

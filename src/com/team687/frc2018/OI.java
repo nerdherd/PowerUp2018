@@ -80,20 +80,20 @@ public class OI {
 	switchPosition_11 = new JoystickButton(driveJoyArtic, 11);
 	switchPosition_11.whenPressed(new SwitchScorePosition());
 
-	SmartDashboard.putData("Arm Reset Encoder", new ResetArmEncoder());
-	SmartDashboard.putData("Wrist Reset Encoder", new ResetWristEncoder());
-	SmartDashboard.putData("Drive Reset Encoders", new ResetDriveEncoders());
-	SmartDashboard.putData("Drive Reset Gyro", new ResetGyro());
+//	SmartDashboard.putData("Arm Reset Encoder", new ResetArmEncoder());
+//	SmartDashboard.putData("Wrist Reset Encoder", new ResetWristEncoder());
+//	SmartDashboard.putData("Drive Reset Encoders", new ResetDriveEncoders());
+//	SmartDashboard.putData("Drive Reset Gyro", new ResetGyro());
 
 	// SmartDashboard.putData("Drive Straight Test", new TestDriveSubsystem());
 	//
-	 SmartDashboard.putData("Arm Voltage 0", new SetArmVoltage(0));
-	 SmartDashboard.putData("Arm Position Vertical", new
-	 SetArmPosition(SuperstructureConstants.kArmVerticalPos));
-	 SmartDashboard.putData("Arm Position Horizontal",
-	 new SetArmPosition(SuperstructureConstants.kArmHorizontalPos));
-	 SmartDashboard.putData("Arm Position Offset", new
-	 SetArmPosition(SuperstructureConstants.kArmOffsetPos));
+//	 SmartDashboard.putData("Arm Voltage 0", new SetArmVoltage(0));
+//	 SmartDashboard.putData("Arm Position Vertical", new
+//	 SetArmPosition(SuperstructureConstants.kArmVerticalPos));d
+//	 SmartDashboard.putData("Arm Position Horizontal",
+//	 new SetArmPosition(SuperstructureConstants.kArmHorizontalPos));
+//	 SmartDashboard.putData("Arm Position Offset", new
+//	 SetArmPosition(SuperstructureConstants.kArmOffsetPos));
 	//
 	// SmartDashboard.putData("Wrist Voltage 0", new SetWristPercentOutput(0));
 	// SmartDashboard.putData("Wrist Position Intake", new
@@ -124,14 +124,14 @@ public class OI {
 	// SmartDashboard.putData("Superstructure Intake Position", new
 	// IntakePosition());
 
-	SmartDashboard.putData("Turn To 0", new TurnToAngle(0));
-	SmartDashboard.putData("Turn To 90", new TurnToAngle(90));
-	SmartDashboard.putData("Turn To -90", new TurnToAngle(-90));
-	SmartDashboard.putData("Turn To 5", new TurnToAngle(5));
-	SmartDashboard.putData("Turn To -5", new TurnToAngle(-5));
-	SmartDashboard.putData("Turn To 20", new TurnToAngle(20));
-	SmartDashboard.putData("Turn To -20", new TurnToAngle(-20));
-
+//	SmartDashboard.putData("Turn To 0", new TurnToAngle(0));
+//	SmartDashboard.putData("Turn To 90", new TurnToAngle(90));
+//	SmartDashboard.putData("Turn To -90", new TurnToAngle(-90));
+//	SmartDashboard.putData("Turn To 5", new TurnToAngle(5));
+//	SmartDashboard.putData("Turn To -5", new TurnToAngle(-5));
+//	SmartDashboard.putData("Turn To 20", new TurnToAngle(20));
+//	SmartDashboard.putData("Turn To -20", new TurnToAngle(-20));
+//
 	SmartDashboard.putData("Center To Left Switch", new CenterToLeftSwitchAuto());
 	SmartDashboard.putData("Center To Right Switch", new CenterToRightSwitchAuto());
 	// SmartDashboard.putData("Left To Left Scale", new LeftToLeftScaleAuto());
