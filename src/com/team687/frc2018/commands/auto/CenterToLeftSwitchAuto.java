@@ -36,7 +36,7 @@ public class CenterToLeftSwitchAuto extends CommandGroup {
 	addSequential(new TurnTime(0.5, 0.5));
 	addSequential(new TurnTime(-0.5, 0.5));
 	addSequential(new ResetDriveEncoders());
-	addSequential(new DriveStraightDistance(NerdyMath.inchesToTicks(-AutoConstants.kRobotToSecondCubeSwitch - 10), -225, 3, 0.5));
+	addSequential(new DriveStraightDistance(NerdyMath.inchesToTicks(-AutoConstants.kRobotToSecondCubeSwitch - 30), -225, 4, 0.5));
 	addSequential(new TurnToAngle(0, 1.5));
 	addSequential(new ResetDriveEncoders());
 	addParallel(new SwitchScorePosition());
