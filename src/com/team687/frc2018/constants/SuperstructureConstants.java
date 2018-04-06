@@ -24,6 +24,7 @@ public class SuperstructureConstants {
 
     public static final int kArmDownPos = 0;
     public static final int kArmOffsetPos = 409;
+    public static final int kArmSwitchPos = 1600;
     public static final int kArmHorizontalPos = 5200;
     public static final int kArmVerticalPos = 12000;
     public static final int kArmAutoScaleScorePos = 11000;
@@ -55,7 +56,7 @@ public class SuperstructureConstants {
     public static final int kWristIntakePos = -3480;
     public static final int kWristStowPos = -50;
     public static final int kWristStowArmOffsetPos = -919;
-    public static final int kWristBackwardsScorePos = -1180;
+    public static final int kWristBackwardsScorePos = -2056; // used to be -1678
 
     public static final int kWristTolerance = 67;
     public static final int kWristForwardSoftLimit = -1678;
@@ -67,9 +68,9 @@ public class SuperstructureConstants {
 
     public static final double kArmSafeCurrent = 40;
     public static final double kWristSafeCurrent = 40;
-    
+
     public static final double kAntiFoulThingkP = 1;
-    
+
     public static final double kAntiFoulThingDeployedPosition = 687;
 
 }

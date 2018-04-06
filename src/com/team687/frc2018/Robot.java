@@ -77,10 +77,6 @@ public class Robot extends TimedRobot {
 	sideChooser.addObject("Left", "left");
 	sideChooser.addObject("Right", "right");
 	SmartDashboard.putData("Auto Chooser", sideChooser);
-
-	// drive.startLog();
-	// arm.startLog();
-	// wrist.startLog();
     }
 
     @Override
@@ -100,17 +96,9 @@ public class Robot extends TimedRobot {
 		!(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent
 			|| wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
 
-	// try {
-	// drive.m_writer.flush();
-	// arm.m_writer.flush();
-	// wrist.m_writer.flush();
-	// } catch (IOException e) {
-	// e.printStackTrace();
-	// }
-
-	// drive.stopLog();
-	// arm.stopLog();
-	// wrist.stopLog();
+	drive.stopLog();
+	arm.stopLog();
+	wrist.stopLog();
     }
 
     @Override
@@ -200,6 +188,10 @@ public class Robot extends TimedRobot {
 	if (autonomousCommand != null) {
 	    autonomousCommand.start();
 	}
+
+	// drive.startLog();
+	// arm.startLog();
+	// wrist.startLog();
     }
 
     @Override
@@ -226,7 +218,6 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-
 	drive.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
 	wrist.reportToSmartDashboard();
@@ -240,7 +231,9 @@ public class Robot extends TimedRobot {
 		!(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent
 			|| wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
 
-	// drive.startLog();
+	drive.startLog();
+	arm.startLog();
+	wrist.startLog();
     }
 
     @Override
@@ -260,9 +253,9 @@ public class Robot extends TimedRobot {
 		!(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent
 			|| wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
 
-	// drive.logToCSV();
-	// arm.logToCSV();
-	// wrist.logToCSV();
+	drive.logToCSV();
+	arm.logToCSV();
+	wrist.logToCSV();
 
 	if (ds.getMatchTime() < 5) {
 	    Robot.wrist.enableBrakeMode();

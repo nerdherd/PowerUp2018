@@ -151,10 +151,10 @@ public class Arm extends Subsystem {
 
     public void reportToSmartDashboard() {
 	// ----- COMMENT THESE OUT WHEN GOING TO FIELD ----- //
-//	SmartDashboard.putNumber("Arm Velocity", getVelocity());
-//	SmartDashboard.putNumber("Arm Voltage", getVoltage());
-//	SmartDashboard.putNumber("Arm Current", getCurrent());
-//	SmartDashboard.putNumber("Arm Desired Position", m_desiredPos);
+	// SmartDashboard.putNumber("Arm Velocity", getVelocity());
+	// SmartDashboard.putNumber("Arm Voltage", getVoltage());
+	// SmartDashboard.putNumber("Arm Current", getCurrent());
+	// SmartDashboard.putNumber("Arm Desired Position", m_desiredPos);
 	// ----- COMMENT THESE OUT WHEN GOING TO FIELD ----- //
 
 	SmartDashboard.putNumber("Arm Position", getPosition());
@@ -218,7 +218,7 @@ public class Arm extends Subsystem {
 			+ String.valueOf(getPosition()) + "," + String.valueOf(getVelocity()) + ","
 			+ String.valueOf(getAngleAbsolute()) + "," + String.valueOf(getVoltage()) + ","
 			+ String.valueOf(getCurrent()) + "\n");
-//		m_writer.flush();
+		m_writer.flush();
 	    } catch (IOException e) {
 		e.printStackTrace();
 		writeException = true;

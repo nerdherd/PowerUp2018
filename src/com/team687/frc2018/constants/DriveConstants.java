@@ -45,10 +45,10 @@ public class DriveConstants {
     public final static double kDriveDistanceOscillationCount = 0;
 
     // Rotation PID
-    public final static double kRotP = .00971;
-    public final static double kRotD = .00118;
-    public final static double kRotMinPower = 0.1477;
-    public final static double kRotPMaxPower = 0.330;
+    public final static double kRotP = .02;
+    public final static double kRotD = .008;
+    public final static double kRotMinPower = 0.25; // 0.23 is good
+    public final static double kRotPMaxPower = 0.7;
 
     public final static double kDriveRotationTolerance = 1;
     public final static double kDriveRotationDeadband = 0.5;
