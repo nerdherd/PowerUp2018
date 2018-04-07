@@ -22,20 +22,16 @@ public class TurnToAngle extends Command {
     private double m_dTerm;
 
     private int m_counter;
-
-    public TurnToAngle(double angle) {
-	m_desiredAngle = angle;
-	m_timeout = 2; // default timeout is 10 seconds
-
-	requires(Robot.drive);
-    }
+    private int m_tolerance;
 
     /**
      * @param angle
      * @param timeout
+     * @param tolerance
      */
-    public TurnToAngle(double angle, double timeout) {
+    public TurnToAngle(double angle, int tolerance, double timeout) {
 	m_desiredAngle = angle;
+	m_tolerance = tolerance;
 	m_timeout = timeout;
 
 	// subsystem dependencies
@@ -75,7 +71,7 @@ public class TurnToAngle extends Command {
 
     @Override
     protected boolean isFinished() {
-	return m_counter > 4 || Timer.getFPGATimestamp() - m_startTime > m_timeout;
+	return m_counter > m_tolerance || Timer.getFPGATimestamp() - m_startTime > m_timeout;
 	// return false;
     }
 

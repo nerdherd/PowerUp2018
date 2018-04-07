@@ -13,7 +13,7 @@ public class LeftToRightScaleAuto extends CommandGroup {
     public LeftToRightScaleAuto() {
 	addParallel(new DefaultStow());
 	addSequential(new DriveStraightDistance(-AutoConstants.kRedWallToPivotPoint, -180, 5));
-	addSequential(new TurnToAngle(-90));
+	addSequential(new TurnToAngle(-90, 2, 2));
 	addSequential(new ResetDriveEncoders());
 	addSequential(new DriveStraightDistance(AutoConstants.kRedPivotPointToMidField, -90, 10));
     }

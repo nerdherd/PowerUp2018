@@ -30,7 +30,7 @@ public class CenterToRightSwitchAuto extends CommandGroup {
 	addSequential(
 		new DriveStraightDistance(NerdyMath.inchesToTicks(-AutoConstants.kBackUpFromSwitch), -180, 3, 0.7));
 	addParallel(new DefaultIntake());
-	addSequential(new TurnToAngle(-45));
+	addSequential(new TurnToAngle(-45, 2, 2));
 	addSequential(new ResetDriveEncoders());
 	addSequential(new DriveStraightDistance(NerdyMath.inchesToTicks(AutoConstants.kRobotToSecondCubeSwitch), -45, 3,
 		0.5));
@@ -40,7 +40,7 @@ public class CenterToRightSwitchAuto extends CommandGroup {
 	addSequential(new ResetDriveEncoders());
 	addSequential(new DriveStraightDistance(NerdyMath.inchesToTicks(-AutoConstants.kRobotToSecondCubeSwitch - 15),
 		-135, 3, 0.5));
-	addSequential(new TurnToAngle(0, 1.5));
+	addSequential(new TurnToAngle(0, 2, 1.5));
 	addSequential(new ResetDriveEncoders());
 	addParallel(new SwitchScorePosition());
 	addSequential(new DriveStraightDistance(NerdyMath.inchesToTicks(AutoConstants.kBackUpFromSwitch), 0, 3, 0.7));

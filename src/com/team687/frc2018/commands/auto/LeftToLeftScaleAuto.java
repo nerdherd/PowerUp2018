@@ -48,7 +48,7 @@ public class LeftToLeftScaleAuto extends CommandGroup {
 	// stow and turn
 	addParallel(new BackwardsScaleToStow());
 	addSequential(new WaitTime(1));
-	addSequential(new TurnToAngle(-5));
+	addSequential(new TurnToAngle(-5, 2, 2));
 	addSequential(new ResetDriveEncoders());
 
 	// get second cube
@@ -60,7 +60,7 @@ public class LeftToLeftScaleAuto extends CommandGroup {
 	addSequential(new DriveStraightDistance(-NerdyMath.inchesToTicks(AutoConstants.kRobotToSecondCubeScale), -185,
 		2, 0.5));
 	addParallel(new DefaultStow());
-	addSequential(new TurnToAngle(-40));
+	addSequential(new TurnToAngle(-40, 2, 2));
 
 	// score second cube and stow
 	addParallel(new StowToBackwardsScale());
