@@ -80,7 +80,7 @@ public class Arm extends Subsystem {
 
     public void setPosition(double position) {
 	m_desiredPos = position;
-	if (position < getPosition()) {
+	if (position > getPosition()) {
 	    m_arm.configMotionAcceleration(SuperstructureConstants.kArmAcceleration, 0);
 	    m_arm.configMotionCruiseVelocity(SuperstructureConstants.kArmCruiseVelocity - 300, 0);
 	} else {
@@ -108,13 +108,13 @@ public class Arm extends Subsystem {
     }
 
     public double ticksToDegrees(double ticks) {
-	return (ticks / 4096) * (360 / SuperstructureConstants.kArmGearRatio)
+	return -(ticks / 4096) * (360 / SuperstructureConstants.kArmGearRatio)
 		- SuperstructureConstants.kArmAngleOffsetWhenDown;
     }
 
     public double degreesToTicks(double degrees) {
-	return (degrees + SuperstructureConstants.kArmAngleOffsetWhenDown) * SuperstructureConstants.kArmGearRatio / 360
-		* 4096;
+	return -((degrees + SuperstructureConstants.kArmAngleOffsetWhenDown) * SuperstructureConstants.kArmGearRatio / 360
+		* 4096);
     }
 
     /**
@@ -151,10 +151,13 @@ public class Arm extends Subsystem {
 
     public void reportToSmartDashboard() {
 	// ----- COMMENT THESE OUT WHEN GOING TO FIELD ----- //
-	// SmartDashboard.putNumber("Arm Velocity", getVelocity());
-	// SmartDashboard.putNumber("Arm Voltage", getVoltage());
-	// SmartDashboard.putNumber("Arm Current", getCurrent());
-	// SmartDashboard.putNumber("Arm Desired Position", m_desiredPos);
+//	SmartDashboard.putNumber("Arm Velocity", getVelocity());
+//	SmartDashboard.putNumber("Arm Voltage", getVoltage());
+//	SmartDashboard.putNumber("Arm Current", getCurrent());
+//	SmartDashboard.putNumber("Arm Desired Position", m_desiredPos);
+    	
+SmartDashboard.putNumber("Arm Pos As Angle Degrees to Ticks", Robot.arm.degreesToTicks(Robot.arm.ticksToDegrees(getPosition())));
+SmartDashboard.putNumber("Arm Pos As Angle Ticks to Degrees", Robot.arm.ticksToDegrees(getPosition()));
 	// ----- COMMENT THESE OUT WHEN GOING TO FIELD ----- //
 
 	SmartDashboard.putNumber("Arm Position", getPosition());

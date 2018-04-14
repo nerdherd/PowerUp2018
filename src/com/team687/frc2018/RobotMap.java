@@ -25,7 +25,7 @@ public class RobotMap {
     public static final int kIntakeRollersID = 6;
 
     public static final int kIntakeClawID1 = 0;
-    public static final int kIntakeClawID2 = 1;
+    public static final int kIntakeClawID2 = 2;
     
     public static final int kAntiFoulThingID = 10;
 

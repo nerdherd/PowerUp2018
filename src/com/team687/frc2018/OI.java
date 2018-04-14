@@ -1,6 +1,7 @@
 package com.team687.frc2018;
 
 import com.team687.frc2018.commands.arm.ResetArmEncoder;
+import com.team687.frc2018.commands.arm.SetArmPosition;
 import com.team687.frc2018.commands.auto.CenterToLeftSwitchAuto;
 import com.team687.frc2018.commands.auto.CenterToRightSwitchAuto;
 import com.team687.frc2018.commands.auto.DriveStraightAuto;
@@ -21,6 +22,8 @@ import com.team687.frc2018.commands.superstructure.StowToBackwardsScale;
 import com.team687.frc2018.commands.superstructure.StowToForwardsScale;
 import com.team687.frc2018.commands.superstructure.SwitchScorePosition;
 import com.team687.frc2018.commands.wrist.ResetWristEncoder;
+import com.team687.frc2018.commands.wrist.SetWristPosition;
+import com.team687.frc2018.constants.SuperstructureConstants;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -89,20 +92,20 @@ public class OI {
 	// SmartDashboard.putData("Drive Straight Test", new TestDriveSubsystem());
 	//
 	// SmartDashboard.putData("Arm Voltage 0", new SetArmVoltage(0));
-	// SmartDashboard.putData("Arm Position Vertical", new
-	// SetArmPosition(SuperstructureConstants.kArmVerticalPos));
-	// SmartDashboard.putData("Arm Position Horizontal",
-	// new SetArmPosition(SuperstructureConstants.kArmHorizontalPos));
-	// SmartDashboard.putData("Arm Position Offset", new
-	// SetArmPosition(SuperstructureConstants.kArmOffsetPos));
+	 SmartDashboard.putData("Arm Position Vertical", new
+	 SetArmPosition(SuperstructureConstants.kArmVerticalPos));
+	 SmartDashboard.putData("Arm Position Horizontal",
+	 new SetArmPosition(SuperstructureConstants.kArmHorizontalPos));
+	 SmartDashboard.putData("Arm Position Offset", new
+	 SetArmPosition(SuperstructureConstants.kArmOffsetPos));
 	//
 	// SmartDashboard.putData("Wrist Voltage 0", new SetWristPercentOutput(0));
-	// SmartDashboard.putData("Wrist Position Intake", new
-	// SetWristPosition(Robot.wrist.angleAbsoluteToTicks(0)));
-	// SmartDashboard.putData("Wrist Position Offset Stow",
-	// new SetWristPosition(SuperstructureConstants.kWristStowArmOffsetPos));
-	// SmartDashboard.putData("Wrist Position Stow", new
-	// SetWristPosition(Robot.wrist.angleAbsoluteToTicks(90)));
+	 SmartDashboard.putData("Wrist Position Intake", new
+	 SetWristPosition(Robot.wrist.angleAbsoluteToTicks(0)));
+	 SmartDashboard.putData("Wrist Position Offset Stow",
+	 new SetWristPosition(SuperstructureConstants.kWristStowArmOffsetPos));
+	 SmartDashboard.putData("Wrist Position Stow", new
+	 SetWristPosition(Robot.wrist.angleAbsoluteToTicks(90)));
 	//
 	// SmartDashboard.putData("Set Intake Power 1", new SetIntakeRollerPower(1));
 	// SmartDashboard.putData("Set Intake Power -1", new SetIntakeRollerPower(-1));
@@ -139,8 +142,15 @@ public class OI {
 	SmartDashboard.putData("Left To Right Scale", new LeftToRightScaleAuto());
 	SmartDashboard.putData("Right To Left Scale", new RightToLeftScaleAuto());
 	SmartDashboard.putData("Right To Right Scale", new RightToRightScaleAuto());
+	SmartDashboard.putData("Open Claw", new ClawOpen());
+	SmartDashboard.putData("Close Claw", new ClawClose());
+
+	SmartDashboard.putData("Superstructure Stow to Forwards Scale", new StowToForwardsScale());
+	SmartDashboard.putData("Superstructure Forwards Scale to Stow", new ForwardsScaleToStow());	
+
 
 	SmartDashboard.putData("Drive Straight Auto", new DriveStraightAuto());
+
     }
 
     /**

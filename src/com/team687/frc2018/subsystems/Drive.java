@@ -36,8 +36,8 @@ public class Drive extends Subsystem {
     private final TalonSRX m_leftMaster;
     private final TalonSRX m_rightMaster;
 
-    private final VictorSPX m_leftSlave1;
-    private final VictorSPX m_rightSlave1;
+    private final TalonSRX m_leftSlave1;
+    private final TalonSRX m_rightSlave1;
 
     private final AHRS m_nav;
     private final navXSensor m_navxsensor;
@@ -57,9 +57,9 @@ public class Drive extends Subsystem {
 
     public Drive() {
 	m_leftMaster = new TalonSRX(RobotMap.kLeftMasterTalonID);
-	m_leftSlave1 = new VictorSPX(RobotMap.kLeftSlaveVictorID);
+	m_leftSlave1 = new TalonSRX(RobotMap.kLeftSlaveVictorID);
 	m_rightMaster = new TalonSRX(RobotMap.kRightMasterTalonID);
-	m_rightSlave1 = new VictorSPX(RobotMap.kRightSlaveVictorID);
+	m_rightSlave1 = new TalonSRX(RobotMap.kRightSlaveVictorID);
 
 	m_leftSlave1.follow(m_leftMaster);
 	m_rightSlave1.follow(m_rightMaster);
