@@ -41,7 +41,7 @@ public class Arm extends Subsystem {
 
 	m_arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
 	m_arm.setSensorPhase(true);
-	m_arm.setInverted(false);
+	m_arm.setInverted(true);
 	m_arm.setNeutralMode(NeutralMode.Coast);
 
 	m_arm.config_kF(0, SuperstructureConstants.kArmF, 0);
@@ -80,7 +80,7 @@ public class Arm extends Subsystem {
 
     public void setPosition(double position) {
 	m_desiredPos = position;
-	if (position > getPosition()) {
+	if (position < getPosition()) {
 	    m_arm.configMotionAcceleration(SuperstructureConstants.kArmAcceleration, 0);
 	    m_arm.configMotionCruiseVelocity(SuperstructureConstants.kArmCruiseVelocity - 300, 0);
 	} else {
@@ -108,12 +108,12 @@ public class Arm extends Subsystem {
     }
 
     public double ticksToDegrees(double ticks) {
-	return -(ticks / 4096) * (360 / SuperstructureConstants.kArmGearRatio)
+	return (ticks / 4096) * (360 / SuperstructureConstants.kArmGearRatio)
 		- SuperstructureConstants.kArmAngleOffsetWhenDown;
     }
 
     public double degreesToTicks(double degrees) {
-	return -((degrees + SuperstructureConstants.kArmAngleOffsetWhenDown) * SuperstructureConstants.kArmGearRatio / 360
+	return ((degrees + SuperstructureConstants.kArmAngleOffsetWhenDown) * SuperstructureConstants.kArmGearRatio / 360
 		* 4096);
     }
 

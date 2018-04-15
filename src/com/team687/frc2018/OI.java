@@ -6,17 +6,23 @@ import com.team687.frc2018.commands.auto.CenterToLeftSwitchAuto;
 import com.team687.frc2018.commands.auto.CenterToRightSwitchAuto;
 import com.team687.frc2018.commands.auto.DriveStraightAuto;
 import com.team687.frc2018.commands.auto.LeftToLeftScaleAuto;
+import com.team687.frc2018.commands.auto.LeftToLeftSwitchAuto;
 import com.team687.frc2018.commands.auto.LeftToRightScaleAuto;
 import com.team687.frc2018.commands.auto.RightToLeftScaleAuto;
+import com.team687.frc2018.commands.auto.RightToRightCompatibleScaleAuto;
 import com.team687.frc2018.commands.auto.RightToRightScaleAuto;
+import com.team687.frc2018.commands.auto.RightToRightSwitchAuto;
+import com.team687.frc2018.commands.auto.TestBackwardsBezier;
 import com.team687.frc2018.commands.drive.ResetDriveEncoders;
 import com.team687.frc2018.commands.drive.ResetGyro;
 import com.team687.frc2018.commands.drive.TurnToAngle;
 import com.team687.frc2018.commands.intake.ClawClose;
 import com.team687.frc2018.commands.intake.ClawOpen;
 import com.team687.frc2018.commands.intake.SetIntakeRollerPower;
+import com.team687.frc2018.commands.superstructure.AdjustForwardsScale;
 import com.team687.frc2018.commands.superstructure.BackwardsScaleToStow;
 import com.team687.frc2018.commands.superstructure.DefaultIntake;
+import com.team687.frc2018.commands.superstructure.DefaultStow;
 import com.team687.frc2018.commands.superstructure.ForwardsScaleToStow;
 import com.team687.frc2018.commands.superstructure.StowToBackwardsScale;
 import com.team687.frc2018.commands.superstructure.StowToForwardsScale;
@@ -47,11 +53,12 @@ public class OI {
     public JoystickButton stopIntake_3;
     public JoystickButton intakePosition_4;
 
+    public JoystickButton switchPosition_11;
     public JoystickButton forwardsToStow_9;
     public JoystickButton stowToForwards_7;
-    public JoystickButton stowToBackwards_8;
-    public JoystickButton backwardsToStow_10;
-    public JoystickButton switchPosition_11;
+    public JoystickButton adjustMiddle_8;
+    public JoystickButton adjustLow_10;
+    public JoystickButton adjustLower_12;
 
     public JoystickButton openClaw_6;
     public JoystickButton closeClaw_5;
@@ -71,10 +78,12 @@ public class OI {
 	stowToForwards_7 = new JoystickButton(driveJoyArtic, 7);
 	stowToForwards_7.whenPressed(new StowToForwardsScale());
 
-	stowToBackwards_8 = new JoystickButton(driveJoyArtic, 8);
-	stowToBackwards_8.whenPressed(new StowToBackwardsScale());
-	backwardsToStow_10 = new JoystickButton(driveJoyArtic, 10);
-	backwardsToStow_10.whenPressed(new BackwardsScaleToStow());
+	adjustMiddle_8 = new JoystickButton(driveJoyArtic, 8);
+	adjustMiddle_8.whenPressed(new AdjustForwardsScale(SuperstructureConstants.kArmMiddleScalePosition));
+	adjustLow_10 = new JoystickButton(driveJoyArtic, 10);
+	adjustLow_10.whenPressed(new AdjustForwardsScale(SuperstructureConstants.kArmLowScalePosition));
+	adjustLower_12 = new JoystickButton(driveJoyArtic, 10);
+	adjustLower_12.whenPressed(new AdjustForwardsScale(SuperstructureConstants.kArmLowerScalePosition));
 
 	switchPosition_11 = new JoystickButton(driveJoyArtic, 11);
 	switchPosition_11.whenPressed(new SwitchScorePosition());
@@ -122,9 +131,13 @@ public class OI {
 	 BackwardsScaleToStow());
 	 SmartDashboard.putData("Superstructure Forwards Scale to Stow", new
 	 ForwardsScaleToStow());
-	//
-	// SmartDashboard.putData("Superstructure Stow", new DefaultStow());
-	// SmartDashboard.putData("Superstructure Intake", new DefaultIntake());
+	 
+	 SmartDashboard.putData("Superstructure Scale Adjust Mid", new AdjustForwardsScale(SuperstructureConstants.kArmMiddleScalePosition));
+	 SmartDashboard.putData("Superstructure Scale Adjust Low", new AdjustForwardsScale(SuperstructureConstants.kArmLowScalePosition));
+	 SmartDashboard.putData("Superstructure Scale Adjust Lower", new AdjustForwardsScale(SuperstructureConstants.kArmLowerScalePosition));
+	
+	 SmartDashboard.putData("Superstructure Stow", new DefaultStow());
+	 SmartDashboard.putData("Superstructure Intake", new DefaultIntake());
 	// SmartDashboard.putData("Superstructure Intake Position", new
 	// IntakePosition());
 
@@ -138,10 +151,15 @@ public class OI {
 
 	SmartDashboard.putData("Center To Left Switch", new CenterToLeftSwitchAuto());
 	SmartDashboard.putData("Center To Right Switch", new CenterToRightSwitchAuto());
+	SmartDashboard.putData("Test Backwards Bezier", new TestBackwardsBezier());
+	
 	SmartDashboard.putData("Left To Left Scale", new LeftToLeftScaleAuto());
 	SmartDashboard.putData("Left To Right Scale", new LeftToRightScaleAuto());
+	SmartDashboard.putData("Left To Left Switch", new LeftToLeftSwitchAuto());
 	SmartDashboard.putData("Right To Left Scale", new RightToLeftScaleAuto());
 	SmartDashboard.putData("Right To Right Scale", new RightToRightScaleAuto());
+	SmartDashboard.putData("Right To Right Compatible Scale", new RightToRightCompatibleScaleAuto());
+	SmartDashboard.putData("Right To Right Switch", new RightToRightSwitchAuto());
 	SmartDashboard.putData("Open Claw", new ClawOpen());
 	SmartDashboard.putData("Close Claw", new ClawClose());
 

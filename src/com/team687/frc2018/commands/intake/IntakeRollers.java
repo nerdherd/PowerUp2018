@@ -9,7 +9,7 @@ public class IntakeRollers extends Command {
     private double m_power;
 
     public IntakeRollers(double power) {
-	m_power = -Math.abs(power);
+	m_power = Math.abs(power);
 	requires(Robot.intake);
     }
 

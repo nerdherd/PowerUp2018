@@ -21,7 +21,7 @@ public class OuttakeRollers extends Command {
 
     @Override
     protected void execute() {
-	Robot.intake.setRollerPower(m_power);
+	Robot.intake.setRollerPower(-m_power);
     }
 
     @Override

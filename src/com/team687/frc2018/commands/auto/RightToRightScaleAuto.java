@@ -32,12 +32,12 @@ public class RightToRightScaleAuto extends CommandGroup {
 	addSequential(
 		new DriveAtHeading(-0.6, 140,
 			NerdyMath.inchesToTicks(AutoConstants.kRedStartingWallToSwitchInches
-				+ 0.3 * AutoConstants.kRedLeftSwitchToScale),
+				+ 0.3 * AutoConstants.kRedLeftSwitchToFrontScale),
 			0.002));
 	addSequential(
 		new DriveAtHeading(-0.3, 140,
 			NerdyMath.inchesToTicks(AutoConstants.kRedStartingWallToSwitchInches
-					+ 1.4 * AutoConstants.kRedLeftSwitchToScale),
+					+ 1.4 * AutoConstants.kRedLeftSwitchToFrontScale),
 			0.004));
 	
 	addParallel(new SetIntakeRollerPower(-1));

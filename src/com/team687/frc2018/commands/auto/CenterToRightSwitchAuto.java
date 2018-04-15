@@ -12,6 +12,7 @@ import com.team687.frc2018.commands.superstructure.DefaultIntake;
 import com.team687.frc2018.commands.superstructure.DefaultStow;
 import com.team687.frc2018.commands.superstructure.SwitchScorePosition;
 import com.team687.frc2018.constants.AutoConstants;
+import com.team687.frc2018.utilities.BezierCurve;
 import com.team687.frc2018.utilities.NerdyMath;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -22,30 +23,24 @@ public class CenterToRightSwitchAuto extends CommandGroup {
 	addParallel(new SwitchScorePosition());
 	addSequential(new DriveBezierPath(AutoConstants.kRedCenterToRightSwitchPath, 0.5, 0.008, 0.001, false));
 	addParallel(new OuttakeRollers(0.4));
-	addSequential(new DriveTime(0.5, 0.5));
+//	addSequential(new DriveTime(0.5, 0.5));
+	addSequential(new ResetDriveEncoders());
 
+	addSequential(new DriveBezierPath(AutoConstants.kRedRightSwitchToCenterPath, -0.5, 0.01, 0.001, false));
+	addParallel(new DefaultIntake());
 	addSequential(new WaitTime(0.1));
+	addSequential(new ResetDriveEncoders());
+	addSequential(new DriveStraightDistance(NerdyMath.inchesToTicks(AutoConstants.kRobotToSecondCubeSwitch), 0, 3, 0.5));
 	addParallel(new DefaultStow());
 	addSequential(new ResetDriveEncoders());
-	addSequential(
-		new DriveStraightDistance(NerdyMath.inchesToTicks(-AutoConstants.kBackUpFromSwitch), -180, 3, 0.7));
-	addParallel(new DefaultIntake());
-	addSequential(new TurnToAngle(-45, 2, 2));
-	addSequential(new ResetDriveEncoders());
-	addSequential(new DriveStraightDistance(NerdyMath.inchesToTicks(AutoConstants.kRobotToSecondCubeSwitch), -45, 3,
-		0.5));
-	// addSequential(new WaitTime(0.1));
-	addSequential(new TurnTime(0.5, 0.5));
-	addSequential(new TurnTime(-0.5, 0.5));
-	addSequential(new ResetDriveEncoders());
-	addSequential(new DriveStraightDistance(NerdyMath.inchesToTicks(-AutoConstants.kRobotToSecondCubeSwitch - 15),
-		-135, 3, 0.5));
-	addSequential(new TurnToAngle(0, 2, 1.5));
-	addSequential(new ResetDriveEncoders());
+	addSequential(new DriveStraightDistance(NerdyMath.inchesToTicks(-AutoConstants.kRobotToSecondCubeSwitch * 1.25), -180, 3, 0.5));
+	
 	addParallel(new SwitchScorePosition());
-	addSequential(new DriveStraightDistance(NerdyMath.inchesToTicks(AutoConstants.kBackUpFromSwitch), 0, 3, 0.7));
-	addSequential(new DriveTime(0.7, 1.0));
+	addSequential(new ResetDriveEncoders());
+	addSequential(new DriveBezierPath(new BezierCurve(AutoConstants.kRobotCenterOriginX, AutoConstants.kRobotOriginY,
+			AutoConstants.kRobotCenterOriginX, AutoConstants.kRedSwitchFrontY / 2, AutoConstants.kRedSwitchRightX, AutoConstants.kRedSwitchFrontY / 3, AutoConstants.kRedSwitchRightX,
+			AutoConstants.kRedSwitchFrontY), 0.5, 0.008, 0.001, false));
 	addParallel(new OuttakeRollers(0.4));
+//	addSequential(new DriveTime(0.5, 0.5));
     }
-
 }

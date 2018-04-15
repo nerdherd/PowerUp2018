@@ -78,6 +78,14 @@ public class Wrist extends Subsystem {
 	m_desiredPos = position;
 	m_wrist.set(ControlMode.MotionMagic, position);
     }
+//    
+//    public void setAdjustmentCruiseVelocity() {
+//    	m_wrist.configMotionCruiseVelocity(SuperstructureConstants.kWristCruiseVelocity - 400, 0);
+//    }
+//    
+//    public void setRegularCruiseVelocity() {
+//    	m_wrist.configMotionCruiseVelocity(SuperstructureConstants.kWristCruiseVelocity, 0);
+//    }
 
     public void setPercentOutput(double power) {
 	m_wrist.set(ControlMode.PercentOutput, power);
