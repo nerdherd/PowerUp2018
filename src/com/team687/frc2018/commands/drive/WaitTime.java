@@ -21,13 +21,13 @@ public class WaitTime extends Command {
     public WaitTime(double time) {
 	m_time = time;
 
-	requires(Robot.drive);
+//	requires(Robot.drive);
     }
 
     @Override
     protected void initialize() {
 	SmartDashboard.putString("Current Drive Command", "WaitTime");
-	Robot.drive.stopDrive();
+//	Robot.drive.stopDrive();
 
 	m_startTime = Timer.getFPGATimestamp();
     }

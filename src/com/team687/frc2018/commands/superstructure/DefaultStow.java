@@ -21,7 +21,7 @@ public class DefaultStow extends Command {
 
     @Override
     protected void execute() {
-	Robot.intake.setRollerPower(-0.1254); // hold cube in place as we go up
+	Robot.intake.setRollerPower(0.254); // hold cube in place as we go up
 	Robot.arm.setPosition(SuperstructureConstants.kArmOffsetPos);
 	Robot.wrist.setAngleAbsolute(90);
 	Robot.intake.openClaw();
