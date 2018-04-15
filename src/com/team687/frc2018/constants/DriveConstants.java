@@ -33,7 +33,7 @@ public class DriveConstants {
     public final static double kLeftVelocityD = 0;
 
     public final static double kMaxVelocity = 3150; // max velocity on ground
-    public final static double kLeftAdjustment = 0.818868;
+    public final static double kLeftAdjustment = 0.95;
 
     // Distance PID
     public final static double kDistP = 0.0001;
@@ -48,7 +48,7 @@ public class DriveConstants {
     public final static double kRotP = .02;
     public final static double kRotD = .008;
     public final static double kRotMinPower = 0.25; // 0.23 is good
-    public final static double kRotPMaxPower = 0.7;
+    public final static double kRotPMaxPower = 0.8;
 
     public final static double kDriveRotationTolerance = 1;
     public final static double kDriveRotationDeadband = 0.5;

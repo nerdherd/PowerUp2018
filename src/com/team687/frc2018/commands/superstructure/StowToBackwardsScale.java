@@ -24,9 +24,9 @@ public class StowToBackwardsScale extends Command {
 	Robot.intake.setRollerPower(-0.1); // hold cube in place as we go up
 	Robot.arm.setPosition(SuperstructureConstants.kArmAutoScaleScorePos);
 	if (Robot.arm.getPosition() > SuperstructureConstants.kArmWristSafePos) {
-	    Robot.wrist.setPosition(SuperstructureConstants.kWristBackwardsScorePos);
-	} else {
 	    Robot.wrist.setPosition(SuperstructureConstants.kWristStowArmOffsetPos);
+	} else {
+	    Robot.wrist.setPosition(SuperstructureConstants.kWristBackwardsScorePos);
 	}
     }
 

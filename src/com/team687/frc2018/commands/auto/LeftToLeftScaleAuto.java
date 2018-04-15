@@ -26,48 +26,50 @@ public class LeftToLeftScaleAuto extends CommandGroup {
 		NerdyMath.inchesToTicks(AutoConstants.kRedStartingWallToSwitchInches), 0.008));
 
 	// curve to scale and score
-	addParallel(new StowToBackwardsScale());
-	addSequential(
-		new DriveAtHeading(-0.6, 180,
-			NerdyMath.inchesToTicks(
-				AutoConstants.kRedStartingWallToSwitchInches + AutoConstants.kRedLeftSwitchLength),
-			0.008));
-	addSequential(
-		new DriveAtHeading(-0.5, 220,
-			NerdyMath.inchesToTicks(AutoConstants.kRedStartingWallToSwitchInches
-				+ AutoConstants.kRedLeftSwitchLength + 0.3 * AutoConstants.kRedLeftSwitchToScale),
-			0.008));
-	addSequential(
-		new DriveAtHeading(-0.3, 220,
-			NerdyMath.inchesToTicks(AutoConstants.kRedStartingWallToSwitchInches
-				+ AutoConstants.kRedLeftSwitchLength + 0.7 * AutoConstants.kRedLeftSwitchToScale),
-			0.008));
-	addParallel(new SetIntakeRollerPower(0.7));
-	addSequential(new WaitTime(0.2));
-
-	// stow and turn
-	addParallel(new BackwardsScaleToStow());
-	addSequential(new WaitTime(1));
-	addSequential(new TurnToAngle(-5, 2, 2));
-	addSequential(new ResetDriveEncoders());
-
-	// get second cube
-	addParallel(new DefaultIntake());
-	addSequential(
-		new DriveStraightDistance(NerdyMath.inchesToTicks(AutoConstants.kRobotToSecondCubeScale), -5, 2, 0.5));
-	addSequential(new WaitTime(0.2));
-	addSequential(new ResetDriveEncoders());
-	addSequential(new DriveStraightDistance(-NerdyMath.inchesToTicks(AutoConstants.kRobotToSecondCubeScale), -185,
-		2, 0.5));
-	addParallel(new DefaultStow());
-	addSequential(new TurnToAngle(-40, 2, 2));
-
-	// score second cube and stow
-	addParallel(new StowToBackwardsScale());
-	addSequential(new WaitTime(2));
-	addParallel(new SetIntakeRollerPower(0.7));
-	addSequential(new WaitTime(0.5));
-	addParallel(new BackwardsScaleToStow());
+//	addParallel(new StowToBackwardsScale());
+	
+//	addSequential(
+//		new DriveAtHeading(-0.6, 180,
+//			NerdyMath.inchesToTicks(
+//				AutoConstants.kRedStartingWallToSwitchInches + AutoConstants.kRedLeftSwitchLength),
+//			0.008));
+//	addSequential(
+//		new DriveAtHeading(-0.5, 220,
+//			NerdyMath.inchesToTicks(AutoConstants.kRedStartingWallToSwitchInches
+//				+ AutoConstants.kRedLeftSwitchLength + 0.3 * AutoConstants.kRedLeftSwitchToScale),
+//			0.008));
+//	addSequential(
+//		new DriveAtHeading(-0.3, 220,
+//			NerdyMath.inchesToTicks(AutoConstants.kRedStartingWallToSwitchInches
+//				+ AutoConstants.kRedLeftSwitchLength + 0.7 * AutoConstants.kRedLeftSwitchToScale),
+//			0.008));
+	
+//	addParallel(new SetIntakeRollerPower(0.7));
+//	addSequential(new WaitTime(0.2));
+//
+//	// stow and turn
+//	addParallel(new BackwardsScaleToStow());
+//	addSequential(new WaitTime(1));
+//	addSequential(new TurnToAngle(-5, 2, 2));
+//	addSequential(new ResetDriveEncoders());
+//
+//	// get second cube
+//	addParallel(new DefaultIntake());
+//	addSequential(
+//		new DriveStraightDistance(NerdyMath.inchesToTicks(AutoConstants.kRobotToSecondCubeScale), -5, 2, 0.5));
+//	addSequential(new WaitTime(0.2));
+//	addSequential(new ResetDriveEncoders());
+//	addSequential(new DriveStraightDistance(-NerdyMath.inchesToTicks(AutoConstants.kRobotToSecondCubeScale), -185,
+//		2, 0.5));
+//	addParallel(new DefaultStow());
+//	addSequential(new TurnToAngle(-40, 2, 2));
+//
+//	// score second cube and stow
+//	addParallel(new StowToBackwardsScale());
+//	addSequential(new WaitTime(2));
+//	addParallel(new SetIntakeRollerPower(0.7));
+//	addSequential(new WaitTime(0.5));
+//	addParallel(new BackwardsScaleToStow());
     }
 
 }

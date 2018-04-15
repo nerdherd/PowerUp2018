@@ -20,7 +20,7 @@ public class AutoConstants {
     public static final double kRedLeftSideWallToScale = 60;
     public static final double kPowerCubeLength = 13;
 
-    public static final double kRobotToSecondCubeScale = 50;
+    public static final double kRobotToSecondCubeScale = 40;
     public static final double kBackUpFromSwitch = 50;
     public static final double kRobotToSecondCubeSwitch = 40;
 

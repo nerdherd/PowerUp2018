@@ -114,27 +114,27 @@ public class OI {
 	// SmartDashboard.putData("Open Intake Claw", new ClawOpen());
 	// SmartDashboard.putData("Close Intake Claw", new ClawClose());
 
-	// SmartDashboard.putData("Superstructure Stow to Backwards Scale", new
-	// StowToBackwardsScale());
-	// SmartDashboard.putData("Superstructure Stow to Forwards Scale", new
-	// StowToForwardsScale());
-	// SmartDashboard.putData("Superstructure Backwards Scale To Stow", new
-	// BackwardsScaleToStow());
-	// SmartDashboard.putData("Superstructure Forwards Scale to Stow", new
-	// ForwardsScaleToStow());
+	 SmartDashboard.putData("Superstructure Stow to Backwards Scale", new
+	 StowToBackwardsScale());
+	 SmartDashboard.putData("Superstructure Stow to Forwards Scale", new
+	 StowToForwardsScale());
+	 SmartDashboard.putData("Superstructure Backwards Scale To Stow", new
+	 BackwardsScaleToStow());
+	 SmartDashboard.putData("Superstructure Forwards Scale to Stow", new
+	 ForwardsScaleToStow());
 	//
 	// SmartDashboard.putData("Superstructure Stow", new DefaultStow());
 	// SmartDashboard.putData("Superstructure Intake", new DefaultIntake());
 	// SmartDashboard.putData("Superstructure Intake Position", new
 	// IntakePosition());
 
-	SmartDashboard.putData("Turn To 0", new TurnToAngle(0, 4, 2));
-	SmartDashboard.putData("Turn To 90", new TurnToAngle(90, 4, 2));
-	SmartDashboard.putData("Turn To -90", new TurnToAngle(-90, 4, 2));
-	SmartDashboard.putData("Turn To 5", new TurnToAngle(5, 4, 2));
-	SmartDashboard.putData("Turn To -5", new TurnToAngle(-5, 4, 2));
-	SmartDashboard.putData("Turn To 20", new TurnToAngle(20, 4, 2));
-	SmartDashboard.putData("Turn To -20", new TurnToAngle(-20, 4, 2));
+	SmartDashboard.putData("Turn To 0", new TurnToAngle(0, 2, 2));
+	SmartDashboard.putData("Turn To 90", new TurnToAngle(90, 2, 2));
+	SmartDashboard.putData("Turn To -90", new TurnToAngle(-90, 2, 2));
+	SmartDashboard.putData("Turn To 5", new TurnToAngle(5, 2, 2));
+	SmartDashboard.putData("Turn To -5", new TurnToAngle(-5, 2, 2));
+	SmartDashboard.putData("Turn To 20", new TurnToAngle(20, 2, 2));
+	SmartDashboard.putData("Turn To -20", new TurnToAngle(-20, 2, 2));
 
 	SmartDashboard.putData("Center To Left Switch", new CenterToLeftSwitchAuto());
 	SmartDashboard.putData("Center To Right Switch", new CenterToRightSwitchAuto());
