@@ -82,7 +82,7 @@ public class Arm extends Subsystem {
 	m_desiredPos = position;
 	if (position < getPosition()) {
 	    m_arm.configMotionAcceleration(SuperstructureConstants.kArmAcceleration, 0);
-	    m_arm.configMotionCruiseVelocity(SuperstructureConstants.kArmCruiseVelocity - 300, 0);
+	    m_arm.configMotionCruiseVelocity(SuperstructureConstants.kArmCruiseVelocity, 0);
 	} else {
 	    m_arm.configMotionAcceleration(SuperstructureConstants.kArmAcceleration, 0);
 	    m_arm.configMotionCruiseVelocity(SuperstructureConstants.kArmCruiseVelocity, 0);

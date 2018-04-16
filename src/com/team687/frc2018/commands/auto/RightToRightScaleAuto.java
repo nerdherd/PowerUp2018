@@ -1,5 +1,6 @@
 package com.team687.frc2018.commands.auto;
 
+import com.team687.frc2018.commands.drive.DriftTurnToAngle;
 import com.team687.frc2018.commands.drive.DriveAtHeading;
 import com.team687.frc2018.commands.drive.DriveStraightDistance;
 import com.team687.frc2018.commands.drive.DriveTime;
@@ -44,33 +45,28 @@ public class RightToRightScaleAuto extends CommandGroup {
 	addSequential(new WaitTime(0.3));
 
 //	// stow and turn
-	addParallel(new BackwardsScaleToStow());
-//	addSequential(new WaitTime(0.5));
-	addSequential(new TurnToAngle(15, 3, 2));
-	addSequential(new ResetDriveEncoders());
-////
-////	// get second cube
 	addParallel(new DefaultIntake());
-	addSequential(
-		new DriveStraightDistance(NerdyMath.inchesToTicks(AutoConstants.kRobotToSecondCubeScale), 15, 2, 0.7));
-	addSequential(new WaitTime(0.2));
+//	addSequential(new WaitTime(0.5));
 	addSequential(new ResetDriveEncoders());
+	addSequential(new DriveAtHeading(0.4, 10, NerdyMath.inchesToTicks(AutoConstants.kRobotToSecondCubeScale * 0.8), 0.008));
+
+//	// get second cube
+	addSequential(new ResetDriveEncoders());
+	addParallel(new DefaultStow());
 	addSequential(new DriveStraightDistance(0.7 * -NerdyMath.inchesToTicks(AutoConstants.kRobotToSecondCubeScale), -165,
 		2, 0.7));
-
-	addParallel(new DefaultStow());
-	addParallel(new TurnToAngle(-30, 2, 2));
-//	addSequential(new ResetDriveEncoders());
-//	addSequential(new DriveStraightDistance(NerdyMath.inchesToTicks(-10), 150, 2, 0.5));
-	
-	// score second cube and stow
 	addParallel(new StowToBackwardsScale());
-	addSequential(new WaitTime(2));
-	addSequential(new DriveTime(-0.5, 0.3));
-	addParallel(new SetIntakeRollerPower(-1));
+	addParallel(new TurnToAngle(-30, 2, 2));
+//	// score second cube and stow
+	addSequential(new WaitTime(0.2));
+	addSequential(new DriveTime(-0.5, 0.2));
+	addParallel(new SetIntakeRollerPower(-0.3));
 	addSequential(new WaitTime(0.3));
-	addSequential(new DriveTime(0.5, 0.3));
-	addParallel(new BackwardsScaleToStow());
+	addParallel(new DefaultIntake());
+	addSequential(new ResetDriveEncoders());
+	addSequential(new DriveAtHeading(0.3, 30, NerdyMath.inchesToTicks(AutoConstants.kRobotToSecondCubeScale * 1), 0.008));
+	addSequential(new ResetDriveEncoders());
+	addParallel(new DefaultStow());
+	addSequential(new DriftTurnToAngle(-0.5, -150, NerdyMath.inchesToTicks(AutoConstants.kRobotToSecondCubeScale * 1), 0.008));
     }
-
 }

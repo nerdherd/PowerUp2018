@@ -23,7 +23,7 @@ public class DefaultIntake extends Command {
     protected void execute() {
 	Robot.arm.setPosition(SuperstructureConstants.kArmOffsetPos);
 	if (Robot.arm.getPosition() > SuperstructureConstants.kArmSwitchPos - 1000) {
-		Robot.wrist.setAngleAbsolute(90);
+		Robot.wrist.setPosition(SuperstructureConstants.kWristStowArmOffsetPos);
 	} else {
 		Robot.wrist.setAngleAbsolute(2);
 	}

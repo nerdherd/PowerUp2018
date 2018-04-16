@@ -10,8 +10,8 @@ public class SuperstructureConstants {
     public static final double kArmP = 4;
     public static final double kArmI = 0;
     public static final double kArmD = 0;
-    public static final int kArmCruiseVelocity = 1114;
-    public static final int kArmAcceleration = 971;
+    public static final int kArmCruiseVelocity = 1305;
+    public static final int kArmAcceleration = 1200;
 
     public static final double kArmMaxVoltageForward = 12;
     public static final double kArmMaxVoltageReverse = -12;
