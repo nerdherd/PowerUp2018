@@ -32,31 +32,31 @@ public class RightToRightScaleAuto extends CommandGroup {
 	addSequential(
 		new DriveAtHeading(-0.6, 140,
 			NerdyMath.inchesToTicks(AutoConstants.kRedStartingWallToSwitchInches
-				+ 0.3 * AutoConstants.kRedLeftSwitchToFrontScale),
-			0.002));
+				+ 0.5 * AutoConstants.kRedLeftSwitchToFrontScale),
+			0.003));
 	addSequential(
 		new DriveAtHeading(-0.3, 140,
 			NerdyMath.inchesToTicks(AutoConstants.kRedStartingWallToSwitchInches
 					+ 1.4 * AutoConstants.kRedLeftSwitchToFrontScale),
-			0.004));
+			0.005));
 	
 	addParallel(new SetIntakeRollerPower(-1));
-	addSequential(new WaitTime(0.8));
+	addSequential(new WaitTime(0.3));
 
 //	// stow and turn
 	addParallel(new BackwardsScaleToStow());
-	addSequential(new WaitTime(1));
+//	addSequential(new WaitTime(0.5));
 	addSequential(new TurnToAngle(15, 3, 2));
 	addSequential(new ResetDriveEncoders());
 ////
 ////	// get second cube
 	addParallel(new DefaultIntake());
 	addSequential(
-		new DriveStraightDistance(NerdyMath.inchesToTicks(AutoConstants.kRobotToSecondCubeScale), 15, 2, 0.5));
+		new DriveStraightDistance(NerdyMath.inchesToTicks(AutoConstants.kRobotToSecondCubeScale), 15, 2, 0.7));
 	addSequential(new WaitTime(0.2));
 	addSequential(new ResetDriveEncoders());
 	addSequential(new DriveStraightDistance(0.7 * -NerdyMath.inchesToTicks(AutoConstants.kRobotToSecondCubeScale), -165,
-		2, 0.5));
+		2, 0.7));
 
 	addParallel(new DefaultStow());
 	addParallel(new TurnToAngle(-30, 2, 2));
@@ -66,10 +66,10 @@ public class RightToRightScaleAuto extends CommandGroup {
 	// score second cube and stow
 	addParallel(new StowToBackwardsScale());
 	addSequential(new WaitTime(2));
-	addSequential(new DriveTime(-0.5, 0.5));
+	addSequential(new DriveTime(-0.5, 0.3));
 	addParallel(new SetIntakeRollerPower(-1));
-	addSequential(new WaitTime(0.8));
-	addSequential(new DriveTime(0.5, 0.5));
+	addSequential(new WaitTime(0.3));
+	addSequential(new DriveTime(0.5, 0.3));
 	addParallel(new BackwardsScaleToStow());
     }
 
