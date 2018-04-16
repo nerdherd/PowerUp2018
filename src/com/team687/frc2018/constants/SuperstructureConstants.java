@@ -24,7 +24,7 @@ public class SuperstructureConstants {
 
     public static final int kArmDownPos = 0;
     public static final int kArmOffsetPos = 500;
-    public static final int kArmSwitchPos = 1600;
+    public static final int kArmSwitchPos = 3000;
     public static final int kArmHorizontalPos = 5200;
     public static final int kArmVerticalPos = 12000;
     public static final int kArmAutoScaleScorePos = 11000;

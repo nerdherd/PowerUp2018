@@ -26,7 +26,8 @@ import com.team687.frc2018.commands.superstructure.DefaultStow;
 import com.team687.frc2018.commands.superstructure.ForwardsScaleToStow;
 import com.team687.frc2018.commands.superstructure.StowToBackwardsScale;
 import com.team687.frc2018.commands.superstructure.StowToForwardsScale;
-import com.team687.frc2018.commands.superstructure.SwitchScorePosition;
+import com.team687.frc2018.commands.superstructure.SwitchScorePositionAuto;
+import com.team687.frc2018.commands.superstructure.SwitchScorePositionTeleop;
 import com.team687.frc2018.commands.wrist.ResetWristEncoder;
 import com.team687.frc2018.commands.wrist.SetWristPosition;
 import com.team687.frc2018.constants.SuperstructureConstants;
@@ -57,8 +58,7 @@ public class OI {
     public JoystickButton forwardsToStow_9;
     public JoystickButton stowToForwards_7;
     public JoystickButton adjustMiddle_8;
-    public JoystickButton adjustLow_10;
-    public JoystickButton adjustLower_12;
+    public JoystickButton defaultStow_10;
 
     public JoystickButton openClaw_6;
     public JoystickButton closeClaw_5;
@@ -67,7 +67,7 @@ public class OI {
 	intake_1 = new JoystickButton(driveJoyArtic, 1);
 	intake_1.whenPressed(new DefaultIntake());
 	outtake_2 = new JoystickButton(driveJoyArtic, 2);
-	outtake_2.whenPressed(new SetIntakeRollerPower(0.4));
+	outtake_2.whenPressed(new SetIntakeRollerPower(-0.4));
 	stopIntake_3 = new JoystickButton(driveJoyArtic, 3);
 	stopIntake_3.whenPressed(new SetIntakeRollerPower(0));
 	intakePosition_4 = new JoystickButton(driveJoyArtic, 4);
@@ -80,13 +80,11 @@ public class OI {
 
 	adjustMiddle_8 = new JoystickButton(driveJoyArtic, 8);
 	adjustMiddle_8.whenPressed(new AdjustForwardsScale(SuperstructureConstants.kArmMiddleScalePosition));
-	adjustLow_10 = new JoystickButton(driveJoyArtic, 10);
-	adjustLow_10.whenPressed(new AdjustForwardsScale(SuperstructureConstants.kArmLowScalePosition));
-	adjustLower_12 = new JoystickButton(driveJoyArtic, 10);
-	adjustLower_12.whenPressed(new AdjustForwardsScale(SuperstructureConstants.kArmLowerScalePosition));
+	defaultStow_10 = new JoystickButton(driveJoyArtic, 10);
+	defaultStow_10.whenPressed(new DefaultStow());
 
 	switchPosition_11 = new JoystickButton(driveJoyArtic, 11);
-	switchPosition_11.whenPressed(new SwitchScorePosition());
+	switchPosition_11.whenPressed(new SwitchScorePositionTeleop());
 
 	openClaw_6 = new JoystickButton(driveJoyArtic, 5);
 	openClaw_6.whenPressed(new ClawOpen());
@@ -138,6 +136,7 @@ public class OI {
 	
 	 SmartDashboard.putData("Superstructure Stow", new DefaultStow());
 	 SmartDashboard.putData("Superstructure Intake", new DefaultIntake());
+	 SmartDashboard.putData("Superstructure Switch Teleop Pos", new SwitchScorePositionTeleop());
 	// SmartDashboard.putData("Superstructure Intake Position", new
 	// IntakePosition());
 

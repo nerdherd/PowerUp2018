@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SwitchScorePosition extends Command {
+public class SwitchScorePositionAuto extends Command {
 
-    public SwitchScorePosition() {
+    public SwitchScorePositionAuto() {
 	requires(Robot.wrist);
 	requires(Robot.arm);
     }
