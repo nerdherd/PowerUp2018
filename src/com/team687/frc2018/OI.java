@@ -4,23 +4,24 @@ import com.team687.frc2018.commands.arm.ResetArmEncoder;
 import com.team687.frc2018.commands.auto.CenterToLeftSwitchAuto;
 import com.team687.frc2018.commands.auto.CenterToRightSwitchAuto;
 import com.team687.frc2018.commands.auto.DriveStraightAuto;
-import com.team687.frc2018.commands.auto.LeftToLeftScaleAuto;
+import com.team687.frc2018.commands.auto.LeftToLeftScale2CubeAuto;
 import com.team687.frc2018.commands.auto.LeftToRightScaleAuto;
 import com.team687.frc2018.commands.auto.RightToLeftScaleAuto;
-import com.team687.frc2018.commands.auto.RightToRightScaleAuto;
+import com.team687.frc2018.commands.auto.RightToRightScale2CubeAuto;
 import com.team687.frc2018.commands.drive.ResetDriveEncoders;
 import com.team687.frc2018.commands.drive.ResetGyro;
 import com.team687.frc2018.commands.drive.TurnToAngle;
 import com.team687.frc2018.commands.intake.ClawClose;
 import com.team687.frc2018.commands.intake.ClawOpen;
 import com.team687.frc2018.commands.intake.SetIntakeRollerPower;
-import com.team687.frc2018.commands.superstructure.BackwardsScaleToStow;
+import com.team687.frc2018.commands.superstructure.AdjustForwardsScale;
 import com.team687.frc2018.commands.superstructure.DefaultIntake;
+import com.team687.frc2018.commands.superstructure.DefaultStow;
 import com.team687.frc2018.commands.superstructure.ForwardsScaleToStow;
-import com.team687.frc2018.commands.superstructure.StowToBackwardsScale;
 import com.team687.frc2018.commands.superstructure.StowToForwardsScale;
-import com.team687.frc2018.commands.superstructure.SwitchScorePosition;
+import com.team687.frc2018.commands.superstructure.SwitchScorePositionTeleop;
 import com.team687.frc2018.commands.wrist.ResetWristEncoder;
+import com.team687.frc2018.constants.SuperstructureConstants;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -44,11 +45,11 @@ public class OI {
     public JoystickButton stopIntake_3;
     public JoystickButton intakePosition_4;
 
+    public JoystickButton switchPosition_11;
     public JoystickButton forwardsToStow_9;
     public JoystickButton stowToForwards_7;
-    public JoystickButton stowToBackwards_8;
-    public JoystickButton backwardsToStow_10;
-    public JoystickButton switchPosition_11;
+    public JoystickButton adjustMiddle_8;
+    public JoystickButton defaultStow_10;
 
     public JoystickButton openClaw_6;
     public JoystickButton closeClaw_5;
@@ -68,13 +69,12 @@ public class OI {
 	stowToForwards_7 = new JoystickButton(driveJoyArtic, 7);
 	stowToForwards_7.whenPressed(new StowToForwardsScale());
 
-	stowToBackwards_8 = new JoystickButton(driveJoyArtic, 8);
-	stowToBackwards_8.whenPressed(new StowToBackwardsScale());
-	backwardsToStow_10 = new JoystickButton(driveJoyArtic, 10);
-	backwardsToStow_10.whenPressed(new BackwardsScaleToStow());
-
+	adjustMiddle_8 = new JoystickButton(driveJoyArtic, 8);
+	adjustMiddle_8.whenPressed(new AdjustForwardsScale(SuperstructureConstants.kArmMiddleScalePosition));
+	defaultStow_10 = new JoystickButton(driveJoyArtic, 10);
+	defaultStow_10.whenPressed(new DefaultStow());
 	switchPosition_11 = new JoystickButton(driveJoyArtic, 11);
-	switchPosition_11.whenPressed(new SwitchScorePosition());
+	switchPosition_11.whenPressed(new SwitchScorePositionTeleop());
 
 	openClaw_6 = new JoystickButton(driveJoyArtic, 5);
 	openClaw_6.whenPressed(new ClawOpen());
@@ -135,10 +135,10 @@ public class OI {
 
 	SmartDashboard.putData("Center To Left Switch", new CenterToLeftSwitchAuto());
 	SmartDashboard.putData("Center To Right Switch", new CenterToRightSwitchAuto());
-	SmartDashboard.putData("Left To Left Scale", new LeftToLeftScaleAuto());
+	SmartDashboard.putData("Left To Left Scale", new LeftToLeftScale2CubeAuto());
 	SmartDashboard.putData("Left To Right Scale", new LeftToRightScaleAuto());
 	SmartDashboard.putData("Right To Left Scale", new RightToLeftScaleAuto());
-	SmartDashboard.putData("Right To Right Scale", new RightToRightScaleAuto());
+	SmartDashboard.putData("Right To Right Scale", new RightToRightScale2CubeAuto());
 
 	SmartDashboard.putData("Drive Straight Auto", new DriveStraightAuto());
     }

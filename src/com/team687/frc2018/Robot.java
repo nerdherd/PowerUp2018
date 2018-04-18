@@ -3,10 +3,10 @@ package com.team687.frc2018;
 import com.team687.frc2018.commands.auto.CenterToLeftSwitchAuto;
 import com.team687.frc2018.commands.auto.CenterToRightSwitchAuto;
 import com.team687.frc2018.commands.auto.DriveStraightWithoutCube;
-import com.team687.frc2018.commands.auto.LeftToLeftScaleAuto;
+import com.team687.frc2018.commands.auto.LeftToLeftScale2CubeAuto;
 import com.team687.frc2018.commands.auto.LeftToRightScaleAuto;
 import com.team687.frc2018.commands.auto.RightToLeftScaleAuto;
-import com.team687.frc2018.commands.auto.RightToRightScaleAuto;
+import com.team687.frc2018.commands.auto.RightToRightScale2CubeAuto;
 import com.team687.frc2018.constants.DriveConstants;
 import com.team687.frc2018.constants.SuperstructureConstants;
 import com.team687.frc2018.subsystems.Arm;
@@ -169,7 +169,7 @@ public class Robot extends TimedRobot {
 	    autonomousCommand = new CenterToRightSwitchAuto();
 	    SmartDashboard.putString("Selected Auto", "Center To Right Switch");
 	} else if (startingPosition == "left" && scaleOnLeft) {
-	    autonomousCommand = new LeftToLeftScaleAuto();
+	    autonomousCommand = new LeftToLeftScale2CubeAuto();
 	    SmartDashboard.putString("Selected Auto", "Left To Left Scale");
 	} else if (startingPosition == "left" && !scaleOnLeft) {
 	    autonomousCommand = new LeftToRightScaleAuto();
@@ -178,7 +178,7 @@ public class Robot extends TimedRobot {
 	    autonomousCommand = new RightToLeftScaleAuto();
 	    SmartDashboard.putString("Selected Auto", "Right To Left Scale");
 	} else if (startingPosition == "right" && !scaleOnLeft) {
-	    autonomousCommand = new RightToRightScaleAuto();
+	    autonomousCommand = new RightToRightScale2CubeAuto();
 	    SmartDashboard.putString("Selected Auto", "Right To Right Scale");
 	} else {
 	    autonomousCommand = new DriveStraightWithoutCube();

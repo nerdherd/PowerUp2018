@@ -4,41 +4,33 @@ import com.team687.frc2018.Robot;
 import com.team687.frc2018.constants.SuperstructureConstants;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class DefaultStow extends Command {
+/**
+ *
+ */
+public class SwitchScorePositionAuto extends Command {
 
-    public DefaultStow() {
-	requires(Robot.arm);
+    public SwitchScorePositionAuto() {
 	requires(Robot.wrist);
-	requires(Robot.intake);
+	requires(Robot.arm);
     }
 
-    @Override
     protected void initialize() {
-	SmartDashboard.putString("Current Command", "DefaultStow");
     }
 
-    @Override
     protected void execute() {
-	Robot.intake.setRollerPower(-0.254); // hold cube in place as we go up
+	Robot.intake.setRollerPower(-0.1);
+	Robot.wrist.setAngleAbsolute(80);
 	Robot.arm.setPosition(SuperstructureConstants.kArmOffsetPos);
-	Robot.wrist.setAngleAbsolute(90);
-	Robot.intake.closeClaw();
     }
 
-    @Override
     protected boolean isFinished() {
 	return false;
     }
 
-    @Override
     protected void end() {
     }
 
-    @Override
     protected void interrupted() {
-	end();
     }
-
 }

@@ -1,7 +1,5 @@
 package com.team687.frc2018.commands.drive;
 
-import com.team687.frc2018.Robot;
-
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,13 +19,13 @@ public class WaitTime extends Command {
     public WaitTime(double time) {
 	m_time = time;
 
-	requires(Robot.drive);
+	// requires(Robot.drive);
     }
 
     @Override
     protected void initialize() {
 	SmartDashboard.putString("Current Drive Command", "WaitTime");
-	Robot.drive.stopDrive();
+	// Robot.drive.stopDrive();
 
 	m_startTime = Timer.getFPGATimestamp();
     }

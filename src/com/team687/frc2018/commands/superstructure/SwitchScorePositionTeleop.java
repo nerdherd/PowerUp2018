@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SwitchScorePosition extends Command {
+public class SwitchScorePositionTeleop extends Command {
 
-    public SwitchScorePosition() {
+    public SwitchScorePositionTeleop() {
 	requires(Robot.wrist);
 	requires(Robot.arm);
     }
@@ -20,8 +20,12 @@ public class SwitchScorePosition extends Command {
 
     protected void execute() {
 	Robot.intake.setRollerPower(-0.1);
-	Robot.wrist.setAngleAbsolute(80);
-	Robot.arm.setPosition(SuperstructureConstants.kArmOffsetPos);
+	Robot.wrist.setAngleAbsolute(70);
+	if (Robot.wrist.getAngleAbsolute() > 50) {
+	    Robot.arm.setPosition(SuperstructureConstants.kArmSwitchPos);
+	} else {
+	    Robot.arm.setPosition(SuperstructureConstants.kArmOffsetPos);
+	}
     }
 
     protected boolean isFinished() {

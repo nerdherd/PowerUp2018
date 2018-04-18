@@ -127,8 +127,8 @@ public class DriveBezierPath extends Command {
 
     @Override
     protected boolean isFinished() {
-	return m_pathIsFinished
-		|| Math.abs(Robot.drive.getDrivetrainPosition()) > m_arcLengthList.get(m_arcLengthList.size() - 1);
+	return m_pathIsFinished || Math.abs(Robot.drive.getDrivetrainPosition()) > Math
+		.abs(m_arcLengthList.get(m_arcLengthList.size() - 1));
     }
 
     @Override

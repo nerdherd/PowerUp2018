@@ -21,8 +21,12 @@ public class DefaultIntake extends Command {
 
     @Override
     protected void execute() {
-	Robot.wrist.setAngleAbsolute(-5);
 	Robot.arm.setPosition(SuperstructureConstants.kArmOffsetPos);
+	if (Robot.arm.getPosition() > SuperstructureConstants.kArmSwitchPos - 1000) {
+	    Robot.wrist.setPosition(SuperstructureConstants.kWristStowArmOffsetPos);
+	} else {
+	    Robot.wrist.setAngleAbsolute(-5);
+	}
 	Robot.intake.setRollerPower(-1);
 	Robot.intake.closeClaw();
     }
