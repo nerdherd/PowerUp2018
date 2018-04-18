@@ -44,5 +44,4 @@ public class CenterToRightSwitchAuto extends CommandGroup {
 	addParallel(new OuttakeRollers(0.4));
 	addSequential(new DriveTime(0.5, 0.5));
     }
-
 }

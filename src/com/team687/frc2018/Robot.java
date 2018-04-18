@@ -2,11 +2,15 @@ package com.team687.frc2018;
 
 import com.team687.frc2018.commands.auto.CenterToLeftSwitchAuto;
 import com.team687.frc2018.commands.auto.CenterToRightSwitchAuto;
-import com.team687.frc2018.commands.auto.DriveStraightWithoutCube;
+import com.team687.frc2018.commands.auto.DriveStraightForwardsWithoutCube;
+import com.team687.frc2018.commands.auto.LeftToLeftCompatibleScaleAuto;
 import com.team687.frc2018.commands.auto.LeftToLeftScale2CubeAuto;
+import com.team687.frc2018.commands.auto.LeftToLeftSwitchAuto;
 import com.team687.frc2018.commands.auto.LeftToRightScaleAuto;
 import com.team687.frc2018.commands.auto.RightToLeftScaleAuto;
+import com.team687.frc2018.commands.auto.RightToRightCompatibleScaleAuto;
 import com.team687.frc2018.commands.auto.RightToRightScale2CubeAuto;
+import com.team687.frc2018.commands.auto.RightToRightSwitchAuto;
 import com.team687.frc2018.constants.DriveConstants;
 import com.team687.frc2018.constants.SuperstructureConstants;
 import com.team687.frc2018.subsystems.Arm;
@@ -43,8 +47,8 @@ public class Robot extends TimedRobot {
     public static Command autonomousCommand;
     public static String startingPosition;
     public static boolean switchOnLeft, scaleOnLeft;
-    SendableChooser<String> numberOfCubesChooser;
-    public static String numberOfCubes;
+    SendableChooser<String> typeChooser;
+    public static String autoType;
 
     @Override
     public void robotInit() {
@@ -78,11 +82,12 @@ public class Robot extends TimedRobot {
 	sideChooser.addDefault("Center", "center");
 	sideChooser.addObject("Left", "left");
 	sideChooser.addObject("Right", "right");
-	SmartDashboard.putData("Auto Chooser", sideChooser);
+	SmartDashboard.putData("Starting Pos Chooser", sideChooser);
 
-	numberOfCubesChooser = new SendableChooser<>();
-	numberOfCubesChooser.addDefault("2 cubes", "2 cubes");
-	numberOfCubesChooser.addDefault("3 cubes", "3 cubes");
+	typeChooser = new SendableChooser<>();
+	typeChooser.addDefault("Main", "main");
+	typeChooser.addObject("Compatible", "compatible");
+	SmartDashboard.putData("Auto Type Chooser", typeChooser);
     }
 
     @Override
@@ -143,8 +148,8 @@ public class Robot extends TimedRobot {
 	startingPosition = sideChooser.getSelected();
 	SmartDashboard.putString("Selected starting position", startingPosition);
 
-	numberOfCubes = numberOfCubesChooser.getSelected();
-	SmartDashboard.putString("Selected number of cubes", startingPosition);
+	autoType = typeChooser.getSelected();
+	SmartDashboard.putString("Selected type of auto", startingPosition);
     }
 
     @Override
@@ -171,27 +176,34 @@ public class Robot extends TimedRobot {
 	    SmartDashboard.putString("Scale Position", "Right");
 	}
 
-	if (startingPosition == "center" && switchOnLeft) {
-	    autonomousCommand = new CenterToLeftSwitchAuto();
-	    SmartDashboard.putString("Selected Auto", "Center To Left Switch");
-	} else if (startingPosition == "center" && !switchOnLeft) {
-	    autonomousCommand = new CenterToRightSwitchAuto();
-	    SmartDashboard.putString("Selected Auto", "Center To Right Switch");
-	} else if (startingPosition == "left" && scaleOnLeft) {
-	    autonomousCommand = new LeftToLeftScale2CubeAuto();
-	    SmartDashboard.putString("Selected Auto", "Left To Left Scale");
-	} else if (startingPosition == "left" && !scaleOnLeft) {
-	    autonomousCommand = new LeftToRightScaleAuto();
-	    SmartDashboard.putString("Selected Auto", "Left To Right Scale");
-	} else if (startingPosition == "right" && scaleOnLeft) {
-	    autonomousCommand = new RightToLeftScaleAuto();
-	    SmartDashboard.putString("Selected Auto", "Right To Left Scale");
-	} else if (startingPosition == "right" && !scaleOnLeft) {
-	    autonomousCommand = new RightToRightScale2CubeAuto();
-	    SmartDashboard.putString("Selected Auto", "Right To Right Scale");
+	if (startingPosition == "center") {
+	    if (switchOnLeft) {
+		autonomousCommand = new CenterToLeftSwitchAuto();
+	    } else if (!switchOnLeft) {
+		autonomousCommand = new CenterToRightSwitchAuto();
+	    }
+	} else if (startingPosition == "left") {
+	    if (scaleOnLeft && autoType == "main") {
+		autonomousCommand = new LeftToLeftScale2CubeAuto();
+	    } else if (scaleOnLeft && autoType == "compatible") {
+		autonomousCommand = new LeftToLeftCompatibleScaleAuto();
+	    } else if (switchOnLeft) {
+		autonomousCommand = new LeftToLeftSwitchAuto();
+	    } else {
+		autonomousCommand = new LeftToRightScaleAuto();
+	    }
+	} else if (startingPosition == "right") {
+	    if (!scaleOnLeft && autoType == "main") {
+		autonomousCommand = new RightToRightScale2CubeAuto();
+	    } else if (!scaleOnLeft && autoType == "compatible") {
+		autonomousCommand = new RightToRightCompatibleScaleAuto();
+	    } else if (!switchOnLeft) {
+		autonomousCommand = new RightToRightSwitchAuto();
+	    } else {
+		autonomousCommand = new RightToLeftScaleAuto();
+	    }
 	} else {
-	    autonomousCommand = new DriveStraightWithoutCube();
-	    SmartDashboard.putString("Selected Auto", "Drive Straight Without Cube");
+	    autonomousCommand = new DriveStraightForwardsWithoutCube();
 	}
 
 	if (autonomousCommand != null) {
