@@ -2,6 +2,7 @@ package com.team687.frc2018;
 
 import com.team687.frc2018.commands.auto.CenterToLeftSwitchAuto;
 import com.team687.frc2018.commands.auto.CenterToRightSwitchAuto;
+import com.team687.frc2018.commands.auto.DriveStraightBackwardsWithoutCube;
 import com.team687.frc2018.commands.auto.DriveStraightForwardsWithoutCube;
 import com.team687.frc2018.commands.auto.LeftToLeftCompatibleScaleAuto;
 import com.team687.frc2018.commands.auto.LeftToLeftScale2CubeAuto;
@@ -181,6 +182,8 @@ public class Robot extends TimedRobot {
 		autonomousCommand = new CenterToLeftSwitchAuto();
 	    } else if (!switchOnLeft) {
 		autonomousCommand = new CenterToRightSwitchAuto();
+	    } else {
+		autonomousCommand = new DriveStraightForwardsWithoutCube();
 	    }
 	} else if (startingPosition == "left") {
 	    if (scaleOnLeft && autoType == "main") {
@@ -203,7 +206,7 @@ public class Robot extends TimedRobot {
 		autonomousCommand = new RightToLeftScaleAuto();
 	    }
 	} else {
-	    autonomousCommand = new DriveStraightForwardsWithoutCube();
+	    autonomousCommand = new DriveStraightBackwardsWithoutCube();
 	}
 
 	if (autonomousCommand != null) {
