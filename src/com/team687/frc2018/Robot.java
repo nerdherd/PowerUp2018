@@ -43,6 +43,8 @@ public class Robot extends TimedRobot {
     public static Command autonomousCommand;
     public static String startingPosition;
     public static boolean switchOnLeft, scaleOnLeft;
+    SendableChooser<String> numberOfCubesChooser;
+    public static String numberOfCubes;
 
     @Override
     public void robotInit() {
@@ -77,6 +79,10 @@ public class Robot extends TimedRobot {
 	sideChooser.addObject("Left", "left");
 	sideChooser.addObject("Right", "right");
 	SmartDashboard.putData("Auto Chooser", sideChooser);
+
+	numberOfCubesChooser = new SendableChooser<>();
+	numberOfCubesChooser.addDefault("2 cubes", "2 cubes");
+	numberOfCubesChooser.addDefault("3 cubes", "3 cubes");
     }
 
     @Override
@@ -136,6 +142,9 @@ public class Robot extends TimedRobot {
 
 	startingPosition = sideChooser.getSelected();
 	SmartDashboard.putString("Selected starting position", startingPosition);
+
+	numberOfCubes = numberOfCubesChooser.getSelected();
+	SmartDashboard.putString("Selected number of cubes", startingPosition);
     }
 
     @Override
