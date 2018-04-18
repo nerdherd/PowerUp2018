@@ -1,16 +1,11 @@
 package com.team687.frc2018;
 
-import com.team687.frc2018.commands.arm.ResetArmEncoder;
 import com.team687.frc2018.commands.auto.CenterToLeftSwitchAuto;
 import com.team687.frc2018.commands.auto.CenterToRightSwitchAuto;
-import com.team687.frc2018.commands.auto.DriveStraightAuto;
 import com.team687.frc2018.commands.auto.LeftToLeftScale2CubeAuto;
 import com.team687.frc2018.commands.auto.LeftToRightScaleAuto;
 import com.team687.frc2018.commands.auto.RightToLeftScaleAuto;
 import com.team687.frc2018.commands.auto.RightToRightScale2CubeAuto;
-import com.team687.frc2018.commands.drive.ResetDriveEncoders;
-import com.team687.frc2018.commands.drive.ResetGyro;
-import com.team687.frc2018.commands.drive.TurnToAngle;
 import com.team687.frc2018.commands.intake.ClawClose;
 import com.team687.frc2018.commands.intake.ClawOpen;
 import com.team687.frc2018.commands.intake.SetIntakeRollerPower;
@@ -20,7 +15,6 @@ import com.team687.frc2018.commands.superstructure.DefaultStow;
 import com.team687.frc2018.commands.superstructure.ForwardsScaleToStow;
 import com.team687.frc2018.commands.superstructure.StowToForwardsScale;
 import com.team687.frc2018.commands.superstructure.SwitchScorePositionTeleop;
-import com.team687.frc2018.commands.wrist.ResetWristEncoder;
 import com.team687.frc2018.constants.SuperstructureConstants;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -81,10 +75,10 @@ public class OI {
 	closeClaw_5 = new JoystickButton(driveJoyArtic, 6);
 	closeClaw_5.whenPressed(new ClawClose());
 
-	SmartDashboard.putData("Arm Reset Encoder", new ResetArmEncoder());
-	SmartDashboard.putData("Wrist Reset Encoder", new ResetWristEncoder());
-	SmartDashboard.putData("Drive Reset Encoders", new ResetDriveEncoders());
-	SmartDashboard.putData("Drive Reset Gyro", new ResetGyro());
+	// SmartDashboard.putData("Arm Reset Encoder", new ResetArmEncoder());
+	// SmartDashboard.putData("Wrist Reset Encoder", new ResetWristEncoder());
+	// SmartDashboard.putData("Drive Reset Encoders", new ResetDriveEncoders());
+	// SmartDashboard.putData("Drive Reset Gyro", new ResetGyro());
 
 	// SmartDashboard.putData("Drive Straight Test", new TestDriveSubsystem());
 	//
@@ -125,22 +119,22 @@ public class OI {
 	// SmartDashboard.putData("Superstructure Intake Position", new
 	// IntakePosition());
 
-	SmartDashboard.putData("Turn To 0", new TurnToAngle(0, 4, 2));
-	SmartDashboard.putData("Turn To 90", new TurnToAngle(90, 4, 2));
-	SmartDashboard.putData("Turn To -90", new TurnToAngle(-90, 4, 2));
-	SmartDashboard.putData("Turn To 5", new TurnToAngle(5, 4, 2));
-	SmartDashboard.putData("Turn To -5", new TurnToAngle(-5, 4, 2));
-	SmartDashboard.putData("Turn To 20", new TurnToAngle(20, 4, 2));
-	SmartDashboard.putData("Turn To -20", new TurnToAngle(-20, 4, 2));
+	// SmartDashboard.putData("Turn To 0", new TurnToAngle(0, 4, 2));
+	// SmartDashboard.putData("Turn To 90", new TurnToAngle(90, 4, 2));
+	// SmartDashboard.putData("Turn To -90", new TurnToAngle(-90, 4, 2));
+	// SmartDashboard.putData("Turn To 5", new TurnToAngle(5, 4, 2));
+	// SmartDashboard.putData("Turn To -5", new TurnToAngle(-5, 4, 2));
+	// SmartDashboard.putData("Turn To 20", new TurnToAngle(20, 4, 2));
+	// SmartDashboard.putData("Turn To -20", new TurnToAngle(-20, 4, 2));
 
 	SmartDashboard.putData("Center To Left Switch", new CenterToLeftSwitchAuto());
 	SmartDashboard.putData("Center To Right Switch", new CenterToRightSwitchAuto());
-	SmartDashboard.putData("Left To Left Scale", new LeftToLeftScale2CubeAuto());
+	SmartDashboard.putData("Left To Left 2 Cube Scale", new LeftToLeftScale2CubeAuto());
+	SmartDashboard.putData("Right To Right 2 Cube Scale", new RightToRightScale2CubeAuto());
 	SmartDashboard.putData("Left To Right Scale", new LeftToRightScaleAuto());
 	SmartDashboard.putData("Right To Left Scale", new RightToLeftScaleAuto());
-	SmartDashboard.putData("Right To Right Scale", new RightToRightScale2CubeAuto());
 
-	SmartDashboard.putData("Drive Straight Auto", new DriveStraightAuto());
+	// SmartDashboard.putData("Drive Straight Auto", new DriveStraightAuto());
     }
 
     /**
