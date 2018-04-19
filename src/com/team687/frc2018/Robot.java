@@ -209,7 +209,7 @@ public class Robot extends TimedRobot {
 	    autonomousCommand = new DriveStraightBackwardsWithoutCube();
 	}
 	
-	autonomousCommand = new RightToRightScale2CubeAuto();
+//	autonomousCommand = new RightToRightScale2CubeAuto();
 
 	if (autonomousCommand != null) {
 	    autonomousCommand.start();
