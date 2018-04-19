@@ -1,5 +1,7 @@
 package com.team687.frc2018;
 
+import com.team687.frc2018.commands.arm.SetArmPosition;
+import com.team687.frc2018.commands.arm.SetArmVoltage;
 import com.team687.frc2018.commands.auto.CenterToLeftSwitchAuto;
 import com.team687.frc2018.commands.auto.CenterToRightSwitchAuto;
 import com.team687.frc2018.commands.auto.LeftToLeftScale2CubeAuto;
@@ -82,13 +84,13 @@ public class OI {
 
 	// SmartDashboard.putData("Drive Straight Test", new TestDriveSubsystem());
 	//
-	// SmartDashboard.putData("Arm Voltage 0", new SetArmVoltage(0));
-	// SmartDashboard.putData("Arm Position Vertical", new
-	// SetArmPosition(SuperstructureConstants.kArmVerticalPos));
-	// SmartDashboard.putData("Arm Position Horizontal",
-	// new SetArmPosition(SuperstructureConstants.kArmHorizontalPos));
-	// SmartDashboard.putData("Arm Position Offset", new
-	// SetArmPosition(SuperstructureConstants.kArmOffsetPos));
+	 SmartDashboard.putData("Arm Voltage 0", new SetArmVoltage(0));
+	 SmartDashboard.putData("Arm Position Vertical", new
+	 SetArmPosition(SuperstructureConstants.kArmVerticalPos));
+	 SmartDashboard.putData("Arm Position Horizontal",
+	 new SetArmPosition(SuperstructureConstants.kArmHorizontalPos));
+	 SmartDashboard.putData("Arm Position Offset", new
+	 SetArmPosition(SuperstructureConstants.kArmOffsetPos));
 	//
 	// SmartDashboard.putData("Wrist Voltage 0", new SetWristPercentOutput(0));
 	// SmartDashboard.putData("Wrist Position Intake", new
@@ -131,8 +133,8 @@ public class OI {
 	SmartDashboard.putData("Center To Right Switch", new CenterToRightSwitchAuto());
 	SmartDashboard.putData("Left To Left 2 Cube Scale", new LeftToLeftScale2CubeAuto());
 	SmartDashboard.putData("Right To Right 2 Cube Scale", new RightToRightScale2CubeAuto());
-	SmartDashboard.putData("Left To Right Scale", new LeftToRightScaleAuto());
-	SmartDashboard.putData("Right To Left Scale", new RightToLeftScaleAuto());
+//	SmartDashboard.putData("Left To Right Scale", new LeftToRightScaleAuto());
+//	SmartDashboard.putData("Right To Left Scale", new RightToLeftScaleAuto());
 
 	// SmartDashboard.putData("Drive Straight Auto", new DriveStraightAuto());
     }
