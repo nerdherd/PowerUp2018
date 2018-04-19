@@ -21,7 +21,7 @@ public class CenterToLeftSwitchAuto extends CommandGroup {
 	addParallel(new SwitchScorePositionAuto());
 	addSequential(new DriveBezierPath(AutoConstants.kRedCenterToLeftSwitchPath, 0.5, 0.008, 0.001, false));
 	addParallel(new OuttakeRollers(0.4));
-	addSequential(new DriveTime(0.5, 0.5));
+	addSequential(new DriveTime(0.3, 0.5));
 	addSequential(new ResetDriveEncoders());
 
 	addSequential(new DriveBezierPath(AutoConstants.kRedLeftSwitchToCenterPath, -0.5, 0.008, 0.001, false));

@@ -26,11 +26,7 @@ public class AdjustForwardsScale extends Command {
     protected void execute() {
 	Robot.intake.setRollerPower(-0.08);
 	Robot.arm.setPosition(m_armPosition);
-	if (m_armPosition == SuperstructureConstants.kArmMiddleScalePosition) {
-	    Robot.wrist.setAngleAbsolute(10);
-	} else {
-	    Robot.wrist.setAngleAbsolute(85);
-	}
+	Robot.wrist.setAngleAbsolute(10);
     }
 
     protected boolean isFinished() {

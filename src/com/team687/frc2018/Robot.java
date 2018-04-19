@@ -215,9 +215,9 @@ public class Robot extends TimedRobot {
 	    autonomousCommand.start();
 	}
 
-	// drive.startLog();
-	// arm.startLog();
-	// wrist.startLog();
+	 drive.startLog();
+	 arm.startLog();
+	 wrist.startLog();
     }
 
     @Override
@@ -237,9 +237,9 @@ public class Robot extends TimedRobot {
 		!(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent
 			|| wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
 
-	// drive.logToCSV();
-	// arm.logToCSV();
-	// wrist.logToCSV();
+	 drive.logToCSV();
+	 arm.logToCSV();
+	 wrist.logToCSV();
     }
 
     @Override
@@ -257,9 +257,9 @@ public class Robot extends TimedRobot {
 		!(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent
 			|| wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
 
-	drive.startLog();
-	arm.startLog();
-	wrist.startLog();
+//	drive.startLog();
+//	arm.startLog();
+//	wrist.startLog();
     }
 
     @Override
@@ -279,9 +279,9 @@ public class Robot extends TimedRobot {
 		!(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent
 			|| wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
 
-	drive.logToCSV();
-	arm.logToCSV();
-	wrist.logToCSV();
+//	drive.logToCSV();
+//	arm.logToCSV();
+//	wrist.logToCSV();
 
 	if (ds.getMatchTime() < 5) {
 	    Robot.wrist.enableBrakeMode();
