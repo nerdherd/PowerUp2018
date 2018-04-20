@@ -7,13 +7,16 @@ import com.team687.frc2018.commands.auto.CenterToRightSwitchAuto;
 import com.team687.frc2018.commands.auto.LeftToLeftScale2CubeAuto;
 import com.team687.frc2018.commands.auto.LeftToRightScaleAuto;
 import com.team687.frc2018.commands.auto.RightToLeftScaleAuto;
+import com.team687.frc2018.commands.auto.RightToRightCompatibleScaleAuto;
 import com.team687.frc2018.commands.auto.RightToRightScale2CubeAuto;
+import com.team687.frc2018.commands.auto.RightToRightScale3CubeAuto;
 import com.team687.frc2018.commands.intake.ClawClose;
 import com.team687.frc2018.commands.intake.ClawOpen;
 import com.team687.frc2018.commands.intake.SetIntakeRollerPower;
 import com.team687.frc2018.commands.superstructure.AdjustForwardsScale;
 import com.team687.frc2018.commands.superstructure.DefaultIntake;
 import com.team687.frc2018.commands.superstructure.DefaultStow;
+import com.team687.frc2018.commands.superstructure.EmergencyWristSave;
 import com.team687.frc2018.commands.superstructure.ForwardsScaleToStow;
 import com.team687.frc2018.commands.superstructure.StowToForwardsScale;
 import com.team687.frc2018.commands.superstructure.SwitchScorePositionTeleop;
@@ -76,6 +79,8 @@ public class OI {
 	openClaw_6.whenPressed(new ClawOpen());
 	closeClaw_5 = new JoystickButton(driveJoyArtic, 6);
 	closeClaw_5.whenPressed(new ClawClose());
+	
+	SmartDashboard.putData("****EMERGENCY WRIST SAVE****", new EmergencyWristSave());
 
 	// SmartDashboard.putData("Arm Reset Encoder", new ResetArmEncoder());
 	// SmartDashboard.putData("Wrist Reset Encoder", new ResetWristEncoder());
@@ -133,8 +138,10 @@ public class OI {
 	SmartDashboard.putData("Center To Right Switch", new CenterToRightSwitchAuto());
 	SmartDashboard.putData("Left To Left 2 Cube Scale", new LeftToLeftScale2CubeAuto());
 	SmartDashboard.putData("Right To Right 2 Cube Scale", new RightToRightScale2CubeAuto());
+	SmartDashboard.putData("Right to Right 3 cube Scale", new RightToRightScale3CubeAuto());
 //	SmartDashboard.putData("Left To Right Scale", new LeftToRightScaleAuto());
 //	SmartDashboard.putData("Right To Left Scale", new RightToLeftScaleAuto());
+	SmartDashboard.putData("Right to Right Scale Compatible", new RightToRightCompatibleScaleAuto());
 
 	// SmartDashboard.putData("Drive Straight Auto", new DriveStraightAuto());
     }
@@ -169,6 +176,13 @@ public class OI {
     public double getDriveJoyRightX() {
 	// return gamepadJoy.getRawAxis(2);
 	return driveJoyRight.getX();
+    }
+    
+    /**
+     * @return input power from artic joy
+     */
+    public double getArticJoyY() {
+    	return driveJoyArtic.getY();
     }
 
     /**

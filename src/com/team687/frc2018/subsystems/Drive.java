@@ -54,6 +54,10 @@ public class Drive extends Subsystem {
     public FileWriter m_writer;
     private boolean writeException = false;
     private double m_logStartTime = 0;
+    
+    private double m_bezierDesiredYaw;
+    private double m_bezierRotError;
+    private double m_bezierRotPower;
 
     public Drive() {
 	m_leftMaster = new TalonSRX(RobotMap.kLeftMasterTalonID);
@@ -328,6 +332,12 @@ public class Drive extends Subsystem {
 	setPower(0, 0);
     }
 
+    public void updateBezierData(double yaw, double error, double rotPower) {
+    	 m_bezierDesiredYaw = yaw;
+    	 m_bezierRotError = error;
+    	 m_bezierRotPower = rotPower;
+    }
+    
     public boolean testDriveSubsystem() {
 	boolean failed = false;
 
@@ -425,7 +435,7 @@ public class Drive extends Subsystem {
 		m_writer = new FileWriter(m_file);
 		m_writer.append("Time,MatchTime,RightPosition,LeftPosition,RightVelocity,LeftVelocity,Yaw"
 			+ "RightMasterVoltage,RightSlaveVoltage,LeftMasterVoltage,LeftSlaveVoltage,"
-			+ "RightMasterCurrent,RightSlaveCurrent,LeftMasterCurrent,LeftSlaveCurrent,ScaleOnLeft,SwitchOnLeft\n");
+			+ "RightMasterCurrent,RightSlaveCurrent,LeftMasterCurrent,LeftSlaveCurrent,ScaleOnLeft,SwitchOnLeft,BezierDesiredYaw,BezierError,BezierRotPower\n");
 		m_logStartTime = Timer.getFPGATimestamp();
 	    } catch (IOException e) {
 		e.printStackTrace();
@@ -456,7 +466,9 @@ public class Drive extends Subsystem {
 			+ String.valueOf(getRightSlaveVoltage()) + "," + String.valueOf(getLeftMasterVoltage()) + ","
 			+ String.valueOf(getLeftSlaveVoltage()) + "," + String.valueOf(getRightMasterCurrent()) + ","
 			+ String.valueOf(getRightSlaveCurrent()) + "," + String.valueOf(getLeftMasterCurrent()) + ","
-			+ String.valueOf(getLeftSlaveCurrent()) + "," + String.valueOf(Robot.scaleOnLeft) + "," + String.valueOf(Robot.switchOnLeft) + "\n");
+			+ String.valueOf(getLeftSlaveCurrent()) + "," + String.valueOf(Robot.scaleOnLeft) + "," + String.valueOf(Robot.switchOnLeft) + 
+			"," + String.valueOf(m_bezierDesiredYaw) + ","
+					+ String.valueOf(m_bezierRotError) + "," + String.valueOf(m_bezierRotPower) + "\n");
 //		m_writer.flush();
 	    } catch (IOException e) {
 		e.printStackTrace();

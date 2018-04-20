@@ -17,7 +17,7 @@ public class DriveBezierPath extends Command {
 
     private BezierCurve m_path;
     private double m_straightPower;
-    private double m_kRotP, m_kDistP;
+    private final double m_kRotP, m_kDistP;
     private boolean m_softStop;
 
     private ArrayList<Double> m_headingList, m_arcLengthList;
@@ -90,9 +90,10 @@ public class DriveBezierPath extends Command {
 		double rotError = m_desiredHeading - robotAngle;
 		rotError = (rotError > 180) ? rotError - 360 : rotError;
 		rotError = (rotError < -180) ? rotError + 360 : rotError;
+		rotError = rotError % 360;
 
 		double rotPower = m_kRotP * rotError;
-
+		Robot.drive.updateBezierData(m_desiredHeading, rotError, rotPower);
 		// default is specified straight power
 		double straightPower = m_straightPower;
 		double maxStraightPower = Math.abs(m_straightPower);
