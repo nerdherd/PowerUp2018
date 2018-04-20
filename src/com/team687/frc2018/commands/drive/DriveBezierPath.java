@@ -83,14 +83,28 @@ public class DriveBezierPath extends Command {
 		// going reverse
 		if (m_direction < 0) {
 		    m_desiredHeading += 180;
+//		    if (m_desiredHeading > 0)	{
+//		    	m_desiredHeading -= 180;
+//		    }
+//		    else if	(m_desiredHeading < 0)	{
+//		    	m_desiredHeading += 180;
+		    	
+//		    }
+		    
 		}
 		// change in sign is necessary because of how P loop is structured
 		m_desiredHeading = -m_desiredHeading;
 
 		double rotError = m_desiredHeading - robotAngle;
+		rotError = (rotError > 180) ? rotError - 360 : rotError;  //possible fix for spinny problems
 		rotError = (rotError > 180) ? rotError - 360 : rotError;
 		rotError = (rotError < -180) ? rotError + 360 : rotError;
-		rotError = rotError % 360;
+		rotError = (rotError < -180) ? rotError + 360 : rotError;
+//		rotError = rotError % 360;
+//		rotError = (rotError + 360) % 360;
+//		if (rotError >= 180)	{
+//			rotError = rotError - 360;
+//		}
 
 		double rotPower = m_kRotP * rotError;
 		Robot.drive.updateBezierData(m_desiredHeading, rotError, rotPower);
