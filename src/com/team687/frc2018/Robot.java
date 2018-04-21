@@ -190,8 +190,8 @@ public class Robot extends TimedRobot {
 		autonomousCommand = new LeftToLeftScale2CubeAuto();
 	    } else if (scaleOnLeft && autoType == "compatible") {
 		autonomousCommand = new LeftToLeftCompatibleScaleAuto();
-	    } else if (switchOnLeft) {
-		autonomousCommand = new LeftToLeftSwitchAuto();
+//	    } else if (switchOnLeft) {
+//		autonomousCommand = new LeftToLeftSwitchAuto();
 	    } else {
 		autonomousCommand = new LeftToRightScaleAuto();
 	    }
@@ -200,8 +200,8 @@ public class Robot extends TimedRobot {
 		autonomousCommand = new RightToRightScale2CubeAuto();
 	    } else if (!scaleOnLeft && autoType == "compatible") {
 		autonomousCommand = new RightToRightCompatibleScaleAuto();
-	    } else if (!switchOnLeft) {
-		autonomousCommand = new RightToRightSwitchAuto();
+//	    } else if (!switchOnLeft) {
+//		autonomousCommand = new RightToRightSwitchAuto();
 	    } else {
 		autonomousCommand = new RightToLeftScaleAuto();
 	    }

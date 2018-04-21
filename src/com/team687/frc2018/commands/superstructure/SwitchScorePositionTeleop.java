@@ -13,6 +13,7 @@ public class SwitchScorePositionTeleop extends Command {
     public SwitchScorePositionTeleop() {
 	requires(Robot.wrist);
 	requires(Robot.arm);
+	requires(Robot.intake);
     }
 
     protected void initialize() {

@@ -13,6 +13,7 @@ public class SwitchScorePositionAuto extends Command {
     public SwitchScorePositionAuto() {
 	requires(Robot.wrist);
 	requires(Robot.arm);
+	requires(Robot.intake);
     }
 
     protected void initialize() {
