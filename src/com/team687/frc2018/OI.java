@@ -76,12 +76,12 @@ public class OI {
 	intakePosition_4.whenPressed(new DefaultIntake());
 
 	intakeRollers_9 = new JoystickButton(driveJoyArtic, 9);
-//	intakeRollers_9.whenPressed(new SetIntakeRollerPower(-.8333333333333333));
-	intakeRollers_9.whenPressed(new StackCubes(0));
+	intakeRollers_9.whenPressed(new SetIntakeRollerPower(-.8333333333333333));
+//	intakeRollers_9.whenPressed(new StackCubes(0));
 	stowToForwards_7 = new JoystickButton(driveJoyArtic, 7);
 	
-//	stowToForwards_7.whenPressed(new StowToForwardsScale());
-	stowToForwards_7.whenPressed(new StackCubes(-15));
+	stowToForwards_7.whenPressed(new StowToForwardsScale());
+//	stowToForwards_7.whenPressed(new StackCubes(-15));
 	
 
 	adjustMiddle_8 = new JoystickButton(driveJoyArtic, 8);
@@ -89,8 +89,8 @@ public class OI {
 	defaultStow_10 = new JoystickButton(driveJoyArtic, 10);
 	defaultStow_10.whenPressed(new DefaultStow());
 	switchPosition_11 = new JoystickButton(driveJoyArtic, 11);
-//	switchPosition_11.whenPressed(new SwitchScorePositionTeleop());
-	switchPosition_11.whenPressed(new StackCubes(35));
+	switchPosition_11.whenPressed(new SwitchScorePositionTeleop());
+//	switchPosition_11.whenPressed(new StackCubes(35));
 
 	openClaw_6 = new JoystickButton(driveJoyArtic, 5);
 	openClaw_6.whenPressed(new ClawOpen());
@@ -98,8 +98,8 @@ public class OI {
 	closeClaw_5.whenPressed(new ClawClose());
 	
 	sketchyStowToBackwards_12 = new JoystickButton(driveJoyArtic, 12);
-//	sketchyStowToBackwards_12.whenPressed(new StowToBackwardsScale());
-	sketchyStowToBackwards_12.whenPressed(new StackCubes(55));
+	sketchyStowToBackwards_12.whenPressed(new StowToBackwardsScale());
+//	sketchyStowToBackwards_12.whenPressed(new StackCubes(55));
 	
 	
 	SmartDashboard.putData("****EMERGENCY WRIST SAVE****", new EmergencyWristSave());
