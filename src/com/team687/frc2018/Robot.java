@@ -81,7 +81,8 @@ public class Robot extends TimedRobot {
 
 	sideChooser = new SendableChooser<>();
 	sideChooser.addDefault("Center", "center");
-	sideChooser.addObject("Left", "left");
+	sideChooser.addObject("Left", ""
+			+ "left");
 	sideChooser.addObject("Right", "right");
 	SmartDashboard.putData("Starting Pos Chooser", sideChooser);
 
@@ -256,7 +257,7 @@ public class Robot extends TimedRobot {
 	SmartDashboard.putBoolean("HEALTHY SUPERSTRUCTURE CURRENT",
 		!(arm.getCurrent() > SuperstructureConstants.kArmSafeCurrent
 			|| wrist.getCurrent() > SuperstructureConstants.kWristSafeCurrent));
-
+	compressor.start();
 //	drive.startLog();
 //	arm.startLog();
 //	wrist.startLog();
@@ -265,7 +266,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
 	Scheduler.getInstance().run();
-
+	compressor.start();
 	drive.reportToSmartDashboard();
 	arm.reportToSmartDashboard();
 	wrist.reportToSmartDashboard();
