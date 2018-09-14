@@ -83,7 +83,6 @@ public class OI {
 	stowToForwards_7.whenPressed(new StowToForwardsScale());
 //	stowToForwards_7.whenPressed(new StackCubes(-15));
 	
-
 	adjustMiddle_8 = new JoystickButton(driveJoyArtic, 8);
 	adjustMiddle_8.whenPressed(new AdjustForwardsScale(SuperstructureConstants.kArmMiddleScalePosition));
 	defaultStow_10 = new JoystickButton(driveJoyArtic, 10);
@@ -96,9 +95,10 @@ public class OI {
 	openClaw_6.whenPressed(new ClawOpen());
 	closeClaw_5 = new JoystickButton(driveJoyArtic, 6);
 	closeClaw_5.whenPressed(new ClawClose());
-	
+
 	sketchyStowToBackwards_12 = new JoystickButton(driveJoyArtic, 12);
 	sketchyStowToBackwards_12.whenPressed(new StowToBackwardsScale());
+	
 //	sketchyStowToBackwards_12.whenPressed(new StackCubes(55));
 	
 	
@@ -112,7 +112,8 @@ public class OI {
 	 SmartDashboard.putData("Drive Reset Gyro", new ResetGyro());
 
 	// SmartDashboard.putData("Drive Straight Test", new TestDriveSubsystem());
-	//
+	
+	 
 	 SmartDashboard.putData("Arm Voltage 0", new SetArmVoltage(0));
 	 SmartDashboard.putData("Arm Position Vertical", new
 	 SetArmPosition(SuperstructureConstants.kArmVerticalPos));

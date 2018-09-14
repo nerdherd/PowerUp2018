@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DefaultStow extends Command {
+	
+	private boolean m_isBackwards;
 
     public DefaultStow() {
 	requires(Robot.arm);
@@ -16,6 +18,7 @@ public class DefaultStow extends Command {
 
     @Override
     protected void initialize() {
+    if (Robot.arm.getAngleAbsolute() > )
 	SmartDashboard.putString("Current Command", "DefaultStow");
     }
 

@@ -25,6 +25,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 
 public class Arm extends Subsystem {
+	
+	private int m_state;
+	// States: 
+	//stow arm: 0, forward scale: 1, backwards scale: 2, lower forwards scale: 3
 
     private final TalonSRX m_arm;
     private double m_desiredPos = 0;
@@ -98,6 +102,10 @@ public class Arm extends Subsystem {
     public void setAngle(double angle) {
 	setPosition(degreesToTicks(angle));
     }
+    
+    public void setState(int newState) {
+    	this.m_state = newState;
+    }
 
     public double getPosition() {
 	return m_arm.getSelectedSensorPosition(0);
@@ -147,6 +155,10 @@ public class Arm extends Subsystem {
 
     public double getCurrent() {
 	return m_arm.getOutputCurrent();
+    }
+    
+    public int getState() {
+    	return this.m_state;
     }
 
     public void reportToSmartDashboard() {

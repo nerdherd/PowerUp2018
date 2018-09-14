@@ -9,8 +9,8 @@ package com.team687.frc2018;
 
 public class RobotMap {
 
-    public static final int kRightMasterTalonID = 0;
-    public static final int kLeftMasterTalonID = 1;
+    public static final int kRightMasterTalonID = 1;
+    public static final int kLeftMasterTalonID = 8;
 
     // practice bot
     public static final int kRightSlaveTalon1ID = 4;
@@ -24,8 +24,8 @@ public class RobotMap {
     public static final int kWristID = 2;
     public static final int kIntakeRollersID = 6;
 
-    public static final int kIntakeClawID1 = 0;
-    public static final int kIntakeClawID2 = 1;
+    public static final int kIntakeClawID1 = 1;
+    public static final int kIntakeClawID2 = 0;
     
     public static final int kAntiFoulThingID = 10;
 
